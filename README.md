@@ -14,7 +14,7 @@ The service is implemented in Java 21 using Spring Boot 3.2
 
 The table below describes the topic a Kafka message is published to when an API error response is received, given the
 number of attempts to process that message. The number of attempts is incremented when processed from the main or
-retry topics. Any runtime exceptions thrown during the processing of a message are handled by publishing the message
+retry topic. Any runtime exceptions thrown during the processing of a message are handled by publishing the message
 immediately to the <br>`filing-history-delta-filing-history-delta-consumer-invalid` topic and are not retried.
 
 | API Response | Attempt          | Topic published to                                         |
@@ -29,7 +29,6 @@ immediately to the <br>`filing-history-delta-filing-history-delta-consumer-inval
 * [Git](https://git-scm.com/downloads)
 * [Java](http://www.oracle.com/technetwork/java/javase/downloads)
 * [Maven](https://maven.apache.org/download.cgi)
-* [MongoDB](https://www.mongodb.com/)
 * [Apache Kafka](https://kafka.apache.org/)
 
 ## Building and Running Locally using Docker
@@ -37,7 +36,9 @@ immediately to the <br>`filing-history-delta-filing-history-delta-consumer-inval
 1. Clone [Docker CHS Development](https://github.com/companieshouse/docker-chs-development) and follow the steps in the
    README.
 2. Enable the following services using the command `./bin/chs-dev services enable <service>`.
-    * `filing-history-delta-consumer`
+   * `chs-delta-api`
+   * `filing-history-delta-consumer`
+   * `filing-history-data-api`
 3. Boot up the services' containers on docker using tilt `tilt up`.
 4. Messages can be produced to the filing-history-delta topic using the instructions given
    in [CHS Delta API](https://github.com/companieshouse/chs-delta-api).
