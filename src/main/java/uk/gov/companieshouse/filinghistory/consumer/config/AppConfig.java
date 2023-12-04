@@ -23,7 +23,7 @@ public class AppConfig {
     @Bean
     Supplier<InternalApiClient> internalApiClientSupplier(
             @Value("${api.api-key}") String apiKey,
-            @Value("${api.api-url}") String apiUrl) {
+            @Value("${api.api-local-url}") String apiUrl) {
         return () -> {
             InternalApiClient internalApiClient = new InternalApiClient(new ApiKeyHttpClient(apiKey));
             internalApiClient.setBasePath(apiUrl);
