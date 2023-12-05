@@ -7,8 +7,6 @@ locals {
   container_port              = "8080"
   docker_repo                 = "filing-history-delta-consumer"
   kms_alias                   = "alias/${var.aws_profile}/environment-services-kms"
-  lb_listener_rule_priority   = 31
-  lb_listener_paths           = ["/filing-history-delta-consumer/*"]
   healthcheck_path            = "/filing-history-delta-consumer/healthcheck" #healthcheck path for filing-history-delta-consumer
   healthcheck_matcher         = "200-302"
   vpc_name                    = local.stack_secrets["vpc_name"]
@@ -35,7 +33,7 @@ locals {
   }
 
   global_secret_list = flatten([for key, value in local.global_secrets_arn_map : 
-    { "name" = upper(key), "valueFrom" = value }
+    { name = upper(key), valueFrom = value }
   ])
 
   ssm_global_version_map = [
@@ -50,7 +48,7 @@ locals {
   }
 
   service_secret_list = flatten([for key, value in local.service_secrets_arn_map : 
-    { "name" = upper(key), "valueFrom" = value }
+    { name = upper(key), valueFrom = value }
   ])
 
   ssm_service_version_map = [
@@ -63,7 +61,7 @@ locals {
   task_secrets = concat(local.service_secret_list,local.global_secret_list,[])
 
   task_environment = concat(local.ssm_global_version_map,local.ssm_service_version_map,[
-    { "name" : "PORT", "value" : local.container_port },
-    { "name" : "LOGLEVEL", "value" : var.log_level }
+    { name : "PORT", value : local.container_port },
+    { name : "LOGLEVEL", value : var.log_level }
   ])
 }
