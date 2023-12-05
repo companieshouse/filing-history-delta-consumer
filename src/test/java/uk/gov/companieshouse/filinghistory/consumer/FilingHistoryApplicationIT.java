@@ -1,4 +1,4 @@
-package uk.gov.companieshouse.filinghistory.api;
+package uk.gov.companieshouse.filinghistory.consumer;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -13,11 +13,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
-import uk.gov.companieshouse.filinghistory.consumer.Application;
 
 @AutoConfigureMockMvc
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class FilingHistoryApplicationITest {
+class FilingHistoryApplicationIT {
 
     @Autowired
     private MockMvc mockMvc;
