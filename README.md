@@ -36,9 +36,9 @@ immediately to the <br>`filing-history-delta-filing-history-delta-consumer-inval
 1. Clone [Docker CHS Development](https://github.com/companieshouse/docker-chs-development) and follow the steps in the
    README.
 2. Enable the following services using the command `./bin/chs-dev services enable <service>`.
-   * `chs-delta-api`
-   * `filing-history-delta-consumer`
-   * `filing-history-data-api`
+    * `chs-delta-api`
+    * `filing-history-delta-consumer`
+    * `filing-history-data-api`
 3. Boot up the services' containers on docker using tilt `tilt up`.
 4. Messages can be produced to the filing-history-delta topic using the instructions given
    in [CHS Delta API](https://github.com/companieshouse/chs-delta-api).
@@ -49,7 +49,6 @@ immediately to the <br>`filing-history-delta-filing-history-delta-consumer-inval
 |-------------------------------|-------------------------------------------------------------------------------------|---------------------------------------|
 | CHS_API_KEY                   | The client ID of an API key with internal app privileges                            | abc123def456ghi789                    |
 | API_LOCAL_URL                 | The host through which requests to the filing-history-data-api are sent             | http://api.chs.local:4001             |
-| SERVER_PORT                   | The server port of this service                                                     | 9090                                  |
 | BOOTSTRAP_SERVER_URL          | The URL to the kafka broker                                                         | kafka:9092                            |
 | CONCURRENT_LISTENER_INSTANCES | The number of listeners run in parallel for the consumer                            | 1                                     |
 | FILING_HISTORY_DELTA_TOPIC    | The topic ID for filing history delta kafka topic                                   | filing-history-delta                  |
