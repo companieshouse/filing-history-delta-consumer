@@ -20,7 +20,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import uk.gov.companieshouse.delta.ChsDelta;
 import uk.gov.companieshouse.filinghistory.consumer.exception.NonRetryableException;
-import uk.gov.companieshouse.filinghistory.consumer.serdes.ChsDeltaSerialiser;
 
 @ExtendWith(MockitoExtension.class)
 public class ChsDeltaSerialiserTest {
