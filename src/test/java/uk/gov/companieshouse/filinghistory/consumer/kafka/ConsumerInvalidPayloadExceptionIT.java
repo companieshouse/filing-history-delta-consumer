@@ -9,7 +9,6 @@ import static uk.gov.companieshouse.filinghistory.consumer.kafka.KafkaUtils.RETR
 
 import java.io.ByteArrayOutputStream;
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 import org.apache.avro.io.DatumWriter;
 import org.apache.avro.io.Encoder;
 import org.apache.avro.io.EncoderFactory;
@@ -29,7 +28,7 @@ import org.springframework.test.context.DynamicPropertySource;
 import uk.gov.companieshouse.filinghistory.consumer.delta.Service;
 
 @SpringBootTest
-class ConsumerInvalidTopicIT extends AbstractKafkaIT {
+class ConsumerInvalidPayloadExceptionIT extends AbstractKafkaIT {
 
     @Autowired
     private KafkaConsumer<String, byte[]> testConsumer;
