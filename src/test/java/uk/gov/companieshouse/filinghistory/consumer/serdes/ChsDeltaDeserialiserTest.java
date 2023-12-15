@@ -19,7 +19,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import uk.gov.companieshouse.delta.ChsDelta;
 import uk.gov.companieshouse.filinghistory.consumer.exception.InvalidPayloadException;
-import uk.gov.companieshouse.filinghistory.consumer.serdes.ChsDeltaDeserialiser;
 
 class ChsDeltaDeserialiserTest {
 

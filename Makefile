@@ -23,7 +23,7 @@ test: test-unit test-integration
 
 .PHONY: test-unit
 test-unit:
-    mvn clean verify -Dskip.unit.tests=false -Dskip.integration.tests=false
+	mvn clean verify
 
 .PHONY: test-integration
 test-integration:
@@ -52,4 +52,9 @@ sonar:
 
 .PHONY: sonar-pr-analysis
 sonar-pr-analysis:
-	mvn sonar:sonar -P sonar-pr-analysis
+	mvn verify -Dskip.unit.tests=true -Dskip.integration.tests=true
+	#mvn sonar:sonar -P sonar-pr-analysis #temporary until sonar available for Java 21
+
+.PHONY: security-check
+security-check:
+	mvn org.owasp:dependency-check-maven:check -DassemblyAnalyzerEnabled=false
