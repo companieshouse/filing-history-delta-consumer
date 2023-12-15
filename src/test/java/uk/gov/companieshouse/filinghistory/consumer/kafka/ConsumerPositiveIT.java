@@ -11,7 +11,6 @@ import static uk.gov.companieshouse.filinghistory.consumer.kafka.TestUtils.RETRY
 
 import java.io.ByteArrayOutputStream;
 import java.time.Duration;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import org.apache.avro.io.DatumWriter;
 import org.apache.avro.io.Encoder;
@@ -27,12 +26,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import uk.gov.companieshouse.delta.ChsDelta;
 import uk.gov.companieshouse.filinghistory.consumer.delta.Service;
 
 @SpringBootTest
-@ActiveProfiles("test_main_positive")
 class ConsumerPositiveIT extends AbstractKafkaIT {
 
     @Autowired
@@ -42,10 +41,15 @@ class ConsumerPositiveIT extends AbstractKafkaIT {
     private KafkaProducer<String, byte[]> testProducer;
 
     @Autowired
-    private CountDownLatch latch;
+    private LatchAspect latchAspect;
 
     @MockBean
     private Service service;
+
+    @DynamicPropertySource
+    static void props(DynamicPropertyRegistry registry) {
+        registry.add("steps", () -> 1);
+    }
 
     @BeforeEach
     public void setup() {
@@ -63,13 +67,13 @@ class ConsumerPositiveIT extends AbstractKafkaIT {
         //when
         testProducer.send(new ProducerRecord<>(MAIN_TOPIC, 0, System.currentTimeMillis(),
                 "key", outputStream.toByteArray()));
-        if (!latch.await(5L, TimeUnit.SECONDS)) {
+        if (!latchAspect.getLatch().await(5L, TimeUnit.SECONDS)) {
             fail("Timed out waiting for latch");
         }
 
         //then
         ConsumerRecords<?, ?> consumerRecords = KafkaTestUtils.getRecords(testConsumer, Duration.ofMillis(10000L), 1);
-        assertThat(TestUtils.noOfRecordsForTopic(consumerRecords, MAIN_TOPIC)).isEqualTo(1);
+        assertThat(TestUtils.noOfRecordsForTopic(consumerRecords, MAIN_TOPIC)).isOne();
         assertThat(TestUtils.noOfRecordsForTopic(consumerRecords, RETRY_TOPIC)).isZero();
         assertThat(TestUtils.noOfRecordsForTopic(consumerRecords, ERROR_TOPIC)).isZero();
         assertThat(TestUtils.noOfRecordsForTopic(consumerRecords, INVALID_TOPIC)).isZero();

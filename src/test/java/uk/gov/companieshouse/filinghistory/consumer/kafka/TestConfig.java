@@ -8,7 +8,6 @@ import static uk.gov.companieshouse.filinghistory.consumer.kafka.TestUtils.RETRY
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.CountDownLatch;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -23,11 +22,6 @@ import org.springframework.context.annotation.Bean;
 
 @TestConfiguration
 public class TestConfig {
-
-    @Bean
-    CountDownLatch latch(@Value("${steps}") int steps) {
-        return new CountDownLatch(steps);
-    }
 
     @Bean
     KafkaConsumer<String, byte[]> testConsumer(@Value("${spring.kafka.bootstrap-servers}") String bootstrapServers) {

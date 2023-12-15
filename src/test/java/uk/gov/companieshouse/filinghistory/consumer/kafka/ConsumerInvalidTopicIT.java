@@ -20,11 +20,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import uk.gov.companieshouse.filinghistory.consumer.delta.Service;
 
 @SpringBootTest
-@ActiveProfiles("test_main_nonretryable")
 class ConsumerInvalidTopicIT extends AbstractKafkaIT {
 
     @Autowired
@@ -32,6 +34,14 @@ class ConsumerInvalidTopicIT extends AbstractKafkaIT {
 
     @Autowired
     private KafkaProducer<String, byte[]> testProducer;
+
+    @MockBean
+    private Service service;
+
+    @DynamicPropertySource
+    static void props(DynamicPropertyRegistry registry) {
+        registry.add("steps", () -> 1);
+    }
 
     @BeforeEach
     public void drainKafkaTopics() {
@@ -52,9 +62,9 @@ class ConsumerInvalidTopicIT extends AbstractKafkaIT {
 
         //then
         ConsumerRecords<?, ?> consumerRecords = KafkaTestUtils.getRecords(testConsumer, Duration.ofMillis(10000L), 2);
-        assertThat(TestUtils.noOfRecordsForTopic(consumerRecords, MAIN_TOPIC)).isEqualTo(1);
+        assertThat(TestUtils.noOfRecordsForTopic(consumerRecords, MAIN_TOPIC)).isOne();
         assertThat(TestUtils.noOfRecordsForTopic(consumerRecords, RETRY_TOPIC)).isZero();
         assertThat(TestUtils.noOfRecordsForTopic(consumerRecords, ERROR_TOPIC)).isZero();
-        assertThat(TestUtils.noOfRecordsForTopic(consumerRecords, INVALID_TOPIC)).isEqualTo(1);
+        assertThat(TestUtils.noOfRecordsForTopic(consumerRecords, INVALID_TOPIC)).isOne();
     }
 }
