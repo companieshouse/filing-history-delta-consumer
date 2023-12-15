@@ -9,7 +9,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
 @Testcontainers
-@Import(TestConfig.class)
+@Import(TestKafkaConfig.class)
 public abstract class AbstractKafkaIT {
 
     @Container

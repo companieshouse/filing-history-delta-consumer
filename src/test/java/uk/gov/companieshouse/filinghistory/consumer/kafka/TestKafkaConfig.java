@@ -1,9 +1,9 @@
 package uk.gov.companieshouse.filinghistory.consumer.kafka;
 
-import static uk.gov.companieshouse.filinghistory.consumer.kafka.TestUtils.ERROR_TOPIC;
-import static uk.gov.companieshouse.filinghistory.consumer.kafka.TestUtils.INVALID_TOPIC;
-import static uk.gov.companieshouse.filinghistory.consumer.kafka.TestUtils.MAIN_TOPIC;
-import static uk.gov.companieshouse.filinghistory.consumer.kafka.TestUtils.RETRY_TOPIC;
+import static uk.gov.companieshouse.filinghistory.consumer.kafka.KafkaUtils.ERROR_TOPIC;
+import static uk.gov.companieshouse.filinghistory.consumer.kafka.KafkaUtils.INVALID_TOPIC;
+import static uk.gov.companieshouse.filinghistory.consumer.kafka.KafkaUtils.MAIN_TOPIC;
+import static uk.gov.companieshouse.filinghistory.consumer.kafka.KafkaUtils.RETRY_TOPIC;
 
 import java.util.List;
 import java.util.Map;
@@ -21,7 +21,7 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 
 @TestConfiguration
-public class TestConfig {
+public class TestKafkaConfig {
 
     @Bean
     KafkaConsumer<String, byte[]> testConsumer(@Value("${spring.kafka.bootstrap-servers}") String bootstrapServers) {

@@ -1,4 +1,4 @@
-package uk.gov.companieshouse.filinghistory.consumer.config;
+package uk.gov.companieshouse.filinghistory.consumer.kafka;
 
 import java.util.Map;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -20,8 +20,6 @@ import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 import org.springframework.kafka.listener.ContainerProperties;
 import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
 import uk.gov.companieshouse.delta.ChsDelta;
-import uk.gov.companieshouse.filinghistory.consumer.kafka.InvalidMessageRouter;
-import uk.gov.companieshouse.filinghistory.consumer.kafka.MessageFlags;
 import uk.gov.companieshouse.filinghistory.consumer.serdes.ChsDeltaDeserialiser;
 import uk.gov.companieshouse.filinghistory.consumer.serdes.ChsDeltaSerialiser;
 

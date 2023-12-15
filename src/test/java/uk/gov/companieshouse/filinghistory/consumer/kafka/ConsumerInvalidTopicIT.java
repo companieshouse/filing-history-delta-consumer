@@ -1,10 +1,10 @@
 package uk.gov.companieshouse.filinghistory.consumer.kafka;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static uk.gov.companieshouse.filinghistory.consumer.kafka.TestUtils.ERROR_TOPIC;
-import static uk.gov.companieshouse.filinghistory.consumer.kafka.TestUtils.INVALID_TOPIC;
-import static uk.gov.companieshouse.filinghistory.consumer.kafka.TestUtils.MAIN_TOPIC;
-import static uk.gov.companieshouse.filinghistory.consumer.kafka.TestUtils.RETRY_TOPIC;
+import static uk.gov.companieshouse.filinghistory.consumer.kafka.KafkaUtils.ERROR_TOPIC;
+import static uk.gov.companieshouse.filinghistory.consumer.kafka.KafkaUtils.INVALID_TOPIC;
+import static uk.gov.companieshouse.filinghistory.consumer.kafka.KafkaUtils.MAIN_TOPIC;
+import static uk.gov.companieshouse.filinghistory.consumer.kafka.KafkaUtils.RETRY_TOPIC;
 
 import java.io.ByteArrayOutputStream;
 import java.time.Duration;
@@ -62,9 +62,9 @@ class ConsumerInvalidTopicIT extends AbstractKafkaIT {
 
         //then
         ConsumerRecords<?, ?> consumerRecords = KafkaTestUtils.getRecords(testConsumer, Duration.ofMillis(10000L), 2);
-        assertThat(TestUtils.noOfRecordsForTopic(consumerRecords, MAIN_TOPIC)).isOne();
-        assertThat(TestUtils.noOfRecordsForTopic(consumerRecords, RETRY_TOPIC)).isZero();
-        assertThat(TestUtils.noOfRecordsForTopic(consumerRecords, ERROR_TOPIC)).isZero();
-        assertThat(TestUtils.noOfRecordsForTopic(consumerRecords, INVALID_TOPIC)).isOne();
+        assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, MAIN_TOPIC)).isOne();
+        assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, RETRY_TOPIC)).isZero();
+        assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, ERROR_TOPIC)).isZero();
+        assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, INVALID_TOPIC)).isOne();
     }
 }

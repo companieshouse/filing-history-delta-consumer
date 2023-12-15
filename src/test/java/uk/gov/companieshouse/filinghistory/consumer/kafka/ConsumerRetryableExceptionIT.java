@@ -6,10 +6,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static uk.gov.companieshouse.filinghistory.consumer.kafka.TestUtils.ERROR_TOPIC;
-import static uk.gov.companieshouse.filinghistory.consumer.kafka.TestUtils.INVALID_TOPIC;
-import static uk.gov.companieshouse.filinghistory.consumer.kafka.TestUtils.MAIN_TOPIC;
-import static uk.gov.companieshouse.filinghistory.consumer.kafka.TestUtils.RETRY_TOPIC;
+import static uk.gov.companieshouse.filinghistory.consumer.kafka.KafkaUtils.ERROR_TOPIC;
+import static uk.gov.companieshouse.filinghistory.consumer.kafka.KafkaUtils.INVALID_TOPIC;
+import static uk.gov.companieshouse.filinghistory.consumer.kafka.KafkaUtils.MAIN_TOPIC;
+import static uk.gov.companieshouse.filinghistory.consumer.kafka.KafkaUtils.RETRY_TOPIC;
 
 import java.io.ByteArrayOutputStream;
 import java.time.Duration;
@@ -67,7 +67,7 @@ class ConsumerRetryableExceptionIT extends AbstractKafkaIT {
         DatumWriter<ChsDelta> writer = new ReflectDatumWriter<>(ChsDelta.class);
         writer.write(new ChsDelta("", 0, "context_id", false), encoder);
 
-        doThrow(RetryableException.class).when(service).process(any());
+        doThrow(new RetryableException("Retryable exception", new Throwable())).when(service).process(any());
 
         //when
         testProducer.send(new ProducerRecord<>(MAIN_TOPIC, 0, System.currentTimeMillis(),
@@ -78,10 +78,10 @@ class ConsumerRetryableExceptionIT extends AbstractKafkaIT {
 
         //then
         ConsumerRecords<?, ?> consumerRecords = KafkaTestUtils.getRecords(testConsumer, Duration.ofMillis(10000L), 6);
-        assertThat(TestUtils.noOfRecordsForTopic(consumerRecords, MAIN_TOPIC)).isOne();
-        assertThat(TestUtils.noOfRecordsForTopic(consumerRecords, RETRY_TOPIC)).isEqualTo(4);
-        assertThat(TestUtils.noOfRecordsForTopic(consumerRecords, ERROR_TOPIC)).isOne();
-        assertThat(TestUtils.noOfRecordsForTopic(consumerRecords, INVALID_TOPIC)).isZero();
+        assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, MAIN_TOPIC)).isOne();
+        assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, RETRY_TOPIC)).isEqualTo(4);
+        assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, ERROR_TOPIC)).isOne();
+        assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, INVALID_TOPIC)).isZero();
         verify(service, times(5)).process(any());
     }
 }
