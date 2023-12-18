@@ -94,8 +94,8 @@ public class KafkaConfig {
                 .maxAttempts(attempts)
                 .fixedBackOff(delay)
                 .useSingleTopicForSameIntervals()
-                .retryTopicSuffix("%s-retry".formatted(groupId)) // this might cause double group IDs
-                .dltSuffix("%s-error".formatted(groupId)) // this might cause double group IDs
+                .retryTopicSuffix("-%s-retry".formatted(groupId)) // this might cause double group IDs
+                .dltSuffix("-%s-error".formatted(groupId)) // this might cause double group IDs
                 .dltProcessingFailureStrategy(DltStrategy.FAIL_ON_ERROR)
                 .retryOn(RetryableException.class)
                 .create(template);
