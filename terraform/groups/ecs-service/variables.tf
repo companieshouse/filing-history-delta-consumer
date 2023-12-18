@@ -146,7 +146,3 @@ variable "concurrent_listener_instances" {
   type        = number
   description = "The number of current Kafka listener instances"
 }
-variable "api_local_url" {
-  type        = number
-  description = "The local API host through which to send requests"
-}

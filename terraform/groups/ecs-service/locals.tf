@@ -7,7 +7,7 @@ locals {
   container_port              = "8080"
   docker_repo                 = "filing-history-delta-consumer"
   kms_alias                   = "alias/${var.aws_profile}/environment-services-kms"
-  healthcheck_path            = "/filing-history-delta-consumer/healthcheck" #healthcheck path for filing-history-delta-consumer
+  healthcheck_path            = "/healthcheck" #healthcheck path for filing-history-delta-consumer
   healthcheck_matcher         = "200-302"
   vpc_name                    = local.stack_secrets["vpc_name"]
   s3_config_bucket            = data.vault_generic_secret.shared_s3.data["config_bucket_name"]
@@ -20,6 +20,7 @@ locals {
 
   service_secrets            = jsondecode(data.vault_generic_secret.service_secrets.data_json)
   chs_api_key                = local.service_secrets["chs_api_key"]
+  api_local_url                = local.service_secrets["api_local_url"]
 
   # create a map of secret name => secret arn to pass into ecs service module
   # using the trimprefix function to remove the prefixed path from the secret name
@@ -61,6 +62,7 @@ locals {
   # secrets to go in list
   task_secrets = concat(local.service_secret_list,local.global_secret_list,[
     { name : "CHS_API_KEY", value : local.chs_api_key },
+    { name : "API_LOCAL_URL", value : local.api_local_url },
   ])
 
   task_environment = concat(local.ssm_global_version_map,local.ssm_service_version_map,[
@@ -72,6 +74,5 @@ locals {
     { name : "MAX_ATTEMPTS", value : var.max_attempts },
     { name : "BACKOFF_DELAY", value : var.backoff_delay },
     { name : "CONCURRENT_LISTENER_INSTANCES", value : var.concurrent_listener_instances },
-    { name : "API_LOCAL_URL", value : var.api_local_url },
   ])
 }
