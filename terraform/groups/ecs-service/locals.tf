@@ -20,7 +20,6 @@ locals {
 
   service_secrets            = jsondecode(data.vault_generic_secret.service_secrets.data_json)
   chs_api_key                = local.service_secrets["chs_api_key"]
-  api_local_url                = local.service_secrets["api_local_url"]
 
   # create a map of secret name => secret arn to pass into ecs service module
   # using the trimprefix function to remove the prefixed path from the secret name
@@ -62,7 +61,6 @@ locals {
   # secrets to go in list
   task_secrets = concat(local.service_secret_list,local.global_secret_list,[
     { name : "CHS_API_KEY", value : local.chs_api_key },
-    { name : "API_LOCAL_URL", value : local.api_local_url },
   ])
 
   task_environment = concat(local.ssm_global_version_map,local.ssm_service_version_map,[
@@ -74,5 +72,6 @@ locals {
     { name : "MAX_ATTEMPTS", value : var.max_attempts },
     { name : "BACKOFF_DELAY", value : var.backoff_delay },
     { name : "CONCURRENT_LISTENER_INSTANCES", value : var.concurrent_listener_instances },
+    { name : "API_LOCAL_URL", value : var.api_local_url },
   ])
 }
