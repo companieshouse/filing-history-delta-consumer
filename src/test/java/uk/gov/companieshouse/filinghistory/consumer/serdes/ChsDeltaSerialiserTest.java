@@ -22,7 +22,7 @@ import uk.gov.companieshouse.delta.ChsDelta;
 import uk.gov.companieshouse.filinghistory.consumer.exception.NonRetryableException;
 
 @ExtendWith(MockitoExtension.class)
-public class ChsDeltaSerialiserTest {
+class ChsDeltaSerialiserTest {
 
     @Mock
     private DatumWriter<ChsDelta> writer;

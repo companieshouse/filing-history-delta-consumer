@@ -1,8 +1,9 @@
-package uk.gov.companieshouse.filinghistory.consumer.config;
+package uk.gov.companieshouse.filinghistory.consumer.kafka;
 
 import java.util.Map;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.common.serialization.ByteArraySerializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,18 +11,19 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
-import org.springframework.kafka.config.KafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
-import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 import org.springframework.kafka.listener.ContainerProperties;
+import org.springframework.kafka.retrytopic.DltStrategy;
+import org.springframework.kafka.retrytopic.RetryTopicConfiguration;
+import org.springframework.kafka.retrytopic.RetryTopicConfigurationBuilder;
+import org.springframework.kafka.support.serializer.DelegatingByTypeSerializer;
 import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
 import uk.gov.companieshouse.delta.ChsDelta;
-import uk.gov.companieshouse.filinghistory.consumer.kafka.InvalidMessageRouter;
-import uk.gov.companieshouse.filinghistory.consumer.kafka.MessageFlags;
+import uk.gov.companieshouse.filinghistory.consumer.exception.RetryableException;
 import uk.gov.companieshouse.filinghistory.consumer.serdes.ChsDeltaDeserialiser;
 import uk.gov.companieshouse.filinghistory.consumer.serdes.ChsDeltaSerialiser;
 
@@ -41,12 +43,14 @@ public class KafkaConfig {
                         ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, ChsDeltaDeserialiser.class,
                         ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest",
                         ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false"),
-                new StringDeserializer(), new ErrorHandlingDeserializer<>(new ChsDeltaDeserialiser()));
+                new StringDeserializer(),
+                new ErrorHandlingDeserializer<>(new ChsDeltaDeserialiser()));
     }
 
     @Bean
-    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, ChsDelta>> kafkaListenerContainerFactory(
-            ConsumerFactory<String, ChsDelta> consumerFactory, @Value("${consumer.concurrency}") Integer concurrency) {
+    public ConcurrentKafkaListenerContainerFactory<String, ChsDelta> kafkaListenerContainerFactory(
+            @Value("${consumer.concurrency}") Integer concurrency,
+            ConsumerFactory<String, ChsDelta> consumerFactory) {
         ConcurrentKafkaListenerContainerFactory<String, ChsDelta> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory);
         factory.setConcurrency(concurrency);
@@ -55,24 +59,46 @@ public class KafkaConfig {
     }
 
     @Bean
-    public ProducerFactory<String, ChsDelta> producerFactory(
+    public ProducerFactory<String, Object> producerFactory(MessageFlags messageFlags,
             @Value("${spring.kafka.bootstrap-servers}") String bootstrapServers,
-            @Value("${consumer.topic}") String topic, @Value("${consumer.group-id}") String groupId,
-            MessageFlags messageFlags) {
+            @Value("${consumer.topic}") String topic,
+            @Value("${consumer.group-id}") String groupId) {
         return new DefaultKafkaProducerFactory<>(
                 Map.of(
                         ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers,
                         ProducerConfig.ACKS_CONFIG, "all",
                         ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class,
-                        ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, ChsDeltaSerialiser.class,
+                        ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, DelegatingByTypeSerializer.class,
                         ProducerConfig.INTERCEPTOR_CLASSES_CONFIG, InvalidMessageRouter.class.getName(),
                         "message-flags", messageFlags,
                         "invalid-topic", "%s-%s-invalid".formatted(topic, groupId)),
-                new StringSerializer(), new ChsDeltaSerialiser());
+                new StringSerializer(),
+                new DelegatingByTypeSerializer(
+                        Map.of(
+                                byte[].class, new ByteArraySerializer(),
+                                ChsDelta.class, new ChsDeltaSerialiser())));
     }
 
     @Bean
-    public KafkaTemplate<String, ChsDelta> kafkaTemplate(ProducerFactory<String, ChsDelta> producerFactory) {
+    public KafkaTemplate<String, Object> kafkaTemplate(ProducerFactory<String, Object> producerFactory) {
         return new KafkaTemplate<>(producerFactory);
+    }
+
+    @Bean
+    public RetryTopicConfiguration retryTopicConfiguration(KafkaTemplate<String, Object> template,
+            @Value("${consumer.group-id}") String groupId,
+            @Value("${consumer.max-attempts}") int attempts,
+            @Value("${consumer.backoff-delay}") int delay) {
+        return RetryTopicConfigurationBuilder
+                .newInstance()
+                .doNotAutoCreateRetryTopics() // this is necessary to prevent failing connection during loading of spring app context
+                .maxAttempts(attempts)
+                .fixedBackOff(delay)
+                .useSingleTopicForSameIntervals()
+                .retryTopicSuffix("-%s-retry".formatted(groupId)) // this might cause double group IDs
+                .dltSuffix("-%s-error".formatted(groupId)) // this might cause double group IDs
+                .dltProcessingFailureStrategy(DltStrategy.FAIL_ON_ERROR)
+                .retryOn(RetryableException.class)
+                .create(template);
     }
 }

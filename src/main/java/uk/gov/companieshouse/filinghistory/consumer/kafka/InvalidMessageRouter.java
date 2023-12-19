@@ -3,6 +3,7 @@ package uk.gov.companieshouse.filinghistory.consumer.kafka;
 import static org.springframework.kafka.support.KafkaHeaders.EXCEPTION_MESSAGE;
 import static org.springframework.kafka.support.KafkaHeaders.ORIGINAL_OFFSET;
 import static org.springframework.kafka.support.KafkaHeaders.ORIGINAL_PARTITION;
+import static org.springframework.kafka.support.KafkaHeaders.ORIGINAL_TOPIC;
 import static uk.gov.companieshouse.filinghistory.consumer.Application.NAMESPACE;
 
 import java.math.BigInteger;
@@ -11,11 +12,10 @@ import java.util.Optional;
 import org.apache.kafka.clients.producer.ProducerInterceptor;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
-import uk.gov.companieshouse.delta.ChsDelta;
 import uk.gov.companieshouse.logging.Logger;
 import uk.gov.companieshouse.logging.LoggerFactory;
 
-public class InvalidMessageRouter implements ProducerInterceptor<String, ChsDelta> {
+public class InvalidMessageRouter implements ProducerInterceptor<String, Object> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(NAMESPACE);
 
@@ -23,13 +23,14 @@ public class InvalidMessageRouter implements ProducerInterceptor<String, ChsDelt
     private String invalidTopic;
 
     @Override
-    public ProducerRecord<String, ChsDelta> onSend(ProducerRecord<String, ChsDelta> producerRecord) {
+    public ProducerRecord<String, Object> onSend(ProducerRecord<String, Object> producerRecord) {
         if (messageFlags.isRetryable()) {
             messageFlags.destroy();
             return producerRecord;
         } else {
 
-            String originalTopic = producerRecord.topic();
+            String originalTopic = Optional.ofNullable(producerRecord.headers().lastHeader(ORIGINAL_TOPIC))
+                    .map(h -> new String(h.value())).orElse(producerRecord.topic());
             BigInteger partition = Optional.ofNullable(producerRecord.headers().lastHeader(ORIGINAL_PARTITION))
                     .map(h -> new BigInteger(h.value())).orElse(BigInteger.valueOf(-1));
             BigInteger offset = Optional.ofNullable(producerRecord.headers().lastHeader(ORIGINAL_OFFSET))
@@ -37,15 +38,15 @@ public class InvalidMessageRouter implements ProducerInterceptor<String, ChsDelt
             String exception = Optional.ofNullable(producerRecord.headers().lastHeader(EXCEPTION_MESSAGE))
                     .map(h -> new String(h.value())).orElse("unknown");
 
-            ChsDelta invalidData = new ChsDelta("""
-                    { "invalid_message": "exception: [ %s ] redirecting message from\s
-                    topic: %s, partition: %d, offset: %d to invalid topic" }
-                    """.formatted(exception, originalTopic, partition, offset), 0, "", false);
+            LOGGER.info("""
+                    Moving record into topic: [%s]
+                                        
+                    From: original topic: [%s], partition: [%s], offset: [%s], exception: [%s]
+                                        
+                    Message content: %s""".formatted(invalidTopic, originalTopic, partition, offset, exception,
+                    producerRecord.value()));
 
-            LOGGER.info(String.format("Moving record into topic: [%s]%nMessage content: %s", invalidTopic,
-                    invalidData.getData()));
-
-            return new ProducerRecord<>(invalidTopic, producerRecord.key(), invalidData);
+            return new ProducerRecord<>(invalidTopic, producerRecord.key(), producerRecord.value());
         }
     }
 

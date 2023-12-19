@@ -34,41 +34,36 @@ class InvalidMessageRouterTest {
     @BeforeEach
     void setup() {
         invalidMessageRouter = new InvalidMessageRouter();
-        invalidMessageRouter.configure(
-                Map.of("message-flags", flags, "invalid-topic", "invalid"));
+        invalidMessageRouter.configure(Map.of("message-flags", flags, "invalid-topic", "invalid"));
     }
 
     @Test
-    void testOnSendRoutesMessageToProfileInvalidMessageTopicIfInvalidPayloadExceptionThrown() {
+    void testOnSendRoutesMessageToInvalidMessageTopicIfNonRetryable() {
         // given
-        ProducerRecord<String, ChsDelta> message = new ProducerRecord<>("main", 0, "key", delta,
+        ProducerRecord<String, Object> message = new ProducerRecord<>("main", 0, "key", "an invalid message",
                 List.of(new RecordHeader(ORIGINAL_PARTITION, BigInteger.ZERO.toByteArray()),
                         new RecordHeader(ORIGINAL_OFFSET, BigInteger.ONE.toByteArray()),
                         new RecordHeader(EXCEPTION_MESSAGE, "invalid".getBytes())));
 
-        ChsDelta invalidData = new ChsDelta("""
-                { "invalid_message": "exception: [ invalid ] redirecting message from\s
-                topic: main, partition: 0, offset: 1 to invalid topic" }
-                """, 0, "", false);
         // when
-        ProducerRecord<String, ChsDelta> actual = invalidMessageRouter.onSend(message);
+        ProducerRecord<String, Object> actual = invalidMessageRouter.onSend(message);
 
         // then
         verify(flags, times(0)).destroy();
-        assertThat(actual).isEqualTo(new ProducerRecord<>("invalid", "key", invalidData));
+        assertThat(actual).isEqualTo(new ProducerRecord<>("invalid", "key", "an invalid message"));
     }
 
     @Test
-    void testOnSendRoutesMessageToTargetTopicIfRetryableExceptionThrown() {
+    void testOnSendRoutesMessageToTargetTopicIfRetryable() {
         // given
-        ProducerRecord<String, ChsDelta> message = new ProducerRecord<>("main", "key", delta);
+        ProducerRecord<String, Object> message = new ProducerRecord<>("main", "key", delta);
         when(flags.isRetryable()).thenReturn(true);
 
         // when
-        ProducerRecord<String, ChsDelta> actual = invalidMessageRouter.onSend(message);
+        ProducerRecord<String, Object> actual = invalidMessageRouter.onSend(message);
 
         // then
-        verify(flags, times(1)).destroy();
         assertThat(actual).isSameAs((message));
+        verify(flags, times(1)).destroy();
     }
 }
