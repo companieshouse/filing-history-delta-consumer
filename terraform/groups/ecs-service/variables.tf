@@ -118,35 +118,3 @@ variable "filing_history_delta_consumer_version" {
   type        = string
   description = "The version of the filing-history-delta-consumer container to run."
 }
-variable "kafka_bootstrap_server_url" {
-  type        = string
-  description = "The URL of the kafka broker/server"
-}
-variable "filing_history_delta_topic" {
-  default     = "filing-history-delta"
-  type        = string
-  description = "The filing history Kafka topic name to be consumed from"
-}
-variable "group_id" {
-  default     = "filing-history-delta-consumer"
-  type        = string
-  description = "The name of the Kafka consumer group"
-}
-variable "max_attempts" {
-  default = 5
-  type        = number
-  description = "The maximum number of attempts to process a Kafka message before publishing to the error topic"
-}
-variable "backoff_delay" {
-  default = 100
-  type        = number
-  description = "The delay time in milliseconds between each retry attempt"
-}
-variable "concurrent_listener_instances" {
-  type        = number
-  description = "The number of current Kafka listener instances"
-}
-variable "api_local_url" {
-  type        = number
-  description = "The local API host through which to send requests"
-}
