@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import uk.gov.companieshouse.api.InternalApiClient;
 import uk.gov.companieshouse.sdk.manager.ApiClientManager;
-import uk.gov.companieshouse.sdk.manager.ApiSdkManager;
 
 @Configuration
 public class DeltaConfig {
