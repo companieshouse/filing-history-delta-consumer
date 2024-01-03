@@ -32,6 +32,15 @@
     <private-api-sdk-java.version>4.0.21</private-api-sdk-java.version>
     <kafka-models.version>3.0.4</kafka-models.version>
 
+    <!--explicit versions of transitive dependencies with vulnerabilities in previous versions-->
+    <logback.version>1.4.14</logback.version>
+    <jackson-databind.version>2.16.1</jackson-databind.version>
+    <grpc.version>1.60.1</grpc.version>
+    <jetty-xml.version>12.0.5</jetty-xml.version>
+    <jetty-client.version>12.0.5</jetty-client.version>
+    <http2-server.version>11.0.19</http2-server.version>
+    <jetty-webapp.version>11.0.19</jetty-webapp.version>
+
     <!--sonar configuration-->
     <sonar.coverage.jacoco.xmlReportPaths>
       ${project.build.directory}/site/jacoco/jacoco.xml
@@ -59,16 +68,54 @@
   </dependencyManagement>
 
   <dependencies>
+    <!--the following transitive dependencies are added specifically to avoid vulnerabilities-->
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-core</artifactId>
-      <version>1.4.14</version>
+      <version>${logback.version}</version>
     </dependency>
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
-      <version>1.4.14</version>
+      <version>${logback.version}</version>
     </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${jackson-databind.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.grpc</groupId>
+      <artifactId>grpc-api</artifactId>
+      <version>${grpc.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.grpc</groupId>
+      <artifactId>grpc-context</artifactId>
+      <version>${grpc.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-xml</artifactId>
+      <version>${jetty-xml.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-client</artifactId>
+      <version>${jetty-client.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty.http2</groupId>
+      <artifactId>http2-server</artifactId>
+      <version>${http2-server.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-webapp</artifactId>
+      <version>${jetty-webapp.version}</version>
+    </dependency>
+    <!--end transitive dependencies-->
+
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter</artifactId>
@@ -121,43 +168,6 @@
           <artifactId>commons-fileupload</artifactId>
         </exclusion>
       </exclusions>
-    </dependency>
-
-    <!--the following dependencies are added specifically to avoid vulnerabilities in transitive dependencies-->
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-databind</artifactId>
-      <version>2.16.1</version>
-    </dependency>
-    <dependency>
-      <groupId>io.grpc</groupId>
-      <artifactId>grpc-api</artifactId>
-      <version>1.60.1</version>
-    </dependency>
-    <dependency>
-      <groupId>io.grpc</groupId>
-      <artifactId>grpc-context</artifactId>
-      <version>1.60.1</version>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jetty.http2</groupId>
-      <artifactId>http2-server</artifactId>
-      <version>11.0.19</version>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-xml</artifactId>
-      <version>12.0.5</version>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-client</artifactId>
-      <version>12.0.5</version>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-webapp</artifactId>
-      <version>11.0.19</version>
     </dependency>
 
     <dependency>
