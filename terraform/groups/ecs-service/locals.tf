@@ -7,6 +7,8 @@ locals {
   container_port              = "8080"
   docker_repo                 = "filing-history-delta-consumer"
   kms_alias                   = "alias/${var.aws_profile}/environment-services-kms"
+  lb_listener_rule_priority   = 10
+  lb_listener_paths           = ["/filing-history-delta-consumer/*"]
   healthcheck_path            = "/healthcheck" #healthcheck path for filing-history-delta-consumer
   healthcheck_matcher         = "200-302"
   vpc_name                    = local.stack_secrets["vpc_name"]
