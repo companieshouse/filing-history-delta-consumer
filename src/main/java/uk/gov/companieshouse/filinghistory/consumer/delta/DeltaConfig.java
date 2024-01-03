@@ -7,7 +7,7 @@ import java.util.function.Supplier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import uk.gov.companieshouse.api.InternalApiClient;
-import uk.gov.companieshouse.sdk.manager.ApiSdkManager;
+import uk.gov.companieshouse.sdk.manager.ApiClientManager;
 
 @Configuration
 public class DeltaConfig {
@@ -21,6 +21,6 @@ public class DeltaConfig {
 
     @Bean
     Supplier<InternalApiClient> internalApiClientSupplier() {
-        return ApiSdkManager::getPrivateSDK;
+        return ApiClientManager::getPrivateSDKLocalURL;
     }
 }

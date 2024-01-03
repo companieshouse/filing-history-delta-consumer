@@ -60,18 +60,11 @@ locals {
 
   # secrets to go in list
   task_secrets = concat(local.service_secret_list,local.global_secret_list,[
-    { name : "CHS_API_KEY", value : local.chs_api_key },
+    { name : "CHS_API_KEY", value : local.chs_api_key }
   ])
 
   task_environment = concat(local.ssm_global_version_map,local.ssm_service_version_map,[
     { name : "PORT", value : local.container_port },
-    { name : "LOGLEVEL", value : var.log_level },
-    { name : "BOOTSTRAP_SERVER_URL", value : var.kafka_bootstrap_server_url },
-    { name : "FILING_HISTORY_DELTA_TOPIC", value : var.filing_history_delta_topic },
-    { name : "GROUP_ID", value : var.group_id },
-    { name : "MAX_ATTEMPTS", value : var.max_attempts },
-    { name : "BACKOFF_DELAY", value : var.backoff_delay },
-    { name : "CONCURRENT_LISTENER_INSTANCES", value : var.concurrent_listener_instances },
-    { name : "API_LOCAL_URL", value : var.api_local_url },
+    { name : "LOGLEVEL", value : var.log_level }
   ])
 }
