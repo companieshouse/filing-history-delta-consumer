@@ -1,8 +1,9 @@
+#file: noinspection YAMLSchemaValidation
 ---
 - default:
     set:
       matched_default: 1          # Identify cases where no matching rule was found
-      # Note: data.category will be passed through unchanged
+                                  # Note: data.category will be passed through unchanged
       data.description: legacy    # Not actually legacy forms but want to display original description in this case
       data.description_values.description: '[% data.description | sentence_case %]'
       original_description: '[% data.description | sentence_case %]'
@@ -46,7 +47,7 @@
     eq:
       data.type: 4.20
     like:
-      data.description: '^(?i:STATEMENT OF AFFAIRS/(?<form_attached>.+?))$'
+      data.description: '^(?i:STATEMENT OF AFFAIRS/(?<formAttached>.+?))$'
   then:
     set:
       data.category: insolvency
@@ -67,7 +68,7 @@
     eq:
       data.type: LIQ02
     like:
-      data.description: '^(?i:NOTICE OF STATEMENT OF AFFAIRS BY LIQUIDATOR/DIRECTOR IN CVL/(?<form_attached>.+?):.*)$'
+      data.description: '^(?i:NOTICE OF STATEMENT OF AFFAIRS BY LIQUIDATOR/DIRECTOR IN CVL/(?<formAttached>.+?):.*)$'
   then:
     set:
       data.category: insolvency
@@ -307,7 +308,7 @@
     eq:
       data.type: 4.68
     like:
-      data.description: "^(?i:LIQUIDATOR'S STATEMENT OF RECEIPTS AND PAYMENTS:BROUGHT DOWN DATE (?<brought_down_date>\\d+\\D\\d+\\D\\d+))$"
+      data.description: "^(?i:LIQUIDATOR'S STATEMENT OF RECEIPTS AND PAYMENTS:BROUGHT DOWN DATE (?<broughtDownDate>\\d+\\D\\d+\\D\\d+))$"
   then:
     set:
       data.category: insolvency
@@ -320,7 +321,7 @@
     eq:
       data.type: 4.68
     like:
-      data.description: '^(?i:(?<brought_down_date>\d+\D\d+\D\d+) : RECEIPTS AND PAYMENTS)$'
+      data.description: '^(?i:(?<broughtDownDate>\d+\D\d+\D\d+) : RECEIPTS AND PAYMENTS)$'
   then:
     set:
       data.category: insolvency
@@ -342,7 +343,7 @@
     eq:
       data.type: LIQ03
     like:
-      data.description: "^(?i:NOTICE OF PROGRESS REPORT IN VOLUNTARY WINDING UP:BROUGHT DOWN DATE (?<brought_down_date>\\d+\\D\\d+\\D\\d+).*)$"
+      data.description: "^(?i:NOTICE OF PROGRESS REPORT IN VOLUNTARY WINDING UP:BROUGHT DOWN DATE (?<broughtDownDate>\\d+\\D\\d+\\D\\d+).*)$"
   then:
     set:
       data.category: insolvency
@@ -631,7 +632,7 @@
     eq:
       data.type: COCOMP
     like:
-      data.description: '^(?i:UNSEEN: ORDER OF COURT TO WIND UP:LIQ. CASE NO.*? ON (?<case_start_date>\d+\D\d+\D\d+).*)$'
+      data.description: '^(?i:UNSEEN: ORDER OF COURT TO WIND UP:LIQ. CASE NO.*? ON (?<caseStartDate>\d+\D\d+\D\d+).*)$'
   then:
     set:
       data.category: insolvency
@@ -682,7 +683,7 @@
     eq:
       data.type: 2.16B
     like:
-      data.description: '^(?i:NOTICE OF STATEMENT OF AFFAIRS/(?<form_attached>.+?)(?::|$))'
+      data.description: '^(?i:NOTICE OF STATEMENT OF AFFAIRS/(?<formAttached>.+?)(?::|$))'
   then:
     set:
       data.category: insolvency
@@ -703,7 +704,7 @@
     eq:
       data.type: AM02
     like:
-      data.description: '^(?i:NOTICE OF STATEMENT OF AFFAIRS IN ADMINISTRATION/(?<form_attached>.+?):.*)$'
+        data.description: '^(?i:NOTICE OF STATEMENT OF AFFAIRS IN ADMINISTRATION/(?<formAttached>.+?):.*)$'
   then:
     set:
       data.category: insolvency
@@ -724,7 +725,7 @@
     eq:
       data.type: AM02(Scot)
     like:
-      data.description: '^(?i:NOTICE OF STATEMENT OF AFFAIRS IN ADMINISTRATION/(?<form_attached>.+?):.*)$'
+        data.description: '^(?i:NOTICE OF STATEMENT OF AFFAIRS IN ADMINISTRATION/(?<formAttached>.+?):.*)$'
   then:
     set:
       data.category: insolvency
@@ -1027,7 +1028,7 @@
     eq:
       data.type: 2.35B
     like:
-      original_values.case_end_date: '^(?<case_end_date>\d+\D\d+\D\d+)$'
+      original_values.case_end_date: '^(?<caseEndDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: insolvency
@@ -1049,7 +1050,7 @@
     eq:
       data.type: AM23
     like:
-      original_values.case_end_date: '^(?<case_end_date>\d+\D\d+\D\d+)$'
+      original_values.case_end_date: '^(?<caseEndDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: insolvency
@@ -1300,7 +1301,7 @@
     eq:
       data.type: 1.3(Scot)
     like:
-      data.description: "^(?i:NOTICE OF VOLUNTARY ARRANGEMENT SUPERVISOR'S ABSTRACT OF RECEIPTS AND PAYMENTS:BROUGHT DOWN DATE (?<brought_down_date>\\d+\\D\\d+\\D\\d+).*)$"
+      data.description: "^(?i:NOTICE OF VOLUNTARY ARRANGEMENT SUPERVISOR'S ABSTRACT OF RECEIPTS AND PAYMENTS:BROUGHT DOWN DATE (?<broughtDownDate>\\d+\\D\\d+\\D\\d+).*)$"
   then:
     set:
       data.category: insolvency
@@ -1403,7 +1404,7 @@
     eq:
       data.type: 2.9(Scot)
     like:
-      data.description: "^(?i:ADMINISTRATOR'S ABSTRACT OF RECEIPTS AND PAYMENTS(?<brought_down_date>\\d+\\D\\d+\\D\\d+):.*)$"
+      data.description: "^(?i:ADMINISTRATOR'S ABSTRACT OF RECEIPTS AND PAYMENTS(?<broughtDownDate>\\d+\\D\\d+\\D\\d+):.*)$"
   then:
     set:
       data.category: insolvency
@@ -1727,7 +1728,7 @@
     eq:
       data.type: 1.3
     like:
-      data.description: "^(?i:VOLUNTARY ARRANGEMENT'S SUPERVISOR'S ABSTRACTS OF RECEIPTS AND PAYMENTS:BROUGHT DOWN DATE (?<brought_down_date>\\d+\\D\\d+\\D\\d+).*)$"
+      data.description: "^(?i:VOLUNTARY ARRANGEMENT'S SUPERVISOR'S ABSTRACTS OF RECEIPTS AND PAYMENTS:BROUGHT DOWN DATE (?<broughtDownDate>\\d+\\D\\d+\\D\\d+).*)$"
   then:
     set:
       data.category: insolvency
@@ -1740,7 +1741,7 @@
     eq:
       data.type: 1.3
     like:
-      data.description: '^(?i:(?<brought_down_date>\d+\D\d+\D\d+) ABSTRACTS AND PAYMENTS)$'
+      data.description: '^(?i:(?<broughtDownDate>\d+\D\d+\D\d+) ABSTRACTS AND PAYMENTS)$'
   then:
     set:
       data.category: insolvency
@@ -1762,7 +1763,7 @@
     eq:
       data.type: CVA3
     like:
-      data.description: '^(?i:.*BROUGHT DOWN DATE (?<brought_down_date>\d+\D\d+\D\d+).*)$'
+      data.description: '^(?i:.*BROUGHT DOWN DATE (?<broughtDownDate>\d+\D\d+\D\d+).*)$'
   then:
     set:
       data.category: insolvency
@@ -1784,7 +1785,7 @@
     eq:
       data.type: 1.4
     like:
-      data.description: '^(?i:.*? ON (?<case_end_date>\d+\D\d+\D\d+).*)$'
+      data.description: '^(?i:.*? ON (?<caseEndDate>\d+\D\d+\D\d+).*)$'
   then:
     set:
       data.category: insolvency
@@ -1842,7 +1843,7 @@
     eq:
       data.type: 2.15
     like:
-      data.description: "^(?i:ADMINISTRATOR'S ABSTRACT OF RECEIPTS AND PAYMENTS:BROUGHT DOWN DATE (?<brought_down_date>\\d+\\D\\d+\\D\\d+).*)$"
+      data.description: "^(?i:ADMINISTRATOR'S ABSTRACT OF RECEIPTS AND PAYMENTS:BROUGHT DOWN DATE (?<broughtDownDate>\\d+\\D\\d+\\D\\d+).*)$"
   then:
     set:
       data.category: insolvency
@@ -1947,7 +1948,7 @@
     eq:
       data.type: 3.6
     like:
-      data.description: '^(?i:ABSTRACT OF RECEIPTS AND PAYMENTS:BROUGHT DOWN DATE (?<brought_down_date>\d+\D\d+\D\d+))'
+      data.description: '^(?i:ABSTRACT OF RECEIPTS AND PAYMENTS:BROUGHT DOWN DATE (?<broughtDownDate>\d+\D\d+\D\d+))'
   then:
     set:
       data.category: insolvency
@@ -1971,7 +1972,7 @@
     eq:
       data.type: REC2
     like:
-      data.description: '^(?i:NOTICE OF SUMMARY OF RECEIPTS AND PAYMENTS BY ADMINISTRATIVE RECEIVER, RECEIVER OR RECEIVER MANAGER:BROUGHT DOWN DATE (?<brought_down_date>\d+\D\d+\D\d+))'
+      data.description: '^(?i:NOTICE OF SUMMARY OF RECEIPTS AND PAYMENTS BY ADMINISTRATIVE RECEIVER, RECEIVER OR RECEIVER MANAGER:BROUGHT DOWN DATE (?<broughtDownDate>\d+\D\d+\D\d+))'
   then:
     set:
       data.category: insolvency
@@ -2475,7 +2476,7 @@
     eq:
       type: LRESEX
     like:
-      description_values.case_start_date: '^(?<case_start_date>\d+\D\d+\D\d+)$'
+      description_values.case_start_date: '^(?<caseStartDate>\d+\D\d+\D\d+)$'
   then:
     set:
       description: liquidation-voluntary-extraordinary-resolution-to-wind-up-with-case-start-date
@@ -2498,7 +2499,7 @@
     eq:
       type: LRESSP
     like:
-      description_values.case_start_date: '^(?<case_start_date>\d+\D\d+\D\d+)$'
+      description_values.case_start_date: '^(?<caseStartDate>\d+\D\d+\D\d+)$'
   then:
     set:
       description: liquidation-voluntary-special-resolution-to-wind-up-case-start-date
@@ -3068,7 +3069,7 @@
     eq:
       data.type: 2.24B(NI)
     like:
-      data.description: "^(?i:ADMINISTRATOR'S PROGRESS REPORT:BROUGHT DOWN DATE (?<brought_down_date>\\d+\\D\\d+\\D\\d+).*)$"
+      data.description: "^(?i:ADMINISTRATOR'S PROGRESS REPORT:BROUGHT DOWN DATE (?<broughtDownDate>\\d+\\D\\d+\\D\\d+).*)$"
   then:
     set:
       data.category: insolvency
@@ -3305,7 +3306,7 @@
     eq:
       data.type: 3.08(NI)
     like:
-      data.description: "^(?i:ADMINISTRATIVE RECEIVER'S / RECEIVER MANAGER'S ABSTRACTS:BROUGHT DOWN DATE (?<brought_down_date>\\d+\\D\\d+\\D\\d+).*)$"
+      data.description: "^(?i:ADMINISTRATIVE RECEIVER'S / RECEIVER MANAGER'S ABSTRACTS:BROUGHT DOWN DATE (?<broughtDownDate>\\d+\\D\\d+\\D\\d+).*)$"
   then:
     set:
       data.category: insolvency
@@ -3474,7 +3475,7 @@
     eq:
       data.type: 4.69(NI)
     like:
-      data.description: '^(?i:LIQUIDATORS STATEMENT OF ACCOUNTS:BROUGHT DOWN DATE (?<brought_down_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:LIQUIDATORS STATEMENT OF ACCOUNTS:BROUGHT DOWN DATE (?<broughtDownDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: insolvency
@@ -3535,8 +3536,8 @@
     eq:
       data.type: MR01
     like:
-      data.description: '^(?i:REGISTRATION OF A CHARGE/CO CHARLES/EXTEND / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.charge_creation_date: '^(?<charge_creation_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:REGISTRATION OF A CHARGE/CO CHARLES/EXTEND / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.charge_creation_date: '^(?<chargeCreationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -3551,8 +3552,8 @@
     eq:
       data.type: MR01
     like:
-      data.description: '^(?i:REGISTRATION OF A CHARGE/CO EXTEND / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.charge_creation_date: '^(?<charge_creation_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:REGISTRATION OF A CHARGE/CO EXTEND / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.charge_creation_date: '^(?<chargeCreationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -3567,8 +3568,8 @@
     eq:
       data.type: MR01
     like:
-      data.description: '^(?i:REGISTRATION OF A CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.charge_creation_date: '^(?<charge_creation_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:REGISTRATION OF A CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.charge_creation_date: '^(?<chargeCreationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -3583,7 +3584,7 @@
     eq:
       data.type: MR01
     like:
-      data.description: '^(?i:REGISTRATION OF A CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
+      data.description: '^(?i:REGISTRATION OF A CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
   then:
     set:
       data.category: mortgage
@@ -3604,8 +3605,8 @@
     eq:
       data.type: MR02
     like:
-      data.description: '^(?i:ACQUISITION OF A CHARGE/CO CHARLES/EXTEND / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.property_acquired_date: '^(?<property_acquired_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:ACQUISITION OF A CHARGE/CO CHARLES/EXTEND / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.property_acquired_date: '^(?<propertyAcquiredDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -3620,8 +3621,8 @@
     eq:
       data.type: MR02
     like:
-      data.description: '^(?i:ACQUISITION OF A CHARGE/CO EXTEND / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.property_acquired_date: '^(?<property_acquired_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:ACQUISITION OF A CHARGE/CO EXTEND / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.property_acquired_date: '^(?<propertyAcquiredDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -3636,8 +3637,8 @@
     eq:
       data.type: MR02
     like:
-      data.description: '^(?i:ACQUISITION OF A CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.property_acquired_date: '^(?<property_acquired_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:ACQUISITION OF A CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.property_acquired_date: '^(?<propertyAcquiredDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -3652,7 +3653,7 @@
     eq:
       data.type: MR02
     like:
-      data.description: '^(?i:ACQUISITION OF A CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
+      data.description: '^(?i:ACQUISITION OF A CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
   then:
     set:
       data.category: mortgage
@@ -3673,8 +3674,8 @@
     eq:
       data.type: MR03
     like:
-      data.description: '^(?i:REGISTRATION OF A SERIES OF DEBENTURES/CO CHARLES/EXTEND / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.charge_creation_date: '^(?<charge_creation_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:REGISTRATION OF A SERIES OF DEBENTURES/CO CHARLES/EXTEND / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.charge_creation_date: '^(?<chargeCreationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -3689,8 +3690,8 @@
     eq:
       data.type: MR03
     like:
-      data.description: '^(?i:REGISTRATION OF A SERIES OF DEBENTURES/CO EXTEND / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.charge_creation_date: '^(?<charge_creation_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:REGISTRATION OF A SERIES OF DEBENTURES/CO EXTEND / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.charge_creation_date: '^(?<chargeCreationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -3705,8 +3706,8 @@
     eq:
       data.type: MR03
     like:
-      data.description: '^(?i:REGISTRATION OF A SERIES OF DEBENTURES / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.charge_creation_date: '^(?<charge_creation_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:REGISTRATION OF A SERIES OF DEBENTURES / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.charge_creation_date: '^(?<chargeCreationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -3730,7 +3731,7 @@
     eq:
       data.type: MR04
     like:
-      data.description: '^(?i:STATEMENT OF SATISFACTION OF A CHARGE / FULL / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
+      data.description: '^(?i:STATEMENT OF SATISFACTION OF A CHARGE / FULL / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
   then:
     set:
       data.category: mortgage
@@ -3742,7 +3743,7 @@
     eq:
       data.type: MR04
     like:
-      data.description: '^(?i:STATEMENT OF SATISFACTION OF A CHARGE / PART / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
+      data.description: '^(?i:STATEMENT OF SATISFACTION OF A CHARGE / PART / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
   then:
     set:
       data.category: mortgage
@@ -3763,7 +3764,7 @@
     eq:
       data.type: MR05
     like:
-      data.description: '^(?i:STATEMENT OF RELEASE / CEASE FROM CHARGE / WHOLE RELEASE / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
+      data.description: '^(?i:STATEMENT OF RELEASE / CEASE FROM CHARGE / WHOLE RELEASE / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
   then:
     set:
       data.category: mortgage
@@ -3775,7 +3776,7 @@
     eq:
       data.type: MR05
     like:
-      data.description: '^(?i:STATEMENT OF RELEASE / CEASE FROM CHARGE / WHOLE CEASE / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
+      data.description: '^(?i:STATEMENT OF RELEASE / CEASE FROM CHARGE / WHOLE CEASE / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
   then:
     set:
       data.category: mortgage
@@ -3787,7 +3788,7 @@
     eq:
       data.type: MR05
     like:
-      data.description: '^(?i:STATEMENT OF RELEASE / CEASE FROM CHARGE / WHOLE BOTH / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
+      data.description: '^(?i:STATEMENT OF RELEASE / CEASE FROM CHARGE / WHOLE BOTH / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
   then:
     set:
       data.category: mortgage
@@ -3799,7 +3800,7 @@
     eq:
       data.type: MR05
     like:
-      data.description: '^(?i:STATEMENT OF RELEASE / CEASE FROM CHARGE / PART RELEASE / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
+      data.description: '^(?i:STATEMENT OF RELEASE / CEASE FROM CHARGE / PART RELEASE / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
   then:
     set:
       data.category: mortgage
@@ -3811,7 +3812,7 @@
     eq:
       data.type: MR05
     like:
-      data.description: '^(?i:STATEMENT OF RELEASE / CEASE FROM CHARGE / PART CEASE / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
+      data.description: '^(?i:STATEMENT OF RELEASE / CEASE FROM CHARGE / PART CEASE / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
   then:
     set:
       data.category: mortgage
@@ -3823,7 +3824,7 @@
     eq:
       data.type: MR05
     like:
-      data.description: '^(?i:STATEMENT OF RELEASE / CEASE FROM CHARGE / PART BOTH / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
+      data.description: '^(?i:STATEMENT OF RELEASE / CEASE FROM CHARGE / PART BOTH / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
   then:
     set:
       data.category: mortgage
@@ -3844,7 +3845,7 @@
     eq:
       data.type: MR06
     like:
-      data.description: '^(?i:STATEMENT OF COMPANY ACTING AS A TRUSTEE / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)'
+      data.description: '^(?i:STATEMENT OF COMPANY ACTING AS A TRUSTEE / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)'
   then:
     set:
       data.category: mortgage
@@ -3865,8 +3866,8 @@
     eq:
       data.type: MR07
     like:
-      data.description: '^(?i:PARTICULARS OF AN INSTRUMENT OF ALTERATION TO A CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.charge_creation_date: '^(?<charge_creation_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:PARTICULARS OF AN INSTRUMENT OF ALTERATION TO A CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.charge_creation_date: '^(?<chargeCreationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -3880,7 +3881,7 @@
     eq:
       data.type: MR07
     like:
-      data.description: '^(?i:PARTICULARS OF AN INSTRUMENT OF ALTERATION TO A CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
+      data.description: '^(?i:PARTICULARS OF AN INSTRUMENT OF ALTERATION TO A CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
   then:
     set:
       data.category: mortgage
@@ -3901,8 +3902,8 @@
     eq:
       data.type: MR08
     like:
-      data.description: '^(?i:REGISTRATION OF A CHARGE WITHOUT DEED/CO CHARLES/EXTEND / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.charge_creation_date: '^(?<charge_creation_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:REGISTRATION OF A CHARGE WITHOUT DEED/CO CHARLES/EXTEND / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.charge_creation_date: '^(?<chargeCreationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -3917,8 +3918,8 @@
     eq:
       data.type: MR08
     like:
-      data.description: '^(?i:REGISTRATION OF A CHARGE WITHOUT DEED/CO EXTEND / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.charge_creation_date: '^(?<charge_creation_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:REGISTRATION OF A CHARGE WITHOUT DEED/CO EXTEND / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.charge_creation_date: '^(?<chargeCreationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -3933,8 +3934,8 @@
     eq:
       data.type: MR08
     like:
-      data.description: '^(?i:REGISTRATION OF A CHARGE WITHOUT DEED / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.charge_creation_date: '^(?<charge_creation_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:REGISTRATION OF A CHARGE WITHOUT DEED / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.charge_creation_date: '^(?<chargeCreationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -3958,8 +3959,8 @@
     eq:
       data.type: MR09
     like:
-      data.description: '^(?i:ACQUISITION OF A CHARGE WITHOUT DEED/CO CHARLES/EXTEND / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.property_acquired_date: '^(?<property_acquired_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:ACQUISITION OF A CHARGE WITHOUT DEED/CO CHARLES/EXTEND / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.property_acquired_date: '^(?<propertyAcquiredDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -3973,8 +3974,8 @@
     eq:
       data.type: MR09
     like:
-      data.description: '^(?i:ACQUISITION OF A CHARGE WITHOUT DEED/CO EXTEND / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.property_acquired_date: '^(?<property_acquired_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:ACQUISITION OF A CHARGE WITHOUT DEED/CO EXTEND / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.property_acquired_date: '^(?<propertyAcquiredDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -3988,8 +3989,8 @@
     eq:
       data.type: MR09
     like:
-      data.description: '^(?i:ACQUISITION OF A CHARGE WITHOUT DEED / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.property_acquired_date: '^(?<property_acquired_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:ACQUISITION OF A CHARGE WITHOUT DEED / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.property_acquired_date: '^(?<propertyAcquiredDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -4012,8 +4013,8 @@
     eq:
       data.type: MR10
     like:
-      data.description: '^(?i:REGISTRATION OF A SERIES OF DEBENTURES WITHOUT DEED/CO CHARLES/EXTEND / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.charge_creation_date: '^(?<charge_creation_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:REGISTRATION OF A SERIES OF DEBENTURES WITHOUT DEED/CO CHARLES/EXTEND / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.charge_creation_date: '^(?<chargeCreationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -4028,8 +4029,8 @@
     eq:
       data.type: MR10
     like:
-      data.description: '^(?i:REGISTRATION OF A SERIES OF DEBENTURES WITHOUT DEED/CO EXTEND / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.charge_creation_date: '^(?<charge_creation_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:REGISTRATION OF A SERIES OF DEBENTURES WITHOUT DEED/CO EXTEND / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.charge_creation_date: '^(?<chargeCreationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -4044,8 +4045,8 @@
     eq:
       data.type: MR10
     like:
-      data.description: '^(?i:REGISTRATION OF A SERIES OF DEBENTURES WITHOUT DEED / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.charge_creation_date: '^(?<charge_creation_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:REGISTRATION OF A SERIES OF DEBENTURES WITHOUT DEED / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.charge_creation_date: '^(?<chargeCreationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -4069,8 +4070,8 @@
     eq:
       data.type: LLMR01
     like:
-      data.description: '^(?i:REGISTRATION OF A CHARGE/CO CHARLES/EXTEND / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.charge_creation_date: '^(?<charge_creation_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:REGISTRATION OF A CHARGE/CO CHARLES/EXTEND / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.charge_creation_date: '^(?<chargeCreationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -4085,8 +4086,8 @@
     eq:
       data.type: LLMR01
     like:
-      data.description: '^(?i:REGISTRATION OF A CHARGE/CO EXTEND / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.charge_creation_date: '^(?<charge_creation_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:REGISTRATION OF A CHARGE/CO EXTEND / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.charge_creation_date: '^(?<chargeCreationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -4101,8 +4102,8 @@
     eq:
       data.type: LLMR01
     like:
-      data.description: '^(?i:REGISTRATION OF A CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.charge_creation_date: '^(?<charge_creation_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:REGISTRATION OF A CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.charge_creation_date: '^(?<chargeCreationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -4117,8 +4118,8 @@
     eq:
       data.type: LLMR01
     like:
-      data.description: '^(?i:DUPLICATE MORTGAGE CERTIFICATE CHARGE CODE (?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.charge_creation_date: '^(?<charge_creation_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:DUPLICATE MORTGAGE CERTIFICATE CHARGE CODE (?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.charge_creation_date: '^(?<chargeCreationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -4132,7 +4133,7 @@
     eq:
       data.type: LLMR01
     like:
-      data.description: '^(?i:DUPLICATE MORTGAGE CERTIFICATE CHARGE CODE (?<charge_number>\S{8}\d{4}|\d+))'
+      data.description: '^(?i:DUPLICATE MORTGAGE CERTIFICATE CHARGE CODE (?<chargeNumber>\S{8}\d{4}|\d+))'
   then:
     set:
       data.category: mortgage
@@ -4144,7 +4145,7 @@
     eq:
       data.type: LLMR01
     like:
-      data.description: '^(?i:REGISTRATION OF A CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
+      data.description: '^(?i:REGISTRATION OF A CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
   then:
     set:
       data.category: mortgage
@@ -4165,8 +4166,8 @@
     eq:
       data.type: LLMR02
     like:
-      data.description: '^(?i:ACQUISITION OF A CHARGE/CO CHARLES/EXTEND / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.property_acquired_date: '^(?<property_acquired_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:ACQUISITION OF A CHARGE/CO CHARLES/EXTEND / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.property_acquired_date: '^(?<propertyAcquiredDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -4181,8 +4182,8 @@
     eq:
       data.type: LLMR02
     like:
-      data.description: '^(?i:ACQUISITION OF A CHARGE/CO EXTEND / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.property_acquired_date: '^(?<property_acquired_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:ACQUISITION OF A CHARGE/CO EXTEND / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.property_acquired_date: '^(?<propertyAcquiredDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -4197,8 +4198,8 @@
     eq:
       data.type: LLMR02
     like:
-      data.description: '^(?i:ACQUISITION OF A CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.property_acquired_date: '^(?<property_acquired_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:ACQUISITION OF A CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.property_acquired_date: '^(?<propertyAcquiredDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -4213,7 +4214,7 @@
     eq:
       data.type: LLMR02
     like:
-      data.description: '^(?i:ACQUISITION OF A CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
+      data.description: '^(?i:ACQUISITION OF A CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
   then:
     set:
       data.category: mortgage
@@ -4234,8 +4235,8 @@
     eq:
       data.type: LLMR03
     like:
-      data.description: '^(?i:REGISTRATION OF A SERIES OF DEBENTURES/CO CHARLES/EXTEND / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.charge_creation_date: '^(?<charge_creation_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:REGISTRATION OF A SERIES OF DEBENTURES/CO CHARLES/EXTEND / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.charge_creation_date: '^(?<chargeCreationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -4250,8 +4251,8 @@
     eq:
       data.type: LLMR03
     like:
-      data.description: '^(?i:REGISTRATION OF A SERIES OF DEBENTURES/CO EXTEND / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.charge_creation_date: '^(?<charge_creation_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:REGISTRATION OF A SERIES OF DEBENTURES/CO EXTEND / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.charge_creation_date: '^(?<chargeCreationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -4266,8 +4267,8 @@
     eq:
       data.type: LLMR03
     like:
-      data.description: '^(?i:REGISTRATION OF A SERIES OF DEBENTURES / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.charge_creation_date: '^(?<charge_creation_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:REGISTRATION OF A SERIES OF DEBENTURES / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.charge_creation_date: '^(?<chargeCreationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -4282,7 +4283,7 @@
     eq:
       data.type: LLMR03
     like:
-      data.description: '^(?i:REGISTRATION OF A SERIES OF DEBENTURES / CHARGE CODE  (?<charge_number>\S{8}\d{4}|\d+))$'
+      data.description: '^(?i:REGISTRATION OF A SERIES OF DEBENTURES / CHARGE CODE  (?<chargeNumber>\S{8}\d{4}|\d+))$'
   then:
     set:
       data.category: mortgage
@@ -4305,7 +4306,7 @@
     eq:
       data.type: LLMR04
     like:
-      data.description: '^(?i:STATEMENT OF SATISFACTION OF A CHARGE / FULL / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
+      data.description: '^(?i:STATEMENT OF SATISFACTION OF A CHARGE / FULL / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
   then:
     set:
       data.category: mortgage
@@ -4317,7 +4318,7 @@
     eq:
       data.type: LLMR04
     like:
-      data.description: '^(?i:STATEMENT OF SATISFACTION OF A CHARGE / PART / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
+      data.description: '^(?i:STATEMENT OF SATISFACTION OF A CHARGE / PART / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
   then:
     set:
       data.category: mortgage
@@ -4338,7 +4339,7 @@
     eq:
       data.type: LLMR05
     like:
-      data.description: '^(?i:STATEMENT OF RELEASE / CEASE FROM CHARGE / WHOLE RELEASE / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+))'
+      data.description: '^(?i:STATEMENT OF RELEASE / CEASE FROM CHARGE / WHOLE RELEASE / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+))'
   then:
     set:
       data.category: mortgage
@@ -4350,7 +4351,7 @@
     eq:
       data.type: LLMR05
     like:
-      data.description: '^(?i:STATEMENT OF RELEASE / CEASE FROM CHARGE / WHOLE CEASE / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
+      data.description: '^(?i:STATEMENT OF RELEASE / CEASE FROM CHARGE / WHOLE CEASE / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
   then:
     set:
       data.category: mortgage
@@ -4362,7 +4363,7 @@
     eq:
       data.type: LLMR05
     like:
-      data.description: '^(?i:STATEMENT OF RELEASE / CEASE FROM CHARGE / WHOLE BOTH / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
+      data.description: '^(?i:STATEMENT OF RELEASE / CEASE FROM CHARGE / WHOLE BOTH / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
   then:
     set:
       data.category: mortgage
@@ -4374,7 +4375,7 @@
     eq:
       data.type: LLMR05
     like:
-      data.description: '^(?i:STATEMENT OF RELEASE / CEASE FROM CHARGE / PART RELEASE / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
+      data.description: '^(?i:STATEMENT OF RELEASE / CEASE FROM CHARGE / PART RELEASE / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
   then:
     set:
       data.category: mortgage
@@ -4386,7 +4387,7 @@
     eq:
       data.type: LLMR05
     like:
-      data.description: '^(?i:STATEMENT OF RELEASE / CEASE FROM CHARGE / PART CEASE / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
+      data.description: '^(?i:STATEMENT OF RELEASE / CEASE FROM CHARGE / PART CEASE / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
   then:
     set:
       data.category: mortgage
@@ -4398,7 +4399,7 @@
     eq:
       data.type: LLMR05
     like:
-      data.description: '^(?i:STATEMENT OF RELEASE / CEASE FROM CHARGE / PART BOTH / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
+      data.description: '^(?i:STATEMENT OF RELEASE / CEASE FROM CHARGE / PART BOTH / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
   then:
     set:
       data.category: mortgage
@@ -4419,7 +4420,7 @@
     eq:
       data.type: LLMR06
     like:
-      data.description: '^(?i:STATEMENT OF COMPANY ACTING AS A TRUSTEE / CHARGE \w+ (?<charge_number>\S{8}\d{4}|\d+))$'
+      data.description: '^(?i:STATEMENT OF COMPANY ACTING AS A TRUSTEE / CHARGE \w+ (?<chargeNumber>\S{8}\d{4}|\d+))$'
   then:
     set:
       data.category: mortgage
@@ -4440,8 +4441,8 @@
     eq:
       data.type: LLMR07
     like:
-      data.description: '^(?i:PARTICULARS OF AN INSTRUMENT OF ALTERATION TO A CHARGE / CHARGE \w+ (?<charge_number>\S{8}\d{4}|\d+))$'
-      original_values.charge_creation_date: '^(?<charge_creation_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:PARTICULARS OF AN INSTRUMENT OF ALTERATION TO A CHARGE / CHARGE \w+ (?<chargeNumber>\S{8}\d{4}|\d+))$'
+      original_values.charge_creation_date: '^(?<chargeCreationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -4464,8 +4465,8 @@
     eq:
       data.type: LLMR08
     like:
-      data.description: '^(?i:REGISTRATION OF A CHARGE WITHOUT DEED/CO CHARLES/EXTEND / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.charge_creation_date: '^(?<charge_creation_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:REGISTRATION OF A CHARGE WITHOUT DEED/CO CHARLES/EXTEND / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.charge_creation_date: '^(?<chargeCreationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -4480,8 +4481,8 @@
     eq:
       data.type: LLMR08
     like:
-      data.description: '^(?i:REGISTRATION OF A CHARGE WITHOUT DEED/CO EXTEND / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.charge_creation_date: '^(?<charge_creation_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:REGISTRATION OF A CHARGE WITHOUT DEED/CO EXTEND / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.charge_creation_date: '^(?<chargeCreationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -4496,8 +4497,8 @@
     eq:
       data.type: LLMR08
     like:
-      data.description: '^(?i:REGISTRATION OF A CHARGE WITHOUT DEED / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.charge_creation_date: '^(?<charge_creation_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:REGISTRATION OF A CHARGE WITHOUT DEED / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.charge_creation_date: '^(?<chargeCreationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -4512,7 +4513,7 @@
     eq:
       data.type: LLMR08
     like:
-      data.description: '^(?i:REGISTRATION OF A CHARGE WITHOUT DEED / CHARGE \w+  (?<charge_number>\S{8}\d{4}|\d+))$'
+      data.description: '^(?i:REGISTRATION OF A CHARGE WITHOUT DEED / CHARGE \w+  (?<chargeNumber>\S{8}\d{4}|\d+))$'
   then:
     set:
       data.category: mortgage
@@ -4535,8 +4536,8 @@
     eq:
       data.type: LLMR09
     like:
-      data.description: '^(?i:ACQUISITION OF A CHARGE WITHOUT DEED/CO CHARLES/EXTEND / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.property_acquired_date: '^(?<property_acquired_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:ACQUISITION OF A CHARGE WITHOUT DEED/CO CHARLES/EXTEND / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.property_acquired_date: '^(?<propertyAcquiredDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -4550,8 +4551,8 @@
     eq:
       data.type: LLMR09
     like:
-      data.description: '^(?i:ACQUISITION OF A CHARGE WITHOUT DEED/CO EXTEND / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.property_acquired_date: '^(?<property_acquired_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:ACQUISITION OF A CHARGE WITHOUT DEED/CO EXTEND / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.property_acquired_date: '^(?<propertyAcquiredDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -4565,8 +4566,8 @@
     eq:
       data.type: LLMR09
     like:
-      data.description: '^(?i:ACQUISITION OF A CHARGE WITHOUT DEED / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.property_acquired_date: '^(?<property_acquired_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:ACQUISITION OF A CHARGE WITHOUT DEED / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.property_acquired_date: '^(?<propertyAcquiredDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -4589,8 +4590,8 @@
     eq:
       data.type: LLMR10
     like:
-      data.description: '^(?i:REGISTRATION OF A SERIES OF DEBENTURES WITHOUT DEED/CO CHARLES/EXTEND / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.charge_creation_date: '^(?<charge_creation_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:REGISTRATION OF A SERIES OF DEBENTURES WITHOUT DEED/CO CHARLES/EXTEND / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.charge_creation_date: '^(?<chargeCreationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -4605,8 +4606,8 @@
     eq:
       data.type: LLMR10
     like:
-      data.description: '^(?i:REGISTRATION OF A SERIES OF DEBENTURES WITHOUT DEED/CO EXTEND / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.charge_creation_date: '^(?<charge_creation_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:REGISTRATION OF A SERIES OF DEBENTURES WITHOUT DEED/CO EXTEND / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.charge_creation_date: '^(?<chargeCreationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -4621,8 +4622,8 @@
     eq:
       data.type: LLMR10
     like:
-      data.description: '^(?i:REGISTRATION OF A SERIES OF DEBENTURES WITHOUT DEED / CHARGE.*?(?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.charge_creation_date: '^(?<charge_creation_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:REGISTRATION OF A SERIES OF DEBENTURES WITHOUT DEED / CHARGE.*?(?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.charge_creation_date: '^(?<chargeCreationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -4646,8 +4647,8 @@
     eq:
       data.type: 466(Scot)
     like:
-      data.description: '^(?i:PARTICULARS OF AN INSTRUMENT OF ALTERATION TO FLOATING CHARGE (?<charge_number>\S{8}\d{4}|\d+).*)$'
-      original_values.charge_creation_date: '^(?<charge_creation_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:PARTICULARS OF AN INSTRUMENT OF ALTERATION TO FLOATING CHARGE (?<chargeNumber>\S{8}\d{4}|\d+).*)$'
+      original_values.charge_creation_date: '^(?<chargeCreationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -4661,7 +4662,7 @@
     eq:
       data.type: 466(Scot)
     like:
-      data.description: '^(?i:PARTICULARS OF AN INSTRUMENT OF ALTERATION OF A FLOATING CHARGE / CHARGE NO: (?<charge_number>\S{8}\d{4}|\d+))'
+      data.description: '^(?i:PARTICULARS OF AN INSTRUMENT OF ALTERATION OF A FLOATING CHARGE / CHARGE NO: (?<chargeNumber>\S{8}\d{4}|\d+))'
   then:
     set:
       data.category: mortgage
@@ -4673,7 +4674,7 @@
     eq:
       data.type: 466(Scot)
     like:
-      data.description: '^(?i:PARTICULARS OF AN INSTRUMENT OF ALTERATION OF A FLOATING CHARGE / CHARGE CODE\s+(?<charge_number>\S{8}\d{4}|\d+))'
+      data.description: '^(?i:PARTICULARS OF AN INSTRUMENT OF ALTERATION OF A FLOATING CHARGE / CHARGE CODE\s+(?<chargeNumber>\S{8}\d{4}|\d+))'
   then:
     set:
       data.category: mortgage
@@ -4722,7 +4723,7 @@
     eq:
       data.type: CORECTIFY
     like:
-      data.description: '^(?i:RECTIFICATION ORDER / CHARGE NO: (?<charge_number>\S{8}\d{4}|\d+).*)$'
+      data.description: '^(?i:RECTIFICATION ORDER / CHARGE NO: (?<chargeNumber>\S{8}\d{4}|\d+).*)$'
   then:
     set:
       data.category: mortgage
@@ -4741,7 +4742,7 @@
     eq:
       data.type: LLP466(Scot)
     like:
-      data.description: '^(?i:PARTICULARS OF AN INSTRUMENT OF ALTERATION OF A FLOATING CHARGE / .* (?<charge_number>\S{8}\d{4}|\d+))$'
+      data.description: '^(?i:PARTICULARS OF AN INSTRUMENT OF ALTERATION OF A FLOATING CHARGE / .* (?<chargeNumber>\S{8}\d{4}|\d+))$'
   then:
     set:
       data.category: mortgage
@@ -5607,7 +5608,7 @@
     eq:
       type: RES15
     like:
-      description: '^(?i:CHANGE OF NAME (?<resolution_date>\d+\D\d+\D\d+))$'
+      description: '^(?i:CHANGE OF NAME (?<resolutionDate>\d+\D\d+\D\d+))$'
   then:
     set:
       description: resolution-change-of-name
@@ -6042,7 +6043,7 @@
     eq:
       data.type: AA
     like:
-      data.description: '^(?<made_up_date>\d+\D\d+\D\d+)\s+AUDITED ABRIDGED$'
+      data.description: '^(?<madeUpDate>\d+\D\d+\D\d+)\s+AUDITED ABRIDGED$'
   then:
     set:
       data.category: accounts
@@ -6053,7 +6054,7 @@
     eq:
       data.type: AA
     like:
-      data.description: '^(?<made_up_date>\d+\D\d+\D\d+)\s+UNAUDITED ABRIDGED$'
+      data.description: '^(?<madeUpDate>\d+\D\d+\D\d+)\s+UNAUDITED ABRIDGED$'
   then:
     set:
       data.category: accounts
@@ -6064,8 +6065,8 @@
     eq:
       data.type: AA
     like:
-      original_values.made_up_date: '^(?<made_up_date>\d+\D\d+\D\d+)$'
-      original_values.acc_type: '^G (?<accounts_type>FULL|SMALL)'
+      original_values.made_up_date: '^(?<madeUpDate>\d+\D\d+\D\d+)$'
+      original_values.acc_type: '^G (?<accountsType>FULL|SMALL)'
   then:
     set:
       data.category: accounts
@@ -6077,8 +6078,8 @@
     eq:
       data.type: AA
     like:
-      original_values.made_up_date: '^(?<made_up_date>\d+\D\d+\D\d+)$'
-      original_values.acc_type: '^(?<accounts_type>DORMANT|FULL|GROUP|INITIAL|INTERIM|MEDIUM|SMALL)'
+      original_values.made_up_date: '^(?<madeUpDate>\d+\D\d+\D\d+)$'
+      original_values.acc_type: '^(?<accountsType>DORMANT|FULL|GROUP|INITIAL|INTERIM|MEDIUM|SMALL)'
   then:
     set:
       data.category: accounts
@@ -6090,7 +6091,7 @@
     eq:
       data.type: AA
     like:
-      data.description: '^(?i:FULL GROUP ACCOUNTS MADE UP TO (?<made_up_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:FULL GROUP ACCOUNTS MADE UP TO (?<madeUpDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: accounts
@@ -6102,7 +6103,7 @@
     eq:
       data.type: AA
     like:
-      original_values.made_up_date: '^(?<made_up_date>\d+\D\d+\D\d+)$'
+      original_values.made_up_date: '^(?<madeUpDate>\d+\D\d+\D\d+)$'
       original_values.acc_type: '^G MED'
   then:
     set:
@@ -6115,7 +6116,7 @@
     eq:
       data.type: AA
     like:
-      data.description: '^(?i)GROUP ACCOUNTS FOR (?<accounts_type>MEDIUM|SMALL) CO. MADE UP TO (?<made_up_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i)GROUP ACCOUNTS FOR (?<accountsType>MEDIUM|SMALL) CO. MADE UP TO (?<madeUpDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: accounts
@@ -6127,7 +6128,7 @@
     eq:
       data.type: AA
     like:
-      data.description: '^(?i:GROUP OF COMPANIES.+? ACCOUNTS MADE UP TO (?<made_up_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:GROUP OF COMPANIES.+? ACCOUNTS MADE UP TO (?<madeUpDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: accounts
@@ -6139,7 +6140,7 @@
     eq:
       data.type: AA
     like:
-      data.description: '^(?i:FULL ACCOUNTS MADE UP TO (?<made_up_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:FULL ACCOUNTS MADE UP TO (?<madeUpDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: accounts
@@ -6151,7 +6152,7 @@
     eq:
       data.type: AA
     like:
-      data.description: '^((?i:ACCOUNTS FOR \D(?<accounts_type>DORMANT|FULL|INITIAL|INTERIM|MEDIUM|SMALL)\D CO. MADE UP TO (?<made_up_date>\d+\D\d+\D\d+))$)|(^(?i)(?<made_up_date>\d+\D\d+\D\d+) (?<accounts_type>DORMANT|FULL|INITIAL|INTERIM|MEDIUM|SMALL)(?:\s+AMEND)?$)'
+      data.description: '^((?i:ACCOUNTS FOR \D(?<accountsType1>DORMANT|FULL|INITIAL|INTERIM|MEDIUM|SMALL)\D CO. MADE UP TO (?<madeUpDate>\d+\D\d+\D\d+))$)|(^(?i)(?<madeUpDate2>\d+\D\d+\D\d+) (?<accountsType2>DORMANT|FULL|INITIAL|INTERIM|MEDIUM|SMALL)(?:\s+AMEND)?$)'
   then:
     set:
       data.category: accounts
@@ -6163,7 +6164,7 @@
     eq:
       data.type: AA
     like:
-      original_values.made_up_date: '^(?<made_up_date>\d+\D\d+\D\d+)$'
+      original_values.made_up_date: '^(?<madeUpDate>\d+\D\d+\D\d+)$'
       original_values.acc_type: '^MICRO ENTITY'
   then:
     set:
@@ -6176,7 +6177,7 @@
     eq:
       data.type: AA
     like:
-      data.description: '^(?i:(?<made_up_date>\d+\D\d+\D\d+) MICRO ENTITY(?:\s+AMEND)?)$'
+      data.description: '^(?i:(?<madeUpDate>\d+\D\d+\D\d+) MICRO ENTITY(?:\s+AMEND)?)$'
   then:
     set:
       data.category: accounts
@@ -6188,7 +6189,7 @@
     eq:
       data.type: AA
     like:
-      original_values.made_up_date: '^(?<made_up_date>\d+\D\d+\D\d+)$'
+      original_values.made_up_date: '^(?<madeUpDate>\d+\D\d+\D\d+)$'
       original_values.acc_type: '^PART(?:IAL)? EX(?:EMPTION)?'
   then:
     set:
@@ -6201,7 +6202,7 @@
     eq:
       data.type: AA
     like:
-      data.description: '^((?i:PARTIAL EXEMPTION ACCOUNTS MADE UP TO (?<made_up_date>\d+\D\d+\D\d+))$)|^(?i:(?<made_up_date>\d+\D\d+\D\d+) PART(?:IAL)? EX(?:EMPTION)?(?:\s+AMEND)?)$'
+      data.description: '^((?i:PARTIAL EXEMPTION ACCOUNTS MADE UP TO (?<madeUpDate>\d+\D\d+\D\d+))$)|^(?i:(?<madeUpDate2>\d+\D\d+\D\d+) PART(?:IAL)? EX(?:EMPTION)?(?:\s+AMEND)?)$'
   then:
     set:
       data.category: accounts
@@ -6213,7 +6214,7 @@
     eq:
       data.type: AA
     like:
-      original_values.made_up_date: '^(?<made_up_date>\d+\D\d+\D\d+)$'
+      original_values.made_up_date: '^(?<madeUpDate>\d+\D\d+\D\d+)$'
       original_values.acc_type: '^TOTAL EXEMPTION FULL|T FULL'
   then:
     set:
@@ -6226,7 +6227,7 @@
     eq:
       data.type: AA
     like:
-      data.description: '(^TOTAL EXEMPTION FULL ACCOUNTS MADE UP TO (?<made_up_date>\d+\D\d+\D\d+)$)|(^(?i:(?<made_up_date>\d+\D\d+\D\d+) TOTAL EXEMPTION FULL(?:\s+AMEND)?)$)'
+      data.description: '(^TOTAL EXEMPTION FULL ACCOUNTS MADE UP TO (?<madeUpDate>\d+\D\d+\D\d+)$)|(^(?i:(?<madeUpDate2>\d+\D\d+\D\d+) TOTAL EXEMPTION FULL(?:\s+AMEND)?)$)'
   then:
     set:
       data.category: accounts
@@ -6238,7 +6239,7 @@
     eq:
       data.type: AA
     like:
-      original_values.made_up_date: '^(?<made_up_date>\d+\D\d+\D\d+)$'
+      original_values.made_up_date: '^(?<madeUpDate>\d+\D\d+\D\d+)$'
       original_values.acc_type: '^TOTAL EXEMPTION SMALL|T ABBR'
   then:
     set:
@@ -6251,7 +6252,7 @@
     eq:
       data.type: AA
     like:
-      data.description: '(^TOTAL EXEMPTION SMALL ACCOUNTS MADE UP TO (?<made_up_date>\d+\D\d+\D\d+)$)|(^(?i:(?<made_up_date>\d+\D\d+\D\d+) TOTAL EXEMPTION SMALL(?:\s+AMEND)?)$)'
+      data.description: '(^TOTAL EXEMPTION SMALL ACCOUNTS MADE UP TO (?<madeUpDate>\d+\D\d+\D\d+)$)|(^(?i:(?<madeUpDate2>\d+\D\d+\D\d+) TOTAL EXEMPTION SMALL(?:\s+AMEND)?)$)'
   then:
     set:
       data.category: accounts
@@ -6263,7 +6264,7 @@
     eq:
       data.type: AA
     like:
-      data.description: '(^AUDIT EXEMPTION SUBSIDIARY ACCOUNTS MADE UP TO (?<made_up_date>\d+\D\d+\D\d+)$)|^(?i:(?<made_up_date>\d+\D\d+\D\d+) AUDIT EXEMPTION SUBSIDUARY)'
+      data.description: '(^AUDIT EXEMPTION SUBSIDIARY ACCOUNTS MADE UP TO (?<madeUpDate>\d+\D\d+\D\d+)$)|^(?i:(?<madeUpDate2>\d+\D\d+\D\d+) AUDIT EXEMPTION SUBSIDUARY)'
   then:
     set:
       data.category: accounts
@@ -6275,7 +6276,7 @@
     eq:
       data.type: AA
     like:
-      data.description: '^(?i:.*?(?<made_up_date>\d+\D\d+\D\d+).*)$'
+      data.description: '^(?i:.*?(?<madeUpDate>\d+\D\d+\D\d+).*)$'
   then:
     set:
       data.category: accounts
@@ -6295,7 +6296,7 @@
     eq:
       data.type: AAMD
     like:
-      original_values.made_up_date: '^(?<made_up_date>\d+\D\d+\D\d+)$'
+      original_values.made_up_date: '^(?<madeUpDate>\d+\D\d+\D\d+)$'
       original_values.acc_type: '^G FULL'
   then:
     set:
@@ -6308,7 +6309,7 @@
     eq:
       data.type: AAMD
     like:
-      data.description: '^(?i:AMENDED FULL GROUP ACCOUNTS MADE UP TO (?<made_up_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:AMENDED FULL GROUP ACCOUNTS MADE UP TO (?<madeUpDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: accounts
@@ -6320,7 +6321,7 @@
     eq:
       data.type: AAMD
     like:
-      original_values.made_up_date: '^(?<made_up_date>\d+\D\d+\D\d+)$'
+      original_values.made_up_date: '^(?<madeUpDate>\d+\D\d+\D\d+)$'
       original_values.acc_type: '^G MED'
   then:
     set:
@@ -6333,7 +6334,7 @@
     eq:
       data.type: AAMD
     like:
-      data.description: '^(?i:AMENDED GROUP ACCOUNTS FOR MEDIUM CO. MADE UP TO (?<made_up_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:AMENDED GROUP ACCOUNTS FOR MEDIUM CO. MADE UP TO (?<madeUpDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: accounts
@@ -6345,7 +6346,7 @@
     eq:
       data.type: AAMD
     like:
-      original_values.made_up_date: '^(?<made_up_date>\d+\D\d+\D\d+)$'
+      original_values.made_up_date: '^(?<madeUpDate>\d+\D\d+\D\d+)$'
       original_values.acc_type: '^G SMALL'
   then:
     set:
@@ -6358,7 +6359,7 @@
     eq:
       data.type: AAMD
     like:
-      data.description: '^(?i:AMENDED GROUP ACCOUNTS FOR SMALL CO. MADE UP TO (?<made_up_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:AMENDED GROUP ACCOUNTS FOR SMALL CO. MADE UP TO (?<madeUpDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: accounts
@@ -6370,7 +6371,7 @@
     eq:
       data.type: AAMD
     like:
-      original_values.made_up_date: '^(?<made_up_date>\d+\D\d+\D\d+)$'
+      original_values.made_up_date: '^(?<madeUpDate>\d+\D\d+\D\d+)$'
       original_values.acc_type: '^GROUP'
   then:
     set:
@@ -6383,7 +6384,7 @@
     eq:
       data.type: AAMD
     like:
-      data.description: '^(?i:AMENDED GROUP OF COMPANIES.+?ACCOUNTS MADE UP TO (?<made_up_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:AMENDED GROUP OF COMPANIES.+?ACCOUNTS MADE UP TO (?<madeUpDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: accounts
@@ -6395,7 +6396,7 @@
     eq:
       data.type: AAMD
     like:
-      original_values.made_up_date: '^(?<made_up_date>\d+\D\d+\D\d+)$'
+      original_values.made_up_date: '^(?<madeUpDate>\d+\D\d+\D\d+)$'
       original_values.acc_type: '^FULL'
   then:
     set:
@@ -6408,7 +6409,7 @@
     eq:
       data.type: AAMD
     like:
-      data.description: '^(?i:AMENDED FULL ACCOUNTS MADE UP TO (?<made_up_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:AMENDED FULL ACCOUNTS MADE UP TO (?<madeUpDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: accounts
@@ -6420,7 +6421,7 @@
     eq:
       data.type: AAMD
     like:
-      data.description: '^(?i:(?<made_up_date>\d+\D\d+\D\d+) FULL(?:\s+AMEND)?)$'
+      data.description: '^(?i:(?<madeUpDate>\d+\D\d+\D\d+) FULL(?:\s+AMEND)?)$'
   then:
     set:
       data.category: accounts
@@ -6432,7 +6433,7 @@
     eq:
       data.type: AAMD
     like:
-      original_values.made_up_date: '^(?<made_up_date>\d+\D\d+\D\d+)$'
+      original_values.made_up_date: '^(?<madeUpDate>\d+\D\d+\D\d+)$'
       original_values.acc_type: '^DORMANT'
   then:
     set:
@@ -6445,7 +6446,7 @@
     eq:
       data.type: AAMD
     like:
-      data.description: '^(?i:(?<made_up_date>\d+\D\d+\D\d+) DORMANT(?:\s+AMEND)?)$'
+      data.description: '^(?i:(?<madeUpDate>\d+\D\d+\D\d+) DORMANT(?:\s+AMEND)?)$'
   then:
     set:
       data.category: accounts
@@ -6457,7 +6458,7 @@
     eq:
       data.type: AAMD
     like:
-      original_values.made_up_date: '^(?<made_up_date>\d+\D\d+\D\d+)$'
+      original_values.made_up_date: '^(?<madeUpDate>\d+\D\d+\D\d+)$'
       original_values.acc_type: '^MEDIUM'
   then:
     set:
@@ -6470,7 +6471,7 @@
     eq:
       data.type: AAMD
     like:
-      data.description: '^(?i:(?<made_up_date>\d+\D\d+\D\d+) MEDIUM(?:\s+AMEND)?)$'
+      data.description: '^(?i:(?<madeUpDate>\d+\D\d+\D\d+) MEDIUM(?:\s+AMEND)?)$'
   then:
     set:
       data.category: accounts
@@ -6482,7 +6483,7 @@
     eq:
       data.type: AAMD
     like:
-      original_values.made_up_date: '^(?<made_up_date>\d+\D\d+\D\d+)$'
+      original_values.made_up_date: '^(?<madeUpDate>\d+\D\d+\D\d+)$'
       original_values.acc_type: '^SMALL'
   then:
     set:
@@ -6495,7 +6496,7 @@
     eq:
       data.type: AAMD
     like:
-      data.description: '^(?i:(?<made_up_date>\d+\D\d+\D\d+) SMALL(?:\s+AMEND)?)$'
+      data.description: '^(?i:(?<madeUpDate>\d+\D\d+\D\d+) SMALL(?:\s+AMEND)?)$'
   then:
     set:
       data.category: accounts
@@ -6507,7 +6508,7 @@
     eq:
       data.type: AAMD
     like:
-      original_values.made_up_date: '^(?<made_up_date>\d+\D\d+\D\d+)$'
+      original_values.made_up_date: '^(?<madeUpDate>\d+\D\d+\D\d+)$'
       original_values.acc_type: '^INTERIM'
   then:
     set:
@@ -6520,7 +6521,7 @@
     eq:
       data.type: AAMD
     like:
-      data.description: '^(?i:(?<made_up_date>\d+\D\d+\D\d+) INTERIM(?:\s+AMEND)?)$'
+      data.description: '^(?i:(?<madeUpDate>\d+\D\d+\D\d+) INTERIM(?:\s+AMEND)?)$'
   then:
     set:
       data.category: accounts
@@ -6532,7 +6533,7 @@
     eq:
       data.type: AAMD
     like:
-      original_values.made_up_date: '^(?<made_up_date>\d+\D\d+\D\d+)$'
+      original_values.made_up_date: '^(?<madeUpDate>\d+\D\d+\D\d+)$'
       original_values.acc_type: '^INITIAL'
   then:
     set:
@@ -6545,7 +6546,7 @@
     eq:
       data.type: AAMD
     like:
-      data.description: '^(?i:(?<made_up_date>\d+\D\d+\D\d+) INITIAL(?:\s+AMEND)?)$'
+      data.description: '^(?i:(?<madeUpDate>\d+\D\d+\D\d+) INITIAL(?:\s+AMEND)?)$'
   then:
     set:
       data.category: accounts
@@ -6557,7 +6558,7 @@
     eq:
       data.type: AAMD
     like:
-      original_values.made_up_date: '^(?<made_up_date>\d+\D\d+\D\d+)$'
+      original_values.made_up_date: '^(?<madeUpDate>\d+\D\d+\D\d+)$'
       original_values.acc_type: '^MICRO ENTITY'
   then:
     set:
@@ -6570,7 +6571,7 @@
     eq:
       data.type: AAMD
     like:
-      data.description: '^(?i:(?<made_up_date>\d+\D\d+\D\d+) MICRO ENTITY(?:\s+AMEND)?)$'
+      data.description: '^(?i:(?<madeUpDate>\d+\D\d+\D\d+) MICRO ENTITY(?:\s+AMEND)?)$'
   then:
     set:
       data.category: accounts
@@ -6582,7 +6583,7 @@
     eq:
       data.type: AAMD
     like:
-      original_values.made_up_date: '^(?<made_up_date>\d+\D\d+\D\d+)$'
+      original_values.made_up_date: '^(?<madeUpDate>\d+\D\d+\D\d+)$'
       original_values.acc_type: '^PART(?:IAL)? EX(?:EMPTION)?'
   then:
     set:
@@ -6595,7 +6596,7 @@
     eq:
       data.type: AAMD
     like:
-      data.description: '^(?i:(?<made_up_date>\d+\D\d+\D\d+) PART(?:IAL)? EX(?:EMPTION)?(?:\s+AMEND)?)$'
+      data.description: '^(?i:(?<madeUpDate>\d+\D\d+\D\d+) PART(?:IAL)? EX(?:EMPTION)?(?:\s+AMEND)?)$'
   then:
     set:
       data.category: accounts
@@ -6607,7 +6608,7 @@
     eq:
       data.type: AAMD
     like:
-      original_values.made_up_date: '^(?<made_up_date>\d+\D\d+\D\d+)$'
+      original_values.made_up_date: '^(?<madeUpDate>\d+\D\d+\D\d+)$'
       original_values.acc_type: '^TOTAL EXEMPTION FULL|T FULL'
   then:
     set:
@@ -6620,7 +6621,7 @@
     eq:
       data.type: AAMD
     like:
-      data.description: '^(?i:(?<made_up_date>\d+\D\d+\D\d+) TOTAL EXEMPTION FULL(?:\s+AMEND)?)$'
+      data.description: '^(?i:(?<madeUpDate>\d+\D\d+\D\d+) TOTAL EXEMPTION FULL(?:\s+AMEND)?)$'
   then:
     set:
       data.category: accounts
@@ -6632,7 +6633,7 @@
     eq:
       data.type: AAMD
     like:
-      original_values.made_up_date: '^(?<made_up_date>\d+\D\d+\D\d+)$'
+      original_values.made_up_date: '^(?<madeUpDate>\d+\D\d+\D\d+)$'
       original_values.acc_type: '^TOTAL EXEMPTION SMALL|T ABBR'
   then:
     set:
@@ -6645,7 +6646,7 @@
     eq:
       data.type: AAMD
     like:
-      data.description: '^(?i:(?<made_up_date>\d+\D\d+\D\d+) TOTAL EXEMPTION SMALL(?:\s+AMEND)?)$'
+      data.description: '^(?i:(?<madeUpDate>\d+\D\d+\D\d+) TOTAL EXEMPTION SMALL(?:\s+AMEND)?)$'
   then:
     set:
       data.category: accounts
@@ -6657,7 +6658,7 @@
     eq:
       data.type: AAMD
     like:
-      data.description: '^(?i:(?<made_up_date>\d+\D\d+\D\d+) AUDIT EXEMPTION SUBSIDIARY)'
+      data.description: '^(?i:(?<madeUpDate>\d+\D\d+\D\d+) AUDIT EXEMPTION SUBSIDIARY)'
   then:
     set:
       data.category: accounts
@@ -6669,7 +6670,7 @@
     eq:
       data.type: AAMD
     like:
-      data.description: '^(?i:.*?(?<made_up_date>\d+\D\d+\D\d+).*)$'
+      data.description: '^(?i:.*?(?<madeUpDate>\d+\D\d+\D\d+).*)$'
   then:
     set:
       data.category: accounts
@@ -6689,7 +6690,7 @@
     eq:
       data.type: AA01
     like:
-      data.description: '^(?i:PREVEXT FROM (?<made_up_date>\d+\D\d+\D\d+) TO (?<new_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:PREVEXT FROM (?<madeUpDate>\d+\D\d+\D\d+) TO (?<newDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: accounts
@@ -6702,7 +6703,7 @@
     eq:
       data.type: AA01
     like:
-      data.description: '^(?i:PREVSHO FROM (?<made_up_date>\d+\D\d+\D\d+) TO (?<new_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:PREVSHO FROM (?<madeUpDate>\d+\D\d+\D\d+) TO (?<newDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: accounts
@@ -6715,7 +6716,7 @@
     eq:
       data.type: AA01
     like:
-      data.description: '^(?i:CURREXT FROM (?<made_up_date>\d+\D\d+\D\d+) TO (?<new_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:CURREXT FROM (?<madeUpDate>\d+\D\d+\D\d+) TO (?<newDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: accounts
@@ -6728,7 +6729,7 @@
     eq:
       data.type: AA01
     like:
-      data.description: '^(?i:CURRSHO FROM (?<made_up_date>\d+\D\d+\D\d+) TO (?<new_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:CURRSHO FROM (?<madeUpDate>\d+\D\d+\D\d+) TO (?<newDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: accounts
@@ -6749,7 +6750,7 @@
     eq:
       data.type: LLAA01
     like:
-      data.description: '^(?i:PREVEXT FROM (?<made_up_date>\d+\D\d+\D\d+) TO (?<new_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:PREVEXT FROM (?<madeUpDate>\d+\D\d+\D\d+) TO (?<newDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: accounts
@@ -6762,7 +6763,7 @@
     eq:
       data.type: LLAA01
     like:
-      data.description: '^(?i:PREVSHO FROM (?<made_up_date>\d+\D\d+\D\d+) TO (?<new_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:PREVSHO FROM (?<madeUpDate>\d+\D\d+\D\d+) TO (?<newDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: accounts
@@ -6775,7 +6776,7 @@
     eq:
       data.type: LLAA01
     like:
-      data.description: '^(?i:CURREXT FROM (?<made_up_date>\d+\D\d+\D\d+) TO (?<new_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:CURREXT FROM (?<madeUpDate>\d+\D\d+\D\d+) TO (?<newDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: accounts
@@ -6788,7 +6789,7 @@
     eq:
       data.type: LLAA01
     like:
-      data.description: '^(?i:CURRSHO FROM (?<made_up_date>\d+\D\d+\D\d+) TO (?<new_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:CURRSHO FROM (?<madeUpDate>\d+\D\d+\D\d+) TO (?<newDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: accounts
@@ -6829,7 +6830,7 @@
     eq:
       data.type: LLAR01
     like:
-      data.description: '^(?i:ANNUAL RETURN MADE UP TO (?<made_up_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:ANNUAL RETURN MADE UP TO (?<madeUpDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: annual-return
@@ -6851,7 +6852,7 @@
     eq:
       data.type: AR01
     like:
-      data.description: '^(?i:(?<made_up_date>\d+\D\d+\D\d+)(?:\s+AMEND)?)$'
+      data.description: '^(?i:(?<madeUpDate>\d+\D\d+\D\d+)(?:\s+AMEND)?)$'
   then:
     set:
       data.category: annual-return
@@ -6863,7 +6864,7 @@
     eq:
       data.type: AR01
     like:
-      data.description: '^(?i:(?<made_up_date>\d+\D\d+\D\d+) FULL LIST(?:\s+AMEND)?)$'
+      data.description: '^(?i:(?<madeUpDate>\d+\D\d+\D\d+) FULL LIST(?:\s+AMEND)?)$'
   then:
     set:
       data.category: annual-return
@@ -6875,7 +6876,7 @@
     eq:
       data.type: AR01
     like:
-      data.description: '^(?i:(?<made_up_date>\d+\D\d+\D\d+) BULK LIST(?:\s+AMEND)?)$'
+      data.description: '^(?i:(?<madeUpDate>\d+\D\d+\D\d+) BULK LIST(?:\s+AMEND)?)$'
   then:
     set:
       data.category: annual-return
@@ -6887,7 +6888,7 @@
     eq:
       data.type: AR01
     like:
-      data.description: '^(?i:(?<made_up_date>\d+\D\d+\D\d+) NO CHANGES(?:\s+AMEND)?)$'
+      data.description: '^(?i:(?<madeUpDate>\d+\D\d+\D\d+) NO CHANGES(?:\s+AMEND)?)$'
   then:
     set:
       data.category: annual-return
@@ -6899,7 +6900,7 @@
     eq:
       data.type: AR01
     like:
-      data.description: '^(?i:(?<made_up_date>\d+\D\d+\D\d+) CHANGES(?:\s+AMEND)?)$'
+      data.description: '^(?i:(?<madeUpDate>\d+\D\d+\D\d+) CHANGES(?:\s+AMEND)?)$'
   then:
     set:
       data.category: annual-return
@@ -6911,7 +6912,7 @@
     eq:
       data.type: AR01
     like:
-      data.description: '^(?i:(?<made_up_date>\d+\D\d+\D\d+) BEARER SHARES(?:\s+AMEND)?)$'
+      data.description: '^(?i:(?<madeUpDate>\d+\D\d+\D\d+) BEARER SHARES(?:\s+AMEND)?)$'
   then:
     set:
       data.category: annual-return
@@ -6923,7 +6924,7 @@
     eq:
       data.type: AR01
     like:
-      data.description: '^(?i:(?<made_up_date>\d+\D\d+\D\d+) NO MEMBER LIST(?:\s+AMEND)?)$'
+      data.description: '^(?i:(?<madeUpDate>\d+\D\d+\D\d+) NO MEMBER LIST(?:\s+AMEND)?)$'
   then:
     set:
       data.category: annual-return
@@ -6959,7 +6960,7 @@
     eq:
       data.type: OSTN01-PAR
     like:
-      data.description: '^(?i:(?<branch_number>(?:FC|SF|NF|BR)\d{6}) PR APPOINTED\s+(?<person_details>(.+)))$'
+      data.description: '^(?i:(?<branchNumber>(?:FC|SF|NF|BR)\d{6}) PR APPOINTED\s+(?<personDetails>(.+)))$'
   then:
     set:
       data.category: annual-return
@@ -6971,7 +6972,7 @@
     eq:
       data.type: OSTN01-PAR
     like:
-      data.description: '^(?i:(?<branch_number>(?:FC|SF|NF|BR)\d{6}) PA APPOINTED\s+(?<person_details>(.+)))$'
+      data.description: '^(?i:(?<branchNumber>(?:FC|SF|NF|BR)\d{6}) PA APPOINTED\s+(?<personDetails>(.+)))$'
   then:
     set:
       data.category: annual-return
@@ -6993,7 +6994,7 @@
       data.type: OSTN01-CHNG
     like:
 
-      data.description: '^(?i:(?<branch_number>(?:FC|SF|NF|BR)\d{6})\s+(?<person_details>(.+)))$'
+      data.description: '^(?i:(?<branchNumber>(?:FC|SF|NF|BR)\d{6})\s+(?<personDetails>(.+)))$'
   then:
     set:
       data.category: annual-return
@@ -7078,8 +7079,8 @@
     eq:
       data.type: AP01
     like:
-      data.description: '^(?i:DIRECTOR APPOINTED (?<officer_name>.+?))$'
-      original_values.appointment_date: '^(?<appointment_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:DIRECTOR APPOINTED (?<officerName>.+?))$'
+      original_values.appointment_date: '^(?<appointmentDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: officers
@@ -7093,7 +7094,7 @@
     eq:
       data.type: AP01
     like:
-      data.description: '^(?i:DIRECTOR APPOINTED (?<officer_name>.+?))$'
+      data.description: '^(?i:DIRECTOR APPOINTED (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -7106,8 +7107,8 @@
       data.type: AP01
     like:
       data.description: '^(?i:MEMBER OF ADMINISTRATIVE ORGAN APPOINTED)'
-      original_values.appointment_date: '^(?<appointment_date>\d+\D\d+\D\d+)$'
-      original_values.officer_name: '^(?<officer_name>.+?)$'
+      original_values.appointment_date: '^(?<appointmentDate>\d+\D\d+\D\d+)$'
+      original_values.officer_name: '^(?<officerName>.+?)$'
   then:
     set:
       data.category: officers
@@ -7121,7 +7122,7 @@
     eq:
       data.type: AP01
     like:
-      data.description: '^(?i:MEMBER OF ADMINISTRATIVE ORGAN APPOINTED (?<officer_name>.+?))$'
+      data.description: '^(?i:MEMBER OF ADMINISTRATIVE ORGAN APPOINTED (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -7146,11 +7147,11 @@
     like:
       data.description: '^(?i:NOTICE OF REMOVAL OF INFORMATION UNDER SECTION 1095)$'
   then:
-    set:
-      data.category: officers
-      data.description: notice-of-removal-of-a-director
-      data.subcategory: appointments
-      original_description: '[% data.description | sentence_case %]'
+      set:
+        data.category: officers
+        data.description: notice-of-removal-of-a-director
+        data.subcategory: appointments
+        original_description: '[% data.description | sentence_case %]'
 - when:
     eq:
       data.type: AP01
@@ -7164,8 +7165,8 @@
     eq:
       data.type: AP03
     like:
-      data.description: '^(?i:SECRETARY APPOINTED (?<officer_name>.+?))$'
-      original_values.appointment_date: '^(?<appointment_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:SECRETARY APPOINTED (?<officerName>.+?))$'
+      original_values.appointment_date: '^(?<appointmentDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: officers
@@ -7179,7 +7180,7 @@
     eq:
       data.type: AP03
     like:
-      data.description: '^(?i:SECRETARY APPOINTED (?<officer_name>.+?))$'
+      data.description: '^(?i:SECRETARY APPOINTED (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -7200,8 +7201,8 @@
     eq:
       data.type: AP02
     like:
-      data.description: '^(?i:CORPORATE DIRECTOR APPOINTED (?<officer_name>.+?))$'
-      original_values.appointment_date: '^(?<appointment_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:CORPORATE DIRECTOR APPOINTED (?<officerName>.+?))$'
+      original_values.appointment_date: '^(?<appointmentDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: officers
@@ -7215,7 +7216,7 @@
     eq:
       data.type: AP02
     like:
-      data.description: '^(?i:CORPORATE DIRECTOR APPOINTED (?<officer_name>.+?))$'
+      data.description: '^(?i:CORPORATE DIRECTOR APPOINTED (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -7227,8 +7228,8 @@
     eq:
       data.type: AP02
     like:
-      data.description: '^(?i:CORPORATE MEMBER OF ADMINISTRATIVE ORGAN APPOINTED (?<officer_name>.+?))$'
-      original_values.appointment_date: '^(?<appointment_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:CORPORATE MEMBER OF ADMINISTRATIVE ORGAN APPOINTED (?<officerName>.+?))$'
+      original_values.appointment_date: '^(?<appointmentDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: officers
@@ -7242,7 +7243,7 @@
     eq:
       data.type: AP02
     like:
-      data.description: '^(?i:CORPORATE MEMBER OF ADMINISTRATIVE ORGAN APPOINTED (?<officer_name>.+?))$'
+      data.description: '^(?i:CORPORATE MEMBER OF ADMINISTRATIVE ORGAN APPOINTED (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -7285,8 +7286,8 @@
     eq:
       data.type: AP04
     like:
-      data.description: '^(?i:CORPORATE SECRETARY APPOINTED (?<officer_name>.+?))$'
-      original_values.appointment_date: '^(?<appointment_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:CORPORATE SECRETARY APPOINTED (?<officerName>.+?))$'
+      original_values.appointment_date: '^(?<appointmentDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: officers
@@ -7300,7 +7301,7 @@
     eq:
       data.type: AP04
     like:
-      data.description: '^(?i:CORPORATE SECRETARY APPOINTED (?<officer_name>.+?) ON (?<appointment_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:CORPORATE SECRETARY APPOINTED (?<officerName>.+?) ON (?<appointmentDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: officers
@@ -7314,7 +7315,7 @@
     eq:
       data.type: AP04
     like:
-      data.description: '^(?i:CORPORATE SECRETARY APPOINTED (?<officer_name>.+?))$'
+      data.description: '^(?i:CORPORATE SECRETARY APPOINTED (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -7335,8 +7336,8 @@
     eq:
       data.type: LLAP01
     like:
-      data.description: '^(?i:LLP MEMBER APPOINTED (?<officer_name>.+?))$'
-      original_values.appointment_date: '^(?<appointment_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:LLP MEMBER APPOINTED (?<officerName>.+?))$'
+      original_values.appointment_date: '^(?<appointmentDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: officers
@@ -7350,7 +7351,7 @@
     eq:
       data.type: LLAP01
     like:
-      data.description: '^(?i:LLP MEMBER APPOINTED (?<officer_name>.+?))$'
+      data.description: '^(?i:LLP MEMBER APPOINTED (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -7362,8 +7363,8 @@
     eq:
       data.type: LLAP02
     like:
-      data.description: '^(?i:CORPORATE LLP MEMBER APPOINTED (?<officer_name>.+?))$'
-      original_values.appointment_date: '^(?<appointment_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:CORPORATE LLP MEMBER APPOINTED (?<officerName>.+?))$'
+      original_values.appointment_date: '^(?<appointmentDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: officers
@@ -7377,7 +7378,7 @@
     eq:
       data.type: LLAP02
     like:
-      data.description: '^(?i:CORPORATE LLP MEMBER APPOINTED (?<officer_name>.+?))$'
+      data.description: '^(?i:CORPORATE LLP MEMBER APPOINTED (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -7389,8 +7390,8 @@
     eq:
       data.type: AP05
     like:
-      data.description: '^(?i:.*JUDICIAL FACTOR APPOINTED (?<officer_name>.+?))$'
-      original_values.appointment_date: '^(?<appointment_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:.*JUDICIAL FACTOR APPOINTED (?<officerName>.+?))$'
+      original_values.appointment_date: '^(?<appointmentDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: officers
@@ -7404,7 +7405,7 @@
     eq:
       data.type: AP05
     like:
-      data.description: '^(?i:.*JUDICIAL FACTOR APPOINTED (?<officer_name>.+?))$'
+      data.description: '^(?i:.*JUDICIAL FACTOR APPOINTED (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -7416,8 +7417,8 @@
     eq:
       data.type: AP05
     like:
-      data.description: '^(?i:.* APPOINTED (?<officer_name>.+?))$'
-      original_values.appointment_date: '^(?<appointment_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:.* APPOINTED (?<officerName>.+?))$'
+      original_values.appointment_date: '^(?<appointmentDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: officers
@@ -7431,7 +7432,7 @@
     eq:
       data.type: AP05
     like:
-      data.description: '^(?i:.* APPOINTED (?<officer_name>.+?))$'
+      data.description: '^(?i:.* APPOINTED (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -7452,8 +7453,8 @@
     eq:
       data.type: OSAP01
     like:
-      data.description: '^(?i:DIRECTOR APPOINTED (?<officer_name>.+?))$'
-      original_values.appointment_date: '^(?<appointment_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:DIRECTOR APPOINTED (?<officerName>.+?))$'
+      original_values.appointment_date: '^(?<appointmentDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: officers
@@ -7467,7 +7468,7 @@
     eq:
       data.type: OSAP01
     like:
-      data.description: '^(?i:DIRECTOR APPOINTED (?<officer_name>.+?))$'
+      data.description: '^(?i:DIRECTOR APPOINTED (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -7488,8 +7489,8 @@
     eq:
       data.type: OSAP02
     like:
-      data.description: '^(?i:CORPORATE DIRECTOR APPOINTED (?<officer_name>.+?))$'
-      original_values.appointment_date: '^(?<appointment_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:CORPORATE DIRECTOR APPOINTED (?<officerName>.+?))$'
+      original_values.appointment_date: '^(?<appointmentDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: officers
@@ -7503,7 +7504,7 @@
     eq:
       data.type: OSAP02
     like:
-      data.description: '^(?i:CORPORATE DIRECTOR APPOINTED (?<officer_name>.+))'
+      data.description: '^(?i:CORPORATE DIRECTOR APPOINTED (?<officerName>.+))'
   then:
     set:
       data.category: officers
@@ -7515,8 +7516,8 @@
     eq:
       data.type: OSAP03
     like:
-      original_values.appointment_date: '^(?<appointment_date>\d+\D\d+\D\d+)$'
-      original_values.officer_name: '^(?<officer_name>.+?)$'
+      original_values.appointment_date: '^(?<appointmentDate>\d+\D\d+\D\d+)$'
+      original_values.officer_name: '^(?<officerName>.+?)$'
   then:
     set:
       data.category: officers
@@ -7530,8 +7531,8 @@
     eq:
       data.type: OSAP03
     like:
-      data.description: '^(?i:SECRETARY APPOINTED (?<officer_name>.+))'
-      original_values.appointment_date: '^(?<appointment_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:SECRETARY APPOINTED (?<officerName>.+))'
+      original_values.appointment_date: '^(?<appointmentDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: officers
@@ -7545,7 +7546,7 @@
     eq:
       data.type: OSAP03
     like:
-      data.description: '^(?i:SECRETARY APPOINTED (?<officer_name>.+?))$'
+      data.description: '^(?i:SECRETARY APPOINTED (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -7557,8 +7558,8 @@
     eq:
       data.type: OSAP04
     like:
-      original_values.officer_name: '^(?<officer_name>.+?)$'
-      original_values.appointment_date: '^(?<appointment_date>\d+\D\d+\D\d+)$'
+      original_values.officer_name: '^(?<officerName>.+?)$'
+      original_values.appointment_date: '^(?<appointmentDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: officers
@@ -7572,7 +7573,7 @@
     eq:
       data.type: OSAP04
     like:
-      data.description: '^(?i:CORPORATE SECRETARY APPOINTED (?<officer_name>.+))'
+      data.description: '^(?i:CORPORATE SECRETARY APPOINTED (?<officerName>.+))'
   then:
     set:
       data.category: officers
@@ -7584,7 +7585,7 @@
     eq:
       data.type: OSAP05
     like:
-      data.description: '^(?i:TRANSACTION OSAP05-\s+(?<branch_number>(?:FC|SF|NF|BR)\d{6})\s+PERSON AUTHORISED TO REPRESENT APPOINTED\s+(?<change_date>\d+\D\d+\D\d+)\s+(?<officer_name>.+?) -- ADDRESS: (?<new_address>.+?))$'
+      data.description: '^(?i:TRANSACTION OSAP05-\s+(?<branchNumber>(?:FC|SF|NF|BR)\d{6})\s+PERSON AUTHORISED TO REPRESENT APPOINTED\s+(?<changeDate>\d+\D\d+\D\d+)\s+(?<officerName>.+?) -- ADDRESS: (?<newAddress>.+?))$'
   then:
     set:
       data.category: officers
@@ -7609,8 +7610,8 @@
     eq:
       data.type: OSAP06
     like:
-      data.description: '^(?i:JUDICIAL FACTOR APPOINTED (?<officer_name>.+?))$'
-      original_values.appointment_date: '^(?<appointment_date>\d+\D\d+\D\d+)$'
+      data.description: '^(?i:JUDICIAL FACTOR APPOINTED (?<officerName>.+?))$'
+      original_values.appointment_date: '^(?<appointmentDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: officers
@@ -7644,7 +7645,7 @@
     eq:
       data.type: OSAP07
     like:
-      data.description: '^(?i:TRANSACTION OSAP07-\s+(?<branch_number>(?:FC|SF|NF|BR)\d{6})\s+PERSON AUTHORISED TO ACCEPT APPOINTED (?<change_date>\d+\D\d+\D\d+) (?<officer_name>.+?) -- ADDRESS: (?<new_address>.+?))$'
+      data.description: '^(?i:TRANSACTION OSAP07-\s+(?<branchNumber>(?:FC|SF|NF|BR)\d{6})\s+PERSON AUTHORISED TO ACCEPT APPOINTED (?<changeDate>\d+\D\d+\D\d+) (?<officerName>.+?) -- ADDRESS: (?<newAddress>.+?))$'
   then:
     set:
       data.category: officers
@@ -7669,8 +7670,8 @@
     eq:
       data.type: SEAP02
     like:
-      original_values.appointment_date: '^(?<appointment_date>\d+\D\d+\D\d+)$'
-      original_values.officer_name: '^(?<officer_name>.+?)$'
+      original_values.appointment_date: '^(?<appointmentDate>\d+\D\d+\D\d+)$'
+      original_values.officer_name: '^(?<officerName>.+?)$'
   then:
     set:
       data.category: officers
@@ -7684,7 +7685,7 @@
     eq:
       data.type: SEAP02
     like:
-      data.description: '^(?i:CORPORATE MEMBER OF SUPERVISORY ORGAN APPOINTED (?<officer_name>.+?))$'
+      data.description: '^(?i:CORPORATE MEMBER OF SUPERVISORY ORGAN APPOINTED (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -7707,8 +7708,8 @@
     eq:
       data.type: SEAP01
     like:
-      original_values.appointment_date: '^(?<appointment_date>\d+\D\d+\D\d+)$'
-      original_values.officer_name: '^(?<officer_name>.+?)$'
+      original_values.appointment_date: '^(?<appointmentDate>\d+\D\d+\D\d+)$'
+      original_values.officer_name: '^(?<officerName>.+?)$'
   then:
     set:
       data.category: officers
@@ -7722,7 +7723,7 @@
     eq:
       data.type: SEAP01
     like:
-      data.description: '^(?i:MEMBER OF SUPERVISORY ORGAN APPOINTED (?<officer_name>.+?))$'
+      data.description: '^(?i:MEMBER OF SUPERVISORY ORGAN APPOINTED (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -7765,7 +7766,7 @@
     eq:
       data.type: CH01
     like:
-      data.description: "^(?i:DIRECTOR'S CHANGE OF PARTICULARS / (?<officer_name>.+?) / (?<change_date>\\d+\\D\\d+\\D\\d+).*)$"
+      data.description: "^(?i:DIRECTOR'S CHANGE OF PARTICULARS / (?<officerName>.+?) / (?<changeDate>\\d+\\D\\d+\\D\\d+).*)$"
   then:
     set:
       data.category: officers
@@ -7799,7 +7800,7 @@
     eq:
       data.type: CH03
     like:
-      data.description: '^(?i:.* / (?<officer_name>.+?) / (?<change_date>\d+\D\d+\D\d+).*)$'
+      data.description: '^(?i:.* / (?<officerName>.+?) / (?<changeDate>\d+\D\d+\D\d+).*)$'
   then:
     set:
       data.category: officers
@@ -7822,7 +7823,7 @@
     eq:
       data.type: CH02
     like:
-      data.description: "^(?i:CORPORATE DIRECTOR'S CHANGE OF PARTICULARS / (?<officer_name>.+?) / (?<change_date>\\d+\\D\\d+\\D\\d+).*)$"
+      data.description: "^(?i:CORPORATE DIRECTOR'S CHANGE OF PARTICULARS / (?<officerName>.+?) / (?<changeDate>\\d+\\D\\d+\\D\\d+).*)$"
   then:
     set:
       data.category: officers
@@ -7845,7 +7846,7 @@
     eq:
       data.type: CH04
     like:
-      data.description: "^(?i:CORPORATE SECRETARY'S CHANGE OF PARTICULARS / (?<officer_name>.+?) / (?<change_date>\\d+\\D\\d+\\D\\d+).*)$"
+      data.description: "^(?i:CORPORATE SECRETARY'S CHANGE OF PARTICULARS / (?<officerName>.+?) / (?<changeDate>\\d+\\D\\d+\\D\\d+).*)$"
   then:
     set:
       data.category: officers
@@ -7868,7 +7869,7 @@
     eq:
       data.type: OSCH01
     like:
-      data.description: "^(?i:(?<branch_number>(?:FC|SF|NF|BR)\\d{6})\\s+(?<change_type>(?:ADDRESS|NAME|BUSINESS) CHANGE)\\s+(?<change_date>\\d+\\D\\d+\\D\\d+)\\s+(?<change_details>.+))$"
+      data.description: "^(?i:(?<branchNumber>(?:FC|SF|NF|BR)\\d{6})\\s+(?<changeType>(?:ADDRESS|NAME|BUSINESS) CHANGE)\\s+(?<changeDate>\\d+\\D\\d+\\D\\d+)\\s+(?<changeDetails>.+))$"
   then:
     set:
       data.category: other
@@ -7891,7 +7892,7 @@
     eq:
       data.type: OSCH02
     like:
-      data.description: "^(?i:CHANGE OF ADDRESS\\s+(?<change_date>\\d+\\D\\d+\\D\\d+)\\s+(?<change_address>.*))$"
+      data.description: "^(?i:CHANGE OF ADDRESS\\s+(?<changeDate>\\d+\\D\\d+\\D\\d+)\\s+(?<changeAddress>.*))$"
   then:
     set:
       data.category: other
@@ -7912,8 +7913,8 @@
     eq:
       data.type: OSCH03
     like:
-      original_values.change_date: '^(?<change_date>\d+\D\d+\D\d+)$'
-      original_values.officer_name: '^(?<officer_name>.+?)$'
+      original_values.change_date: '^(?<changeDate>\d+\D\d+\D\d+)$'
+      original_values.officer_name: '^(?<officerName>.+?)$'
   then:
     set:
       data.category: officers
@@ -7927,7 +7928,7 @@
     eq:
       data.type: OSCH03
     like:
-      data.description: "^(?i:OVERSEAS COMPANY DIRECTOR'S CHANGE OF PARTICULARS / (?<officer_name>.+?) / (?<change_date>\\d+\\D\\d+\\D\\d+))$"
+      data.description: "^(?i:OVERSEAS COMPANY DIRECTOR'S CHANGE OF PARTICULARS / (?<officerName>.+?) / (?<changeDate>\\d+\\D\\d+\\D\\d+))$"
   then:
     set:
       data.category: officers
@@ -7950,8 +7951,8 @@
     eq:
       data.type: OSCH04
     like:
-      original_values.change_date: '^(?<change_date>\d+\D\d+\D\d+)$'
-      original_values.officer_name: '^(?<officer_name>.+?)$'
+      original_values.change_date: '^(?<changeDate>\d+\D\d+\D\d+)$'
+      original_values.officer_name: '^(?<officerName>.+?)$'
   then:
     set:
       data.category: officers
@@ -7965,7 +7966,7 @@
     eq:
       data.type: OSCH04
     like:
-      data.description: "^(?i:CORPORATE OVERSEAS COMPANY DIRECTOR'S CHANGE OF PARTICULARS / (?<officer_name>.+?) / (?<change_date>\\d+\\D\\d+\\D\\d+) / HOUSENAME/NUMBER WAS: , NOW: 1290; STREET WAS: 30 BROAD STREET, NOW: AVENUES OF THE AMERICAS; AREA WAS: , NOW: 22ND FLOOR; REGION WAS: NEW YORK 10004, NOW: NY10104)$"
+      data.description: "^(?i:CORPORATE OVERSEAS COMPANY DIRECTOR'S CHANGE OF PARTICULARS / (?<officerName>.+?) / (?<changeDate>\\d+\\D\\d+\\D\\d+) / HOUSENAME/NUMBER WAS: , NOW: 1290; STREET WAS: 30 BROAD STREET, NOW: AVENUES OF THE AMERICAS; AREA WAS: , NOW: 22ND FLOOR; REGION WAS: NEW YORK 10004, NOW: NY10104)$"
   then:
     set:
       data.category: officers
@@ -7988,8 +7989,8 @@
     eq:
       data.type: OSCH05
     like:
-      original_values.change_date: '^(?<change_date>\d+\D\d+\D\d+)$'
-      original_values.officer_name: '^(?<officer_name>.+?)$'
+      original_values.change_date: '^(?<changeDate>\d+\D\d+\D\d+)$'
+      original_values.officer_name: '^(?<officerName>.+?)$'
   then:
     set:
       data.category: officers
@@ -8003,7 +8004,7 @@
     eq:
       data.type: OSCH05
     like:
-      data.description: "^(?i:OVERSEAS COMPANY SECRETARY'S CHANGE OF PARTICULARS / (?<officer_name>.+?) / (?<change_date>\\d+\\D\\d+\\D\\d+))$"
+      data.description: "^(?i:OVERSEAS COMPANY SECRETARY'S CHANGE OF PARTICULARS / (?<officerName>.+?) / (?<changeDate>\\d+\\D\\d+\\D\\d+))$"
   then:
     set:
       data.category: officers
@@ -8025,7 +8026,7 @@
     eq:
       data.type: OSCH06
     like:
-      data.description: "^(?i:CORPORATE OVERSEAS COMPANY SECRETARY'S CHANGE OF PARTICULARS / (?<officer_name>.+?) / (?<change_date>\\d+\\D\\d+\\D\\d+).*)$"
+      data.description: "^(?i:CORPORATE OVERSEAS COMPANY SECRETARY'S CHANGE OF PARTICULARS / (?<officerName>.+?) / (?<changeDate>\\d+\\D\\d+\\D\\d+).*)$"
   then:
     set:
       data.category: officers
@@ -8048,7 +8049,7 @@
     eq:
       data.type: OSCH07
     like:
-      data.description: '^(?i:TRANSACTION OSCH07-\s+(?<branch_number>(?:FC|SF|NF|BR)\d{6})\s+PERSON AUTHORISED TO REPRESENT PARTIC (?<change_date>\d+\D\d+\D\d+) (?<officer_name>.+?)\s+--\s+ADDRESS:\s(?<officer_address>.+?))$'
+      data.description: '^(?i:TRANSACTION OSCH07-\s+(?<branchNumber>(?:FC|SF|NF|BR)\d{6})\s+PERSON AUTHORISED TO REPRESENT PARTIC (?<changeDate>\d+\D\d+\D\d+) (?<officerName>.+?)\s+--\s+ADDRESS:\s(?<officerAddress>.+?))$'
   then:
     set:
       data.category: officers
@@ -8082,7 +8083,7 @@
     eq:
       data.type: OSCH09
     like:
-      data.description: '^(?i:TRANSACTION OSCH09-\s+(?<branch_number>(?:FC|SF|NF|BR)\d{6})\s+PERSON AUTHORISED TO ACCEPT PARTIC (?<change_date>\d+\D\d+\D\d+) (?<officer_name>.+?)\s+--.*)$'
+      data.description: '^(?i:TRANSACTION OSCH09-\s+(?<branchNumber>(?:FC|SF|NF|BR)\d{6})\s+PERSON AUTHORISED TO ACCEPT PARTIC (?<changeDate>\d+\D\d+\D\d+) (?<officerName>.+?)\s+--.*)$'
   then:
     set:
       data.category: officers
@@ -8115,7 +8116,7 @@
     eq:
       data.type: LLCH01
     like:
-      data.description: "^(?i:LLP MEMBER'S CHANGE OF PARTICULARS / (?<officer_name>.+?) / (?<change_date>\\d+\\D\\d+\\D\\d+).*)$"
+      data.description: "^(?i:LLP MEMBER'S CHANGE OF PARTICULARS / (?<officerName>.+?) / (?<changeDate>\\d+\\D\\d+\\D\\d+).*)$"
   then:
     set:
       data.category: officers
@@ -8138,7 +8139,7 @@
     eq:
       data.type: LLCH02
     like:
-      data.description: "^(?i:CORPORATE LLP MEMBER'S CHANGE OF PARTICULARS / (?<officer_name>.+?) / (?<change_date>\\d+\\D\\d+\\D\\d+).*)$"
+      data.description: "^(?i:CORPORATE LLP MEMBER'S CHANGE OF PARTICULARS / (?<officerName>.+?) / (?<changeDate>\\d+\\D\\d+\\D\\d+).*)$"
   then:
     set:
       data.category: officers
@@ -8170,8 +8171,8 @@
     eq:
       data.type: SECH01
     like:
-      original_values.change_date: '^(?<change_date>\d+\D\d+\D\d+)$'
-      original_values.officer_name: '^(?<officer_name>.+?)$'
+      original_values.change_date: '^(?<changeDate>\d+\D\d+\D\d+)$'
+      original_values.officer_name: '^(?<officerName>.+?)$'
   then:
     set:
       data.category: officers
@@ -8185,7 +8186,7 @@
     eq:
       data.type: SECH01
     like:
-      data.description: "^(?i:MEMBER OF SUPERVISORY ORGAN'S CHANGE OF PARTICULARS / (?<officer_name>.+?) / (?<change_date>\\d+\\D\\d+\\D\\d+).*)$"
+      data.description: "^(?i:MEMBER OF SUPERVISORY ORGAN'S CHANGE OF PARTICULARS / (?<officerName>.+?) / (?<changeDate>\\d+\\D\\d+\\D\\d+).*)$"
   then:
     set:
       data.category: officers
@@ -8208,8 +8209,8 @@
     eq:
       data.type: SECH02
     like:
-      original_values.change_date: '^(?<change_date>\d+\D\d+\D\d+)$'
-      original_values.officer_name: '^(?<officer_name>.+?)$'
+      original_values.change_date: '^(?<changeDate>\d+\D\d+\D\d+)$'
+      original_values.officer_name: '^(?<officerName>.+?)$'
   then:
     set:
       data.category: officers
@@ -8223,7 +8224,7 @@
     eq:
       data.type: SECH02
     like:
-      data.description: "^(?i:CORPORATE MEMBER OF SUPERVISORY ORGAN'S CHANGE OF PARTICULARS / (?<officer_name>.+?) / (?<change_date>\\d+\\D\\d+\\D\\d+).*)$"
+      data.description: "^(?i:CORPORATE MEMBER OF SUPERVISORY ORGAN'S CHANGE OF PARTICULARS / (?<officerName>.+?) / (?<changeDate>\\d+\\D\\d+\\D\\d+).*)$"
   then:
     set:
       data.category: officers
@@ -8255,8 +8256,8 @@
     eq:
       data.type: OSTM01
     like:
-      original_values.resignation_date: '^(?<termination_date>\d+\D\d+\D\d+)$'
-      original_values.officer_name: '^(?<officer_name>.+?)$'
+      original_values.resignation_date: '^(?<terminationDate>\d+\D\d+\D\d+)$'
+      original_values.officer_name: '^(?<officerName>.+?)$'
   then:
     set:
       data.category: officers
@@ -8270,7 +8271,7 @@
     eq:
       data.type: OSTM01
     like:
-      data.description: '^(?i:APPOINTMENT TERMINATED, DIRECTOR (?<officer_name>.+?))$'
+      data.description: '^(?i:APPOINTMENT TERMINATED, DIRECTOR (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -8291,8 +8292,8 @@
     eq:
       data.type: OSTM02
     like:
-      original_values.resignation_date: '^(?<termination_date>\d+\D\d+\D\d+)$'
-      original_values.officer_name: '^(?<officer_name>.+?)$'
+      original_values.resignation_date: '^(?<terminationDate>\d+\D\d+\D\d+)$'
+      original_values.officer_name: '^(?<officerName>.+?)$'
   then:
     set:
       data.category: officers
@@ -8306,7 +8307,7 @@
     eq:
       data.type: OSTM02
     like:
-      data.description: '^(?i:APPOINTMENT TERMINATED, SECRETARY (?<officer_name>.+?))$'
+      data.description: '^(?i:APPOINTMENT TERMINATED, SECRETARY (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -8337,8 +8338,8 @@
     eq:
       data.type: OSTM04
     like:
-      original_values.resignation_date: '^(?<termination_date>\d+\D\d+\D\d+)$'
-      original_values.officer_name: '^(?<officer_name>.+?)$'
+      original_values.resignation_date: '^(?<terminationDate>\d+\D\d+\D\d+)$'
+      original_values.officer_name: '^(?<officerName>.+?)$'
   then:
     set:
       data.category: officers
@@ -8370,8 +8371,8 @@
     eq:
       data.type: TM01
     like:
-      original_values.resignation_date: '^(?<termination_date>\d+\D\d+\D\d+)$'
-      original_values.officer_name: '^(?<officer_name>.+?)$'
+      original_values.resignation_date: '^(?<terminationDate>\d+\D\d+\D\d+)$'
+      original_values.officer_name: '^(?<officerName>.+?)$'
   then:
     set:
       data.category: officers
@@ -8385,7 +8386,7 @@
     eq:
       data.type: TM01
     like:
-      data.description: '^(?i:.*, DIRECTOR (?<officer_name>.+?))$'
+      data.description: '^(?i:.*, DIRECTOR (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -8406,8 +8407,8 @@
     eq:
       data.type: LLTM01
     like:
-      original_values.resignation_date: '^(?<termination_date>\d+\D\d+\D\d+)$'
-      original_values.officer_name: '^(?<officer_name>.+?)$'
+      original_values.resignation_date: '^(?<terminationDate>\d+\D\d+\D\d+)$'
+      original_values.officer_name: '^(?<officerName>.+?)$'
   then:
     set:
       data.category: officers
@@ -8421,7 +8422,7 @@
     eq:
       data.type: LLTM01
     like:
-      data.description: '^(?i:.*, LLP MEMBER (?<officer_name>.+?))$'
+      data.description: '^(?i:.*, LLP MEMBER (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -8442,8 +8443,8 @@
     eq:
       data.type: TM02
     like:
-      original_values.resignation_date: '^(?<termination_date>\d+\D\d+\D\d+)$'
-      original_values.officer_name: '^(?<officer_name>.+?)$'
+      original_values.resignation_date: '^(?<terminationDate>\d+\D\d+\D\d+)$'
+      original_values.officer_name: '^(?<officerName>.+?)$'
   then:
     set:
       data.category: officers
@@ -8457,7 +8458,7 @@
     eq:
       data.type: TM02
     like:
-      data.description: '^(?i:.*, SECRETARY (?<officer_name>.+?))$'
+      data.description: '^(?i:.*, SECRETARY (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -8496,8 +8497,8 @@
     eq:
       data.type: SETM01
     like:
-      original_values.resignation_date: '^(?<termination_date>\d+\D\d+\D\d+)$'
-      original_values.officer_name: '^(?<officer_name>.+?)$'
+      original_values.resignation_date: '^(?<terminationDate>\d+\D\d+\D\d+)$'
+      original_values.officer_name: '^(?<officerName>.+?)$'
   then:
     set:
       data.category: officers
@@ -8511,7 +8512,7 @@
     eq:
       data.type: SETM01
     like:
-      data.description: '^(?i:APPOINTMENT TERMINATED, MEMBER OF SUPERVISORY ORGAN  (?<officer_name>.+?))$'
+      data.description: '^(?i:APPOINTMENT TERMINATED, MEMBER OF SUPERVISORY ORGAN  (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -8580,7 +8581,7 @@
     eq:
       data.type: OSCC01
     like:
-      data.description: '^(?i:ALTN CONSTITUTIONAL DOC (?<change_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:ALTN CONSTITUTIONAL DOC (?<changeDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: change-of-constitution
@@ -8608,7 +8609,7 @@
     eq:
       data.type: CONDIR
     like:
-      data.description: '^(?i:CHANGE OF NAME DIRECTED BY ADJUDICATION ON (?<change_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:CHANGE OF NAME DIRECTED BY ADJUDICATION ON (?<changeDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: change-of-name
@@ -8648,7 +8649,7 @@
       original_description: '[% description | sentence_case %]'
 - when:
     eq:
-      type: NM04
+     type: NM04
   then:
     set:
       category: change-of-name
@@ -8712,7 +8713,7 @@
     eq:
       data.type: OSNM01
     like:
-      data.description: '^(?i:CHANGE OF NAME (?<change_date>\d+\D\d+\D\d+)\s+(?<change_name>.+))$'
+      data.description: '^(?i:CHANGE OF NAME (?<changeDate>\d+\D\d+\D\d+)\s+(?<changeName>.+))$'
   then:
     set:
       data.category: change-of-name
@@ -8805,7 +8806,7 @@
     eq:
       data.type: OSDS01
     like:
-      data.description: '^(?i:(?<branch_number>BR\d{6}) BRANCH CLOSED (?<close_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:(?<branchNumber>BR\d{6}) BRANCH CLOSED (?<closeDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: dissolution
@@ -8817,7 +8818,7 @@
     eq:
       data.type: OSDS01
     like:
-      data.description: '^(?i:(?<branch_number>(?:FC|SF|NF|BR)\d{6})\s+BRANCH CLOSED\s+(?<company_number>(?:FC|SF|NF|BR)\d{6})\s+COMPANY CLOSED\s+(?<close_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:(?<branchNumber>(?:FC|SF|NF|BR)\d{6})\s+BRANCH CLOSED\s+(?<companyNumber>(?:FC|SF|NF|BR)\d{6})\s+COMPANY CLOSED\s+(?<closeDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: dissolution
@@ -8839,7 +8840,7 @@
     eq:
       data.type: OSDS02
     like:
-      data.description: '^(?i:TERMINATION OF OVERSEAS COMPANY INSOLVENCY PROCEEDINGS:LIQ. CASE NO.(?<case_number>\d+))$'
+      data.description: '^(?i:TERMINATION OF OVERSEAS COMPANY INSOLVENCY PROCEEDINGS:LIQ. CASE NO.(?<caseNumber>\d+))$'
   then:
     set:
       data.category: dissolution
@@ -8909,7 +8910,7 @@
     eq:
       data.type: OS-PAR
     like:
-      data.description: '^(?i:(?<branch_number>(?:FC|SF|NF|BR)\d{6}) PR APPOINTED\s+(?<person_details>(.+)))$'
+      data.description: '^(?i:(?<branchNumber>(?:FC|SF|NF|BR)\d{6}) PR APPOINTED\s+(?<personDetails>(.+)))$'
   then:
     set:
       data.category: annual-return
@@ -8921,7 +8922,7 @@
     eq:
       data.type: OS-PAR
     like:
-      data.description: '^(?i:(?<branch_number>(?:FC|SF|NF|BR)\d{6}) PA APPOINTED\s+(?<person_details>(.+)))$'
+      data.description: '^(?i:(?<branchNumber>(?:FC|SF|NF|BR)\d{6}) PA APPOINTED\s+(?<personDetails>(.+)))$'
   then:
     set:
       data.category: annual-return
@@ -9017,7 +9018,7 @@
     eq:
       data.type: NEWINC
     like:
-      data.description: '^(?i:INCORPORATION OF A (?<company_type>.+?) ON (?<incorporation_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:INCORPORATION OF A (?<companyType>.+?) ON (?<incorporationDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: incorporation
@@ -9054,7 +9055,7 @@
     eq:
       data.type: EEFM01
     like:
-      data.description: '^(?i:.*?ON (?<incorporation_date>\d+\D\d+\D\d+).*)$'
+      data.description: '^(?i:.*?ON (?<incorporationDate>\d+\D\d+\D\d+).*)$'
   then:
     set:
       data.category: incorporation
@@ -9408,7 +9409,7 @@
     eq:
       data.type: RP04
     like:
-      data.description: '^(?i:SECOND FILING WITH MUD (?<made_up_date>\d+\D\d+\D\d+) FOR FORM (?<form_type>.+?))$'
+      data.description: '^(?i:SECOND FILING WITH MUD (?<madeUpDate>\d+\D\d+\D\d+) FOR FORM (?<formType>.+?))$'
   then:
     set:
       data.category: document-replacement
@@ -9422,7 +9423,7 @@
     eq:
       data.type: RP04
     like:
-      data.description: '^(?i:SECOND FILING FOR FORM (?<form_type>.+?))$'
+      data.description: '^(?i:SECOND FILING FOR FORM (?<formType>.+?))$'
   then:
     set:
       data.category: document-replacement
@@ -9443,7 +9444,7 @@
     eq:
       data.type: RP05
     like:
-      data.description: '^(?i:REGISTERED OFFICE ADDRESS CHANGED ON (?<change_date>\d+\D\d+\D\d+) TO (?<default_address>.+?))$'
+      data.description: '^(?i:REGISTERED OFFICE ADDRESS CHANGED ON (?<changeDate>\d+\D\d+\D\d+) TO (?<defaultAddress>.+?))$'
   then:
     set:
       data.category: address
@@ -9456,7 +9457,7 @@
     eq:
       data.type: OC-ROA
     like:
-      data.description: '^(?i:REGISTERED OFFICE ADDRESS CHANGED ON (?<change_date>\d+\D\d+\D\d+) BY ORDER OF COURT FROM (?<old_address>.+?) TO (?<new_address>.+?))$'
+      data.description: '^(?i:REGISTERED OFFICE ADDRESS CHANGED ON (?<changeDate>\d+\D\d+\D\d+) BY ORDER OF COURT FROM (?<oldAddress>.+?) TO (?<newAddress>.+?))$'
   then:
     set:
       data.category: address
@@ -9470,7 +9471,7 @@
     eq:
       data.type: OC-DEF
     like:
-      data.description: '^(?i:REGISTERED OFFICE ADDRESS CHANGED ON (?<change_date>\d+\D\d+\D\d+) BY ORDER OF COURT TO (?<new_address>.+?))$'
+      data.description: '^(?i:REGISTERED OFFICE ADDRESS CHANGED ON (?<changeDate>\d+\D\d+\D\d+) BY ORDER OF COURT TO (?<newAddress>.+?))$'
   then:
     set:
       data.category: address
@@ -9542,8 +9543,8 @@
     eq:
       data.type: LLAD01
     like:
-      data.description: '^(?i:REGISTERED OFFICE CHANGED ON (?<change_date>\d+\D\d+\D\d+) FROM\s*(?<old_address>.+?))$'
-      original_values.new_ro_address: '^(?<new_address>.+)$'
+      data.description: '^(?i:REGISTERED OFFICE CHANGED ON (?<changeDate>\d+\D\d+\D\d+) FROM\s*(?<oldAddress>.+?))$'
+      original_values.new_ro_address: '^(?<newAddress>.+)$'
   then:
     set:
       data.category: address
@@ -9557,7 +9558,7 @@
     eq:
       data.type: LLAD01
     like:
-      data.description: '^(?i:REGISTERED OFFICE CHANGED ON (?<change_date>\d+\D\d+\D\d+) FROM\s*(?<old_address>.+?))$'
+      data.description: '^(?i:REGISTERED OFFICE CHANGED ON (?<changeDate>\d+\D\d+\D\d+) FROM\s*(?<oldAddress>.+?))$'
   then:
     set:
       data.category: address
@@ -9578,8 +9579,8 @@
     eq:
       data.type: AD01
     like:
-      data.description: '^(?i:REGISTERED OFFICE CHANGED ON (?<change_date>\d+\D\d+\D\d+) FROM\s*(?<old_address>.+?))$'
-      original_values.new_ro_address: '^(?<new_address>.+)$'
+      data.description: '^(?i:REGISTERED OFFICE CHANGED ON (?<changeDate>\d+\D\d+\D\d+) FROM\s*(?<oldAddress>.+?))$'
+      original_values.new_ro_address: '^(?<newAddress>.+)$'
   then:
     set:
       data.category: address
@@ -9593,7 +9594,7 @@
     eq:
       data.type: AD01
     like:
-      data.description: '^(?i:REGISTERED OFFICE CHANGED ON (?<change_date>\d+\D\d+\D\d+) FROM\s*(?<old_address>.+?))$'
+      data.description: '^(?i:REGISTERED OFFICE CHANGED ON (?<changeDate>\d+\D\d+\D\d+) FROM\s*(?<oldAddress>.+?))$'
   then:
     set:
       data.category: address
@@ -9614,8 +9615,8 @@
     eq:
       data.type: AD02
     like:
-      data.description: '^(?i:SAIL ADDRESS CHANGED FROM: (?<old_address>.+?))$'
-      original_values.new_ro_address: '^(?<new_address>.+)$'
+      data.description: '^(?i:SAIL ADDRESS CHANGED FROM: (?<oldAddress>.+?))$'
+      original_values.new_ro_address: '^(?<newAddress>.+)$'
   then:
     set:
       data.category: address
@@ -9627,7 +9628,7 @@
     eq:
       data.type: AD02
     like:
-      data.description: '^(?i:SAIL ADDRESS CHANGED FROM:[ \\]*(?<old_address>.+?))$'
+      data.description: '^(?i:SAIL ADDRESS CHANGED FROM:[ \\]*(?<oldAddress>.+?))$'
   then:
     set:
       data.category: address
@@ -9639,7 +9640,7 @@
       data.type: AD02
     like:
       data.description: '^(?i:SAIL ADDRESS CREATED)$'
-      original_values.new_ro_address: '^(?<new_address>.+)$'
+      original_values.new_ro_address: '^(?<newAddress>.+)$'
   then:
     set:
       data.category: address
@@ -9660,7 +9661,7 @@
     eq:
       data.type: AD03
     like:
-      original_values.new_ro_address: '^(?<new_address>.+)$'
+      original_values.new_ro_address: '^(?<newAddress>.+)$'
   then:
     set:
       data.category: address
@@ -9679,7 +9680,7 @@
     eq:
       data.type: AD04
     like:
-      original_values.new_ro_address: '^(?<new_address>.+)$'
+      original_values.new_ro_address: '^(?<newAddress>.+)$'
   then:
     set:
       data.category: address
@@ -9698,8 +9699,8 @@
     eq:
       data.type: LLAD02
     like:
-      data.description: '^(?i:SAIL ADDRESS CHANGED FROM: (?<old_address>.+?))$'
-      original_values.new_ro_address: '^(?<new_address>.+)$'
+      data.description: '^(?i:SAIL ADDRESS CHANGED FROM: (?<oldAddress>.+?))$'
+      original_values.new_ro_address: '^(?<newAddress>.+)$'
   then:
     set:
       data.category: address
@@ -9711,7 +9712,7 @@
     eq:
       data.type: LLAD02
     like:
-      data.description: '^(?i:SAIL ADDRESS CHANGED FROM: (?<old_address>.+?))$'
+      data.description: '^(?i:SAIL ADDRESS CHANGED FROM: (?<oldAddress>.+?))$'
   then:
     set:
       data.category: address
@@ -9723,7 +9724,7 @@
       data.type: LLAD02
     like:
       data.description: '^(?i:SAIL ADDRESS CREATED)$'
-      original_values.new_ro_address: '^(?<new_address>.+)$'
+      original_values.new_ro_address: '^(?<newAddress>.+)$'
   then:
     set:
       data.category: address
@@ -9744,7 +9745,7 @@
     eq:
       data.type: LLAD03
     like:
-      original_values.new_ro_address: '^(?<new_address>.+)$'
+      original_values.new_ro_address: '^(?<newAddress>.+)$'
   then:
     set:
       data.category: address
@@ -9763,7 +9764,7 @@
     eq:
       data.type: LLAD04
     like:
-      original_values.new_ro_address: '^(?<new_address>.+)$'
+      original_values.new_ro_address: '^(?<newAddress>.+)$'
   then:
     set:
       data.category: address
@@ -9798,7 +9799,7 @@
     eq:
       data.type: AD05
     like:
-      data.description: '^(?i:.*?FROM (?<old_jurisdiction>(ENGLAND\s*(?:AND|&|/)\s*WALES|ENGLAND|WALES|SCOTLAND|N\w+?\s*IRELAND|)) TO (?<new_jurisdiction>(ENGLAND\s*(?:AND|&|/)\s*WALES|ENGLAND|WALES|SCOTLAND|N\w+?\s*IRELAND|)) (?:ON |- |,?RES DATE )(?<change_date>\d+\D\d+\D\d+).*)$'
+      data.description: '^(?i:.*?FROM (?<oldJurisdiction>(ENGLAND\s*(?:AND|&|/)\s*WALES|ENGLAND|WALES|SCOTLAND|N\w+?\s*IRELAND|)) TO (?<newJurisdiction>(ENGLAND\s*(?:AND|&|/)\s*WALES|ENGLAND|WALES|SCOTLAND|N\w+?\s*IRELAND|)) (?:ON |- |,?RES DATE )(?<changeDate>\d+\D\d+\D\d+).*)$'
   then:
     set:
       data.category: address
@@ -9812,7 +9813,7 @@
     eq:
       data.type: AD05
     like:
-      data.description: '^(?i:.*?FROM (?<old_jurisdiction>(ENGLAND\s*(?:AND|&|/)\s*WALES|ENGLAND|WALES|SCOTLAND|N\w+?\s*IRELAND|)) TO (?<new_jurisdiction>(ENGLAND\s*(?:AND|&|/)\s*WALES|ENGLAND|WALES|SCOTLAND|N\w+?\s*IRELAND|)).*)$'
+      data.description: '^(?i:.*?FROM (?<oldJurisdiction>(ENGLAND\s*(?:AND|&|/)\s*WALES|ENGLAND|WALES|SCOTLAND|N\w+?\s*IRELAND|)) TO (?<newJurisdiction>(ENGLAND\s*(?:AND|&|/)\s*WALES|ENGLAND|WALES|SCOTLAND|N\w+?\s*IRELAND|)).*)$'
   then:
     set:
       data.category: address
@@ -9824,7 +9825,7 @@
     eq:
       data.type: AD05
     like:
-      data.description: '^(?i:.*?TO (?<new_jurisdiction>(ENGLAND\s*(?:AND|&|/)\s*WALES|ENGLAND|WALES|SCOTLAND|N\w+?\s*IRELAND|)).*)$'
+      data.description: '^(?i:.*?TO (?<newJurisdiction>(ENGLAND\s*(?:AND|&|/)\s*WALES|ENGLAND|WALES|SCOTLAND|N\w+?\s*IRELAND|)).*)$'
   then:
     set:
       data.category: address
@@ -9846,7 +9847,7 @@
       description: '^(?i)(?<date>\d+\D\d+\D\d+) STATEMENT OF CAPITAL;(?:\w+) (?:\d+\.\d+|\.\d+|\d+)'
   then:
     define:
-      extract: '(?i:\bSTATEMENT OF CAPITAL;(?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:\bSTATEMENT OF CAPITAL;(?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       action_date: '[% date | bson_date %]'
       category: capital
@@ -9862,7 +9863,7 @@
       data.description: '^(?i)(?<date>\d+\D\d+\D\d+) STATEMENT OF CAPITAL[; ](?:\w+) (?:\d+\.\d+|\.\d+|\d+)'
   then:
     define:
-      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       data.action_date: '[% date | bson_date %]'
       data.category: capital
@@ -9878,7 +9879,7 @@
       data.description: '^(?i)(?<date>\d+\D\d+\D\d+) STATEMENT OF CAPITAL (?:\w+) (?:\d+\.\d+|\.\d+|\d+)'
   then:
     define:
-      extract: '(?i:\bSTATEMENT OF CAPITAL (?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:\bSTATEMENT OF CAPITAL (?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       data.action_date: '[% date | bson_date %]'
       data.category: capital
@@ -9894,7 +9895,7 @@
       data.description: '^(?i)CONSOLIDATION (?<date>\d+\D\d+\D\d+) STATEMENT OF CAPITAL[; ](?:\w+) (?:\d+\.\d+|\.\d+|\d+)'
   then:
     define:
-      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       data.action_date: '[% date | bson_date %]'
       data.category: capital
@@ -9922,7 +9923,7 @@
       data.description: '^(?i)SUB-DIVISION (?<date>\d+\D\d+\D\d+) STATEMENT OF CAPITAL[; ](?:\w+) (?:\d+\.\d+|\.\d+|\d+)'
   then:
     define:
-      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       data.action_date: '[% date | bson_date %]'
       data.category: capital
@@ -9950,7 +9951,7 @@
       data.description: '^(?i)RE-DEMPTION (?<date>\d+\D\d+\D\d+) STATEMENT OF CAPITAL[; ](?:\w+) (?:\d+\.\d+|\.\d+|\d+)'
   then:
     define:
-      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       data.action_date: '[% date | bson_date %]'
       data.category: capital
@@ -9978,7 +9979,7 @@
       data.description: '^(?i)RE-CONVERSION (?<date>\d+\D\d+\D\d+) STATEMENT OF CAPITAL[; ](?:\w+) (?:\d+\.\d+|\.\d+|\d+)'
   then:
     define:
-      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       data.action_date: '[% date | bson_date %]'
       data.category: capital
@@ -10006,7 +10007,7 @@
       data.description: '^(?i)CONSOLIDATION SUB-DIVISION RE-CONVERSION (?<date>\d+\D\d+\D\d+) STATEMENT OF CAPITAL[; ](?:\w+) (?:\d+\.\d+|\.\d+|\d+)'
   then:
     define:
-      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       data.action_date: '[% date | bson_date %]'
       data.category: capital
@@ -10034,7 +10035,7 @@
       data.description: '^(?i)CONSOLIDATION SUB-DIVISION (?<date>\d+\D\d+\D\d+) STATEMENT OF CAPITAL[; ](?:\w+) (?:\d+\.\d+|\.\d+|\d+)'
   then:
     define:
-      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       data.action_date: '[% date | bson_date %]'
       data.category: capital
@@ -10062,7 +10063,7 @@
       data.description: '^(?i)CONSOLIDATION RE-CONVERSION (?<date>\d+\D\d+\D\d+) STATEMENT OF CAPITAL[; ](?:\w+) (?:\d+\.\d+|\.\d+|\d+)'
   then:
     define:
-      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       data.action_date: '[% date | bson_date %]'
       data.category: capital
@@ -10090,7 +10091,7 @@
       data.description: '^(?i)SUB-DIVISION RE-CONVERSION (?<date>\d+\D\d+\D\d+) STATEMENT OF CAPITAL[; ](?:\w+) (?:\d+\.\d+|\.\d+|\d+)'
   then:
     define:
-      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       data.action_date: '[% date | bson_date %]'
       data.category: capital
@@ -10126,7 +10127,7 @@
       data.description: '^(?i)RETURN OF PURCHASE OF OWN SHARES\D*(?<date>\d+\D\d+\D\d+) TREASURY CAPITAL (?:\w+) (?:\d+\.\d+|\.\d+|\d+)'
   then:
     define:
-      extract: '(?i:RETURN OF PURCHASE OF OWN SHARES\D*(?<capital_date>\d+\D\d+\D\d+) TREASURY CAPITAL (?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:RETURN OF PURCHASE OF OWN SHARES\D*(?<capitalDate>\d+\D\d+\D\d+) TREASURY CAPITAL (?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       data.action_date: '[% date | bson_date %]'
       data.category: capital
@@ -10142,7 +10143,7 @@
       data.description: '^(?i)RETURN OF PURCHASE OF OWN SHARES\D*(?<date>\d+\D\d+\D\d+) SHARE CAPITAL (?:\w+) (?:\d+\.\d+|\.\d+|\d+)'
   then:
     define:
-      extract: '(?i:\bSHARE CAPITAL (?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:\bSHARE CAPITAL (?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       data.action_date: '[% date | bson_date %]'
       data.category: capital
@@ -10178,7 +10179,7 @@
       data.description: '^(?i)(?<date>\d+\D\d+\D\d+) TREASURY CAPITAL (?:\w+) (?:\d+\.\d+|\.\d+|\d+)'
   then:
     define:
-      extract: '(?i:(?<capital_date>\d+\D\d+\D\d+) TREASURY CAPITAL (?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:(?<capitalDate>\d+\D\d+\D\d+) TREASURY CAPITAL (?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       data.action_date: '[% date | bson_date %]'
       data.category: capital
@@ -10197,7 +10198,7 @@
     define:
       # FIXME this preserves the behaviour of the latest version in develop even though it isn't right
       # (e.g. the the absence of a figure will trigger an undefined-value warning)
-      extract: '(?i:(?<capital_date>\d+\D\d+\D\d+) TREASURY CAPITAL (?<capital_currency>\w+))'
+      extract: '(?i:(?<capitalDate>\d+\D\d+\D\d+) TREASURY CAPITAL (?<capitalCurrency>\w+))'
     set:
       data.category: capital
       data.description: capital-sale-or-transfer-treasury-shares-with-date-currency
@@ -10213,7 +10214,7 @@
       data.description: '^(?i)(?<date>\d+\D\d+\D\d+).?(?:\w+) TR (?:\d+\.\d+|\.\d+|\d+)'
   then:
     define:
-      extract: '(?i:(?<capital_currency>\w+) TR (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:(?<capitalCurrency>\w+) TR (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       data.action_date: '[% date | bson_date %]'
       data.category: capital
@@ -10249,7 +10250,7 @@
       data.description: '^(?i:(?<date>\d+\D\d+\D\d+) (?:(?:STATEMENT OF CAPITAL)|(?:TREASURY CAPITAL)) \w+ (?:\d+\.\d+|\.\d+|\d+))'
   then:
     define:
-      extract: '(?i:(?<capital_date>\d+\D\d+\D\d+) (?:(?<capital_desc>STATEMENT OF CAPITAL)|(?<capital_alt_desc>TREASURY CAPITAL)) (?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:(?<capitalDate>\d+\D\d+\D\d+) (?:(?<capitalDesc>STATEMENT OF CAPITAL)|(?<capitalAltDesc>TREASURY CAPITAL)) (?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
       alt_description: capital-cancellation-treasury-shares-with-date-treasury-capital-figure
     set:
       data.category: capital
@@ -10274,7 +10275,7 @@
       data.description: '^(?i)(?<date>\d+\D\d+\D\d+) STATEMENT OF CAPITAL (?:\w+) (?:\d+\.\d+|\.\d+|\d+)'
   then:
     define:
-      extract: '(?i:\bSTATEMENT OF CAPITAL (?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:\bSTATEMENT OF CAPITAL (?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       data.action_date: '[% date | bson_date %]'
       data.category: capital
@@ -10290,7 +10291,7 @@
       data.description: '^(?i)(?<date>\d+\D\d+\D\d+) STATEMENT OF CAPITAL (?:\w+) (?:\d+\.\d+|\.\d+|\d+)'
   then:
     define:
-      extract: '(?i:\bSTATEMENT OF CAPITAL (?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:\bSTATEMENT OF CAPITAL (?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       data.action_date: '[% date | bson_date %]'
       data.category: capital
@@ -10368,7 +10369,7 @@
       data.description: '^(?i)(?<date>\d+\D\d+\D\d+) STATEMENT OF CAPITAL (?:\w+) (?:\d+\.\d+|\.\d+|\d+)'
   then:
     define:
-      extract: '(?i:\bSTATEMENT OF CAPITAL (?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:\bSTATEMENT OF CAPITAL (?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       data.action_date: '[% date | bson_date %]'
       data.category: capital
@@ -10384,7 +10385,7 @@
       data.description: '^(?i)(?<date>\d+\D\d+\D\d+) STATEMENT OF CAPITAL (?:\w+) (?:\d+\.\d+|\.\d+|\d+)'
   then:
     define:
-      extract: '(?i:\bSTATEMENT OF CAPITAL (?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:\bSTATEMENT OF CAPITAL (?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       data.action_date: '[% date | bson_date %]'
       data.category: capital
@@ -10424,7 +10425,7 @@
       data.description: '^(?i)(?<date>\d+\D\d+\D\d+) STATEMENT OF CAPITAL (?:\w+) (?:\d+\.\d+|\.\d+|\d+)'
   then:
     define:
-      extract: '(?i:\bSTATEMENT OF CAPITAL (?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:\bSTATEMENT OF CAPITAL (?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       data.action_date: '[% date | bson_date %]'
       data.category: capital
@@ -14583,7 +14584,7 @@
     eq:
       data.type: LIQ MISC OC(NI)
     like:
-      data.description: '^(?i:COURT ORDER INSOLVENCY#USERTEXT:LIQ. CASE NO.(?<case_number>\d+))$'
+      data.description: '^(?i:COURT ORDER INSOLVENCY#USERTEXT:LIQ. CASE NO.(?<caseNumber>\d+))$'
   then:
     set:
       data.category: insolvency
@@ -14612,7 +14613,7 @@
     eq:
       data.type: 4.32(NI)
     like:
-      data.description: '^(?i:NOTICE OF APPOINTMENT OF LIQUIDATOR (COMPULSORY):LIQ. CASE NO.(?<case_number>\d+):.*)$'
+      data.description: '^(?i:NOTICE OF APPOINTMENT OF LIQUIDATOR (COMPULSORY):LIQ. CASE NO.(?<caseNumber>\d+):.*)$'
   then:
     set:
       data.category: insolvency
@@ -14839,7 +14840,7 @@
     eq:
       data.type: 2.24B
     like:
-      data.description: "^(?i:ADMINISTRATOR'S PROGRESS REPORT:BROUGHT DOWN DATE (?<brought_down_date>\\d+\\D\\d+\\D\\d+))"
+      data.description: "^(?i:ADMINISTRATOR'S PROGRESS REPORT:BROUGHT DOWN DATE (?<broughtDownDate>\\d+\\D\\d+\\D\\d+))"
   then:
     set:
       data.category: insolvency
@@ -14897,7 +14898,7 @@
     eq:
       data.type: 2.20B(Scot)
     like:
-      data.description: "^(?i:ADMINISTRATOR'S PROGRESS REPORT:BROUGHT DOWN DATE (?<brought_down_date>\\d+\\D\\d+\\D\\d+).*)$"
+      data.description: "^(?i:ADMINISTRATOR'S PROGRESS REPORT:BROUGHT DOWN DATE (?<broughtDownDate>\\d+\\D\\d+\\D\\d+).*)$"
   then:
     set:
       data.category: insolvency
@@ -14946,7 +14947,7 @@
     eq:
       data.type: 2.15B(Scot)
     like:
-      data.description: '^(?i:NOTICE OF STATEMENT OF AFFAIRS/(?<form_attached>.+?))$'
+      data.description: '^(?i:NOTICE OF STATEMENT OF AFFAIRS/(?<formAttached>.+?))$'
   then:
     set:
       data.category: insolvency
@@ -17038,7 +17039,7 @@
     eq:
       data.type: RP04AP01
     like:
-      data.description: '^(?i:Second filing of AP01 for (?<officer_name>.+?))$'
+      data.description: '^(?i:Second filing of AP01 for (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -17050,7 +17051,7 @@
     eq:
       data.type: RP04AP02
     like:
-      data.description: '^(?i:Second filing of AP02 for (?<officer_name>.+?))$'
+      data.description: '^(?i:Second filing of AP02 for (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -17062,7 +17063,7 @@
     eq:
       data.type: RP04AP03
     like:
-      data.description: '^(?i:Second filing of AP03 for (?<officer_name>.+?))$'
+      data.description: '^(?i:Second filing of AP03 for (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -17074,7 +17075,7 @@
     eq:
       data.type: RP04AP04
     like:
-      data.description: '^(?i:Second filing of AP04 for (?<officer_name>.+?))$'
+      data.description: '^(?i:Second filing of AP04 for (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -17086,7 +17087,7 @@
     eq:
       data.type: RP04CH01
     like:
-      data.description: '^(?i:Second filing of CH01 for (?<officer_name>.+?))$'
+      data.description: '^(?i:Second filing of CH01 for (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -17098,7 +17099,7 @@
     eq:
       data.type: RP04CH02
     like:
-      data.description: '^(?i:Second filing of CH02 for (?<officer_name>.+?))$'
+      data.description: '^(?i:Second filing of CH02 for (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -17110,7 +17111,7 @@
     eq:
       data.type: RP04CH03
     like:
-      data.description: '^(?i:Second filing of CH03 for (?<officer_name>.+?))$'
+      data.description: '^(?i:Second filing of CH03 for (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -17122,7 +17123,7 @@
     eq:
       data.type: RP04CH04
     like:
-      data.description: '^(?i:Second filing of CH04 for (?<officer_name>.+?))$'
+      data.description: '^(?i:Second filing of CH04 for (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -17134,7 +17135,7 @@
     eq:
       data.type: RP04TM01
     like:
-      data.description: '^(?i:Second filing of TM01 for (?<officer_name>.+?))$'
+      data.description: '^(?i:Second filing of TM01 for (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -17146,7 +17147,7 @@
     eq:
       data.type: RP04TM02
     like:
-      data.description: '^(?i:Second filing of TM02 for (?<officer_name>.+?))$'
+      data.description: '^(?i:Second filing of TM02 for (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -17158,7 +17159,7 @@
     eq:
       data.type: RP04AR01
     like:
-      data.description: '^(?i:Second filing of AR01 with a made up date of (?<made_up_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:Second filing of AR01 with a made up date of (?<madeUpDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: annual-return
@@ -17171,7 +17172,7 @@
     eq:
       data.type: RP04LLAP01
     like:
-      data.description: '^(?i:Second filing of LLAP01 for (?<officer_name>.+?))$'
+      data.description: '^(?i:Second filing of LLAP01 for (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -17183,7 +17184,7 @@
     eq:
       data.type: RP04LLAP02
     like:
-      data.description: '^(?i:Second filing of LLAP02 for (?<officer_name>.+?))$'
+      data.description: '^(?i:Second filing of LLAP02 for (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -17195,7 +17196,7 @@
     eq:
       data.type: RP04LLCH01
     like:
-      data.description: '^(?i:Second filing of LLCH01 for (?<officer_name>.+?))$'
+      data.description: '^(?i:Second filing of LLCH01 for (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -17207,7 +17208,7 @@
     eq:
       data.type: RP04LLCH02
     like:
-      data.description: '^(?i:Second filing of LLCH02 for (?<officer_name>.+?))$'
+      data.description: '^(?i:Second filing of LLCH02 for (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -17219,7 +17220,7 @@
     eq:
       data.type: RP04LLTM01
     like:
-      data.description: '^(?i:Second filing of LLTM01 for (?<officer_name>.+?))$'
+      data.description: '^(?i:Second filing of LLTM01 for (?<officerName>.+?))$'
   then:
     set:
       data.category: officers
@@ -17231,7 +17232,7 @@
     eq:
       data.type: RP04LLAR01
     like:
-      data.description: '^(?i:Second filing of LLAR01 with a made up date of (?<made_up_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:Second filing of LLAR01 with a made up date of (?<madeUpDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: annual-return
@@ -17244,7 +17245,7 @@
     eq:
       data.type: RP04CS01
     like:
-      data.description: '^(?i:Second filing of Confirmation Statement Dated (?<made_up_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:Second filing of Confirmation Statement Dated (?<madeUpDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: confirmation-statement
@@ -17256,7 +17257,7 @@
     eq:
       data.type: RP04LLCS01
     like:
-      data.description: '^(?i:Second filing of Confirmation Statement Dated (?<made_up_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:Second filing of Confirmation Statement Dated (?<madeUpDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: confirmation-statement
@@ -17268,7 +17269,7 @@
     eq:
       data.type: SLPCS01
     like:
-      data.description: '^(?i:CONFIRMATION STATEMENT MADE ON (?<made_up_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:CONFIRMATION STATEMENT MADE ON (?<madeUpDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: confirmation-statement
@@ -17288,7 +17289,7 @@
     eq:
       data.type: SQPCS01
     like:
-      data.description: '^(?i:CONFIRMATION STATEMENT MADE ON (?<made_up_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:CONFIRMATION STATEMENT MADE ON (?<madeUpDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: confirmation-statement
@@ -17308,7 +17309,7 @@
     eq:
       data.type: CS01
     like:
-      data.description: '^(?i:CONFIRMATION STATEMENT MADE ON (?<made_up_date>\d+\D\d+\D\d+), NO UPDATES)$'
+      data.description: '^(?i:CONFIRMATION STATEMENT MADE ON (?<madeUpDate>\d+\D\d+\D\d+), NO UPDATES)$'
   then:
     set:
       data.category: confirmation-statement
@@ -17320,7 +17321,7 @@
     eq:
       data.type: CS01
     like:
-      data.description: '^(?i:CONFIRMATION STATEMENT MADE ON (?<made_up_date>\d+\D\d+\D\d+), WITH UPDATES)$'
+      data.description: '^(?i:CONFIRMATION STATEMENT MADE ON (?<madeUpDate>\d+\D\d+\D\d+), WITH UPDATES)$'
   then:
     set:
       data.category: confirmation-statement
@@ -17341,7 +17342,7 @@
     eq:
       data.type: LLCS01
     like:
-      data.description: '^(?i:CONFIRMATION STATEMENT MADE ON\s+(?<made_up_date>\d+\D\d+\D\d+),\s+WITH UPDATES)$'
+      data.description: '^(?i:CONFIRMATION STATEMENT MADE ON\s+(?<madeUpDate>\d+\D\d+\D\d+),\s+WITH UPDATES)$'
   then:
     set:
       data.category: confirmation-statement
@@ -17353,7 +17354,7 @@
     eq:
       data.type: LLCS01
     like:
-      data.description: '^(?i:CONFIRMATION STATEMENT MADE ON\s+(?<made_up_date>\d+\D\d+\D\d+),\s+NO UPDATES)$'
+      data.description: '^(?i:CONFIRMATION STATEMENT MADE ON\s+(?<madeUpDate>\d+\D\d+\D\d+),\s+NO UPDATES)$'
   then:
     set:
       data.category: confirmation-statement
@@ -18057,7 +18058,7 @@
       data.description: '^(?i:SECOND FILED SH01 - (?<date>\d+\D\d+\D\d+) STATEMENT OF CAPITAL[; ](?:\w+) (?:\d+\.\d+|\.\d+|\d+))$'
   then:
     define:
-      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       data.action_date: '[% date | bson_date %]'
       data.category: capital
@@ -18073,7 +18074,7 @@
       data.description: '^(?i:SECOND FILED SH02 - (?<date>\d+\D\d+\D\d+) STATEMENT OF CAPITAL (?:\w+) (?:\d+\.\d+|\.\d+|\d+))'
   then:
     define:
-      extract: '(?i:\bSTATEMENT OF CAPITAL (?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:\bSTATEMENT OF CAPITAL (?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       data.action_date: '[% date | bson_date %]'
       data.category: capital
@@ -18089,7 +18090,7 @@
       data.description: '^(?i:SECOND FILED SH02 - CONSOLIDATION (?<date>\d+\D\d+\D\d+) STATEMENT OF CAPITAL[; ](?:\w+) (?:\d+\.\d+|\.\d+|\d+))'
   then:
     define:
-      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       data.action_date: '[% date | bson_date %]'
       data.category: capital
@@ -18117,7 +18118,7 @@
       data.description: '^(?i:SECOND FILED SH02 - SUB-DIVISION (?<date>\d+\D\d+\D\d+) STATEMENT OF CAPITAL[; ](?:\w+) (?:\d+\.\d+|\.\d+|\d+))'
   then:
     define:
-      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       data.action_date: '[% date | bson_date %]'
       data.category: capital
@@ -18145,7 +18146,7 @@
       data.description: '^(?i:SECOND FILED SH02 - RE-DEMPTION (?<date>\d+\D\d+\D\d+) STATEMENT OF CAPITAL[; ](?:\w+) (?:\d+\.\d+|\.\d+|\d+))'
   then:
     define:
-      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       data.action_date: '[% date | bson_date %]'
       data.category: capital
@@ -18173,7 +18174,7 @@
       data.description: '^(?i:SECOND FILED SH02 - RE-CONVERSION (?<date>\d+\D\d+\D\d+) STATEMENT OF CAPITAL[; ](?:\w+) (?:\d+\.\d+|\.\d+|\d+))'
   then:
     define:
-      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       data.action_date: '[% date | bson_date %]'
       data.category: capital
@@ -18201,7 +18202,7 @@
       data.description: '^(?i:SECOND FILED SH02 - CONSOLIDATION SUB-DIVISION RE-CONVERSION (?<date>\d+\D\d+\D\d+) STATEMENT OF CAPITAL[; ](?:\w+) (?:\d+\.\d+|\.\d+|\d+))'
   then:
     define:
-      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       data.action_date: '[% date | bson_date %]'
       data.category: capital
@@ -18229,7 +18230,7 @@
       data.description: '^(?i:SECOND FILED SH02 - CONSOLIDATION SUB-DIVISION (?<date>\d+\D\d+\D\d+) STATEMENT OF CAPITAL[; ](?:\w+) (?:\d+\.\d+|\.\d+|\d+))'
   then:
     define:
-      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       data.action_date: '[% date | bson_date %]'
       data.category: capital
@@ -18257,7 +18258,7 @@
       data.description: '^(?i:SECOND FILED SH02 - CONSOLIDATION RE-CONVERSION (?<date>\d+\D\d+\D\d+) STATEMENT OF CAPITAL[; ](?:\w+) (?:\d+\.\d+|\.\d+|\d+))'
   then:
     define:
-      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       data.action_date: '[% date | bson_date %]'
       data.category: capital
@@ -18285,7 +18286,7 @@
       data.description: '^(?i:SECOND FILED SH02 - SUB-DIVISION RE-CONVERSION (?<date>\d+\D\d+\D\d+) STATEMENT OF CAPITAL[; ](?:\w+) (?:\d+\.\d+|\.\d+|\d+))'
   then:
     define:
-      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       data.action_date: '[% date | bson_date %]'
       data.category: capital
@@ -18321,7 +18322,7 @@
       data.description: '^(?i:SECOND FILED SH05 - (?<date>\d+\D\d+\D\d+) (?:(?:STATEMENT OF CAPITAL)|(?:TREASURY CAPITAL)) \w+ (?:\d+\.\d+|\.\d+|\d+))'
   then:
     define:
-      extract: '(?i:(?<capital_date>\d+\D\d+\D\d+) (?:(?<capital_desc>STATEMENT OF CAPITAL)|(?<capital_alt_desc>TREASURY CAPITAL)) (?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:(?<capitalDate>\d+\D\d+\D\d+) (?:(?<capitalDesc>STATEMENT OF CAPITAL)|(?<capitalAltDesc>TREASURY CAPITAL)) (?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
       alt_description: second-filing-capital-cancellation-treasury-shares-with-date-treasury-capital-figure
     set:
       data.category: capital
@@ -18346,7 +18347,7 @@
       data.description: '^(?i:SECOND FILED SH06 - (?<date>\d+\D\d+\D\d+) STATEMENT OF CAPITAL (?:\w+) (?:\d+\.\d+|\.\d+|\d+))'
   then:
     define:
-      extract: '(?i:\bSTATEMENT OF CAPITAL (?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:\bSTATEMENT OF CAPITAL (?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       data.action_date: '[% date | bson_date %]'
       data.category: capital
@@ -18362,7 +18363,7 @@
       data.description: '^(?i:SECOND FILED SH07 - (?<date>\d+\D\d+\D\d+) STATEMENT OF CAPITAL (?:\w+) (?:\d+\.\d+|\.\d+|\d+))'
   then:
     define:
-      extract: '(?i:\bSTATEMENT OF CAPITAL (?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:\bSTATEMENT OF CAPITAL (?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       data.action_date: '[% date | bson_date %]'
       data.category: capital
@@ -18378,7 +18379,7 @@
       data.description: '^(?i:SECOND FILED SH14 - (?<date>\d+\D\d+\D\d+) STATEMENT OF CAPITAL (?:\w+) (?:\d+\.\d+|\.\d+|\d+))'
   then:
     define:
-      extract: '(?i:\bSTATEMENT OF CAPITAL (?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:\bSTATEMENT OF CAPITAL (?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       data.action_date: '[% date | bson_date %]'
       data.category: capital
@@ -18394,7 +18395,7 @@
       data.description: '^(?i:SECOND FILED SH15 - (?<date>\d+\D\d+\D\d+) STATEMENT OF CAPITAL (?:\w+) (?:\d+\.\d+|\.\d+|\d+))'
   then:
     define:
-      extract: '(?i:\bSTATEMENT OF CAPITAL (?<capital_currency>\w+) (?<capital_figure>\d+\.\d+|\.\d+|\d+))'
+      extract: '(?i:\bSTATEMENT OF CAPITAL (?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
     set:
       data.action_date: '[% date | bson_date %]'
       data.category: capital
@@ -18793,9 +18794,9 @@
       original_description: '[% data.description | sentence_case %]'
 - when:
     eq:
-      data.type: PRE14
+     data.type: PRE14
     like:
-      data.description: '^(?i:PRE14 DOCUMENT PACKAGE)$'
+     data.description: '^(?i:PRE14 DOCUMENT PACKAGE)$'
   then:
     set:
       data.category: historical
@@ -18837,7 +18838,7 @@
       original_description: '[% data.description | sentence_case %]'
 - when:
     eq:
-      data.type: FE01
+     data.type: FE01
   then:
     set:
       data.category: insolvency
@@ -18926,7 +18927,7 @@
     eq:
       data.type: OE02
     like:
-      data.description: '^(?i:ANNUAL UPDATE MADE ON (?<made_up_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:ANNUAL UPDATE MADE ON (?<madeUpDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: confirmation-statement
@@ -18954,7 +18955,7 @@
     eq:
       data.type: RP09
     like:
-      data.description: '^(?i:Director''s \(or Secretary''s\) service address changed to (?<company_number>.+?) - (?<default_address>.+?), for (?<officer_name>.+?) on (?<change_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:Director''s \(or Secretary''s\) service address changed to (?<companyNumber>.+?) - (?<defaultAddress>.+?), for (?<officerName>.+?) on (?<changeDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: address
@@ -18968,7 +18969,7 @@
     eq:
       data.type: RP09
     like:
-      data.description: '^(?i:Director''s \(or Secretary''s\) registered or principal office address changed to (?<company_number>.+?) - (?<default_address>.+?), for (?<officer_name>.+?) on (?<change_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:Director''s \(or Secretary''s\) registered or principal office address changed to (?<companyNumber>.+?) - (?<defaultAddress>.+?), for (?<officerName>.+?) on (?<changeDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: address
@@ -18982,7 +18983,7 @@
     eq:
       data.type: RP10
     like:
-      data.description: '^(?i:PSC''s service address changed to (?<company_number>.+?) - (?<default_address>.+?), for (?<psc_name>.+?) on (?<change_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:PSC''s service address changed to (?<companyNumber>.+?) - (?<defaultAddress>.+?), for (?<pscName>.+?) on (?<changeDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: address
@@ -18996,7 +18997,7 @@
     eq:
       data.type: RP10
     like:
-      data.description: '^(?i:PSC''s registered or principal office address changed to (?<company_number>.+?) - (?<default_address>.+?), for (?<psc_name>.+?) on (?<change_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:PSC''s registered or principal office address changed to (?<companyNumber>.+?) - (?<defaultAddress>.+?), for (?<pscName>.+?) on (?<changeDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: address
@@ -19010,7 +19011,7 @@
     eq:
       data.type: RP10
     like:
-      data.description: '^(?i:PSC''s principal office address changed to (?<company_number>.+?) - (?<default_address>.+?), for (?<psc_name>.+?) on (?<change_date>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:PSC''s principal office address changed to (?<companyNumber>.+?) - (?<defaultAddress>.+?), for (?<pscName>.+?) on (?<changeDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: address
