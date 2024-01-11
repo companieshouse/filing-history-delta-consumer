@@ -18,7 +18,7 @@ public class TransformerService {
         for (TransformRule rule : compiledRules) {
             Result result = rule.match(delta);
             if (result.matched()) {
-                return rule.apply(delta, result.groups());
+                return rule.apply(delta, result.contextData()); // TODO
             }
         }
         return defaultRule.apply(delta, Map.of());

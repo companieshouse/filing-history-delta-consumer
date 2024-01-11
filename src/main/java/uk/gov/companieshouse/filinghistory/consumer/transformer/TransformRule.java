@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.util.Map;
 
 // Container for Rules - TBD
-public record TransformRule(When when, Then then, Default defaultRule/* TODO and set etc*/) {
+public record TransformRule(When when, Then then, Default defaultRule) {
 
     public TransformRule(Default defaultRule) {
         this(null, null, defaultRule);

@@ -14,10 +14,13 @@ public record ThenProperties(@JsonProperty("define") Map<String, String> define,
 
     public Then compile() {
         // Parse the entries in the set, define and exec to:
-        //  - set: build a map of field name -> one or more transformer functions
-        Entry<String, ?> setElements = set.entrySet().stream()
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Missing data.type or type data"));
+        //  - set: build a map of field name -> a transformer function
+//        Map<String, List<String>> setElements = set.entrySet().stream()
+//                .map(entry -> )
+//                .findFirst()
+//                .orElseThrow(() -> new IllegalArgumentException("Missing data.type or type data"));
+
+
 
         //  - exec: ?? field name -> Call a custom method to build the value. Check Perl ??
         //  - define: ?? Apply regex to some field. Check Perl ??
