@@ -1,4 +1,4 @@
-package uk.gov.companieshouse.filinghistory.consumer.transformer;
+package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,7 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
-import uk.gov.companieshouse.filinghistory.consumer.transformer.parsers.RuleProperties;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.parsers.RuleProperties;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.rules.Rule;
 
 @Configuration
 public class TransformerConfig {
@@ -21,7 +22,7 @@ public class TransformerConfig {
         File file = new ClassPathResource(rulesFile).getFile();
         List<RuleProperties> ruleProperties = mapper.readValue(file, new TypeReference<>() {});
 
-        List<TransformRule> rules =  ruleProperties.stream()
+        List<Rule> rules = ruleProperties.stream()
                 .map(RuleProperties::compile)
                 .toList();
 

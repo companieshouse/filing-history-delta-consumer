@@ -1,4 +1,4 @@
-package uk.gov.companieshouse.filinghistory.consumer.transformer;
+package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.rules;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -13,13 +13,15 @@ public record Then(Map<String, Pattern> define,
     public JsonNode apply(JsonNode putRequest, Map<String, String> contextData) {
         ObjectNode updated = putRequest.deepCopy();
         // 1. Process define elements to add to the contextData
-        // 2. Setters
-        setters.forEach((key, value) -> value.transformer().transform(putRequest, updated, key, value, contextData));
+        // TODO
 
-        // Parse the entries in the set, define and exec to:
-        //  - set: build a map of field name -> one or more transformer functions
-        //  - exec: ?? field na.e -> Call a custom method to build the value. Check Perl ??
-        //  - define: ?? Apply regex to some field. Check Perl ??
+        // 2. Setters
+        setters.forEach(
+                (key, value) -> value.transformer().transform(updated, key, value, contextData));
+
+        // 3. Exec. field name -> Call a custom method to build the value. Check Perl ??
+        // TODO
+
         return updated;
     }
 

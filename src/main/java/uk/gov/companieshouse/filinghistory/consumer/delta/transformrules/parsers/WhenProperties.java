@@ -1,11 +1,11 @@
-package uk.gov.companieshouse.filinghistory.consumer.transformer.parsers;
+package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.parsers;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import uk.gov.companieshouse.filinghistory.consumer.transformer.When;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.rules.When;
 
 public record WhenProperties(@JsonProperty("eq") Map<String, String> eq,
                              @JsonProperty("like") Map<String, String> like) {

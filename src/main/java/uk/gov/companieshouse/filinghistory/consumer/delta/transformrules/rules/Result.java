@@ -1,4 +1,4 @@
-package uk.gov.companieshouse.filinghistory.consumer.transformer;
+package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.rules;
 
 import java.util.Map;
 

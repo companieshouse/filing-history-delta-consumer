@@ -1,16 +1,16 @@
-package uk.gov.companieshouse.filinghistory.consumer.transformer;
+package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.rules;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import java.util.Map;
 
 // Container for Rules - TBD
-public record TransformRule(When when, Then then, Default defaultRule) {
+public record Rule(When when, Then then, Default defaultRule) {
 
-    public TransformRule(Default defaultRule) {
+    public Rule(Default defaultRule) {
         this(null, null, defaultRule);
     }
 
-    public TransformRule(When when, Then then) {
+    public Rule(When when, Then then) {
         this(when, then, null);
     }
 

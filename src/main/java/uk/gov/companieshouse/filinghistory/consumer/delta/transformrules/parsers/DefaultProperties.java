@@ -1,8 +1,8 @@
-package uk.gov.companieshouse.filinghistory.consumer.transformer.parsers;
+package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.parsers;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Map;
-import uk.gov.companieshouse.filinghistory.consumer.transformer.Default;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.rules.Default;
 
 class DefaultProperties {
 

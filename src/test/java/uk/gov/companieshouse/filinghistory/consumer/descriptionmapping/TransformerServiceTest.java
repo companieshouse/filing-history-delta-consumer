@@ -1,4 +1,4 @@
-package uk.gov.companieshouse.filinghistory.consumer.transformer;
+package uk.gov.companieshouse.filinghistory.consumer.descriptionmapping;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -8,6 +8,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.TransformerConfig;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.TransformerService;
 
 class TransformerServiceTest {
 

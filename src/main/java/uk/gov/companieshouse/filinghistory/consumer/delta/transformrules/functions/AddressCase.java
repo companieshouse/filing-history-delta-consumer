@@ -1,18 +1,16 @@
-package uk.gov.companieshouse.filinghistory.consumer.transformer;
+package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Map;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.rules.SetterArgs;
 
-public class ReplaceProperty implements Transformer {
+public class AddressCase implements Transformer {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
-    public void transform(JsonNode inputRequest,
-            ObjectNode rootNode,
+    public void transform(ObjectNode rootNode,
             String field,
             SetterArgs setterArgs,
             Map<String, String> contextValue) {
@@ -25,11 +23,6 @@ public class ReplaceProperty implements Transformer {
 
         String finalField = fields[fields.length - 1];
 
-        if (setterArgs.arguments().size() == 1) {
-            rootNode.put(finalField, setterArgs.arguments().getFirst());
-        } else {
-            ArrayNode leafNode = rootNode.putArray(finalField);
-            setterArgs.arguments().forEach(leafNode::add);
-        }
+        rootNode.put(finalField, "TODO: Address case: " + setterArgs.arguments().getFirst());
     }
 }

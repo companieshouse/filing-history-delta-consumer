@@ -1,7 +1,7 @@
-package uk.gov.companieshouse.filinghistory.consumer.transformer.parsers;
+package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.parsers;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import uk.gov.companieshouse.filinghistory.consumer.transformer.TransformRule;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.rules.Rule;
 
 public class RuleProperties {
 
@@ -12,11 +12,11 @@ public class RuleProperties {
     @JsonProperty("default")
     private DefaultProperties defaultRule;
 
-    public TransformRule compile() {
+    public Rule compile() {
         if (defaultRule != null) {
-            return new TransformRule(defaultRule.compile());
+            return new Rule(defaultRule.compile());
         } else {
-            return new TransformRule(when.compile(), then.compile());
+            return new Rule(when.compile(), then.compile());
         }
     }
 }

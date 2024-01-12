@@ -1,4 +1,4 @@
-package uk.gov.companieshouse.filinghistory.consumer.transformer;
+package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.rules;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import java.util.HashMap;
