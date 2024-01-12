@@ -28,6 +28,23 @@ class TransformerServiceTest {
                 "_document_id" : "000AAAAAAAA1234"
             }""";
 
+    // TODO The dates might not have the correct structure
+    private static final String aaRequestBody = """
+            {
+                "_id" : "MTUxMjg0MTM5YWRpcXprY3g",
+                "company_number" : "14388379",
+                "_document_id" : "000AOKK2A9N0981",
+                "_entity_id" : "151284139",
+                "data" : {
+                    "action_date" : "1998-04-05T00:00:00.000+0000",
+                    "category" : "accounts",
+                    "date" : "1998-10-12T11:59:17.000+0000",
+                    "description" : "GROUP ACCOUNTS FOR SMALL CO. MADE UP TO 05/04/98",
+                    "paper_filed" : true,
+                    "type" : "AA"
+                }
+            }""";
+
     private TransformerService service;
 
     @BeforeEach
@@ -36,10 +53,24 @@ class TransformerServiceTest {
     }
 
     @Test
-    void transform() throws JsonProcessingException {
+    void transformTM01() throws JsonProcessingException {
         // given
         ObjectMapper mapper = new ObjectMapper();
         JsonNode delta = mapper.readTree(tm01RequestBody);
+
+        // when
+        JsonNode requestBody = service.transform(delta);
+
+        // then
+        assertNotNull(requestBody);
+        System.out.println(requestBody);
+    }
+
+    @Test
+    void transformAA() throws JsonProcessingException {
+        // given
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode delta = mapper.readTree(aaRequestBody);
 
         // when
         JsonNode requestBody = service.transform(delta);

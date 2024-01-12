@@ -6122,8 +6122,8 @@
       data.category: accounts
       data.description: 'accounts-with-accounts-type-[% accounts_type | lc %]-group'
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% made_up_date | bson_date %]'
-      data.description_values.made_up_date: '[% made_up_date | bson_date %]'
+      data.action_date: '[% madeUpDate | bson_date %]'
+      data.description_values.made_up_date: '[% madeUpDate | bson_date %]'
 - when:
     eq:
       data.type: AA
@@ -6134,8 +6134,8 @@
       data.category: accounts
       data.description: accounts-with-accounts-type-group
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% made_up_date | bson_date %]'
-      data.description_values.made_up_date: '[% made_up_date | bson_date %]'
+      data.action_date: '[% madeUpDate | bson_date %]'
+      data.description_values.made_up_date: '[% madeUpDate | bson_date %]'
 - when:
     eq:
       data.type: AA
@@ -6146,8 +6146,8 @@
       data.category: accounts
       data.description: accounts-with-accounts-type-full
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% made_up_date | bson_date %]'
-      data.description_values.made_up_date: '[% made_up_date | bson_date %]'
+      data.action_date: '[% madeUpDate | bson_date %]'
+      data.description_values.made_up_date: '[% madeUpDate | bson_date %]'
 - when:
     eq:
       data.type: AA

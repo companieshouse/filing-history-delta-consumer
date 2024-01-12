@@ -48,7 +48,8 @@ public record ThenProperties(@JsonProperty("define") Map<String, String> define,
             if (matcher.matches()) {
                 String sourcePath = matcher.group(1);
                 Transformer transformer = switch (matcher.group(2)) {
-                    case "address_case" -> new AddressCase();
+                    case "address_case" ->
+                            new AddressCase(); // TODO Make functions Beans and inject
                     case "bson_date" -> new BsonDate();
                     case "lc" -> new LowerCase();
                     case "sentence_case" -> new SentenceCase();

@@ -17,12 +17,15 @@ public record When(String field, String formType, Map<String, Pattern> like) {
             Map<String, String> groups = new HashMap<>();
             boolean matched = like.entrySet().stream()
                     .allMatch(e -> {
-                        JsonNode deltaLikeField = putRequest.get("/" + e.getKey().replace(".", "/"));
-                        if (deltaLikeField != null) {
+                        JsonNode deltaLikeField = putRequest.at("/" + e.getKey().replace(".", "/"));
+                        if (deltaLikeField != null && deltaLikeField.textValue() != null) {
                             Matcher matcher = e.getValue().matcher(deltaLikeField.textValue());
-                            groups.putAll(matcher.namedGroups().entrySet().stream()
-                                    .collect(Collectors.toMap(Entry::getKey, entry -> matcher.group(entry.getValue()))));
-                            return matcher.matches();
+                            if (matcher.find()) {
+                                groups.putAll(matcher.namedGroups().entrySet().stream()
+                                        .collect(Collectors.toMap(Entry::getKey,
+                                                entry -> matcher.group(entry.getValue()))));
+                                return true;
+                            }
                         }
                         return false;
                     });
