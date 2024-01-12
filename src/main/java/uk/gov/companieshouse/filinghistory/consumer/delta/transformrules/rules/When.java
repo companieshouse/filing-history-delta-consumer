@@ -14,22 +14,23 @@ public record When(String field, String formType, Map<String, Pattern> like) {
         String deltaFormType = putRequest.at("/" + field.replace(".", "/")).textValue();
 
         if (formType.equals(deltaFormType)) {
-            Map<String, String> groups = new HashMap<>();
+            Map<String, String> captureGroups = new HashMap<>();
             boolean matched = like.entrySet().stream()
                     .allMatch(e -> {
                         JsonNode deltaLikeField = putRequest.at("/" + e.getKey().replace(".", "/"));
                         if (deltaLikeField != null && deltaLikeField.textValue() != null) {
                             Matcher matcher = e.getValue().matcher(deltaLikeField.textValue());
                             if (matcher.find()) {
-                                groups.putAll(matcher.namedGroups().entrySet().stream()
-                                        .collect(Collectors.toMap(Entry::getKey,
+                                captureGroups.putAll(matcher.namedGroups().entrySet().stream()
+                                        .collect(Collectors.toMap(
+                                                Entry::getKey,
                                                 entry -> matcher.group(entry.getValue()))));
                                 return true;
                             }
                         }
                         return false;
                     });
-            return new Result(matched, groups);
+            return new Result(matched, captureGroups);
         }
         return new Result(false, Map.of());
     }

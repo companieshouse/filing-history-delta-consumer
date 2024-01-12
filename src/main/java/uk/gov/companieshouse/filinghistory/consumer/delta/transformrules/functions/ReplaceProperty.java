@@ -25,6 +25,13 @@ public class ReplaceProperty implements Transformer {
         String finalField = fields[fields.length - 1];
 
         if (setterArgs.arguments().size() == 1) {
+
+//            TODO
+//            data.category: accounts tick
+//            data.description: 'accounts-with-accounts-type-[% accounts_type | lc %]-group'
+//            original_description: '[% data.description | sentence_case %]'
+//            data.action_date: '[% made_up_date | bson_date %]'
+
             rootNode.put(finalField, setterArgs.arguments().getFirst());
         } else {
             ArrayNode leafNode = rootNode.putArray(finalField);
