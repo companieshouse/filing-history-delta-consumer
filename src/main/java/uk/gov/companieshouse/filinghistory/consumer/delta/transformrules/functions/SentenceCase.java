@@ -1,5 +1,6 @@
 package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Map;
@@ -10,12 +11,13 @@ public class SentenceCase implements Transformer {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
-    public void transform(ObjectNode rootNode,
+    public void transform(JsonNode source,
+            ObjectNode outputNode,
             String field,
             SetterArgs setterArgs,
             Map<String, String> contextValue) {
 
-        ObjectNode workingNode = rootNode;
+        ObjectNode workingNode = outputNode;
 
         String[] fields = field.split("\\."); // len = 2
         for (int i = 0; i < fields.length - 1; i++) {
@@ -24,12 +26,12 @@ public class SentenceCase implements Transformer {
         }
 
         String finalField = fields[fields.length - 1];
-        String nodeText = rootNode.at("/" + setterArgs.arguments().getFirst().replace(".", "/"))
+        String nodeText = outputNode.at("/" + setterArgs.arguments().getFirst().replace(".", "/"))
                 .textValue();
 
         // TODO Apply Perl sentence_case transformation to node text
         String transformedText = "TODO: Sentence case: " + nodeText;
 
-        rootNode.put(finalField, transformedText);
+        outputNode.put(finalField, transformedText);
     }
 }

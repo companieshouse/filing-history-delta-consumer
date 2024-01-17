@@ -1,5 +1,6 @@
 package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -11,15 +12,16 @@ public class ReplaceProperty implements Transformer {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
-    public void transform(ObjectNode rootNode,
+    public void transform(JsonNode source,
+            ObjectNode outputNode,
             String field,
             SetterArgs setterArgs,
             Map<String, String> contextValue) {
 
         String[] fields = field.split("\\."); // len = 2
         for (int i = 0; i < fields.length - 1; i++) {
-            rootNode.putIfAbsent(fields[i], objectMapper.createObjectNode());
-            rootNode = (ObjectNode) rootNode.at("/" + fields[i]);
+            outputNode.putIfAbsent(fields[i], objectMapper.createObjectNode());
+            outputNode = (ObjectNode) outputNode.at("/" + fields[i]);
         }
 
         String finalField = fields[fields.length - 1];
@@ -32,9 +34,9 @@ public class ReplaceProperty implements Transformer {
 //            original_description: '[% data.description | sentence_case %]'
 //            data.action_date: '[% made_up_date | bson_date %]'
 
-            rootNode.put(finalField, setterArgs.arguments().getFirst());
+            outputNode.put(finalField, setterArgs.arguments().getFirst());
         } else {
-            ArrayNode leafNode = rootNode.putArray(finalField);
+            ArrayNode leafNode = outputNode.putArray(finalField);
             setterArgs.arguments().forEach(leafNode::add);
         }
     }

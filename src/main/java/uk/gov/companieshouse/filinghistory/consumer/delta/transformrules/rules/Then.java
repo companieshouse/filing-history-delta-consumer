@@ -17,7 +17,8 @@ public record Then(Map<String, Pattern> define,
 
         // 2. Setters
         setters.forEach(
-                (key, value) -> value.transformer().transform(updated, key, value, contextData));
+                (key, value) -> value.transformer()
+                        .transform(putRequest, updated, key, value, contextData));
 
         // 3. Exec. field name -> Call a custom method to build the value. Check Perl ??
         // TODO
