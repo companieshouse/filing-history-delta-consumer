@@ -1,0 +1,43 @@
+package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.util.Map;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.rules.SetterArgs;
+
+public class ReplaceProperty implements Transformer {
+
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+
+    @Override
+    public void transform(JsonNode source,
+            ObjectNode outputNode,
+            String field,
+            SetterArgs setterArgs,
+            Map<String, String> contextValue) {
+
+        String[] fields = field.split("\\."); // len = 2
+        for (int i = 0; i < fields.length - 1; i++) {
+            outputNode.putIfAbsent(fields[i], objectMapper.createObjectNode());
+            outputNode = (ObjectNode) outputNode.at("/" + fields[i]);
+        }
+
+        String finalField = fields[fields.length - 1];
+
+        if (setterArgs.arguments().size() == 1) {
+
+//            TODO
+//            data.category: accounts tick
+//            data.description: 'accounts-with-accounts-type-[% accounts_type | lc %]-group'
+//            original_description: '[% data.description | sentence_case %]'
+//            data.action_date: '[% made_up_date | bson_date %]'
+
+            outputNode.put(finalField, setterArgs.arguments().getFirst());
+        } else {
+            ArrayNode leafNode = outputNode.putArray(finalField);
+            setterArgs.arguments().forEach(leafNode::add);
+        }
+    }
+}
