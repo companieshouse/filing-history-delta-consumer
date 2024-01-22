@@ -16388,11 +16388,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: notification-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: notifications
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.notification_date | bson_date %]'
-      data.description_values.notification_date: '[% originalValues.notification_date | bson_date %]'
+      data.action_date: '[% original_values.notification_date | bson_date %]'
+      data.description_values.notification_date: '[% original_values.notification_date | bson_date %]'
 - when:
     eq:
       data.type: PSC02
@@ -16400,11 +16400,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: notification-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: notifications
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.notification_date | bson_date %]'
-      data.description_values.notification_date: '[% originalValues.notification_date | bson_date %]'
+      data.action_date: '[% original_values.notification_date | bson_date %]'
+      data.description_values.notification_date: '[% original_values.notification_date | bson_date %]'
 - when:
     eq:
       data.type: PSC03
@@ -16412,11 +16412,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: notification-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: notifications
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.notification_date | bson_date %]'
-      data.description_values.notification_date: '[% originalValues.notification_date | bson_date %]'
+      data.action_date: '[% original_values.notification_date | bson_date %]'
+      data.description_values.notification_date: '[% original_values.notification_date | bson_date %]'
 - when:
     eq:
       data.type: PSC04
@@ -16446,11 +16446,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: change-to-a-person-with-significant-control
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.change_date | bson_date %]'
-      data.description_values.change_date: '[% originalValues.change_date | bson_date %]'
+      data.action_date: '[% original_values.change_date | bson_date %]'
+      data.description_values.change_date: '[% original_values.change_date | bson_date %]'
 - when:
     eq:
       data.type: PSC05
@@ -16469,11 +16469,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: change-to-a-person-with-significant-control
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.change_date | bson_date %]'
-      data.description_values.change_date: '[% originalValues.change_date | bson_date %]'
+      data.action_date: '[% original_values.change_date | bson_date %]'
+      data.description_values.change_date: '[% original_values.change_date | bson_date %]'
 - when:
     eq:
       data.type: PSC06
@@ -16492,11 +16492,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: change-to-a-person-with-significant-control
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.change_date | bson_date %]'
-      data.description_values.change_date: '[% originalValues.change_date | bson_date %]'
+      data.action_date: '[% original_values.change_date | bson_date %]'
+      data.description_values.change_date: '[% original_values.change_date | bson_date %]'
 - when:
     eq:
       data.type: PSC07
@@ -16515,11 +16515,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: cessation-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.cessation_date | bson_date %]'
-      data.description_values.cessation_date: '[% originalValues.cessation_date | bson_date %]'
+      data.action_date: '[% original_values.cessation_date | bson_date %]'
+      data.description_values.cessation_date: '[% original_values.cessation_date | bson_date %]'
 - when:
     eq:
       data.type: PSC08
@@ -16538,8 +16538,8 @@
       data.description: withdrawal-of-a-person-with-significant-control-statement
       data.subcategory: statements
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.cessation_date | bson_date %]'
-      data.description_values.withdrawal_date: '[% originalValues.cessation_date | bson_date %]'
+      data.action_date: '[% original_values.cessation_date | bson_date %]'
+      data.description_values.withdrawal_date: '[% original_values.cessation_date | bson_date %]'
 - when:
     eq:
       data.type: LLPSC01
@@ -16558,11 +16558,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: notification-of-a-person-with-significant-control-limited-liability-partnership
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: notifications
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.notification_date | bson_date %]'
-      data.description_values.notification_date: '[% originalValues.notification_date | bson_date %]'
+      data.action_date: '[% original_values.notification_date | bson_date %]'
+      data.description_values.notification_date: '[% original_values.notification_date | bson_date %]'
 - when:
     eq:
       data.type: LLPSC02
@@ -16570,11 +16570,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: notification-of-a-person-with-significant-control-limited-liability-partnership
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: notifications
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.notification_date | bson_date %]'
-      data.description_values.notification_date: '[% originalValues.notification_date | bson_date %]'
+      data.action_date: '[% original_values.notification_date | bson_date %]'
+      data.description_values.notification_date: '[% original_values.notification_date | bson_date %]'
 - when:
     eq:
       data.type: LLPSC03
@@ -16582,11 +16582,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: notification-of-a-person-with-significant-control-limited-liability-partnership
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: notifications
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.notification_date | bson_date %]'
-      data.description_values.notification_date: '[% originalValues.notification_date | bson_date %]'
+      data.action_date: '[% original_values.notification_date | bson_date %]'
+      data.description_values.notification_date: '[% original_values.notification_date | bson_date %]'
 - when:
     eq:
       data.type: LLPSC04
@@ -16616,11 +16616,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: change-to-a-person-with-significant-control-limited-liability-partnership
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.change_date | bson_date %]'
-      data.description_values.change_date: '[% originalValues.change_date | bson_date %]'
+      data.action_date: '[% original_values.change_date | bson_date %]'
+      data.description_values.change_date: '[% original_values.change_date | bson_date %]'
 - when:
     eq:
       data.type: LLPSC05
@@ -16639,11 +16639,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: change-to-a-person-with-significant-control-limited-liability-partnership
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.change_date | bson_date %]'
-      data.description_values.change_date: '[% originalValues.change_date | bson_date %]'
+      data.action_date: '[% original_values.change_date | bson_date %]'
+      data.description_values.change_date: '[% original_values.change_date | bson_date %]'
 - when:
     eq:
       data.type: LLPSC06
@@ -16662,11 +16662,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: change-to-a-person-with-significant-control-limited-liability-partnership
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.change_date | bson_date %]'
-      data.description_values.change_date: '[% originalValues.change_date | bson_date %]'
+      data.action_date: '[% original_values.change_date | bson_date %]'
+      data.description_values.change_date: '[% original_values.change_date | bson_date %]'
 - when:
     eq:
       data.type: LLPSC07
@@ -16685,11 +16685,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: cessation-of-a-person-with-significant-control-limited-liability-partnership
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.cessation_date | bson_date %]'
-      data.description_values.cessation_date: '[% originalValues.cessation_date | bson_date %]'
+      data.action_date: '[% original_values.cessation_date | bson_date %]'
+      data.description_values.cessation_date: '[% original_values.cessation_date | bson_date %]'
 - when:
     eq:
       data.type: LLPSC08
@@ -16708,8 +16708,8 @@
       data.description: withdrawal-of-a-person-with-significant-control-statement-limited-liability-partnership
       data.subcategory: statements
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.cessation_date | bson_date %]'
-      data.description_values.withdrawal_date: '[% originalValues.cessation_date | bson_date %]'
+      data.action_date: '[% original_values.cessation_date | bson_date %]'
+      data.description_values.withdrawal_date: '[% original_values.cessation_date | bson_date %]'
 - when:
     eq:
       data.type: SLPPSC01
@@ -16728,11 +16728,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: notification-of-a-person-with-significant-control-scottish-limited-partnership
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: notifications
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.notification_date | bson_date %]'
-      data.description_values.notification_date: '[% originalValues.notification_date | bson_date %]'
+      data.action_date: '[% original_values.notification_date | bson_date %]'
+      data.description_values.notification_date: '[% original_values.notification_date | bson_date %]'
 - when:
     eq:
       data.type: SLPPSC02
@@ -16740,11 +16740,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: notification-of-a-person-with-significant-control-scottish-limited-partnership
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: notifications
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.notification_date | bson_date %]'
-      data.description_values.notification_date: '[% originalValues.notification_date | bson_date %]'
+      data.action_date: '[% original_values.notification_date | bson_date %]'
+      data.description_values.notification_date: '[% original_values.notification_date | bson_date %]'
 - when:
     eq:
       data.type: SLPPSC03
@@ -16752,11 +16752,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: notification-of-a-person-with-significant-control-scottish-limited-partnership
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: notifications
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.notification_date | bson_date %]'
-      data.description_values.notification_date: '[% originalValues.notification_date | bson_date %]'
+      data.action_date: '[% original_values.notification_date | bson_date %]'
+      data.description_values.notification_date: '[% original_values.notification_date | bson_date %]'
 - when:
     eq:
       data.type: SLPPSC04
@@ -16786,11 +16786,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: change-to-a-person-with-significant-control-scottish-limited-partnership
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.change_date | bson_date %]'
-      data.description_values.change_date: '[% originalValues.change_date | bson_date %]'
+      data.action_date: '[% original_values.change_date | bson_date %]'
+      data.description_values.change_date: '[% original_values.change_date | bson_date %]'
 - when:
     eq:
       data.type: SLPPSC05
@@ -16809,11 +16809,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: change-to-a-person-with-significant-control-scottish-limited-partnership
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.change_date | bson_date %]'
-      data.description_values.change_date: '[% originalValues.change_date | bson_date %]'
+      data.action_date: '[% original_values.change_date | bson_date %]'
+      data.description_values.change_date: '[% original_values.change_date | bson_date %]'
 - when:
     eq:
       data.type: SLPPSC06
@@ -16832,11 +16832,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: change-to-a-person-with-significant-control-scottish-limited-partnership
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.change_date | bson_date %]'
-      data.description_values.change_date: '[% originalValues.change_date | bson_date %]'
+      data.action_date: '[% original_values.change_date | bson_date %]'
+      data.description_values.change_date: '[% original_values.change_date | bson_date %]'
 - when:
     eq:
       data.type: SLPPSC07
@@ -16855,11 +16855,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: cessation-of-a-person-with-significant-control-scottish-limited-partnership
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.cessation_date | bson_date %]'
-      data.description_values.cessation_date: '[% originalValues.cessation_date | bson_date %]'
+      data.action_date: '[% original_values.cessation_date | bson_date %]'
+      data.description_values.cessation_date: '[% original_values.cessation_date | bson_date %]'
 - when:
     eq:
       data.type: SLPPSC08
@@ -16878,8 +16878,8 @@
       data.description: withdrawal-of-a-person-with-significant-control-statement-scottish-limited-partnership
       data.subcategory: statements
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.cessation_date | bson_date %]'
-      data.description_values.withdrawal_date: '[% originalValues.cessation_date | bson_date %]'
+      data.action_date: '[% original_values.cessation_date | bson_date %]'
+      data.description_values.withdrawal_date: '[% original_values.cessation_date | bson_date %]'
 
 - when:
     eq:
@@ -17388,11 +17388,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-notification-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.notification_date | bson_date %]'
-      data.description_values.notification_date: '[% originalValues.notification_date | bson_date %]'
+      data.action_date: '[% original_values.notification_date | bson_date %]'
+      data.description_values.notification_date: '[% original_values.notification_date | bson_date %]'
 - when:
     eq:
       data.type: RP04SLPPSC01
@@ -17411,11 +17411,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-notification-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.notification_date | bson_date %]'
-      data.description_values.notification_date: '[% originalValues.notification_date | bson_date %]'
+      data.action_date: '[% original_values.notification_date | bson_date %]'
+      data.description_values.notification_date: '[% original_values.notification_date | bson_date %]'
 - when:
     eq:
       data.type: RP04SQPPSC01
@@ -17434,11 +17434,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-notification-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.notification_date | bson_date %]'
-      data.description_values.notification_date: '[% originalValues.notification_date | bson_date %]'
+      data.action_date: '[% original_values.notification_date | bson_date %]'
+      data.description_values.notification_date: '[% original_values.notification_date | bson_date %]'
 - when:
     eq:
       data.type: RP04PSC02
@@ -17446,11 +17446,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-notification-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.notification_date | bson_date %]'
-      data.description_values.notification_date: '[% originalValues.notification_date | bson_date %]'
+      data.action_date: '[% original_values.notification_date | bson_date %]'
+      data.description_values.notification_date: '[% original_values.notification_date | bson_date %]'
 - when:
     eq:
       data.type: RP04SLPPSC02
@@ -17458,11 +17458,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-notification-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.notification_date | bson_date %]'
-      data.description_values.notification_date: '[% originalValues.notification_date | bson_date %]'
+      data.action_date: '[% original_values.notification_date | bson_date %]'
+      data.description_values.notification_date: '[% original_values.notification_date | bson_date %]'
 - when:
     eq:
       data.type: RP04SQPPSC02
@@ -17470,11 +17470,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-notification-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.notification_date | bson_date %]'
-      data.description_values.notification_date: '[% originalValues.notification_date | bson_date %]'
+      data.action_date: '[% original_values.notification_date | bson_date %]'
+      data.description_values.notification_date: '[% original_values.notification_date | bson_date %]'
 - when:
     eq:
       data.type: RP04PSC03
@@ -17482,11 +17482,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-notification-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.notification_date | bson_date %]'
-      data.description_values.notification_date: '[% originalValues.notification_date | bson_date %]'
+      data.action_date: '[% original_values.notification_date | bson_date %]'
+      data.description_values.notification_date: '[% original_values.notification_date | bson_date %]'
 - when:
     eq:
       data.type: RP04SLPPSC03
@@ -17494,11 +17494,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-notification-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.notification_date | bson_date %]'
-      data.description_values.notification_date: '[% originalValues.notification_date | bson_date %]'
+      data.action_date: '[% original_values.notification_date | bson_date %]'
+      data.description_values.notification_date: '[% original_values.notification_date | bson_date %]'
 - when:
     eq:
       data.type: RP04SQPPSC03
@@ -17506,11 +17506,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-notification-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.notification_date | bson_date %]'
-      data.description_values.notification_date: '[% originalValues.notification_date | bson_date %]'
+      data.action_date: '[% original_values.notification_date | bson_date %]'
+      data.description_values.notification_date: '[% original_values.notification_date | bson_date %]'
 - when:
     eq:
       data.type: RP04PSC04
@@ -17540,11 +17540,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-change-details-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.change_date | bson_date %]'
-      data.description_values.change_date: '[% originalValues.change_date | bson_date %]'
+      data.action_date: '[% original_values.change_date | bson_date %]'
+      data.description_values.change_date: '[% original_values.change_date | bson_date %]'
 - when:
     eq:
       data.type: RP04SLPPSC04
@@ -17574,11 +17574,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-change-details-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.change_date | bson_date %]'
-      data.description_values.change_date: '[% originalValues.change_date | bson_date %]'
+      data.action_date: '[% original_values.change_date | bson_date %]'
+      data.description_values.change_date: '[% original_values.change_date | bson_date %]'
 - when:
     eq:
       data.type: RP04SQPPSC04
@@ -17608,11 +17608,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-change-details-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.change_date | bson_date %]'
-      data.description_values.change_date: '[% originalValues.change_date | bson_date %]'
+      data.action_date: '[% original_values.change_date | bson_date %]'
+      data.description_values.change_date: '[% original_values.change_date | bson_date %]'
 - when:
     eq:
       data.type: RP04PSC05
@@ -17631,11 +17631,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-change-details-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.change_date | bson_date %]'
-      data.description_values.change_date: '[% originalValues.change_date | bson_date %]'
+      data.action_date: '[% original_values.change_date | bson_date %]'
+      data.description_values.change_date: '[% original_values.change_date | bson_date %]'
 - when:
     eq:
       data.type: RP04SLPPSC05
@@ -17654,11 +17654,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-change-details-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.change_date | bson_date %]'
-      data.description_values.change_date: '[% originalValues.change_date | bson_date %]'
+      data.action_date: '[% original_values.change_date | bson_date %]'
+      data.description_values.change_date: '[% original_values.change_date | bson_date %]'
 - when:
     eq:
       data.type: RP04SQPPSC05
@@ -17677,11 +17677,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-change-details-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.change_date | bson_date %]'
-      data.description_values.change_date: '[% originalValues.change_date | bson_date %]'
+      data.action_date: '[% original_values.change_date | bson_date %]'
+      data.description_values.change_date: '[% original_values.change_date | bson_date %]'
 - when:
     eq:
       data.type: RP04PSC06
@@ -17700,11 +17700,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-change-details-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.change_date | bson_date %]'
-      data.description_values.change_date: '[% originalValues.change_date | bson_date %]'
+      data.action_date: '[% original_values.change_date | bson_date %]'
+      data.description_values.change_date: '[% original_values.change_date | bson_date %]'
 - when:
     eq:
       data.type: RP04SLPPSC06
@@ -17723,11 +17723,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-change-details-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.change_date | bson_date %]'
-      data.description_values.change_date: '[% originalValues.change_date | bson_date %]'
+      data.action_date: '[% original_values.change_date | bson_date %]'
+      data.description_values.change_date: '[% original_values.change_date | bson_date %]'
 - when:
     eq:
       data.type: RP04SQPPSC06
@@ -17746,11 +17746,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-change-details-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.change_date | bson_date %]'
-      data.description_values.change_date: '[% originalValues.change_date | bson_date %]'
+      data.action_date: '[% original_values.change_date | bson_date %]'
+      data.description_values.change_date: '[% original_values.change_date | bson_date %]'
 - when:
     eq:
       data.type: RP04PSC07
@@ -17769,11 +17769,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-cessation-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.cessation_date | bson_date %]'
-      data.description_values.cessation_date: '[% originalValues.cessation_date | bson_date %]'
+      data.action_date: '[% original_values.cessation_date | bson_date %]'
+      data.description_values.cessation_date: '[% original_values.cessation_date | bson_date %]'
 - when:
     eq:
       data.type: RP04SLPPSC07
@@ -17792,11 +17792,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-cessation-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.cessation_date | bson_date %]'
-      data.description_values.cessation_date: '[% originalValues.cessation_date | bson_date %]'
+      data.action_date: '[% original_values.cessation_date | bson_date %]'
+      data.description_values.cessation_date: '[% original_values.cessation_date | bson_date %]'
 - when:
     eq:
       data.type: RP04SQPPSC07
@@ -17815,11 +17815,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-cessation-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.cessation_date | bson_date %]'
-      data.description_values.cessation_date: '[% originalValues.cessation_date | bson_date %]'
+      data.action_date: '[% original_values.cessation_date | bson_date %]'
+      data.description_values.cessation_date: '[% original_values.cessation_date | bson_date %]'
 - when:
     eq:
       data.type: RP04PSC08
@@ -17856,8 +17856,8 @@
       data.description: second-filing-withdrawal-of-a-person-with-significant-control-statement
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.cessation_date | bson_date %]'
-      data.description_values.withdrawal_date: '[% originalValues.cessation_date | bson_date %]'
+      data.action_date: '[% original_values.cessation_date | bson_date %]'
+      data.description_values.withdrawal_date: '[% original_values.cessation_date | bson_date %]'
 - when:
     eq:
       data.type: RP04SLPPSC09
@@ -17867,8 +17867,8 @@
       data.description: second-filing-withdrawal-of-a-person-with-significant-control-statement
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.cessation_date | bson_date %]'
-      data.description_values.withdrawal_date: '[% originalValues.cessation_date | bson_date %]'
+      data.action_date: '[% original_values.cessation_date | bson_date %]'
+      data.description_values.withdrawal_date: '[% original_values.cessation_date | bson_date %]'
 - when:
     eq:
       data.type: RP04SQPPSC09
@@ -17878,8 +17878,8 @@
       data.description: second-filing-withdrawal-of-a-person-with-significant-control-statement
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.cessation_date | bson_date %]'
-      data.description_values.withdrawal_date: '[% originalValues.cessation_date | bson_date %]'
+      data.action_date: '[% original_values.cessation_date | bson_date %]'
+      data.description_values.withdrawal_date: '[% original_values.cessation_date | bson_date %]'
 - when:
     eq:
       data.type: RP04LLPSC01
@@ -17898,11 +17898,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-notification-of-a-person-with-significant-control-limited-liability-partnership
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.notification_date | bson_date %]'
-      data.description_values.notification_date: '[% originalValues.notification_date | bson_date %]'
+      data.action_date: '[% original_values.notification_date | bson_date %]'
+      data.description_values.notification_date: '[% original_values.notification_date | bson_date %]'
 - when:
     eq:
       data.type: RP04LLPSC02
@@ -17910,11 +17910,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-notification-of-a-person-with-significant-control-limited-liability-partnership
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.notification_date | bson_date %]'
-      data.description_values.notification_date: '[% originalValues.notification_date | bson_date %]'
+      data.action_date: '[% original_values.notification_date | bson_date %]'
+      data.description_values.notification_date: '[% original_values.notification_date | bson_date %]'
 - when:
     eq:
       data.type: RP04LLPSC03
@@ -17922,11 +17922,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-notification-of-a-person-with-significant-control-limited-liability-partnership
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.notification_date | bson_date %]'
-      data.description_values.notification_date: '[% originalValues.notification_date | bson_date %]'
+      data.action_date: '[% original_values.notification_date | bson_date %]'
+      data.description_values.notification_date: '[% original_values.notification_date | bson_date %]'
 - when:
     eq:
       data.type: RP04LLPSC04
@@ -17956,11 +17956,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-change-details-of-a-person-with-significant-control-limited-liability-partnership
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.change_date | bson_date %]'
-      data.description_values.change_date: '[% originalValues.change_date | bson_date %]'
+      data.action_date: '[% original_values.change_date | bson_date %]'
+      data.description_values.change_date: '[% original_values.change_date | bson_date %]'
 - when:
     eq:
       data.type: RP04LLPSC05
@@ -17979,11 +17979,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-change-details-of-a-person-with-significant-control-limited-liability-partnership
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.change_date | bson_date %]'
-      data.description_values.change_date: '[% originalValues.change_date | bson_date %]'
+      data.action_date: '[% original_values.change_date | bson_date %]'
+      data.description_values.change_date: '[% original_values.change_date | bson_date %]'
 - when:
     eq:
       data.type: RP04LLPSC06
@@ -18002,11 +18002,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-change-details-of-a-person-with-significant-control-limited-liability-partnership
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.change_date | bson_date %]'
-      data.description_values.change_date: '[% originalValues.change_date | bson_date %]'
+      data.action_date: '[% original_values.change_date | bson_date %]'
+      data.description_values.change_date: '[% original_values.change_date | bson_date %]'
 - when:
     eq:
       data.type: RP04LLPSC07
@@ -18025,11 +18025,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-cessation-of-a-person-with-significant-control-limited-liability-partnership
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.cessation_date | bson_date %]'
-      data.description_values.cessation_date: '[% originalValues.cessation_date | bson_date %]'
+      data.action_date: '[% original_values.cessation_date | bson_date %]'
+      data.description_values.cessation_date: '[% original_values.cessation_date | bson_date %]'
 - when:
     eq:
       data.type: RP04LLPSC08
@@ -18048,8 +18048,8 @@
       data.description: second-filing-withdrawal-of-a-person-with-significant-control-statement-limited-liability-partnership
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.cessation_date | bson_date %]'
-      data.description_values.withdrawal_date: '[% originalValues.cessation_date | bson_date %]'
+      data.action_date: '[% original_values.cessation_date | bson_date %]'
+      data.description_values.withdrawal_date: '[% original_values.cessation_date | bson_date %]'
 - when:
     eq:
       data.type: RP04SH01
@@ -18535,11 +18535,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: notification-of-a-person-with-significant-control-scottish-partnership
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: notifications
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.notification_date | bson_date %]'
-      data.description_values.notification_date: '[% originalValues.notification_date | bson_date %]'
+      data.action_date: '[% original_values.notification_date | bson_date %]'
+      data.description_values.notification_date: '[% original_values.notification_date | bson_date %]'
 - when:
     eq:
       data.type: SQPPSC02
@@ -18547,11 +18547,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: notification-of-a-person-with-significant-control-scottish-partnership
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: notifications
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.notification_date | bson_date %]'
-      data.description_values.notification_date: '[% originalValues.notification_date | bson_date %]'
+      data.action_date: '[% original_values.notification_date | bson_date %]'
+      data.description_values.notification_date: '[% original_values.notification_date | bson_date %]'
 - when:
     eq:
       data.type: SQPPSC03
@@ -18559,11 +18559,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: notification-of-a-person-with-significant-control-scottish-partnership
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: notifications
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.notification_date | bson_date %]'
-      data.description_values.notification_date: '[% originalValues.notification_date | bson_date %]'
+      data.action_date: '[% original_values.notification_date | bson_date %]'
+      data.description_values.notification_date: '[% original_values.notification_date | bson_date %]'
 - when:
     eq:
       data.type: SQPPSC04
@@ -18593,11 +18593,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: change-to-a-person-with-significant-control-scottish-partnership
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.change_date | bson_date %]'
-      data.description_values.change_date: '[% originalValues.change_date | bson_date %]'
+      data.action_date: '[% original_values.change_date | bson_date %]'
+      data.description_values.change_date: '[% original_values.change_date | bson_date %]'
 - when:
     eq:
       data.type: SQPPSC05
@@ -18616,11 +18616,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: change-to-a-person-with-significant-control-scottish-partnership
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.change_date | bson_date %]'
-      data.description_values.change_date: '[% originalValues.change_date | bson_date %]'
+      data.action_date: '[% original_values.change_date | bson_date %]'
+      data.description_values.change_date: '[% original_values.change_date | bson_date %]'
 - when:
     eq:
       data.type: SQPPSC06
@@ -18639,11 +18639,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: change-to-a-person-with-significant-control-scottish-partnership
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.change_date | bson_date %]'
-      data.description_values.change_date: '[% originalValues.change_date | bson_date %]'
+      data.action_date: '[% original_values.change_date | bson_date %]'
+      data.description_values.change_date: '[% original_values.change_date | bson_date %]'
 - when:
     eq:
       data.type: SQPPSC07
@@ -18662,11 +18662,11 @@
     set:
       data.category: persons-with-significant-control
       data.description: cessation-of-a-person-with-significant-control-scottish-partnership
-      data.description_values.psc_name: '[% originalValues.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.cessation_date | bson_date %]'
-      data.description_values.cessation_date: '[% originalValues.cessation_date | bson_date %]'
+      data.action_date: '[% original_values.cessation_date | bson_date %]'
+      data.description_values.cessation_date: '[% original_values.cessation_date | bson_date %]'
 - when:
     eq:
       data.type: SQPPSC08
@@ -18685,8 +18685,8 @@
       data.description: withdrawal-of-a-person-with-significant-control-statement-scottish-partnership
       data.subcategory: statements
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% originalValues.cessation_date | bson_date %]'
-      data.description_values.withdrawal_date: '[% originalValues.cessation_date | bson_date %]'
+      data.action_date: '[% original_values.cessation_date | bson_date %]'
+      data.description_values.withdrawal_date: '[% original_values.cessation_date | bson_date %]'
 - when:
     eq:
       data.type: IE04
