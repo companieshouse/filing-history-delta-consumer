@@ -31,7 +31,7 @@ import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import uk.gov.companieshouse.delta.ChsDelta;
-import uk.gov.companieshouse.filinghistory.consumer.delta.Service;
+import uk.gov.companieshouse.filinghistory.consumer.delta.DeltaService;
 import uk.gov.companieshouse.filinghistory.consumer.exception.RetryableException;
 
 @SpringBootTest
@@ -47,7 +47,7 @@ class ConsumerRetryableExceptionIT extends AbstractKafkaIT {
     private LatchAspect latchAspect;
 
     @MockBean
-    private Service service;
+    private DeltaService deltaService;
 
     @DynamicPropertySource
     static void props(DynamicPropertyRegistry registry) {
@@ -67,7 +67,7 @@ class ConsumerRetryableExceptionIT extends AbstractKafkaIT {
         DatumWriter<ChsDelta> writer = new ReflectDatumWriter<>(ChsDelta.class);
         writer.write(new ChsDelta("", 0, "context_id", false), encoder);
 
-        doThrow(new RetryableException("Retryable exception", new Throwable())).when(service).process(any());
+        doThrow(new RetryableException("Retryable exception", new Throwable())).when(deltaService).process(any());
 
         //when
         testProducer.send(new ProducerRecord<>(MAIN_TOPIC, 0, System.currentTimeMillis(),
@@ -82,6 +82,6 @@ class ConsumerRetryableExceptionIT extends AbstractKafkaIT {
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, RETRY_TOPIC)).isEqualTo(4);
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, ERROR_TOPIC)).isOne();
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, INVALID_TOPIC)).isZero();
-        verify(service, times(5)).process(any());
+        verify(deltaService, times(5)).process(any());
     }
 }

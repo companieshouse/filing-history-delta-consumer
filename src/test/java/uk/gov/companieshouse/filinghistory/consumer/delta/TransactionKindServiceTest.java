@@ -1,0 +1,32 @@
+package uk.gov.companieshouse.filinghistory.consumer.delta;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import uk.gov.companieshouse.api.filinghistory.InternalData.TransactionKindEnum;
+
+class TransactionKindServiceTest {
+
+    private static final String SALT = "salt";
+    private TransactionKindService kindService;
+
+    @BeforeEach
+    void setUp() {
+        kindService = new TransactionKindService(SALT);
+    }
+
+    @Test
+    void shouldSuccessfullyEncodeIdByTransactionKind() {
+        // given
+        TransactionKindCriteria criteria = new TransactionKindCriteria("entityId", "", "TM01", "", "");
+
+        TransactionKindResult expected = new TransactionKindResult("ZW50aXR5SWRzYWx0", TransactionKindEnum.TOP_LEVEL);
+
+        // when
+        TransactionKindResult actual = kindService.encodeIdByTransactionKind(criteria);
+
+        // then
+        assertEquals(expected, actual);
+    }
+}

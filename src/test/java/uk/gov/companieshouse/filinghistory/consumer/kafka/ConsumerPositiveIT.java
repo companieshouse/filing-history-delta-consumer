@@ -29,7 +29,7 @@ import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import uk.gov.companieshouse.delta.ChsDelta;
-import uk.gov.companieshouse.filinghistory.consumer.delta.Service;
+import uk.gov.companieshouse.filinghistory.consumer.delta.DeltaService;
 
 @SpringBootTest
 class ConsumerPositiveIT extends AbstractKafkaIT {
@@ -44,7 +44,7 @@ class ConsumerPositiveIT extends AbstractKafkaIT {
     private LatchAspect latchAspect;
 
     @MockBean
-    private Service service;
+    private DeltaService deltaService;
 
     @DynamicPropertySource
     static void props(DynamicPropertyRegistry registry) {
@@ -77,6 +77,6 @@ class ConsumerPositiveIT extends AbstractKafkaIT {
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, RETRY_TOPIC)).isZero();
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, ERROR_TOPIC)).isZero();
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, INVALID_TOPIC)).isZero();
-        verify(service).process(any());
+        verify(deltaService).process(any());
     }
 }
