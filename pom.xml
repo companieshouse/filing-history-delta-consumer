@@ -22,7 +22,6 @@
     <maven-surefire.version>3.2.3</maven-surefire.version>
     <maven-surefire-plugin.version>${maven-surefire.version}</maven-surefire-plugin.version>
     <maven-failsafe-plugin.version>${maven-surefire.version}</maven-failsafe-plugin.version>
-    <commons-text.version>1.11.0</commons-text.version>
     <skip.unit.tests>false</skip.unit.tests>
     <skip.integration.tests>false</skip.integration.tests>
 
@@ -156,6 +155,7 @@
       <artifactId>commons-text</artifactId>
       <version>${commons-text.version}</version>
     </dependency>
+
     <dependency>
       <groupId>uk.gov.companieshouse</groupId>
       <artifactId>structured-logging</artifactId>
