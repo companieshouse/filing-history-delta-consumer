@@ -21,12 +21,12 @@ class WhenPropertiesTest {
                 eq:
                   data.type: TM01
                 like:
-                  data.description: '^(?i:.*, DIRECTOR (?<officer_name>.+?))$'
+                  data.description: '^(?i:.*, DIRECTOR (?<officerName>.+?))$'
               then:
                 set:
                   data.category: officers
                   data.description: termination-director-company-with-name
-                  data.description_values.officer_name: '[% officer_name | title_case  %]'
+                  data.description_values.officer_name: '[% officerName | title_case  %]'
                   data.subcategory: termination
             """;
     private static final String TWO_LIKES = """
@@ -34,27 +34,27 @@ class WhenPropertiesTest {
                 eq:
                   data.type: LLAD01
                 like:
-                  data.description: '^(?i:REGISTERED OFFICE CHANGED ON (?<change_date>\\d+\\D\\d+\\D\\d+) FROM\\s*(?<old_address>.+?))$'
-                  original_values.new_ro_address: '^(?<new_address>.+)$'
+                  data.description: '^(?i:REGISTERED OFFICE CHANGED ON (?<changeDate>\\d+\\D\\d+\\D\\d+) FROM\\s*(?<oldAddress>.+?))$'
+                  original_values.new_ro_address: '^(?<newAddress>.+)$'
               then:
                 set:
                   data.category: address
                   data.description: change-registered-office-address-limited-liability-partnership-with-date-old-address-new-address
-                  data.description_values.old_address: '[% old_address | address_case %]'
-                  data.description_values.new_address: '[% new_address | address_case %]'
+                  data.description_values.old_address: '[% oldAddress | address_case %]'
+                  data.description_values.new_address: '[% newAddress | address_case %]'
                   original_description: '[% data.description | sentence_case %]'
                   data.action_date: '[% change_date | bson_date %]'
-                  data.description_values.change_date: '[% change_date | bson_date %]'
+                  data.description_values.change_date: '[% changeDate | bson_date %]'
             """;
     private static final String MISSING_EQ = """
             - when:
                 like:
-                  data.description: '^(?i:.*, DIRECTOR (?<officer_name>.+?))$'
+                  data.description: '^(?i:.*, DIRECTOR (?<officerName>.+?))$'
               then:
                 set:
                   data.category: officers
                   data.description: termination-director-company-with-name
-                  data.description_values.officer_name: '[% officer_name | title_case  %]'
+                  data.description_values.officer_name: '[% officerName | title_case  %]'
                   data.subcategory: termination
             """;
     private static final String MISSING_FORM_TYPE = """
@@ -62,12 +62,12 @@ class WhenPropertiesTest {
                 eq:
                   stuff: stuff
                 like:
-                  data.description: '^(?i:.*, DIRECTOR (?<officer_name>.+?))$'
+                  data.description: '^(?i:.*, DIRECTOR (?<officerName>.+?))$'
               then:
                 set:
                   data.category: officers
                   data.description: termination-director-company-with-name
-                  data.description_values.officer_name: '[% officer_name | title_case  %]'
+                  data.description_values.officer_name: '[% officerName | title_case  %]'
                   data.subcategory: termination
             """;
 
@@ -111,8 +111,7 @@ class WhenPropertiesTest {
                 new TypeReference<>() {
                 });
         WhenProperties whenProperties = ruleProperties.getFirst().when();
-        Executable executable = () -> whenProperties.compile();
-        ;
+        Executable executable = whenProperties::compile;
 
         // then
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
@@ -126,8 +125,7 @@ class WhenPropertiesTest {
         List<RuleProperties> ruleProperties = MAPPER.readValue(MISSING_EQ, new TypeReference<>() {
         });
         WhenProperties whenProperties = ruleProperties.getFirst().when();
-        Executable executable = () -> whenProperties.compile();
-        ;
+        Executable executable = whenProperties::compile;
 
         // then
         Exception exception = assertThrows(NullPointerException.class, executable);

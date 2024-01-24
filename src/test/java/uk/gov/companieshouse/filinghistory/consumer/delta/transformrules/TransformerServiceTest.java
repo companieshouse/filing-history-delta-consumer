@@ -8,6 +8,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.AddressCase;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.BsonDate;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.LowerCase;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.SentenceCase;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.TitleCase;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.TransformerFactory;
 
 class TransformerServiceTest {
 
@@ -43,11 +49,14 @@ class TransformerServiceTest {
                 }
             }""";
 
+
+    private final TransformerFactory transformerFactory = new TransformerFactory(new AddressCase(),
+            new BsonDate(), new LowerCase(), new SentenceCase(), new TitleCase());
     private TransformerService service;
 
     @BeforeEach
     void setUp() throws IOException {
-        service = new TransformerConfig().transformRules("transform_rules.yml");
+        service = new TransformerConfig().transformRules("transform_rules.yml", transformerFactory);
     }
 
     @Test

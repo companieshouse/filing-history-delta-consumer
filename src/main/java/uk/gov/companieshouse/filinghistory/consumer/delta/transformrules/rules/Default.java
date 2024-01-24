@@ -1,5 +1,7 @@
 package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.rules;
 
-public record Default() {
+import java.util.Map;
+
+public record Default(Map<String, SetterArgs> setters) {
 
 }
