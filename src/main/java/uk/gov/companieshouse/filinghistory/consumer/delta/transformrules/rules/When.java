@@ -11,13 +11,13 @@ import java.util.stream.Collectors;
 public record When(String field, String formType, Map<String, Pattern> like) {
 
     public Result match(JsonNode putRequest) {
-        String deltaFormType = putRequest.at("/" + field.replace(".", "/")).textValue();
+        String deltaFormType = putRequest.at(toJsonPtr(field)).textValue();
 
         if (formType.equals(deltaFormType)) {
             Map<String, String> captureGroups = new HashMap<>();
             boolean matched = like.entrySet().stream()
                     .allMatch(e -> {
-                        JsonNode deltaLikeField = putRequest.at("/" + e.getKey().replace(".", "/"));
+                        JsonNode deltaLikeField = putRequest.at(toJsonPtr(e.getKey()));
                         if (deltaLikeField != null && deltaLikeField.textValue() != null) {
                             Matcher matcher = e.getValue().matcher(deltaLikeField.textValue());
                             if (matcher.find()) {
@@ -33,6 +33,10 @@ public record When(String field, String formType, Map<String, Pattern> like) {
             return new Result(matched, captureGroups);
         }
         return new Result(false, Map.of());
+    }
+
+    private static String toJsonPtr(String key) {
+        return "/%s".formatted(key.replace(".", "/"));
     }
 }
 
