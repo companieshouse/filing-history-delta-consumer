@@ -6151,7 +6151,19 @@
     eq:
       data.type: AA
     like:
-      data.description: '^((?i:ACCOUNTS FOR \D(?<accountsType>DORMANT|FULL|INITIAL|INTERIM|MEDIUM|SMALL)\D CO. MADE UP TO (?<madeUpDate>\d+\D\d+\D\d+))$)|(^(?i)(?<madeUpDate>\d+\D\d+\D\d+) (?<accountsType>DORMANT|FULL|INITIAL|INTERIM|MEDIUM|SMALL)(?:\s+AMEND)?$)'
+      data.description: '^((?i:ACCOUNTS FOR \D(?<accountsType>DORMANT|FULL|INITIAL|INTERIM|MEDIUM|SMALL)\D CO. MADE UP TO (?<madeUpDate>\d+\D\d+\D\d+))$)'
+  then:
+    set:
+      data.category: accounts
+      data.description: 'accounts-with-accounts-type-[% accountsType | lc %]'
+      original_description: '[% data.description | sentence_case %]'
+      data.action_date: '[% madeUpDate | bson_date %]'
+      data.description_values.made_up_date: '[% madeUpDate | bson_date %]'
+- when:
+    eq:
+      data.type: AA
+    like:
+      data.description: '(^(?i)(?<madeUpDate>\d+\D\d+\D\d+) (?<accountsType>DORMANT|FULL|INITIAL|INTERIM|MEDIUM|SMALL)(?:\s+AMEND)?$)'
   then:
     set:
       data.category: accounts
@@ -6201,7 +6213,19 @@
     eq:
       data.type: AA
     like:
-      data.description: '^((?i:PARTIAL EXEMPTION ACCOUNTS MADE UP TO (?<madeUpDate>\d+\D\d+\D\d+))$)|^(?i:(?<madeUpDate>\d+\D\d+\D\d+) PART(?:IAL)? EX(?:EMPTION)?(?:\s+AMEND)?)$'
+      data.description: '^(?i:(?<madeUpDate>\d+\D\d+\D\d+) PART(?:IAL)? EX(?:EMPTION)?(?:\s+AMEND)?)$'
+  then:
+    set:
+      data.category: accounts
+      data.description: accounts-with-accounts-type-partial-exemption
+      original_description: '[% data.description | sentence_case %]'
+      data.action_date: '[% madeUpDate | bson_date %]'
+      data.description_values.made_up_date: '[% madeUpDate | bson_date %]'
+- when:
+    eq:
+      data.type: AA
+    like:
+      data.description: '^((?i:PARTIAL EXEMPTION ACCOUNTS MADE UP TO (?<madeUpDate>\d+\D\d+\D\d+))$)'
   then:
     set:
       data.category: accounts
@@ -6226,7 +6250,19 @@
     eq:
       data.type: AA
     like:
-      data.description: '(^TOTAL EXEMPTION FULL ACCOUNTS MADE UP TO (?<madeUpDate>\d+\D\d+\D\d+)$)|(^(?i:(?<madeUpDate>\d+\D\d+\D\d+) TOTAL EXEMPTION FULL(?:\s+AMEND)?)$)'
+      data.description: '(^(?i:(?<madeUpDate>\d+\D\d+\D\d+) TOTAL EXEMPTION FULL(?:\s+AMEND)?)$)'
+  then:
+    set:
+      data.category: accounts
+      data.description: accounts-with-accounts-type-total-exemption-full
+      original_description: '[% data.description | sentence_case %]'
+      data.action_date: '[% madeUpDate | bson_date %]'
+      data.description_values.made_up_date: '[% madeUpDate | bson_date %]'
+- when:
+    eq:
+      data.type: AA
+    like:
+      data.description: '(^TOTAL EXEMPTION FULL ACCOUNTS MADE UP TO (?<madeUpDate>\d+\D\d+\D\d+)$)'
   then:
     set:
       data.category: accounts
@@ -6251,7 +6287,7 @@
     eq:
       data.type: AA
     like:
-      data.description: '(^TOTAL EXEMPTION SMALL ACCOUNTS MADE UP TO (?<madeUpDate>\d+\D\d+\D\d+)$)|(^(?i:(?<madeUpDate>\d+\D\d+\D\d+) TOTAL EXEMPTION SMALL(?:\s+AMEND)?)$)'
+      data.description: '(^TOTAL EXEMPTION SMALL ACCOUNTS MADE UP TO (?<madeUpDate>\d+\D\d+\D\d+)$)'
   then:
     set:
       data.category: accounts
@@ -6263,7 +6299,31 @@
     eq:
       data.type: AA
     like:
-      data.description: '(^AUDIT EXEMPTION SUBSIDIARY ACCOUNTS MADE UP TO (?<madeUpDate>\d+\D\d+\D\d+)$)|^(?i:(?<madeUpDate>\d+\D\d+\D\d+) AUDIT EXEMPTION SUBSIDUARY)'
+      data.description: '(^(?i:(?<madeUpDate>\d+\D\d+\D\d+) TOTAL EXEMPTION SMALL(?:\s+AMEND)?)$)'
+  then:
+    set:
+      data.category: accounts
+      data.description: accounts-with-accounts-type-total-exemption-small
+      original_description: '[% data.description | sentence_case %]'
+      data.action_date: '[% madeUpDate | bson_date %]'
+      data.description_values.made_up_date: '[% madeUpDate | bson_date %]'
+- when:
+    eq:
+      data.type: AA
+    like:
+      data.description: '(^AUDIT EXEMPTION SUBSIDIARY ACCOUNTS MADE UP TO (?<madeUpDate>\d+\D\d+\D\d+)$)'
+  then:
+    set:
+      data.category: accounts
+      data.description: accounts-with-accounts-type-audit-exemption-subsiduary
+      original_description: '[% data.description | sentence_case %]'
+      data.action_date: '[% madeUpDate | bson_date %]'
+      data.description_values.made_up_date: '[% madeUpDate | bson_date %]'
+- when:
+    eq:
+      data.type: AA
+    like:
+      data.description: '^(?i:(?<madeUpDate>\d+\D\d+\D\d+) AUDIT EXEMPTION SUBSIDUARY)'
   then:
     set:
       data.category: accounts

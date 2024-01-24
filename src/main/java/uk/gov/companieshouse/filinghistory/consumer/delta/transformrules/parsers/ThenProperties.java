@@ -1,7 +1,5 @@
 package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.parsers;
 
-import static uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.parsers.PropertiesUtils.convertToCamelCase;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +30,7 @@ public record ThenProperties(@JsonProperty("define") Map<String, String> define,
         Map<String, Pattern> defineElements = define != null ? define.entrySet().stream()
                 .collect(Collectors.toMap(
                         Entry::getKey,
-                        e -> Pattern.compile(convertToCamelCase(e.getValue()))
+                        e -> Pattern.compile(e.getValue())
                 )) : Map.of();
 
         Map<String, SetterArgs> setElements = set.entrySet().stream()

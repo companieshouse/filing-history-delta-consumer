@@ -1,7 +1,5 @@
 package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.parsers;
 
-import static uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.parsers.PropertiesUtils.convertToCamelCase;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -20,7 +18,7 @@ public record WhenProperties(@JsonProperty("eq") Map<String, String> eq,
         Map<String, Pattern> likeElements = like != null ? like.entrySet().stream()
                 .collect(Collectors.toMap(
                         Entry::getKey,
-                        e -> Pattern.compile(convertToCamelCase(e.getValue())))
+                        e -> Pattern.compile(e.getValue()))
                 ) : Map.of();
 
         return new When(eqEntry.getKey(), eqEntry.getValue(), likeElements);
