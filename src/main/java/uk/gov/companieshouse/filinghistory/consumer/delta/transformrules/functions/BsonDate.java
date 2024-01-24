@@ -14,6 +14,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
+import org.springframework.stereotype.Component;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 
