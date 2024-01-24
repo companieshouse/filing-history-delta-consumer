@@ -61,7 +61,6 @@ class TransformerServiceTest {
 
         // then
         assertNotNull(requestBody);
-        System.out.println(requestBody);
     }
 
     @Test
@@ -75,6 +74,5 @@ class TransformerServiceTest {
 
         // then
         assertNotNull(requestBody);
-        System.out.println(requestBody);
     }
 }

@@ -3,8 +3,8 @@ package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functi
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.util.List;
 import java.util.Map;
-import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.rules.SetterArgs;
 
 public class SentenceCase implements Transformer {
 
@@ -14,19 +14,13 @@ public class SentenceCase implements Transformer {
     public void transform(JsonNode source,
             ObjectNode outputNode,
             String field,
-            SetterArgs setterArgs,
+            List<String> arguments,
             Map<String, String> contextValue) {
 
         ObjectNode workingNode = outputNode;
 
-        String[] fields = field.split("\\."); // len = 2
-        for (int i = 0; i < fields.length - 1; i++) {
-            workingNode.putIfAbsent(fields[i], objectMapper.createObjectNode());
-            workingNode = (ObjectNode) workingNode.at("/" + fields[i]);
-        }
-
-        String finalField = fields[fields.length - 1];
-        String nodeText = outputNode.at("/" + setterArgs.arguments().getFirst().replace(".", "/"))
+        String finalField = getFinalField(objectMapper, field, outputNode);
+        String nodeText = outputNode.at("/" + arguments.getFirst().replace(".", "/"))
                 .textValue();
 
         // TODO Apply Perl sentence_case transformation to node text
