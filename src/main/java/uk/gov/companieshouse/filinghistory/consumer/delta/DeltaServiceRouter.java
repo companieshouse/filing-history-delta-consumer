@@ -13,6 +13,8 @@ public class DeltaServiceRouter {
     }
 
     public void route(ChsDelta delta) {
-        upsertDeltaService.process(delta);
+        if (!delta.getIsDelete()) {
+            upsertDeltaService.process(delta);
+        }
     }
 }
