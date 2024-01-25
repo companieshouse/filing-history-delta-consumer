@@ -17,12 +17,14 @@ public class PreTransformMapper {
         this.objectMapper = objectMapper;
     }
 
-    public ObjectNode mapDeltaToObjectNode(final FilingHistoryDelta delta) {
-        ObjectNode objectNode = objectMapper.createObjectNode();
-        final FilingHistory filingHistory = delta.getFilingHistory().getFirst();
-
-        objectNode.put("company_number", filingHistory.getCompanyNumber());
-        objectNode.put("_entity_id", filingHistory.getEntityId());
+    public ObjectNode mapDeltaToObjectNode(final FilingHistory filingHistory) {
+        final ObjectNode objectNode = objectMapper.createObjectNode();
+        objectNode
+            .put("company_number", filingHistory.getCompanyNumber())
+            .put("_entity_id", filingHistory.getEntityId())
+            .put("parent_entity_id", filingHistory.getParentEntityId())
+            .put("parent_form_type", filingHistory.getParentFormType())
+            .put("pre_scanned_batch", filingHistory.getPreScannedBatch());
 
         mapBarcodeAndDocumentId(objectNode, filingHistory);
         mapDescriptionValuesObject(objectNode, filingHistory.getDescriptionValues());
@@ -52,17 +54,19 @@ public class PreTransformMapper {
         final String officerName = descriptionValues.getOFFICERNAME();
 
         if (!StringUtils.isBlank(resignationDate) && !StringUtils.isBlank(officerName)) {
-            objectNode.putObject("original_values")
-                    .put("resignation_date", resignationDate)
-                    .put("officer_name", officerName);
+            objectNode
+                .putObject("original_values")
+                .put("resignation_date", resignationDate)
+                .put("officer_name", officerName);
         }
     }
 
     private void mapDataObject(ObjectNode objectNode, final FilingHistory filingHistory) {
-        objectNode.putObject("data")
-                .put("type", filingHistory.getFormType())
-                .put("date", filingHistory.getReceiveDate())
-                .put("description", filingHistory.getDescription())
-                .put("category", filingHistory.getCategory());
+        objectNode
+            .putObject("data")
+            .put("type", filingHistory.getFormType())
+            .put("date", filingHistory.getReceiveDate())
+            .put("description", filingHistory.getDescription())
+            .put("category", filingHistory.getCategory());
     }
 }
