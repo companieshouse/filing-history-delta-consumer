@@ -1,7 +1,7 @@
 package uk.gov.companieshouse.filinghistory.consumer.delta;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import uk.gov.companieshouse.api.delta.DescriptionValues;
@@ -11,33 +11,39 @@ import uk.gov.companieshouse.api.delta.FilingHistoryDelta;
 @Component
 public class PreTransformMapper {
 
-    public Map<String, Object> map(final FilingHistoryDelta delta) {
-        Map<String, Object> map = new HashMap<>();
-        final FilingHistory filingHistory = delta.getFilingHistory().getFirst();
+    private final ObjectMapper objectMapper;
 
-        map.put("company_number", filingHistory.getCompanyNumber());
-        map.put("_entity_id", filingHistory.getEntityId());
-
-        mapBarcodeAndDocumentId(map, filingHistory);
-        mapDescriptionValues(map, filingHistory.getDescriptionValues());
-        mapData(map, filingHistory);
-
-        return map;
+    public PreTransformMapper(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
     }
 
-    private void mapBarcodeAndDocumentId(Map<String, Object> map, final FilingHistory filingHistory) {
+    public ObjectNode mapDeltaToObjectNode(final FilingHistoryDelta delta) {
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        final FilingHistory filingHistory = delta.getFilingHistory().getFirst();
+
+        objectNode.put("company_number", filingHistory.getCompanyNumber());
+        objectNode.put("_entity_id", filingHistory.getEntityId());
+
+        mapBarcodeAndDocumentId(objectNode, filingHistory);
+        mapDescriptionValuesObject(objectNode, filingHistory.getDescriptionValues());
+        mapDataObject(objectNode, filingHistory);
+
+        return objectNode;
+    }
+
+    private void mapBarcodeAndDocumentId(ObjectNode objectNode, final FilingHistory filingHistory) {
         final String barcode = filingHistory.getBarcode();
         if (!StringUtils.isBlank(barcode)) {
-            map.put("_barcode", barcode);
+            objectNode.put("_barcode", barcode);
         }
 
         final String documentId = filingHistory.getDocumentId();
         if (!StringUtils.isBlank(documentId)) {
-            map.put("_document_id", documentId);
+            objectNode.put("_document_id", documentId);
         }
     }
 
-    private void mapDescriptionValues(Map<String, Object> map, final DescriptionValues descriptionValues) {
+    private void mapDescriptionValuesObject(ObjectNode objectNode, final DescriptionValues descriptionValues) {
         if (descriptionValues == null) {
             return;
         }
@@ -46,20 +52,17 @@ public class PreTransformMapper {
         final String officerName = descriptionValues.getOFFICERNAME();
 
         if (!StringUtils.isBlank(resignationDate) && !StringUtils.isBlank(officerName)) {
-            Map<String, String> originalValuesMap = new HashMap<>();
-            map.put("original_values", originalValuesMap);
-            originalValuesMap.put("resignation_date", resignationDate);
-            originalValuesMap.put("officer_name", officerName);
+            objectNode.putObject("original_values")
+                    .put("resignation_date", resignationDate)
+                    .put("officer_name", officerName);
         }
     }
 
-    private void mapData(Map<String, Object> map, final FilingHistory filingHistory) {
-        Map<String, String> dataMap = new HashMap<>();
-        map.put("data", dataMap);
-
-        dataMap.put("type", filingHistory.getFormType());
-        dataMap.put("date", filingHistory.getReceiveDate());
-        dataMap.put("description", filingHistory.getDescription());
-        dataMap.put("category", filingHistory.getCategory());
+    private void mapDataObject(ObjectNode objectNode, final FilingHistory filingHistory) {
+        objectNode.putObject("data")
+                .put("type", filingHistory.getFormType())
+                .put("date", filingHistory.getReceiveDate())
+                .put("description", filingHistory.getDescription())
+                .put("category", filingHistory.getCategory());
     }
 }

@@ -1,22 +1,42 @@
 package uk.gov.companieshouse.filinghistory.consumer.delta;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.when;
 
-import java.util.HashMap;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.util.List;
-import java.util.Map;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import uk.gov.companieshouse.api.delta.DescriptionValues;
 import uk.gov.companieshouse.api.delta.FilingHistory;
 import uk.gov.companieshouse.api.delta.FilingHistoryDelta;
 
+@ExtendWith(MockitoExtension.class)
 class PreTransformMapperTest {
 
-    private final PreTransformMapper preTransformMapper = new PreTransformMapper();
+    @InjectMocks
+    private PreTransformMapper preTransformMapper;
+
+    @Mock
+    private ObjectMapper objectMapper;
+
+    private final ObjectMapper testObjectMapper =
+            new ObjectMapper()
+                    .setSerializationInclusion(JsonInclude.Include.NON_NULL)
+                    .registerModule(new JavaTimeModule());
 
     @Test
-    void shouldMapDeltaObjectOntoHashMap() {
+    void shouldMapDeltaObjectOntoObjectNode() {
         // given
+        when(objectMapper.createObjectNode()).thenReturn(testObjectMapper.createObjectNode());
+
         final FilingHistoryDelta delta = new FilingHistoryDelta()
                 .deltaAt("20140916230459600643")
                 .filingHistory(List.of(
@@ -37,36 +57,36 @@ class PreTransformMapperTest {
                                 .preScannedBatch("0")
                 ));
 
-        Map<String, Object> expectedHashMap = new HashMap<>();
-        expectedHashMap.put("company_number", "12345678");
-        expectedHashMap.put("_entity_id", "3063732185");
-        expectedHashMap.put("_barcode", "XAITVXAX");
-        expectedHashMap.put("_document_id", "000XAITVXAX4682");
+        final ObjectNode expectedObjectNode = testObjectMapper.createObjectNode();
+        expectedObjectNode.put("company_number", "12345678");
+        expectedObjectNode.put("_entity_id", "3063732185");
+        expectedObjectNode.put("_barcode", "XAITVXAX");
+        expectedObjectNode.put("_document_id", "000XAITVXAX4682");
 
-        Map<String, String> expectedOriginalValuesHashMap = new HashMap<>();
-        expectedHashMap.put("original_values", expectedOriginalValuesHashMap);
+        ObjectNode expectedOriginalValuesNode = expectedObjectNode.putObject("original_values");
 
-        Map<String, String> expectedDataHashMap = new HashMap<>();
-        expectedHashMap.put("data", expectedDataHashMap);
+        ObjectNode expectedDataNode = expectedObjectNode.putObject("data");
 
-        expectedOriginalValuesHashMap.put("resignation_date", "02/07/2011");
-        expectedOriginalValuesHashMap.put("officer_name", "John Doe");
+        expectedOriginalValuesNode.put("resignation_date", "02/07/2011");
+        expectedOriginalValuesNode.put("officer_name", "John Doe");
 
-        expectedDataHashMap.put("type", "TM01");
-        expectedDataHashMap.put("date", "20110905053919");
-        expectedDataHashMap.put("description", "Appointment Terminated, Director JOHN DOE");
-        expectedDataHashMap.put("category", "2");
+        expectedDataNode.put("type", "TM01");
+        expectedDataNode.put("date", "20110905053919");
+        expectedDataNode.put("description", "Appointment Terminated, Director JOHN DOE");
+        expectedDataNode.put("category", "2");
 
         // when
-        final Map<String, Object> actualHashMap = preTransformMapper.map(delta);
+        final ObjectNode actualObjectNode = preTransformMapper.mapDeltaToObjectNode(delta);
 
         // then
-        assertEquals(expectedHashMap, actualHashMap);
+        assertEquals(expectedObjectNode, actualObjectNode);
     }
 
     @Test
-    void shouldMapDeltaObjectOntoHashMapWhenDeltaMissingFieldsAndNullDescriptionValues() {
+    void shouldMapDeltaObjectOntoObjectNodeWhenDeltaMissingFieldsAndNullDescriptionValues() {
         // given
+        when(objectMapper.createObjectNode()).thenReturn(testObjectMapper.createObjectNode());
+
         final FilingHistoryDelta delta = new FilingHistoryDelta()
                 .deltaAt("20140916230459600643")
                 .filingHistory(List.of(
@@ -85,28 +105,27 @@ class PreTransformMapperTest {
                                 .preScannedBatch("0")
                 ));
 
-        Map<String, Object> expectedHashMap = new HashMap<>();
-        expectedHashMap.put("company_number", "12345678");
-        expectedHashMap.put("_entity_id", "3063732185");
+        final ObjectNode expectedObjectNode = testObjectMapper.createObjectNode();
+        expectedObjectNode.put("company_number", "12345678");
+        expectedObjectNode.put("_entity_id", "3063732185");
 
-        Map<String, String> expectedDataHashMap = new HashMap<>();
-        expectedHashMap.put("data", expectedDataHashMap);
-
-        expectedDataHashMap.put("type", "TM01");
-        expectedDataHashMap.put("date", "20110905053919");
-        expectedDataHashMap.put("description", "Appointment Terminated, Director JOHN DOE");
-        expectedDataHashMap.put("category", "2");
+        expectedObjectNode.putObject("data")
+                .put("type", "TM01")
+                .put("date", "20110905053919")
+                .put("description", "Appointment Terminated, Director JOHN DOE")
+                .put("category", "2");
 
         // when
-        final Map<String, Object> actualHashMap = preTransformMapper.map(delta);
-
+        final ObjectNode actualObjectNode = preTransformMapper.mapDeltaToObjectNode(delta);
         // then
-        assertEquals(expectedHashMap, actualHashMap);
+        assertEquals(expectedObjectNode, actualObjectNode);
     }
 
     @Test
-    void shouldMapDeltaObjectOntoHashMapWhenDeltaMissingFieldsAndEmptyDescriptionValuesObject() {
+    void shouldMapDeltaObjectOntoObjectNodeWhenDeltaMissingFieldsAndEmptyDescriptionValuesObject() {
         // given
+        when(objectMapper.createObjectNode()).thenReturn(testObjectMapper.createObjectNode());
+
         final FilingHistoryDelta delta = new FilingHistoryDelta()
                 .deltaAt("20140916230459600643")
                 .filingHistory(List.of(
@@ -125,22 +144,20 @@ class PreTransformMapperTest {
                                 .preScannedBatch("0")
                 ));
 
-        Map<String, Object> expectedHashMap = new HashMap<>();
-        expectedHashMap.put("company_number", "12345678");
-        expectedHashMap.put("_entity_id", "3063732185");
+        final ObjectNode expectedObjectNode = testObjectMapper.createObjectNode();
+        expectedObjectNode.put("company_number", "12345678");
+        expectedObjectNode.put("_entity_id", "3063732185");
 
-        Map<String, String> expectedDataHashMap = new HashMap<>();
-        expectedHashMap.put("data", expectedDataHashMap);
-
-        expectedDataHashMap.put("type", "TM01");
-        expectedDataHashMap.put("date", "20110905053919");
-        expectedDataHashMap.put("description", "Appointment Terminated, Director JOHN DOE");
-        expectedDataHashMap.put("category", "2");
+        expectedObjectNode.putObject("data")
+                .put("type", "TM01")
+                .put("date", "20110905053919")
+                .put("description", "Appointment Terminated, Director JOHN DOE")
+                .put("category", "2");
 
         // when
-        final Map<String, Object> actualHashMap = preTransformMapper.map(delta);
+        final ObjectNode actualObjectNode = preTransformMapper.mapDeltaToObjectNode(delta);
 
         // then
-        assertEquals(expectedHashMap, actualHashMap);
+        assertEquals(expectedObjectNode, actualObjectNode);
     }
 }
