@@ -3,7 +3,6 @@ package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.rules;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.util.Map;
 
-// Container for Rules - TBD
 public record Rule(When when, Then then, Default defaultRule) {
 
     public Rule(Default defaultRule) {

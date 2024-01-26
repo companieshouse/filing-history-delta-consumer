@@ -11,13 +11,15 @@ import org.junit.jupiter.api.Test;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.AddressCase;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.BsonDate;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.LowerCase;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.ProcessCapital;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.ReplaceProperty;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.SentenceCase;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.TitleCase;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.TransformerFactory;
 
 class TransformerServiceTest {
 
-    private static final String tm01RequestBody = """
+    private static final String TM01_REQUEST_BODY = """
             {
                 "_id" : "mongo_id",
                 "company_number" : "12345678",
@@ -33,7 +35,7 @@ class TransformerServiceTest {
             }""";
 
     // TODO The dates might not have the correct structure
-    private static final String aaRequestBody = """
+    private static final String AA_REQUEST_BODY = """
             {
                 "_id" : "MTUxMjg0MTM5YWRpcXprY3g",
                 "company_number" : "14388379",
@@ -49,9 +51,20 @@ class TransformerServiceTest {
                 }
             }""";
 
+    private static final String REQUEST_WITH_DEFINE_EXEC = """
+            {
+                "_id" : "MzA0MTc3MzgzMmFkaXF6a2N4",
+                "_entity_id" : "3041773832",
+                "data" : {
+                    "type" : "SH01",
+                    "description" : "29/07/11 Statement of Capital gbp 13337"
+                }
+            }
+            """;
 
     private final TransformerFactory transformerFactory = new TransformerFactory(new AddressCase(),
-            new BsonDate(), new LowerCase(), new SentenceCase(), new TitleCase());
+            new BsonDate(), new LowerCase(), new SentenceCase(), new TitleCase(),
+            new ReplaceProperty(), new ProcessCapital());
     private TransformerService service;
 
     @BeforeEach
@@ -63,7 +76,7 @@ class TransformerServiceTest {
     void transformTM01() throws JsonProcessingException {
         // given
         ObjectMapper mapper = new ObjectMapper();
-        JsonNode delta = mapper.readTree(tm01RequestBody);
+        JsonNode delta = mapper.readTree(TM01_REQUEST_BODY);
 
         // when
         JsonNode requestBody = service.transform(delta);
@@ -76,7 +89,21 @@ class TransformerServiceTest {
     void transformAA() throws JsonProcessingException {
         // given
         ObjectMapper mapper = new ObjectMapper();
-        JsonNode delta = mapper.readTree(aaRequestBody);
+        JsonNode delta = mapper.readTree(AA_REQUEST_BODY);
+
+        // when
+        JsonNode requestBody = service.transform(delta);
+
+        // then
+        assertNotNull(requestBody);
+        System.out.println(requestBody);
+    }
+
+    @Test
+    void transformWithDefineAndExec() throws JsonProcessingException {
+        // given
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode delta = mapper.readTree(REQUEST_WITH_DEFINE_EXEC);
 
         // when
         JsonNode requestBody = service.transform(delta);
