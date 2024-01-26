@@ -25,7 +25,8 @@ public record ThenProperties(@JsonProperty("define") Map<String, String> define,
 
         ExecArgs execArgs;
         if (define != null && exec != null) {
-            Pattern extract = define.containsKey("extract") ? Pattern.compile(define.get("extract")) : null;
+            Pattern extract = define.containsKey("extract") ? Pattern.compile(
+                    define.get("extract")) : null;
             String altDescription = define.get("alt_description");
             execArgs = new ExecArgs(transformerFactory.getProcessCapital(),
                     extractFieldPath(exec.get("process_capital").getFirst()), extract,

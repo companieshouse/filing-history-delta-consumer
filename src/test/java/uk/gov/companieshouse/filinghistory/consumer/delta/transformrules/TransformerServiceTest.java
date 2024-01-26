@@ -12,8 +12,6 @@ import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functio
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.BsonDate;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.FormatNumber;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.LowerCase;
-import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.ProcessCapital;
-import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.ReplaceProperty;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.SentenceCase;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.TitleCase;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.TransformerFactory;
@@ -36,7 +34,7 @@ class TransformerServiceTest {
             }""";
 
     // TODO The dates might not have the correct structure
-    private static final String AA_REQUEST_BODY = """
+    private static final String aaRequestBody = """
             {
                 "_id" : "MTUxMjg0MTM5YWRpcXprY3g",
                 "company_number" : "14388379",
