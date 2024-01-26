@@ -10,14 +10,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import uk.gov.companieshouse.api.filinghistory.ExternalData;
-import uk.gov.companieshouse.api.filinghistory.FilingHistoryItemDataAnnotations;
 import uk.gov.companieshouse.api.filinghistory.FilingHistoryItemDataDescriptionValues;
 import uk.gov.companieshouse.api.filinghistory.FilingHistoryItemDataLinks;
 import uk.gov.companieshouse.api.filinghistory.InternalData;
@@ -32,18 +30,18 @@ class InternalFilingHistoryApiMapperTest {
     private static final String ENCODED_ID = "MzA1Njc0Mjg0N3NqYXNqamQ";
     private static final String BARCODE = "XAITVXAX";
     private static final String DESCRIPTION = "termination-director-company-with-name-termination-date";
-    private static final String ORIGINAL_DESCRIPTION = "Termination person judicial factor overseas company";
-    private static final String DOCUMENT_ID = "000XAITVXAX4682";
+    private static final String ORIGINAL_DESCRIPTION = "Appointment terminated, director john tester";
+    private static final String DOCUMENT_ID = "000%s4682".formatted(BARCODE);
     private static final String COMPANY_NUMBER = "12345678";
     private static final String DATE = "20110905053919";
     private static final String TYPE = "TM01";
     private static final String CATEGORY = "officers";
+    private static final String SUBCATEGORY = "termination";
+    private static final String UPDATED_BY = "updatedBy";
 
     @InjectMocks
     private InternalFilingHistoryApiMapper mapper;
 
-    @Mock
-    private AnnotationsMapper annotationsMapper;
     @Mock
     private DescriptionValuesMapper descriptionValuesMapper;
     @Mock
@@ -51,8 +49,6 @@ class InternalFilingHistoryApiMapperTest {
     @Mock
     private OriginalValuesMapper originalValuesMapper;
 
-    @Mock
-    private FilingHistoryItemDataAnnotations filingHistoryItemDataAnnotations;
     @Mock
     private FilingHistoryItemDataDescriptionValues filingHistoryItemDataDescriptionValues;
     @Mock
@@ -64,7 +60,6 @@ class InternalFilingHistoryApiMapperTest {
     @Test
     void shouldMapTransformedJsonNodeToInternalFilingHistoryApiObject() {
         // given
-        when(annotationsMapper.map(any())).thenReturn(List.of(filingHistoryItemDataAnnotations));
         when(descriptionValuesMapper.map(any())).thenReturn(filingHistoryItemDataDescriptionValues);
         when(linksMapper.map(any())).thenReturn(filingHistoryItemDataLinks);
         when(originalValuesMapper.map(any())).thenReturn(internalDataOriginalValues);
@@ -76,12 +71,12 @@ class InternalFilingHistoryApiMapperTest {
                         .type(TYPE)
                         .date(DATE)
                         .category(ExternalData.CategoryEnum.OFFICERS)
-                        .annotations(List.of(filingHistoryItemDataAnnotations))
-                        .subcategory(ExternalData.SubcategoryEnum.OFFICERS)
+                        .subcategory(ExternalData.SubcategoryEnum.TERMINATION)
                         .description(DESCRIPTION)
                         .descriptionValues(filingHistoryItemDataDescriptionValues)
                         .actionDate(DATE)
-                        .links(filingHistoryItemDataLinks))
+                        .links(filingHistoryItemDataLinks)
+                        .paperFiled(false))
                 .internalData(new InternalData()
                         .transactionKind(TOP_LEVEL)
                         .deltaAt(DELTA_AT)
@@ -90,10 +85,11 @@ class InternalFilingHistoryApiMapperTest {
                         .companyNumber(COMPANY_NUMBER)
                         .parentEntityId("")
                         .entityId(ENTITY_ID)
-                        .documentId(DOCUMENT_ID));
+                        .documentId(DOCUMENT_ID)
+                        .updatedBy(UPDATED_BY));
 
         // when
-        final InternalFilingHistoryApi actualRequestBody = mapper.mapJsonNodeToInternalFilingHistoryApi(buildJsonNode(), buildTransactionKindResult(), DELTA_AT);
+        final InternalFilingHistoryApi actualRequestBody = mapper.mapJsonNodeToInternalFilingHistoryApi(buildJsonNode(), buildTransactionKindResult(), DELTA_AT, UPDATED_BY);
 
         // then
         assertEquals(expectedRequestBody, actualRequestBody);
@@ -116,7 +112,7 @@ class InternalFilingHistoryApiMapperTest {
                 .put("type", TYPE)
                 .put("date", DATE)
                 .put("category", CATEGORY)
-                .put("subcategory", CATEGORY)
+                .put("subcategory", SUBCATEGORY)
                 .put("description", DESCRIPTION)
                 .put("action_date", DATE)
                 .putObject("description_values")

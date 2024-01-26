@@ -1,6 +1,10 @@
 package uk.gov.companieshouse.filinghistory.consumer.delta;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.regex.Pattern;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import uk.gov.companieshouse.api.filinghistory.ExternalData;
 import uk.gov.companieshouse.api.filinghistory.ExternalData.CategoryEnum;
@@ -11,47 +15,66 @@ import uk.gov.companieshouse.api.filinghistory.InternalFilingHistoryApi;
 @Component
 public class InternalFilingHistoryApiMapper {
 
-    private final AnnotationsMapper annotationsMapper;
+    private static final Pattern BARCODE_REGEX = Pattern.compile("^X");
+    private static final Pattern DOCUMENT_ID_REGEX = Pattern.compile("^...X", Pattern.CASE_INSENSITIVE);
+
     private final DescriptionValuesMapper descriptionValuesMapper;
     private final LinksMapper linksMapper;
     private final OriginalValuesMapper originalValuesMapper;
 
-    public InternalFilingHistoryApiMapper(AnnotationsMapper annotationsMapper, DescriptionValuesMapper descriptionValuesMapper, LinksMapper linksMapper, OriginalValuesMapper originalValuesMapper) {
-        this.annotationsMapper = annotationsMapper;
+    public InternalFilingHistoryApiMapper(DescriptionValuesMapper descriptionValuesMapper, LinksMapper linksMapper, OriginalValuesMapper originalValuesMapper) {
         this.descriptionValuesMapper = descriptionValuesMapper;
         this.linksMapper = linksMapper;
         this.originalValuesMapper = originalValuesMapper;
     }
 
-    public InternalFilingHistoryApi mapJsonNodeToInternalFilingHistoryApi(final JsonNode topLevelNode, final TransactionKindResult kindResult, final String deltaAt) {
+    public InternalFilingHistoryApi mapJsonNodeToInternalFilingHistoryApi(final JsonNode topLevelNode, final TransactionKindResult kindResult, final String deltaAt, final String updatedBy) {
         final JsonNode dataNode = topLevelNode.get("data");
         final JsonNode originalValuesNode = topLevelNode.get("original_values");
         final JsonNode descriptionValuesNode = dataNode.get("description_values");
 
+        final String barcode = getValueFromField(topLevelNode, "_barcode");
+        final String documentId = getValueFromField(topLevelNode, "_document_id");
+
         return new InternalFilingHistoryApi()
                 .externalData(new ExternalData()
                         .transactionId(kindResult.encodedId())
-                        .barcode(topLevelNode.get("_barcode").textValue())
-                        .type(dataNode.get("type").textValue())
-                        .date(dataNode.get("date").textValue())
-                        .category(CategoryEnum.fromValue(dataNode.get("category").textValue()))
-                        .annotations(annotationsMapper.map(topLevelNode))
-                        .subcategory(SubcategoryEnum.fromValue(dataNode.get("subcategory").textValue()))
-                        .description(dataNode.get("description").textValue())
+                        .barcode(barcode)
+                        .type(getValueFromField(dataNode, "type"))
+                        .date(getValueFromField(dataNode, "date"))
+                        .category(getEnumFromField(dataNode, "category", CategoryEnum::fromValue))
+                        .subcategory(getEnumFromField(dataNode, "subcategory", SubcategoryEnum::fromValue))
+                        .description(getValueFromField(dataNode, "description"))
                         .descriptionValues(descriptionValuesMapper.map(descriptionValuesNode))
-//                        .pages(topLevelNode.get("pages").asInt()) // TODO where is pages?
-                        .actionDate(dataNode.get("action_date").textValue())
-//                        .paperFiled(topLevelNode.get("paper_filed").asBoolean()) // TODO where is paper filed?
+                        .actionDate(getValueFromField(dataNode, "action_date"))
+                        .paperFiled(isPaperFiled(barcode, documentId))
                         .links(linksMapper.map(topLevelNode)))
                 .internalData(new InternalData()
                         .originalValues(originalValuesMapper.map(originalValuesNode))
-                        .originalDescription(topLevelNode.get("original_description").textValue())
-                        .companyNumber(descriptionValuesNode.get("company_number").textValue())
-                        .parentEntityId(topLevelNode.get("parent_entity_id").textValue())
-                        .entityId(topLevelNode.get("_entity_id").textValue())
-                        .documentId(topLevelNode.get("_document_id").textValue())
+                        .originalDescription(getValueFromField(topLevelNode, "original_description"))
+                        .companyNumber(getValueFromField(descriptionValuesNode, "company_number"))
+                        .parentEntityId(getValueFromField(topLevelNode, "parent_entity_id"))
+                        .entityId(getValueFromField(topLevelNode, "_entity_id"))
+                        .documentId(documentId)
                         .deltaAt(deltaAt)
-//                        .updatedBy("updated_by") // TODO where is updated by?
+                        .updatedBy(updatedBy)
                         .transactionKind(kindResult.kind()));
+    }
+
+    private String getValueFromField(final JsonNode node, final String field) {
+        return node.get(field) != null ? node.get(field).textValue() : null;
+    }
+
+    private <T extends Enum<?>> T getEnumFromField(final JsonNode node, final String field, Function<String, T> fromValue) {
+        return Optional.ofNullable(node.get(field))
+                .map(JsonNode::textValue)
+                .map(fromValue)
+                .orElse(null);
+    }
+
+    private boolean isPaperFiled(final String barcode, final String documentId) {
+        if (!StringUtils.isBlank(barcode) && !BARCODE_REGEX.matcher(barcode).find()) {
+            return true;
+        } else return !StringUtils.isBlank(documentId) && !DOCUMENT_ID_REGEX.matcher(documentId).find();
     }
 }

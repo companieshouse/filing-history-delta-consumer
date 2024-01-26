@@ -26,7 +26,7 @@ class FilingHistoryDeltaMapperTest {
         InternalFilingHistoryApi expected = new InternalFilingHistoryApi();
 
         // when
-        InternalFilingHistoryApi actual = mapper.map(delta);
+        InternalFilingHistoryApi actual = mapper.map(delta, "contextId");
 
         // then
         assertEquals(expected, actual);

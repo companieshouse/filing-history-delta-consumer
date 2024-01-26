@@ -23,7 +23,7 @@ public class UpsertDeltaService implements DeltaService {
     @Override
     public void process(ChsDelta delta) {
         FilingHistoryDelta filingHistory = deserialiser.deserialiseFilingHistoryDelta(delta.getData());
-        InternalFilingHistoryApi apiRequest = mapper.map(filingHistory);
+        InternalFilingHistoryApi apiRequest = mapper.map(filingHistory, delta.getContextId());
         apiClient.upsertFilingHistory(apiRequest);
     }
 }

@@ -1,6 +1,7 @@
 package uk.gov.companieshouse.filinghistory.consumer.delta;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -37,7 +38,7 @@ class UpsertDeltaServiceTest {
     void shouldSuccessfullyPassDeserialisedAndMappedDeltaToApiClient() {
         // given
         when(deserialiser.deserialiseFilingHistoryDelta(any())).thenReturn(delta);
-        when(mapper.map(any())).thenReturn(apiRequest);
+        when(mapper.map(any(), anyString())).thenReturn(apiRequest);
 
         ChsDelta chsDelta = new ChsDelta(DELTA_JSON, 0, "contextId", false);
 
@@ -46,7 +47,7 @@ class UpsertDeltaServiceTest {
 
         // then
         verify(deserialiser).deserialiseFilingHistoryDelta(DELTA_JSON);
-        verify(mapper).map(delta);
+        verify(mapper).map(delta, "contextId");
         verify(apiClient).upsertFilingHistory(apiRequest);
     }
 }

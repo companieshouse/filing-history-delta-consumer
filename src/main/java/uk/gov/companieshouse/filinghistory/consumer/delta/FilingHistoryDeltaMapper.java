@@ -25,7 +25,7 @@ public class FilingHistoryDeltaMapper {
         this.objectMapper = objectMapper;
     }
 
-    public InternalFilingHistoryApi map(FilingHistoryDelta delta) {
+    public InternalFilingHistoryApi map(FilingHistoryDelta delta, final String updatedBy) {
         final FilingHistory filingHistory = delta.getFilingHistory().getFirst();
         TransactionKindCriteria criteria = new TransactionKindCriteria(
                 filingHistory.getEntityId(), filingHistory.getParentEntityId(), filingHistory.getFormType(),
@@ -39,6 +39,6 @@ public class FilingHistoryDeltaMapper {
         // TODO clean up fields, mostly child transactions
         // TODO sort/order fields? not needed (probably)
 
-        return internalFilingHistoryApiMapper.mapJsonNodeToInternalFilingHistoryApi(transformedJsonNode, kindResult, delta.getDeltaAt());
+        return internalFilingHistoryApiMapper.mapJsonNodeToInternalFilingHistoryApi(transformedJsonNode, kindResult, delta.getDeltaAt(), updatedBy);
     }
 }
