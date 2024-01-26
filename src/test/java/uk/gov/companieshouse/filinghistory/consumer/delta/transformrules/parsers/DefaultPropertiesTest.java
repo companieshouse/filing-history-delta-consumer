@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.AddressCase;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.BsonDate;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.LowerCase;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.ProcessCapital;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.ReplaceProperty;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.SentenceCase;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.TitleCase;
@@ -23,7 +24,8 @@ class DefaultPropertiesTest {
     private static final ObjectMapper MAPPER = new ObjectMapper(new YAMLFactory());
 
     private final TransformerFactory transformerFactory = new TransformerFactory(new AddressCase(),
-            new BsonDate(), new LowerCase(), new SentenceCase(), new TitleCase());
+            new BsonDate(), new LowerCase(), new SentenceCase(), new TitleCase(),
+            new ReplaceProperty(), new ProcessCapital());
 
     private static final String DEFAULT = """
             - default:

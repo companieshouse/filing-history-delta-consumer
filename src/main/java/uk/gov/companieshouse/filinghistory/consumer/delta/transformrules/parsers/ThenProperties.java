@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.ReplaceProperty;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.Transformer;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.TransformerFactory;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.rules.ExecArgs;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.rules.SetterArgs;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.rules.Then;
 
@@ -17,26 +18,31 @@ public record ThenProperties(@JsonProperty("define") Map<String, String> define,
                              @JsonProperty("set") Map<String, Object> set,
                              @JsonProperty("exec") Map<String, List<String>> exec) {
 
-    private static final Pattern PLACEHOLDER_PATTERN = Pattern.compile("^\\[%\\s([\\w.]*)\\s\\|\\s([\\w_]*)\\s%]$");
+    private static final Pattern PLACEHOLDER_PATTERN = Pattern.compile(
+            "^\\[%\\s([\\w.]+)\\s\\|\\s([\\w]+)\\s%]$");
+    private static final Pattern EXEC_PLACEHOLDER_PATTERN = Pattern.compile(
+            "^\\[%\\s([\\w.]+)\\s%]$");
 
     public Then compile(TransformerFactory transformerFactory) {
-        // Parse the entries in the set, define and exec to:
 
-        //  - define: ?? Apply regex to some field. Check Perl ??
-        Map<String, Pattern> defineElements = define != null ? define.entrySet().stream()
-                .collect(Collectors.toMap(
-                        Entry::getKey,
-                        e -> Pattern.compile(e.getValue())
-                )) : Map.of();
+        ExecArgs execArgs;
+        if (define != null && exec != null) {
+            Pattern extract = define.containsKey("extract") ? Pattern.compile(
+                    define.get("extract")) : null;
+            String altDescription = define.get("alt_description");
+            execArgs = new ExecArgs(transformerFactory.getProcessCapital(),
+                    extractFieldPath(exec.get("process_capital").getFirst()), extract,
+                    altDescription);
+        } else {
+            execArgs = null;
+        }
 
         Map<String, SetterArgs> setElements = set.entrySet().stream()
                 .collect(Collectors.toMap(
                         Entry::getKey,
                         e -> buildSetterArgs(e, transformerFactory)));
 
-        //  - exec: ?? field name -> Call a custom method to build the value. Check Perl ??
-
-        return new Then(defineElements, setElements, Map.of());
+        return new Then(setElements, execArgs);
     }
 
     @SuppressWarnings("unchecked")
@@ -53,9 +59,18 @@ public record ThenProperties(@JsonProperty("define") Map<String, String> define,
                 Transformer transformer = transformerFactory.mapTransformer(matcher.group(2));
                 setterArgs = new SetterArgs(transformer, List.of(sourcePath));
             } else {
-                setterArgs = new SetterArgs(new ReplaceProperty(), List.of(value));
+                setterArgs = new SetterArgs(transformerFactory.getReplaceProperty(),
+                        List.of(value));
             }
         }
         return setterArgs;
+    }
+
+    private static String extractFieldPath(String rawFieldPath) {
+        Matcher matcher = EXEC_PLACEHOLDER_PATTERN.matcher(rawFieldPath);
+        if (matcher.matches()) {
+            return matcher.group(1);
+        }
+        throw new IllegalArgumentException("Invalid field path in exec %s".formatted(rawFieldPath));
     }
 }

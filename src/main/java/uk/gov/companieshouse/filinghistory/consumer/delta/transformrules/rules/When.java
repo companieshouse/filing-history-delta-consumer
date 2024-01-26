@@ -1,5 +1,7 @@
 package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.rules;
 
+import static uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.TransformerUtils.toJsonPtr;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,8 +37,5 @@ public record When(String field, String formType, Map<String, Pattern> like) {
         return new Result(false, Map.of());
     }
 
-    private static String toJsonPtr(String key) {
-        return "/%s".formatted(key.replace(".", "/"));
-    }
 }
 

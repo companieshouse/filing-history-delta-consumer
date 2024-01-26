@@ -10,14 +10,20 @@ public class TransformerFactory {
     private final LowerCase lowerCase;
     private final SentenceCase sentenceCase;
     private final TitleCase titleCase;
+    private final ReplaceProperty replaceProperty;
+
+    private final ProcessCapital processCapital;
 
     public TransformerFactory(AddressCase addressCase, BsonDate bsonDate, LowerCase lowerCase,
-            SentenceCase sentenceCase, TitleCase titleCase) {
+            SentenceCase sentenceCase, TitleCase titleCase, ReplaceProperty replaceProperty,
+            ProcessCapital processCapital) {
         this.addressCase = addressCase;
         this.bsonDate = bsonDate;
         this.lowerCase = lowerCase;
         this.sentenceCase = sentenceCase;
         this.titleCase = titleCase;
+        this.replaceProperty = replaceProperty;
+        this.processCapital = processCapital;
     }
 
     public Transformer mapTransformer(String function) {
@@ -29,5 +35,13 @@ public class TransformerFactory {
             case "title_case" -> titleCase;
             default -> throw new IllegalArgumentException("Unexpected function " + function);
         };
+    }
+
+    public ReplaceProperty getReplaceProperty() {
+        return replaceProperty;
+    }
+
+    public ProcessCapital getProcessCapital() {
+        return processCapital;
     }
 }
