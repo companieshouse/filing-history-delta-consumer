@@ -16,7 +16,7 @@ import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.rules.S
 record DefaultProperties(@JsonProperty("set") Map<String, String> set) {
 
     private static final Pattern PLACEHOLDER_PATTERN = Pattern.compile(
-            "^\\[%\\s([\\w.]*)\\s\\|\\s([\\w_]*)\\s%]$");
+            "^\\[%\\s([\\w.]+)\\s\\|\\s(\\w+)\\s%]$");
 
     public Default compile(TransformerFactory transformerFactory) {
         Map<String, SetterArgs> setElements = set.entrySet().stream()

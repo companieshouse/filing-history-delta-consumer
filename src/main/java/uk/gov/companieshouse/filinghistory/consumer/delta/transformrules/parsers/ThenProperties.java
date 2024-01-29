@@ -19,7 +19,7 @@ public record ThenProperties(@JsonProperty("define") Map<String, String> define,
                              @JsonProperty("exec") Map<String, List<String>> exec) {
 
     private static final Pattern PLACEHOLDER_PATTERN = Pattern.compile(
-            "^\\[%\\s([\\w.]+)\\s\\|\\s([\\w]+)\\s%]$");
+            "^\\[%\\s([\\w.]+)\\s\\|\\s(\\w+)\\s%]$");
     private static final Pattern EXEC_PLACEHOLDER_PATTERN = Pattern.compile(
             "^\\[%\\s([\\w.]+)\\s%]$");
 
