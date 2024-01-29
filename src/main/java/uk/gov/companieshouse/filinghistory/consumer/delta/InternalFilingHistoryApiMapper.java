@@ -38,9 +38,12 @@ public class InternalFilingHistoryApiMapper {
         final String barcode = getValueFromField(topLevelNode, "_barcode");
         final String documentId = getValueFromField(topLevelNode, "_document_id");
 
+        final String encodedId = kindResult.encodedId();
+        final String companyNumber = getValueFromField(descriptionValuesNode, "company_number");
+
         return new InternalFilingHistoryApi()
                 .externalData(new ExternalData()
-                        .transactionId(kindResult.encodedId())
+                        .transactionId(encodedId)
                         .barcode(barcode)
                         .type(getValueFromField(dataNode, "type"))
                         .date(getValueFromField(dataNode, "date"))
@@ -50,11 +53,11 @@ public class InternalFilingHistoryApiMapper {
                         .descriptionValues(descriptionValuesMapper.map(descriptionValuesNode))
                         .actionDate(getValueFromField(dataNode, "action_date"))
                         .paperFiled(isPaperFiled(barcode, documentId))
-                        .links(linksMapper.map(topLevelNode)))
+                        .links(linksMapper.map(companyNumber, encodedId)))
                 .internalData(new InternalData()
                         .originalValues(originalValuesMapper.map(originalValuesNode))
                         .originalDescription(getValueFromField(topLevelNode, "original_description"))
-                        .companyNumber(getValueFromField(descriptionValuesNode, "company_number"))
+                        .companyNumber(companyNumber)
                         .parentEntityId(getValueFromField(topLevelNode, "parent_entity_id"))
                         .entityId(getValueFromField(topLevelNode, "_entity_id"))
                         .documentId(documentId)
