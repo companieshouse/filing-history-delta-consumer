@@ -5,6 +5,8 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.nio.charset.StandardCharsets;
+import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,8 +19,6 @@ import uk.gov.companieshouse.filinghistory.consumer.serdes.FilingHistoryDeltaDes
 
 @ExtendWith(MockitoExtension.class)
 class UpsertDeltaServiceTest {
-
-    private static final String DELTA_JSON = "json string representing filing history delta";
 
     @InjectMocks
     private UpsertDeltaService service;
@@ -35,18 +35,20 @@ class UpsertDeltaServiceTest {
     private InternalFilingHistoryApi apiRequest;
 
     @Test
-    void shouldSuccessfullyPassDeserialisedAndMappedDeltaToApiClient() {
+    void shouldSuccessfullyPassDeserialisedAndMappedDeltaToApiClient() throws Exception {
         // given
         when(deserialiser.deserialiseFilingHistoryDelta(any())).thenReturn(delta);
         when(mapper.processDelta(any(), anyString())).thenReturn(apiRequest);
 
-        ChsDelta chsDelta = new ChsDelta(DELTA_JSON, 0, "contextId", false);
+        final String jsonString = IOUtils.resourceToString("/tm01_delta.json", StandardCharsets.UTF_8);
+
+        ChsDelta chsDelta = new ChsDelta(jsonString, 0, "contextId", false);
 
         // when
         service.process(chsDelta);
 
         // then
-        verify(deserialiser).deserialiseFilingHistoryDelta(DELTA_JSON);
+        verify(deserialiser).deserialiseFilingHistoryDelta(jsonString);
         verify(mapper).processDelta(delta, "contextId");
         verify(apiClient).upsertFilingHistory(apiRequest);
     }
