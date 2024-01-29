@@ -10,20 +10,20 @@ import uk.gov.companieshouse.filinghistory.consumer.serdes.FilingHistoryDeltaDes
 public class UpsertDeltaService implements DeltaService {
 
     private final FilingHistoryDeltaDeserialiser deserialiser;
-    private final FilingHistoryDeltaMapper mapper;
+    private final FilingHistoryDeltaProcessor filingHistoryDeltaProcessor;
     private final FilingHistoryApiClient apiClient;
 
-    public UpsertDeltaService(FilingHistoryDeltaDeserialiser deserialiser, FilingHistoryDeltaMapper mapper,
+    public UpsertDeltaService(FilingHistoryDeltaDeserialiser deserialiser, FilingHistoryDeltaProcessor filingHistoryDeltaProcessor,
             FilingHistoryApiClient apiClient) {
         this.deserialiser = deserialiser;
-        this.mapper = mapper;
+        this.filingHistoryDeltaProcessor = filingHistoryDeltaProcessor;
         this.apiClient = apiClient;
     }
 
     @Override
     public void process(ChsDelta delta) {
         FilingHistoryDelta filingHistory = deserialiser.deserialiseFilingHistoryDelta(delta.getData());
-        InternalFilingHistoryApi apiRequest = mapper.map(filingHistory, delta.getContextId());
+        InternalFilingHistoryApi apiRequest = filingHistoryDeltaProcessor.processDelta(filingHistory, delta.getContextId());
         apiClient.upsertFilingHistory(apiRequest);
     }
 }

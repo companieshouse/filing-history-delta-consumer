@@ -25,7 +25,7 @@ class UpsertDeltaServiceTest {
     @Mock
     private FilingHistoryDeltaDeserialiser deserialiser;
     @Mock
-    private FilingHistoryDeltaMapper mapper;
+    private FilingHistoryDeltaProcessor mapper;
     @Mock
     private FilingHistoryApiClient apiClient;
 
@@ -38,7 +38,7 @@ class UpsertDeltaServiceTest {
     void shouldSuccessfullyPassDeserialisedAndMappedDeltaToApiClient() {
         // given
         when(deserialiser.deserialiseFilingHistoryDelta(any())).thenReturn(delta);
-        when(mapper.map(any(), anyString())).thenReturn(apiRequest);
+        when(mapper.processDelta(any(), anyString())).thenReturn(apiRequest);
 
         ChsDelta chsDelta = new ChsDelta(DELTA_JSON, 0, "contextId", false);
 
@@ -47,7 +47,7 @@ class UpsertDeltaServiceTest {
 
         // then
         verify(deserialiser).deserialiseFilingHistoryDelta(DELTA_JSON);
-        verify(mapper).map(delta, "contextId");
+        verify(mapper).processDelta(delta, "contextId");
         verify(apiClient).upsertFilingHistory(apiRequest);
     }
 }
