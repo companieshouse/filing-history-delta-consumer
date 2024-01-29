@@ -1,0 +1,21 @@
+{
+  "filing_history": [
+    {
+      "category": "2",
+      "receive_date": "20120604053919",
+      "form_type": "TM01",
+      "description": "Appointment Terminated, Director JOHN TESTER",
+      "barcode": "XHJYVXAY",
+      "document_id": "000XHJYVXAY4378",
+      "company_number": "12345678",
+      "entity_id": "3043972675",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "description_values": {
+        "resignation_date": "04/06/2012",
+        "OFFICER_NAME": "John Tester"
+      },
+      "pre_scanned_batch": "0"
+    }
+  ]
+}

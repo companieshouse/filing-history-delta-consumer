@@ -39,7 +39,7 @@ public class InternalFilingHistoryApiMapper {
         final String documentId = getValueFromField(topLevelNode, "_document_id");
 
         final String encodedId = kindResult.encodedId();
-        final String companyNumber = getValueFromField(descriptionValuesNode, "company_number");
+        final String companyNumber = getValueFromField(topLevelNode, "company_number");
 
         return new InternalFilingHistoryApi()
                 .externalData(new ExternalData()

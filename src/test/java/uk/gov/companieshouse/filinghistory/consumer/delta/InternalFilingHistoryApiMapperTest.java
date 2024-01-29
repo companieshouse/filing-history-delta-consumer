@@ -215,7 +215,8 @@ class InternalFilingHistoryApiMapperTest {
                 .put("original_description", ORIGINAL_DESCRIPTION)
                 .put("parent_entity_id", "")
                 .put("_entity_id", ENTITY_ID)
-                .put("_document_id", documentId);
+                .put("_document_id", documentId)
+                .put("company_number", companyNumber);
 
         topLevelNode.putObject("original_values");
 
@@ -226,8 +227,7 @@ class InternalFilingHistoryApiMapperTest {
                 .put("subcategory", SUBCATEGORY)
                 .put("description", DESCRIPTION)
                 .put("action_date", DATE)
-                .putObject("description_values")
-                    .put("company_number", companyNumber);
+                .putObject("description_values");
 
         return topLevelNode;
     }
@@ -239,13 +239,13 @@ class InternalFilingHistoryApiMapperTest {
                         .registerModule(new JavaTimeModule());
 
         ObjectNode topLevelNode = objectMapper.createObjectNode()
-                .put("_entity_id", ENTITY_ID);
+                .put("_entity_id", ENTITY_ID)
+                .put("company_number", COMPANY_NUMBER);
 
         topLevelNode.putObject("original_values");
 
         topLevelNode.putObject("data")
-                .putObject("description_values")
-                .put("company_number", COMPANY_NUMBER);
+                .putObject("description_values");
 
         return topLevelNode;
     }
