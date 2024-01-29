@@ -110,7 +110,7 @@ class InternalFilingHistoryApiMapperTest {
     @CsvSource({
             "000XAITVXAX4682 , false",
             "000TAITVXAX4682 , true"})
-    void shouldMapTransformedJsonNodeToInternalFilingHistoryApiObjectWhenBarcodeIsEmptyButDocumentIdIsNot(String documentId, boolean isPaperFiled) {
+    void shouldMapTransformedJsonNodeToInternalFilingHistoryApiObjectWhenBarcodeIsEmptyButDocumentIdIsNot(final String documentId, final boolean isPaperFiled) {
         // given
         when(descriptionValuesMapper.map(any())).thenReturn(filingHistoryItemDataDescriptionValues);
         when(linksMapper.map(any())).thenReturn(filingHistoryItemDataLinks);
@@ -133,7 +133,7 @@ class InternalFilingHistoryApiMapperTest {
     }
 
     @Test
-    void shouldMapJsonNodeWithNoFieldsToInternalFilingHistoryApiObject() {
+    void shouldHandleNullInputFieldsBySettingNonRequiredFieldsToNullOnInternalFilingHistoryApiObject() {
         // given
         when(descriptionValuesMapper.map(any())).thenReturn(filingHistoryItemDataDescriptionValues);
         when(linksMapper.map(any())).thenReturn(filingHistoryItemDataLinks);
