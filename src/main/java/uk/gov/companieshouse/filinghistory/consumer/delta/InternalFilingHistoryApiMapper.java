@@ -75,6 +75,7 @@ public class InternalFilingHistoryApiMapper {
     private boolean isPaperFiled(final String barcode, final String documentId) {
         if (!StringUtils.isBlank(barcode) && !BARCODE_REGEX.matcher(barcode).find()) {
             return true;
-        } else return !StringUtils.isBlank(documentId) && !DOCUMENT_ID_REGEX.matcher(documentId).find();
+        }
+        return !StringUtils.isBlank(documentId) && !DOCUMENT_ID_REGEX.matcher(documentId).find();
     }
 }

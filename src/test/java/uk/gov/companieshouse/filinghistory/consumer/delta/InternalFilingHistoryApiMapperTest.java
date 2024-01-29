@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -69,29 +71,56 @@ class InternalFilingHistoryApiMapperTest {
         final JsonNode expectedDescriptionValuesNode = topLevelNode.get("data").get("description_values");
         final JsonNode expectedOriginalValuesNode = topLevelNode.get("original_values");
 
-        final InternalFilingHistoryApi expectedRequestBody = new InternalFilingHistoryApi()
-                .externalData(new ExternalData()
-                        .transactionId(ENCODED_ID)
-                        .barcode(BARCODE)
-                        .type(TYPE)
-                        .date(DATE)
-                        .category(ExternalData.CategoryEnum.OFFICERS)
-                        .subcategory(ExternalData.SubcategoryEnum.TERMINATION)
-                        .description(DESCRIPTION)
-                        .descriptionValues(filingHistoryItemDataDescriptionValues)
-                        .actionDate(DATE)
-                        .links(filingHistoryItemDataLinks)
-                        .paperFiled(false))
-                .internalData(new InternalData()
-                        .transactionKind(TOP_LEVEL)
-                        .deltaAt(DELTA_AT)
-                        .originalValues(internalDataOriginalValues)
-                        .originalDescription(ORIGINAL_DESCRIPTION)
-                        .companyNumber(COMPANY_NUMBER)
-                        .parentEntityId("")
-                        .entityId(ENTITY_ID)
-                        .documentId(DOCUMENT_ID)
-                        .updatedBy(UPDATED_BY));
+        final InternalFilingHistoryApi expectedRequestBody = buildExpectedTM01RequestBody(BARCODE, DOCUMENT_ID, false);
+
+        // when
+        final InternalFilingHistoryApi actualRequestBody = mapper.mapJsonNodeToInternalFilingHistoryApi(topLevelNode, buildTransactionKindResult(), DELTA_AT, UPDATED_BY);
+
+        // then
+        assertEquals(expectedRequestBody, actualRequestBody);
+        verify(descriptionValuesMapper).map(expectedDescriptionValuesNode);
+        verify(linksMapper).map(topLevelNode);
+        verify(originalValuesMapper).map(expectedOriginalValuesNode);
+    }
+
+    @Test
+    void shouldMapTransformedJsonNodeToInternalFilingHistoryApiObjectWhenBarcodeDoesNotStartWithXAndSetPaperFiledToTrue() {
+        // given
+        when(descriptionValuesMapper.map(any())).thenReturn(filingHistoryItemDataDescriptionValues);
+        when(linksMapper.map(any())).thenReturn(filingHistoryItemDataLinks);
+        when(originalValuesMapper.map(any())).thenReturn(internalDataOriginalValues);
+
+        final JsonNode topLevelNode = buildJsonNode("TAITVXAX", "000TAITVXAX4682");
+        final JsonNode expectedDescriptionValuesNode = topLevelNode.get("data").get("description_values");
+        final JsonNode expectedOriginalValuesNode = topLevelNode.get("original_values");
+
+        final InternalFilingHistoryApi expectedRequestBody = buildExpectedTM01RequestBody("TAITVXAX", "000TAITVXAX4682", true);
+
+        // when
+        final InternalFilingHistoryApi actualRequestBody = mapper.mapJsonNodeToInternalFilingHistoryApi(topLevelNode, buildTransactionKindResult(), DELTA_AT, UPDATED_BY);
+
+        // then
+        assertEquals(expectedRequestBody, actualRequestBody);
+        verify(descriptionValuesMapper).map(expectedDescriptionValuesNode);
+        verify(linksMapper).map(topLevelNode);
+        verify(originalValuesMapper).map(expectedOriginalValuesNode);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "000XAITVXAX4682 , false",
+            "000TAITVXAX4682 , true"})
+    void shouldMapTransformedJsonNodeToInternalFilingHistoryApiObjectWhenBarcodeIsEmptyButDocumentIdIsNot(String documentId, boolean isPaperFiled) {
+        // given
+        when(descriptionValuesMapper.map(any())).thenReturn(filingHistoryItemDataDescriptionValues);
+        when(linksMapper.map(any())).thenReturn(filingHistoryItemDataLinks);
+        when(originalValuesMapper.map(any())).thenReturn(internalDataOriginalValues);
+
+        final JsonNode topLevelNode = buildJsonNode("", documentId);
+        final JsonNode expectedDescriptionValuesNode = topLevelNode.get("data").get("description_values");
+        final JsonNode expectedOriginalValuesNode = topLevelNode.get("original_values");
+
+        final InternalFilingHistoryApi expectedRequestBody = buildExpectedTM01RequestBody("", documentId, isPaperFiled);
 
         // when
         final InternalFilingHistoryApi actualRequestBody = mapper.mapJsonNodeToInternalFilingHistoryApi(topLevelNode, buildTransactionKindResult(), DELTA_AT, UPDATED_BY);
@@ -136,51 +165,6 @@ class InternalFilingHistoryApiMapperTest {
                         .parentEntityId(null)
                         .entityId(ENTITY_ID)
                         .documentId(null)
-                        .updatedBy(UPDATED_BY));
-
-        // when
-        final InternalFilingHistoryApi actualRequestBody = mapper.mapJsonNodeToInternalFilingHistoryApi(topLevelNode, buildTransactionKindResult(), DELTA_AT, UPDATED_BY);
-
-        // then
-        assertEquals(expectedRequestBody, actualRequestBody);
-        verify(descriptionValuesMapper).map(expectedDescriptionValuesNode);
-        verify(linksMapper).map(topLevelNode);
-        verify(originalValuesMapper).map(expectedOriginalValuesNode);
-    }
-
-    @Test
-    void shouldMapTransformedJsonNodeToInternalFilingHistoryApiObjectWhenBarcodeDoesNotStartWithXAndSetPaperFiledToTrue() {
-        // given
-        when(descriptionValuesMapper.map(any())).thenReturn(filingHistoryItemDataDescriptionValues);
-        when(linksMapper.map(any())).thenReturn(filingHistoryItemDataLinks);
-        when(originalValuesMapper.map(any())).thenReturn(internalDataOriginalValues);
-
-        final JsonNode topLevelNode = buildJsonNode("TAITVXAX", "000TAITVXAX4682");
-        final JsonNode expectedDescriptionValuesNode = topLevelNode.get("data").get("description_values");
-        final JsonNode expectedOriginalValuesNode = topLevelNode.get("original_values");
-
-        final InternalFilingHistoryApi expectedRequestBody = new InternalFilingHistoryApi()
-                .externalData(new ExternalData()
-                        .transactionId(ENCODED_ID)
-                        .barcode("TAITVXAX")
-                        .type(TYPE)
-                        .date(DATE)
-                        .category(ExternalData.CategoryEnum.OFFICERS)
-                        .subcategory(ExternalData.SubcategoryEnum.TERMINATION)
-                        .description(DESCRIPTION)
-                        .descriptionValues(filingHistoryItemDataDescriptionValues)
-                        .actionDate(DATE)
-                        .links(filingHistoryItemDataLinks)
-                        .paperFiled(true))
-                .internalData(new InternalData()
-                        .transactionKind(TOP_LEVEL)
-                        .deltaAt(DELTA_AT)
-                        .originalValues(internalDataOriginalValues)
-                        .originalDescription(ORIGINAL_DESCRIPTION)
-                        .companyNumber(COMPANY_NUMBER)
-                        .parentEntityId("")
-                        .entityId(ENTITY_ID)
-                        .documentId("000TAITVXAX4682")
                         .updatedBy(UPDATED_BY));
 
         // when
@@ -240,5 +224,31 @@ class InternalFilingHistoryApiMapperTest {
 
     private static TransactionKindResult buildTransactionKindResult() {
         return new TransactionKindResult(ENCODED_ID, TOP_LEVEL);
+    }
+
+    private InternalFilingHistoryApi buildExpectedTM01RequestBody(final String barcode, final String documentId, final boolean isPaperFiled) {
+        return new InternalFilingHistoryApi()
+                .externalData(new ExternalData()
+                        .transactionId(ENCODED_ID)
+                        .barcode(barcode)
+                        .type(TYPE)
+                        .date(DATE)
+                        .category(ExternalData.CategoryEnum.OFFICERS)
+                        .subcategory(ExternalData.SubcategoryEnum.TERMINATION)
+                        .description(DESCRIPTION)
+                        .descriptionValues(filingHistoryItemDataDescriptionValues)
+                        .actionDate(DATE)
+                        .links(filingHistoryItemDataLinks)
+                        .paperFiled(isPaperFiled))
+                .internalData(new InternalData()
+                        .transactionKind(TOP_LEVEL)
+                        .deltaAt(DELTA_AT)
+                        .originalValues(internalDataOriginalValues)
+                        .originalDescription(ORIGINAL_DESCRIPTION)
+                        .companyNumber(COMPANY_NUMBER)
+                        .parentEntityId("")
+                        .entityId(ENTITY_ID)
+                        .documentId(documentId)
+                        .updatedBy(UPDATED_BY));
     }
 }
