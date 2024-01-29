@@ -30,12 +30,20 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import uk.gov.companieshouse.api.filinghistory.ExternalData;
+import uk.gov.companieshouse.api.filinghistory.FilingHistoryItemDataDescriptionValues;
+import uk.gov.companieshouse.api.filinghistory.FilingHistoryItemDataLinks;
+import uk.gov.companieshouse.api.filinghistory.InternalData;
+import uk.gov.companieshouse.api.filinghistory.InternalDataOriginalValues;
 import uk.gov.companieshouse.api.filinghistory.InternalFilingHistoryApi;
 import uk.gov.companieshouse.delta.ChsDelta;
 import uk.gov.companieshouse.filinghistory.consumer.delta.FilingHistoryApiClient;
 
 @SpringBootTest
 class ConsumerPositiveIT extends AbstractKafkaIT {
+
+    private static final String TRANSACTION_ID = "MzA0Mzk3MjY3NXNhbHQ";
+    private static final String COMPANY_NUMBER = "12345678";
 
     @Autowired
     private KafkaConsumer<String, byte[]> testConsumer;
@@ -68,6 +76,8 @@ class ConsumerPositiveIT extends AbstractKafkaIT {
         final String delta = IOUtils.resourceToString("/tm01_delta.json", StandardCharsets.UTF_8);
         writer.write(new ChsDelta(delta, 0, "context_id", false), encoder);
 
+        final InternalFilingHistoryApi expected = buildExpectedRequestBody();
+
         //when
         testProducer.send(new ProducerRecord<>(MAIN_TOPIC, 0, System.currentTimeMillis(),
                 "key", outputStream.toByteArray()));
@@ -81,7 +91,39 @@ class ConsumerPositiveIT extends AbstractKafkaIT {
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, RETRY_TOPIC)).isZero();
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, ERROR_TOPIC)).isZero();
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, INVALID_TOPIC)).isZero();
-        verify(apiClient).upsertFilingHistory(any(InternalFilingHistoryApi.class));
+        verify(apiClient).upsertFilingHistory(expected);
+    }
+
+    private static InternalFilingHistoryApi buildExpectedRequestBody() {
+        // TODO: Replace incorrect values once transform_rules.yml is full implemented e.g. [% officerName | title_case  %] or the TODOs
+        return new InternalFilingHistoryApi()
+                .externalData(new ExternalData()
+                        .transactionId(TRANSACTION_ID)
+                        .barcode("XHJYVXAY")
+                        .type("TM01")
+                        .date("20120604053919")
+                        .category(ExternalData.CategoryEnum.OFFICERS)
+                        .subcategory(ExternalData.SubcategoryEnum.TERMINATION)
+                        .description("termination-director-company-with-name-termination-date")
+                        .descriptionValues(new FilingHistoryItemDataDescriptionValues()
+                                .officerName("[% officerName | title_case  %]")
+                                .terminationDate("TODO: BSON date: terminationDate"))
+                        .paperFiled(false)
+                        .actionDate("TODO: BSON date: terminationDate")
+                        .links(new FilingHistoryItemDataLinks()
+                                .self("/company/%s/filing-history/%s".formatted(COMPANY_NUMBER, TRANSACTION_ID))))
+                .internalData(new InternalData()
+                        .originalValues(new InternalDataOriginalValues()
+                                .resignationDate("04/06/2012")
+                                .officerName("John Tester"))
+                        .originalDescription("TODO: Sentence case: Appointment Terminated, Director JOHN TESTER")
+                        .companyNumber(COMPANY_NUMBER)
+                        .parentEntityId("")
+                        .entityId("3043972675")
+                        .documentId("000XHJYVXAY4378")
+                        .deltaAt("20120705053919")
+                        .updatedBy("context_id")
+                        .transactionKind(InternalData.TransactionKindEnum.TOP_LEVEL));
     }
 
 }
