@@ -2,6 +2,8 @@ package uk.gov.companieshouse.filinghistory.consumer.kafka;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static uk.gov.companieshouse.filinghistory.consumer.kafka.KafkaUtils.ERROR_TOPIC;
 import static uk.gov.companieshouse.filinghistory.consumer.kafka.KafkaUtils.INVALID_TOPIC;
 import static uk.gov.companieshouse.filinghistory.consumer.kafka.KafkaUtils.MAIN_TOPIC;
@@ -24,10 +26,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import uk.gov.companieshouse.api.filinghistory.InternalFilingHistoryApi;
 import uk.gov.companieshouse.delta.ChsDelta;
+import uk.gov.companieshouse.filinghistory.consumer.delta.FilingHistoryApiClient;
 
 @SpringBootTest
 class ConsumerPositiveIT extends AbstractKafkaIT {
@@ -40,6 +45,9 @@ class ConsumerPositiveIT extends AbstractKafkaIT {
 
     @Autowired
     private LatchAspect latchAspect;
+
+    @MockBean
+    private FilingHistoryApiClient apiClient;
 
     @DynamicPropertySource
     static void props(DynamicPropertyRegistry registry) {
@@ -73,6 +81,7 @@ class ConsumerPositiveIT extends AbstractKafkaIT {
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, RETRY_TOPIC)).isZero();
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, ERROR_TOPIC)).isZero();
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, INVALID_TOPIC)).isZero();
+        verify(apiClient).upsertFilingHistory(any(InternalFilingHistoryApi.class));
     }
 
 }
