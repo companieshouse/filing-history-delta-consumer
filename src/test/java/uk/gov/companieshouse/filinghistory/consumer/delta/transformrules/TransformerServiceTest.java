@@ -62,6 +62,28 @@ class TransformerServiceTest {
             }
             """;
 
+    private static final String REQUEST_WITH_TWO_LIKE_CAPTURE_GROUPS = """
+            {
+                "_id" : "MzA0MTc3MzgzMmFkaXF6a2N4",
+                "_entity_id" : "3041773832",
+                "data" : {
+                    "type" : "AA01",
+                    "description" : "PREVSHO FROM 29/07/11 TO 1/07/12"
+                }
+            }
+            """;
+
+    private static final String MATCH_DEFAULT_RULE = """
+            {
+                "_id" : "MzA0MTc3MzgzMmFkaXF6a2N4",
+                "_entity_id" : "3041773832",
+                "data" : {
+                    "type" : "DEFAULT",
+                    "description" : "Some unrecognised string"
+                }
+            }
+            """;
+
     private final TransformerFactory transformerFactory = new TransformerFactory(new AddressCase(),
             new BsonDate(), new LowerCase(), new SentenceCase(), new TitleCase(),
             new ReplaceProperty(), new ProcessCapital());
@@ -110,5 +132,34 @@ class TransformerServiceTest {
 
         // then
         assertNotNull(requestBody);
+    }
+
+    @Test
+    void transformAA01() throws JsonProcessingException {
+        // given
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode delta = mapper.readTree(REQUEST_WITH_TWO_LIKE_CAPTURE_GROUPS);
+
+        // when
+        JsonNode requestBody = service.transform(delta);
+
+        // then
+        assertNotNull(requestBody);
+        System.out.println(requestBody);
+    }
+
+
+    @Test
+    void transformUsingDefaultRule() throws JsonProcessingException {
+        // given
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode delta = mapper.readTree(MATCH_DEFAULT_RULE);
+
+        // when
+        JsonNode requestBody = service.transform(delta);
+
+        // then
+        assertNotNull(requestBody);
+        System.out.println(requestBody);
     }
 }

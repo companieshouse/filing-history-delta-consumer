@@ -36,6 +36,5 @@ public record When(String field, String formType, Map<String, Pattern> like) {
         }
         return new Result(false, Map.of());
     }
-
 }
 

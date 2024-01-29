@@ -18,6 +18,7 @@ public record Rule(When when, Then then, Default defaultRule) {
     }
 
     public JsonNode apply(JsonNode putRequest, Map<String, String> captureGroups) {
-        return then.apply(putRequest, captureGroups);
+        return defaultRule != null ? defaultRule.apply(putRequest, captureGroups) :
+                then.apply(putRequest, captureGroups);
     }
 }
