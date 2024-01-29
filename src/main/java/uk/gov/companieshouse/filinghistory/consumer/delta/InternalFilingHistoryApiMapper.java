@@ -1,5 +1,7 @@
 package uk.gov.companieshouse.filinghistory.consumer.delta;
 
+import static uk.gov.companieshouse.filinghistory.consumer.delta.MappingUtils.getValueFromField;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import java.util.Optional;
 import java.util.function.Function;
@@ -59,10 +61,6 @@ public class InternalFilingHistoryApiMapper {
                         .deltaAt(deltaAt)
                         .updatedBy(updatedBy)
                         .transactionKind(kindResult.kind()));
-    }
-
-    private String getValueFromField(final JsonNode node, final String field) {
-        return node.get(field) != null ? node.get(field).textValue() : null;
     }
 
     private <T extends Enum<?>> T getEnumFromField(final JsonNode node, final String field, Function<String, T> fromValue) {
