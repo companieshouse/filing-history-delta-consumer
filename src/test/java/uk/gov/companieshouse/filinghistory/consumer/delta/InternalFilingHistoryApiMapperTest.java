@@ -183,8 +183,8 @@ class InternalFilingHistoryApiMapperTest {
 
     @ParameterizedTest
     @CsvSource({
-            "12345678 , null",
-            "null , MzA1Njc0Mjg0N3NqYXNqamQ"
+            "12345678 , ",
+            " , MzA1Njc0Mjg0N3NqYXNqamQ"
     })
     void shouldThrowIllegalArgumentExceptionWhenNullOrEmptyCompanyNumberOrTransactionId(final String companyNumber, final String transactionId) {
         // given
