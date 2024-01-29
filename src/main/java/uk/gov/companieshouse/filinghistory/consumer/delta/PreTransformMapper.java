@@ -6,7 +6,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import uk.gov.companieshouse.api.delta.DescriptionValues;
 import uk.gov.companieshouse.api.delta.FilingHistory;
-import uk.gov.companieshouse.api.delta.FilingHistoryDelta;
 
 @Component
 public class PreTransformMapper {
