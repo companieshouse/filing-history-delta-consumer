@@ -161,4 +161,33 @@ class TransformerServiceTest {
         assertNotNull(requestBody);
         System.out.println(requestBody);
     }
+
+    @Test
+    void transformAA01() throws JsonProcessingException {
+        // given
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode delta = mapper.readTree(REQUEST_WITH_TWO_LIKE_CAPTURE_GROUPS);
+
+        // when
+        JsonNode requestBody = service.transform(delta);
+
+        // then
+        assertNotNull(requestBody);
+        System.out.println(requestBody);
+    }
+
+
+    @Test
+    void transformUsingDefaultRule() throws JsonProcessingException {
+        // given
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode delta = mapper.readTree(MATCH_DEFAULT_RULE);
+
+        // when
+        JsonNode requestBody = service.transform(delta);
+
+        // then
+        assertNotNull(requestBody);
+        System.out.println(requestBody);
+    }
 }
