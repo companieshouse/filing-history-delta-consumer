@@ -18,17 +18,14 @@ public record ThenProperties(@JsonProperty("define") Map<String, String> define,
                              @JsonProperty("set") Map<String, Object> set,
                              @JsonProperty("exec") Map<String, List<String>> exec) {
 
-    private static final Pattern PLACEHOLDER_PATTERN = Pattern.compile(
-            "^\\[%\\s([\\w.]+)\\s\\|\\s(\\w+)\\s%]$");
-    private static final Pattern EXEC_PLACEHOLDER_PATTERN = Pattern.compile(
-            "^\\[%\\s([\\w.]+)\\s%]$");
+    private static final Pattern PLACEHOLDER_PATTERN = Pattern.compile("^\\[%\\s([\\w.]+)\\s\\|\\s(\\w+)\\s%]$");
+    private static final Pattern EXEC_PLACEHOLDER_PATTERN = Pattern.compile("^\\[%\\s([\\w.]+)\\s%]$");
 
     public Then compile(TransformerFactory transformerFactory) {
 
         ExecArgs execArgs;
         if (define != null && exec != null) {
-            Pattern extract = define.containsKey("extract") ? Pattern.compile(
-                    define.get("extract")) : null;
+            Pattern extract = define.containsKey("extract") ? Pattern.compile(define.get("extract")) : null;
             String altDescription = define.get("alt_description");
             execArgs = new ExecArgs(transformerFactory.getProcessCapital(),
                     extractFieldPath(exec.get("process_capital").getFirst()), extract,
@@ -38,9 +35,7 @@ public record ThenProperties(@JsonProperty("define") Map<String, String> define,
         }
 
         Map<String, SetterArgs> setElements = set.entrySet().stream()
-                .collect(Collectors.toMap(
-                        Entry::getKey,
-                        e -> buildSetterArgs(e, transformerFactory)));
+                .collect(Collectors.toMap(Entry::getKey, e -> buildSetterArgs(e, transformerFactory)));
 
         return new Then(setElements, execArgs);
     }
