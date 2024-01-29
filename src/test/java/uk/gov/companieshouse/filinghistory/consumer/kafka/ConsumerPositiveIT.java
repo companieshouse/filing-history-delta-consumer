@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
+import static uk.gov.companieshouse.api.filinghistory.ExternalData.CategoryEnum.OFFICERS;
+import static uk.gov.companieshouse.api.filinghistory.ExternalData.SubcategoryEnum.TERMINATION;
 import static uk.gov.companieshouse.filinghistory.consumer.kafka.KafkaUtils.ERROR_TOPIC;
 import static uk.gov.companieshouse.filinghistory.consumer.kafka.KafkaUtils.INVALID_TOPIC;
 import static uk.gov.companieshouse.filinghistory.consumer.kafka.KafkaUtils.MAIN_TOPIC;
@@ -76,7 +78,7 @@ class ConsumerPositiveIT extends AbstractKafkaIT {
         final String delta = IOUtils.resourceToString("/tm01_delta.json", StandardCharsets.UTF_8);
         writer.write(new ChsDelta(delta, 0, "context_id", false), encoder);
 
-        final InternalFilingHistoryApi expected = buildExpectedRequestBody();
+        final InternalFilingHistoryApi expectedRequestObject = buildExpectedRequestBody();
 
         //when
         testProducer.send(new ProducerRecord<>(MAIN_TOPIC, 0, System.currentTimeMillis(),
@@ -91,7 +93,7 @@ class ConsumerPositiveIT extends AbstractKafkaIT {
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, RETRY_TOPIC)).isZero();
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, ERROR_TOPIC)).isZero();
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, INVALID_TOPIC)).isZero();
-        verify(apiClient).upsertFilingHistory(expected);
+        verify(apiClient).upsertFilingHistory(expectedRequestObject);
     }
 
     private static InternalFilingHistoryApi buildExpectedRequestBody() {
@@ -102,8 +104,8 @@ class ConsumerPositiveIT extends AbstractKafkaIT {
                         .barcode("XHJYVXAY")
                         .type("TM01")
                         .date("20120604053919")
-                        .category(ExternalData.CategoryEnum.OFFICERS)
-                        .subcategory(ExternalData.SubcategoryEnum.TERMINATION)
+                        .category(OFFICERS)
+                        .subcategory(TERMINATION)
                         .description("termination-director-company-with-name-termination-date")
                         .descriptionValues(new FilingHistoryItemDataDescriptionValues()
                                 .officerName("[% officerName | title_case  %]")
