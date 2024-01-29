@@ -5,7 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.List;
 import java.util.Map;
-
+import org.springframework.stereotype.Component;
+@Component
 public class AddressCase implements Transformer {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();

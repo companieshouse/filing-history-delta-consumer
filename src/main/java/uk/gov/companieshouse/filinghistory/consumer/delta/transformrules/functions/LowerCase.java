@@ -5,9 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.List;
 import java.util.Map;
-
+import org.springframework.stereotype.Component;
+@Component
 public class LowerCase implements Transformer {
-
+// this isn't really a case candidate like in the Perl. It's covered in both TitleCase and SentenceCase.
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override

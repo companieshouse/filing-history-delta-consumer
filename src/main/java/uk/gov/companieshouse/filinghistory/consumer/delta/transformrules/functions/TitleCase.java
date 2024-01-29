@@ -9,13 +9,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.BiFunction;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.lang.WordUtils;
 import org.eclipse.jetty.util.StringUtil;
-import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.rules.SetterArgs;
-
+import org.springframework.stereotype.Component;
+@Component
 public class TitleCase implements Transformer {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
@@ -26,7 +24,8 @@ public class TitleCase implements Transformer {
     private static final Pattern FIND_FIRST_WORD_PATTERN = Pattern.compile("^(\\p{L}[\\p{L}']*)");
 
     private static final Pattern FIND_LAST_WORD_PATTERN = Pattern.compile("(\\p{L}[\\p{L}']*)$");
-
+    private static final Pattern OPENING_PARENTHESIS = Pattern.compile("[(](\\p{L}[\\p{L}']*)");
+    private static final Pattern CLOSING_PARENTHESIS = Pattern.compile("(\\p{L}[\\p{L}']*)[)]");
     private static final Pattern COLON = Pattern.compile("([:;]\\s+)(\\p{L}[\\p{L}']*)");
 
 
@@ -44,7 +43,7 @@ public class TitleCase implements Transformer {
 
         String finalField = getFinalField(objectMapper, field, outputNode);
 
-        outputNode.put(finalField, "Title case: " + transformTitleCase(arguments.getFirst()));
+        outputNode.put(finalField, "Title case: " + arguments.getFirst());
     }
 
     public String transformTitleCase(String jsonFieldWeWantToTransform) {
@@ -52,45 +51,20 @@ public class TitleCase implements Transformer {
             return jsonFieldWeWantToTransform;
         }
         jsonFieldWeWantToTransform = jsonFieldWeWantToTransform.toUpperCase(Locale.UK);
-        jsonFieldWeWantToTransform = mapToken(IDENTIFYING_WORDS_PATTERN, jsonFieldWeWantToTransform, (word, matcher)
+        jsonFieldWeWantToTransform = Transformer.mapToken(IDENTIFYING_WORDS_PATTERN, jsonFieldWeWantToTransform, (word, matcher)
                 -> STOP_WORDS.contains(word) ? word.toLowerCase(Locale.UK) :
                 WordUtils.capitalizeFully(word), true);
-        jsonFieldWeWantToTransform = mapToken(FIND_FIRST_WORD_PATTERN, jsonFieldWeWantToTransform, //this first word pattern will work apart from instances when the string does not
+        jsonFieldWeWantToTransform = Transformer.mapToken(FIND_FIRST_WORD_PATTERN, jsonFieldWeWantToTransform, //this first word pattern will work apart from instances when the string does not
                 // begin with a word, in which case you will need a different regex.
                 (word, matcher) -> WordUtils.capitalizeFully(word), false);
-        jsonFieldWeWantToTransform = mapToken(FIND_LAST_WORD_PATTERN, jsonFieldWeWantToTransform,
+        jsonFieldWeWantToTransform = Transformer.mapToken(FIND_LAST_WORD_PATTERN, jsonFieldWeWantToTransform,
                 (word, matcher) -> WordUtils.capitalizeFully(word), false);
-        jsonFieldWeWantToTransform = mapToken(COLON, jsonFieldWeWantToTransform, (token, matcher) ->
+        jsonFieldWeWantToTransform = Transformer.mapToken(OPENING_PARENTHESIS, jsonFieldWeWantToTransform, (token, matcher) ->
+                "(" + org.apache.commons.text.WordUtils.capitalizeFully(matcher.group(1)), false);
+        jsonFieldWeWantToTransform = Transformer.mapToken(CLOSING_PARENTHESIS, jsonFieldWeWantToTransform, (token, matcher) ->
+                org.apache.commons.text.WordUtils.capitalizeFully(matcher.group(1)) + ")", false);
+        jsonFieldWeWantToTransform = Transformer.mapToken(COLON, jsonFieldWeWantToTransform, (token, matcher) ->
                 matcher.group(1) + org.apache.commons.text.WordUtils.capitalizeFully(matcher.group(2)), false);
-
-
         return jsonFieldWeWantToTransform.trim();
     }
-
-    private static String mapToken(Pattern pattern,
-            String word,
-            BiFunction<String, Matcher, String> matchRemappingFunction,
-            boolean global) {
-        Matcher matcher = pattern.matcher(word);
-        StringBuilder result = new StringBuilder();
-        int start;
-        int end;
-        int prevEnd = 0;
-        while (matcher.find()) {
-            start = matcher.start();
-            end = matcher.end();
-            if (start > 0) {
-                result.append(word.substring(prevEnd, start));
-            }
-            result.append(matchRemappingFunction.apply(
-                    word.substring(start, end), matcher));
-            prevEnd = end;
-            if (!global) {
-                break;
-            }
-        }
-        result.append(word.substring(prevEnd));
-        return result.toString();
-    }
-
 }
