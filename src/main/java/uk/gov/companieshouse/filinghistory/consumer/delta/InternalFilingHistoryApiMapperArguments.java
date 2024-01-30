@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.util.Objects;
 
 public record InternalFilingHistoryApiMapperArguments(JsonNode topLevelNode, TransactionKindResult kindResult, String companyNumber, String deltaAt, String updatedBy) {
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
