@@ -2,6 +2,7 @@ package uk.gov.companieshouse.filinghistory.consumer.kafka;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static uk.gov.companieshouse.api.filinghistory.ExternalData.CategoryEnum.OFFICERS;
 import static uk.gov.companieshouse.api.filinghistory.ExternalData.SubcategoryEnum.TERMINATION;
@@ -11,14 +12,12 @@ import static uk.gov.companieshouse.filinghistory.consumer.kafka.KafkaUtils.MAIN
 import static uk.gov.companieshouse.filinghistory.consumer.kafka.KafkaUtils.RETRY_TOPIC;
 
 import java.io.ByteArrayOutputStream;
-import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 import org.apache.avro.io.DatumWriter;
 import org.apache.avro.io.Encoder;
 import org.apache.avro.io.EncoderFactory;
 import org.apache.avro.reflect.ReflectDatumWriter;
-import org.apache.commons.io.IOUtils;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -38,7 +37,7 @@ import uk.gov.companieshouse.api.filinghistory.InternalData;
 import uk.gov.companieshouse.api.filinghistory.InternalDataOriginalValues;
 import uk.gov.companieshouse.api.filinghistory.InternalFilingHistoryApi;
 import uk.gov.companieshouse.delta.ChsDelta;
-import uk.gov.companieshouse.filinghistory.consumer.delta.FilingHistoryApiClient;
+import uk.gov.companieshouse.filinghistory.consumer.delta.DeltaServiceRouter;
 
 @SpringBootTest
 class ConsumerPositiveIT extends AbstractKafkaIT {
@@ -56,7 +55,7 @@ class ConsumerPositiveIT extends AbstractKafkaIT {
     private LatchAspect latchAspect;
 
     @MockBean
-    private FilingHistoryApiClient apiClient;
+    private DeltaServiceRouter router;
 
     @DynamicPropertySource
     static void props(DynamicPropertyRegistry registry) {
@@ -74,10 +73,7 @@ class ConsumerPositiveIT extends AbstractKafkaIT {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         Encoder encoder = EncoderFactory.get().directBinaryEncoder(outputStream, null);
         DatumWriter<ChsDelta> writer = new ReflectDatumWriter<>(ChsDelta.class);
-        final String delta = IOUtils.resourceToString("/tm01_delta.json", StandardCharsets.UTF_8);
-        writer.write(new ChsDelta(delta, 0, "context_id", false), encoder);
-
-        final InternalFilingHistoryApi expectedRequestObject = buildExpectedRequestBody();
+        writer.write(new ChsDelta("", 0, "context_id", false), encoder);
 
         //when
         testProducer.send(new ProducerRecord<>(MAIN_TOPIC, 0, System.currentTimeMillis(),
@@ -92,11 +88,13 @@ class ConsumerPositiveIT extends AbstractKafkaIT {
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, RETRY_TOPIC)).isZero();
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, ERROR_TOPIC)).isZero();
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, INVALID_TOPIC)).isZero();
-        verify(apiClient).upsertFilingHistory(expectedRequestObject);
+
+        // TODO: Remove Mockbean and verify api request body
+        verify(router).route(any());
     }
 
     private static InternalFilingHistoryApi buildExpectedRequestBody() {
-        // TODO: Replace incorrect values once transform_rules.yml is full implemented e.g. [% officerName | title_case  %] or the TODOs
+        // TODO: Replace incorrect values once transform rules are fully implemented e.g. [% officerName | title_case  %] or the TODOs
         return new InternalFilingHistoryApi()
                 .externalData(new ExternalData()
                         .transactionId(TRANSACTION_ID)

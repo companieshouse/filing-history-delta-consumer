@@ -19,7 +19,12 @@ class PaperFieldMapperTest {
             "null , 000TAITVXAX4682 , true",
             "XAITVXAX , null , false",
             "TAITVXAX , null , true",
-            "null , null , true"
+            "null , null , true",
+            "'' , 000XAITVXAX4682 , false",
+            "'' , 000TAITVXAX4682 , true",
+            "XAITVXAX , '' , false",
+            "TAITVXAX , '' , true",
+            "'' , '' , true",
     },
     nullValues = {"null"})
     void testPaperFieldReturnsBooleanCorrectly(final String barcode, final String documentId, final boolean expected) {

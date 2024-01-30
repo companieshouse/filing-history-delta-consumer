@@ -1,14 +1,17 @@
 package uk.gov.companieshouse.filinghistory.consumer.delta;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.function.Executable;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import uk.gov.companieshouse.delta.ChsDelta;
+import uk.gov.companieshouse.filinghistory.consumer.exception.NonRetryableException;
 
 @ExtendWith(MockitoExtension.class)
 class DeltaServiceRouterTest {
@@ -37,9 +40,10 @@ class DeltaServiceRouterTest {
         delta.setIsDelete(true);
 
         // when
-        router.route(delta);
+        Executable executable = () -> router.route(delta);
 
         // then
+        assertThrows(NonRetryableException.class, executable);
         verifyNoInteractions(upsertDeltaService);
     }
 }
