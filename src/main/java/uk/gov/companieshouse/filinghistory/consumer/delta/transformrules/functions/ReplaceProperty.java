@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.databind.node.TextNode;
 import jakarta.annotation.Nonnull;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -40,7 +39,7 @@ public class ReplaceProperty implements Transformer {
         String finalField = fields[fields.length - 1];
 
         if (setterArgs.arguments().size() == 1) {
-            outputNode.set(finalField, new TextNode(getReplacementValue(setterArgs, contextValues)));
+            outputNode.put(finalField, getReplacementValue(setterArgs, contextValues));
         } else {
             ArrayNode leafNode = outputNode.putArray(finalField);
             setterArgs.arguments().forEach(leafNode::add);
