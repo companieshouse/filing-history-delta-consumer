@@ -38,10 +38,10 @@ public class AddressCase implements Transformer {
             return nodeText;
         }
         nodeText = titleCase.transformTitleCase(nodeText);
-        nodeText = Transformer.mapToken(POST_CODE_PATTERN, nodeText, (word, matcher)
+        nodeText = mapToken(POST_CODE_PATTERN, nodeText, (word, matcher)
                 -> matcher.group(1).toUpperCase(Locale.UK), true);
         nodeText = PO_BOX_PATTERN.matcher(nodeText).replaceFirst("PO Box");
-        nodeText = Transformer.mapToken(NUMBER_SUFFIX_PATTERN, nodeText, (word, matcher)
+        nodeText = mapToken(NUMBER_SUFFIX_PATTERN, nodeText, (word, matcher)
                 -> matcher.group(1).toLowerCase(Locale.UK), true);
         return nodeText.trim();
     }
