@@ -33,6 +33,8 @@ public class SentenceCase implements Transformer {
     private static final Pattern MIXED_ALPHANUMERIC = Pattern.compile("(\\w+\\d+\\w*|\\d+\\w+)");
     private static final Pattern MATCHES_ENTITY = Pattern.compile(
             "(\\b(?i:" + String.join("|", ENTITIES) + ")\\b)");
+
+//    private static final Pattern MATCHES_ENDING = Pattern.compile("(\\b(?i:' . join('|',reverse sort @endings) . ')\\b)")
     private static final Pattern OPENING_BRACKET = Pattern.compile("[(\\[]");
     private static final Pattern SENTENCE_TERMINATOR = Pattern.compile("[.!?]");
     private static final Pattern FIRST_LETTER = Pattern.compile("([a-z])",
@@ -53,8 +55,6 @@ public class SentenceCase implements Transformer {
             String field,
             List<String> arguments,
             Map<String, String> contextValue) {
-
-        ObjectNode workingNode = outputNode;
 
         String finalField = getFinalField(objectMapper, field, outputNode);
         String nodeText = outputNode.at("/" + arguments.getFirst().replace(".", "/"))

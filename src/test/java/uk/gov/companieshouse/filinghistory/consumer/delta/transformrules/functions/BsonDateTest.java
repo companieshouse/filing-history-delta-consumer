@@ -2,7 +2,6 @@ package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functi
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,11 +11,11 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class BsonDateTest {
 
-    private BsonDate titleCase;
+    private BsonDate bsonDate;
 
     @BeforeEach
     void beforeEach() {
-        titleCase = new BsonDate();
+        bsonDate = new BsonDate();
     }
 
     @ParameterizedTest(name = "Map [{0}] to [{1}]")
@@ -26,7 +25,7 @@ class BsonDateTest {
         //given
 
         //when
-        String output = titleCase.transformBsonDate(input);
+        String output = bsonDate.transformBsonDate(input);
 
         //then
         assertEquals(expected, output);
