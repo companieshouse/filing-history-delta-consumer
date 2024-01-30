@@ -4,9 +4,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.util.List;
 import java.util.Map;
-import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.rules.SetterArgs;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ReplaceProperty implements Transformer {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
@@ -15,18 +17,12 @@ public class ReplaceProperty implements Transformer {
     public void transform(JsonNode source,
             ObjectNode outputNode,
             String field,
-            SetterArgs setterArgs,
+            List<String> arguments,
             Map<String, String> contextValue) {
 
-        String[] fields = field.split("\\."); // len = 2
-        for (int i = 0; i < fields.length - 1; i++) {
-            outputNode.putIfAbsent(fields[i], objectMapper.createObjectNode());
-            outputNode = (ObjectNode) outputNode.at("/" + fields[i]);
-        }
+        String finalField = getFinalField(objectMapper, field, outputNode);
 
-        String finalField = fields[fields.length - 1];
-
-        if (setterArgs.arguments().size() == 1) {
+        if (arguments.size() == 1) {
 
 //            TODO
 //            data.category: accounts tick
@@ -34,10 +30,12 @@ public class ReplaceProperty implements Transformer {
 //            original_description: '[% data.description | sentence_case %]'
 //            data.action_date: '[% made_up_date | bson_date %]'
 
-            outputNode.put(finalField, setterArgs.arguments().getFirst());
+            outputNode.put(finalField, arguments.getFirst());
         } else {
             ArrayNode leafNode = outputNode.putArray(finalField);
-            setterArgs.arguments().forEach(leafNode::add);
+//          TODO test with a unit test using line 134 values of transform_rules.yml
+//           to replace value with an array instead of a string.
+            arguments.forEach(leafNode::add);
         }
     }
 }

@@ -3,28 +3,46 @@ package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functi
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
-import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.rules.SetterArgs;
+import java.util.regex.Pattern;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.stereotype.Component;
 
+@Component
 public class AddressCase implements Transformer {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
+    private final TitleCase titleCase = new TitleCase();
+    private static final Pattern POST_CODE_PATTERN = Pattern.compile(
+            "(\\b[A-Z][A-Z]?\\d[A-Z\\d]?\\s*\\d[A-Z]{2}\\b)", Pattern.CASE_INSENSITIVE);
+    private static final Pattern PO_BOX_PATTERN = Pattern.compile("\\bPo\\s+Box\\b", Pattern.CASE_INSENSITIVE);
+    private static final Pattern NUMBER_SUFFIX_PATTERN = Pattern.compile("(\\b\\d+\\s*(nd|th|rd|st)\\b)", Pattern.CASE_INSENSITIVE);
 
     @Override
     public void transform(JsonNode source,
             ObjectNode outputNode,
             String field,
-            SetterArgs setterArgs,
+            List<String> arguments,
             Map<String, String> contextValue) {
 
-        String[] fields = field.split("\\."); // len = 2
-        for (int i = 0; i < fields.length - 1; i++) {
-            outputNode.putIfAbsent(fields[i], objectMapper.createObjectNode());
-            outputNode = (ObjectNode) outputNode.at("/" + fields[i]);
-        }
+        String finalField = getFinalField(objectMapper, field, outputNode);
 
-        String finalField = fields[fields.length - 1];
-
-        outputNode.put(finalField, "TODO: Address case: " + setterArgs.arguments().getFirst());
+        outputNode.put(finalField, "TODO: Address case: " + arguments.getFirst());
     }
+
+    String transformAddressCase(String nodeText){
+        if(StringUtils.isEmpty(nodeText)){
+            return nodeText;
+        }
+        nodeText = titleCase.transformTitleCase(nodeText);
+        nodeText = Transformer.mapToken(POST_CODE_PATTERN, nodeText, (word, matcher)
+                -> matcher.group(1).toUpperCase(Locale.UK), true);
+        nodeText = PO_BOX_PATTERN.matcher(nodeText).replaceFirst("PO Box");
+        nodeText = Transformer.mapToken(NUMBER_SUFFIX_PATTERN, nodeText, (word, matcher)
+                -> matcher.group(1).toLowerCase(Locale.UK), true);
+        return nodeText.trim();
+    }
+
 }
