@@ -1,5 +1,7 @@
 package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions;
 
+import static uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.TransformerUtils.toJsonPtr;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -76,7 +78,7 @@ public class ProcessCapital {
         }
 
         outputNode.putIfAbsent("description_values", objectMapper.createObjectNode());
-        ObjectNode descriptionValues = (ObjectNode) outputNode.at("/%s".formatted("description_values"));
+        ObjectNode descriptionValues = (ObjectNode) outputNode.at(toJsonPtr("description_values"));
 
         descriptionValues
                 .putArray("capital")

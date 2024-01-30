@@ -3,8 +3,6 @@ package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functi
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -23,13 +21,13 @@ public class TitleCase implements Transformer {
     private static final Pattern FIND_FIRST_WORD_PATTERN = Pattern.compile("^(\\p{L}[\\p{L}']*)");
     private static final Pattern FIND_LAST_WORD_PATTERN = Pattern.compile("(\\p{L}[\\p{L}']*)$");
     private static final Pattern OPENING_PARENTHESIS = Pattern.compile("[(](\\p{L}[\\p{L}']*)");
-    private static final Pattern CLOSING_PARENTHESIS = Pattern.compile("(\\p{L}[\\p{L}']*)[)]");
+    private static final Pattern CLOSING_PARENTHESIS = Pattern.compile("(\\p{L}[\\p{L}']*)\\)");
     private static final Pattern COLON = Pattern.compile("([:;]\\s+)(\\p{L}[\\p{L}']*)");
 
-    private static final Set<String> STOP_WORDS = new HashSet<>(Arrays.asList("A", "AN", "AT",
+    private static final Set<String> STOP_WORDS = Set.of("A", "AN", "AT",
             "AS", "AND", "ARE", "BUT", "BY", "ERE", "FOR", "FROM", "IN", "INTO", "IS", "OF", "ON",
             "ONTO", "OR", "OVER", "PER", "THE", "TO", "THAT", "THAN", "UNTIL", "UNTO", "UPON",
-            "VIA", "WITH", "WHILE", "WHILST", "WITHIN", "WITHOUT"));
+            "VIA", "WITH", "WHILE", "WHILST", "WITHIN", "WITHOUT");
 
     @Override
     public void transform(JsonNode source,
@@ -40,7 +38,7 @@ public class TitleCase implements Transformer {
 
         String finalField = getFinalField(objectMapper, field, outputNode);
 
-        outputNode.put(finalField, "Title case: " + arguments.getFirst());
+        outputNode.put(finalField, transformTitleCase(arguments.getFirst()));
     }
 
     String transformTitleCase(String jsonFieldWeWantToTransform) {
@@ -48,21 +46,21 @@ public class TitleCase implements Transformer {
             return jsonFieldWeWantToTransform;
         }
         jsonFieldWeWantToTransform = jsonFieldWeWantToTransform.toUpperCase(Locale.UK);
-        jsonFieldWeWantToTransform = Transformer.mapToken(IDENTIFYING_WORDS_PATTERN, jsonFieldWeWantToTransform,
+        jsonFieldWeWantToTransform = mapToken(IDENTIFYING_WORDS_PATTERN, jsonFieldWeWantToTransform,
                 (word, matcher)
                         -> STOP_WORDS.contains(word) ? word.toLowerCase(Locale.UK) :
                         WordUtils.capitalizeFully(word), true);
-        jsonFieldWeWantToTransform = Transformer.mapToken(FIND_FIRST_WORD_PATTERN, jsonFieldWeWantToTransform,
+        jsonFieldWeWantToTransform = mapToken(FIND_FIRST_WORD_PATTERN, jsonFieldWeWantToTransform,
                 (word, matcher) -> WordUtils.capitalizeFully(word), false);
-        jsonFieldWeWantToTransform = Transformer.mapToken(FIND_LAST_WORD_PATTERN, jsonFieldWeWantToTransform,
+        jsonFieldWeWantToTransform = mapToken(FIND_LAST_WORD_PATTERN, jsonFieldWeWantToTransform,
                 (word, matcher) -> WordUtils.capitalizeFully(word), false);
-        jsonFieldWeWantToTransform = Transformer.mapToken(OPENING_PARENTHESIS, jsonFieldWeWantToTransform,
+        jsonFieldWeWantToTransform = mapToken(OPENING_PARENTHESIS, jsonFieldWeWantToTransform,
                 (token, matcher) ->
                         "(" + WordUtils.capitalizeFully(matcher.group(1)), false);
-        jsonFieldWeWantToTransform = Transformer.mapToken(CLOSING_PARENTHESIS, jsonFieldWeWantToTransform,
+        jsonFieldWeWantToTransform = mapToken(CLOSING_PARENTHESIS, jsonFieldWeWantToTransform,
                 (token, matcher) ->
                         WordUtils.capitalizeFully(matcher.group(1)) + ")", false);
-        jsonFieldWeWantToTransform = Transformer.mapToken(COLON, jsonFieldWeWantToTransform, (token, matcher) ->
+        jsonFieldWeWantToTransform = mapToken(COLON, jsonFieldWeWantToTransform, (token, matcher) ->
                 matcher.group(1) + WordUtils.capitalizeFully(matcher.group(2)), false);
         return jsonFieldWeWantToTransform.trim();
     }

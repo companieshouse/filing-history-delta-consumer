@@ -27,7 +27,7 @@ public interface Transformer {
         return fields[fields.length - 1];
     }
 
-    static String mapToken(Pattern pattern,
+    default String mapToken(Pattern pattern,
             String word,
             BiFunction<String, Matcher, String> matchRemappingFunction,
             boolean global) {

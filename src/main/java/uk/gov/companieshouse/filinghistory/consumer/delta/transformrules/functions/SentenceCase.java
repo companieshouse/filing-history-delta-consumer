@@ -60,10 +60,7 @@ public class SentenceCase implements Transformer {
         String nodeText = outputNode.at("/" + arguments.getFirst().replace(".", "/"))
                 .textValue();
 
-        // TODO Apply Perl sentence_case transformation to node text
-        String transformedText = "TODO: Sentence case: " + nodeText;
-
-        outputNode.put(finalField, transformedText);
+        outputNode.put(finalField, transformSentenceCase(nodeText));
     }
 
     String transformSentenceCase(String nodeText) {
@@ -78,26 +75,26 @@ public class SentenceCase implements Transformer {
             nodeText = forwardslashAbbreviationMatcher.group(2);
         }
         SentenceState sentenceState = new SentenceState();
-        nodeText = Transformer.mapToken(TOKENISATION_PATTERN, nodeText,
+        nodeText = mapToken(TOKENISATION_PATTERN, nodeText,
                 (token, matcher) ->
                         mapWord(token, sentenceState), true);
         if (!start.isEmpty()) {
             nodeText = start + nodeText;
         }
-        nodeText = Transformer.mapToken(NEWLINE, nodeText, (token, matcher) -> " ", true);
-        nodeText = Transformer.mapToken(ABBREVIATIONS, nodeText, (token, matcher) ->
+        nodeText = mapToken(NEWLINE, nodeText, (token, matcher) -> " ", true);
+        nodeText = mapToken(ABBREVIATIONS, nodeText, (token, matcher) ->
                 matcher.group(1).toUpperCase(Locale.UK) + ".", true);
-        nodeText = Transformer.mapToken(MULTIPLE_SPACES, nodeText, (token, matcher) -> " ", true);
-        nodeText = Transformer.mapToken(MIXED_ALPHANUMERIC, nodeText, (token, matcher) ->
+        nodeText = mapToken(MULTIPLE_SPACES, nodeText, (token, matcher) -> " ", true);
+        nodeText = mapToken(MIXED_ALPHANUMERIC, nodeText, (token, matcher) ->
                 matcher.group(1).toUpperCase(Locale.UK), true);
-        nodeText = Transformer.mapToken(MATCHES_ENTITY, nodeText, (token, matcher) ->
+        nodeText = mapToken(MATCHES_ENTITY, nodeText, (token, matcher) ->
                 ENTITIES.contains(token.toUpperCase(Locale.UK))
                         ? token.toUpperCase(Locale.UK)
                         : token, true);
         return nodeText.trim();
     }
 
-    private static String mapWord(String token, SentenceState sentenceState) {
+    private String mapWord(String token, SentenceState sentenceState) {
         Possessiveness possessive = isPossessive(token);
         if (possessive.possessive) {
             sentenceState.setEndOfSentence(possessive.endOfSentence);
@@ -106,7 +103,7 @@ public class SentenceCase implements Transformer {
         }
         token = token.toLowerCase(Locale.UK);
         if (sentenceState.isEndOfSentence()) {
-            token = Transformer.mapToken(FIRST_LETTER,
+            token = mapToken(FIRST_LETTER,
                     token, (t, m) -> t.toUpperCase(Locale.UK), false);
             sentenceState.setMatchingBracket(token.matches("^[\\[(].*$"));
         }
