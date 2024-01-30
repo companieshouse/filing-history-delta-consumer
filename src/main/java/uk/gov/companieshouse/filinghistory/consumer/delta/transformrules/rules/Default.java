@@ -11,7 +11,7 @@ public record Default(Map<String, SetterArgs> setters) {
 
         setters.forEach(
                 (key, value) -> value.transformer()
-                        .transform(source, updated, key, value, contextData));
+                        .transform(source, updated, key, value.arguments(), contextData));
 
         return updated;
     }

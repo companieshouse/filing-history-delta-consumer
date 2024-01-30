@@ -8,7 +8,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import org.springframework.stereotype.Component;
 import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -35,7 +34,7 @@ public class SentenceCase implements Transformer {
     private static final Pattern MATCHES_ENTITY = Pattern.compile(
             "(\\b(?i:" + String.join("|", ENTITIES) + ")\\b)");
 
-//    private static final Pattern MATCHES_ENDING = Pattern.compile("(\\b(?i:' . join('|',reverse sort @endings) . ')\\b)")
+    //    private static final Pattern MATCHES_ENDING = Pattern.compile("(\\b(?i:' . join('|',reverse sort @endings) . ')\\b)")
     private static final Pattern OPENING_BRACKET = Pattern.compile("[(\\[]");
     private static final Pattern SENTENCE_TERMINATOR = Pattern.compile("[.!?]");
     private static final Pattern FIRST_LETTER = Pattern.compile("([a-z])",
@@ -68,7 +67,7 @@ public class SentenceCase implements Transformer {
     }
 
     String transformSentenceCase(String nodeText) {
-        if(StringUtils.isEmpty(nodeText)){
+        if (StringUtils.isEmpty(nodeText)) {
             return nodeText;
         }
         nodeText = nodeText.toUpperCase(Locale.UK);
@@ -95,7 +94,7 @@ public class SentenceCase implements Transformer {
                 ENTITIES.contains(token.toUpperCase(Locale.UK))
                         ? token.toUpperCase(Locale.UK)
                         : token, true);
-        return  nodeText.trim();
+        return nodeText.trim();
     }
 
     private static String mapWord(String token, SentenceState sentenceState) {
@@ -161,6 +160,7 @@ public class SentenceCase implements Transformer {
     }
 
     private static class SentenceState {
+
         private boolean endOfSentence = true;
         private boolean matchingBracket = false;
 
@@ -182,6 +182,7 @@ public class SentenceCase implements Transformer {
     }
 
     static class Possessiveness {
+
         boolean possessive;
         boolean openingBrackets;
         boolean endOfSentence;
@@ -237,6 +238,7 @@ public class SentenceCase implements Transformer {
             return result.toString();
         }
     }
+
     static Possessiveness isPossessive(String token) {
         Possessiveness result = new Possessiveness();
         if (StringUtils.isEmpty(token)) {
