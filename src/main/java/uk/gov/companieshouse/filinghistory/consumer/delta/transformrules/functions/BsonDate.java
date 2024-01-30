@@ -10,8 +10,9 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
-import org.eclipse.jetty.util.StringUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
+
 @Component
 public class BsonDate implements Transformer {
 
@@ -32,7 +33,7 @@ public class BsonDate implements Transformer {
     }
 
     String transformBsonDate(String nodeText) {
-        if(StringUtil.isEmpty(nodeText)){
+        if(StringUtils.isEmpty(nodeText)){
             return nodeText;
         }
         Instant nodeTextAsDate;

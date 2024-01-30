@@ -7,8 +7,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
-import org.eclipse.jetty.util.StringUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
+
 @Component
 public class AddressCase implements Transformer {
 
@@ -32,7 +33,7 @@ public class AddressCase implements Transformer {
     }
 
     String transformAddressCase(String nodeText){
-        if(StringUtil.isEmpty(nodeText)){
+        if(StringUtils.isEmpty(nodeText)){
             return nodeText;
         }
         nodeText = titleCase.transformTitleCase(nodeText);

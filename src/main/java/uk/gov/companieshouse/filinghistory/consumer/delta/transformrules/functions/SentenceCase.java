@@ -12,9 +12,9 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.apache.commons.lang3.StringUtils;
-import org.eclipse.jetty.util.StringUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
+
 @Component
 public class SentenceCase implements Transformer {
 
@@ -67,7 +67,7 @@ public class SentenceCase implements Transformer {
     }
 
     String transformSentenceCase(String nodeText) {
-        if(StringUtil.isEmpty(nodeText)){
+        if(StringUtils.isEmpty(nodeText)){
             return nodeText;
         }
         nodeText = nodeText.toUpperCase(Locale.UK);

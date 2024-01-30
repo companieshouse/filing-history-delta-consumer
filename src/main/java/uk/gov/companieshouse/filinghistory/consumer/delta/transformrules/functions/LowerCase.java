@@ -5,8 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.List;
 import java.util.Map;
-import org.eclipse.jetty.util.StringUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
+
 @Component
 public class LowerCase implements Transformer {
     private static final ObjectMapper objectMapper = new ObjectMapper();
@@ -23,7 +24,7 @@ public class LowerCase implements Transformer {
     }
 
      String transformLowerCase(String nodeText){
-        if(StringUtil.isBlank(nodeText)){
+        if(StringUtils.isBlank(nodeText)){
             return nodeText;
         }
         return nodeText.toLowerCase();
