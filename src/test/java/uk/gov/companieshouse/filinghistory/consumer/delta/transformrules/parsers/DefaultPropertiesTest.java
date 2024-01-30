@@ -11,6 +11,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.AddressCase;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.BsonDate;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.FormatNumber;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.LowerCase;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.ProcessCapital;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.ReplaceProperty;
@@ -25,7 +26,7 @@ class DefaultPropertiesTest {
 
     private final TransformerFactory transformerFactory = new TransformerFactory(new AddressCase(),
             new BsonDate(), new LowerCase(), new SentenceCase(), new TitleCase(),
-            new ReplaceProperty(), new ProcessCapital());
+            new ReplaceProperty(), new ProcessCapital(new FormatNumber()));
 
     private static final String DEFAULT = """
             - default:

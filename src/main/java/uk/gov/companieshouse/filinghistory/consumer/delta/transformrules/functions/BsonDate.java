@@ -10,7 +10,6 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
-import org.springframework.stereotype.Component;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 
@@ -34,21 +33,18 @@ public class BsonDate implements Transformer {
     }
 
     String transformBsonDate(String nodeText) {
-        if(StringUtils.isEmpty(nodeText)){
+        if (StringUtils.isEmpty(nodeText)) {
             return nodeText;
         }
         Instant nodeTextAsDate;
-        if(nodeText.length() == 8) {
+        if (nodeText.length() == 8) {
             nodeTextAsDate = LocalDate.parse(nodeText, DateTimeFormatter.BASIC_ISO_DATE).atStartOfDay(
                     ZoneOffset.UTC).toInstant();
-        }
-        else if(nodeText.contains("/")){
+        } else if (nodeText.contains("/")) {
             nodeTextAsDate = LocalDate.parse(nodeText, SLASHES_FORMATTER).atStartOfDay(ZoneOffset.UTC).toInstant();
-        }
-        else if(nodeText.length() == 14){
+        } else if (nodeText.length() == 14) {
             nodeTextAsDate = LocalDateTime.parse(nodeText, INPUT_FORMATTER).atZone(ZoneOffset.UTC).toInstant();
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("Unrecognised Bson Date format");
         }
         return DateTimeFormatter.ISO_INSTANT.format(nodeTextAsDate);

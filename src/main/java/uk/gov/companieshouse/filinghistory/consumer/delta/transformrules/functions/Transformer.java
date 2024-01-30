@@ -17,7 +17,7 @@ public interface Transformer {
             List<String> arguments,
             Map<String, String> contextValue);
 
-    default String getFinalField(ObjectMapper objectMapper, String field, ObjectNode outputNode){
+    default String getFinalField(ObjectMapper objectMapper, String field, ObjectNode outputNode) {
         String[] fields = field.split("\\."); // len = 2
         for (int i = 0; i < fields.length - 1; i++) {
             outputNode.putIfAbsent(fields[i], objectMapper.createObjectNode());
