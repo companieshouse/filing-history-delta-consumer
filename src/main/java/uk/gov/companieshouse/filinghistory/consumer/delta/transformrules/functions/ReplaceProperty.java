@@ -7,11 +7,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import jakarta.annotation.Nonnull;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.springframework.stereotype.Component;
-import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.rules.SetterArgs;
 
 @Component
 public class ReplaceProperty implements Transformer {
@@ -28,7 +28,7 @@ public class ReplaceProperty implements Transformer {
             ObjectNode outputNode,
             String field,
             List<String> arguments,
-            Map<String, String> contextValue) {
+            Map<String, String> context) {
 
         String[] fields = field.split("\\."); // len = 2
         for (int i = 0; i < fields.length - 1; i++) {
@@ -38,23 +38,23 @@ public class ReplaceProperty implements Transformer {
 
         String finalField = fields[fields.length - 1];
 
-        if (setterArgs.arguments().size() == 1) {
-            outputNode.put(finalField, getReplacementValue(setterArgs, contextValues));
+        if (arguments.size() == 1) {
+            outputNode.put(finalField, getReplacementValue(arguments, context));
         } else {
             ArrayNode leafNode = outputNode.putArray(finalField);
-            setterArgs.arguments().forEach(leafNode::add);
+            arguments.forEach(leafNode::add);
         }
     }
 
     @Nonnull
-    private static String getReplacementValue(SetterArgs setterArgs, Map<String, String> contextValues) {
-        String replacementValue = setterArgs.arguments().getFirst();
+    private static String getReplacementValue(List<String> arguments, Map<String, String> context) {
+        String replacementValue = arguments.getFirst();
         Matcher matcher = SUBSTITUTION_PATTERN.matcher(replacementValue);
         if (matcher.matches()) {
             if ("lc".equals(matcher.group(FUNCTION))) {
                 String placeHolder = matcher.group(PLACE_HOLDER);
                 replacementValue = replacementValue.replace(matcher.group(SUBSTITUTION),
-                        contextValues.get(placeHolder).toLowerCase());
+                        context.get(placeHolder).toLowerCase());
             } else {
                 throw new IllegalArgumentException("Unexpected function type of %s".formatted(matcher.group(FUNCTION)));
             }

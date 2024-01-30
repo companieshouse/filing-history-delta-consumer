@@ -16,12 +16,13 @@
   <properties>
     <maven.compiler.source>21</maven.compiler.source>
     <maven.compiler.target>21</maven.compiler.target>
-    <spring.boot.version>3.2.1</spring.boot.version>
+    <spring.boot.version>3.2.2</spring.boot.version>
     <jib-maven-plugin.version>3.4.0</jib-maven-plugin.version>
     <test-containers.version>1.19.3</test-containers.version>
     <maven-surefire.version>3.2.3</maven-surefire.version>
     <maven-surefire-plugin.version>${maven-surefire.version}</maven-surefire-plugin.version>
     <maven-failsafe-plugin.version>${maven-surefire.version}</maven-failsafe-plugin.version>
+    <commons-text.version>1.11.0</commons-text.version>
     <skip.unit.tests>false</skip.unit.tests>
     <skip.integration.tests>false</skip.integration.tests>
 
@@ -155,7 +156,6 @@
       <artifactId>commons-text</artifactId>
       <version>${commons-text.version}</version>
     </dependency>
-
     <dependency>
       <groupId>uk.gov.companieshouse</groupId>
       <artifactId>structured-logging</artifactId>

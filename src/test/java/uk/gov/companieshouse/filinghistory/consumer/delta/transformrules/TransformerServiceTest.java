@@ -13,6 +13,8 @@ import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functio
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.BsonDate;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.FormatNumber;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.LowerCase;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.ProcessCapital;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.ReplaceProperty;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.SentenceCase;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.TitleCase;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.TransformerFactory;
@@ -34,7 +36,7 @@ class TransformerServiceTest {
                 "_document_id" : "000AAAAAAAA1234"
             }""";
 
-    private static final String aaRequestBody = """
+    private static final String AA_REQUEST_BODY = """
             {
                 "_id" : "MTUxMjg0MTM5YWRpcXprY3g",
                 "company_number" : "14388379",
@@ -135,35 +137,6 @@ class TransformerServiceTest {
 
         // then
         assertNotNull(requestBody);
-    }
-
-    @Test
-    void transformAA01() throws JsonProcessingException {
-        // given
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode delta = mapper.readTree(REQUEST_WITH_TWO_LIKE_CAPTURE_GROUPS);
-
-        // when
-        JsonNode requestBody = service.transform(delta);
-
-        // then
-        assertNotNull(requestBody);
-        System.out.println(requestBody);
-    }
-
-
-    @Test
-    void transformUsingDefaultRule() throws JsonProcessingException {
-        // given
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode delta = mapper.readTree(MATCH_DEFAULT_RULE);
-
-        // when
-        JsonNode requestBody = service.transform(delta);
-
-        // then
-        assertNotNull(requestBody);
-        System.out.println(requestBody);
     }
 
     @Test
