@@ -66,7 +66,7 @@ public class SentenceCase implements Transformer {
         outputNode.put(finalField, transformedText);
     }
 
-    public String transformSentenceCase(String nodeText) {
+    String transformSentenceCase(String nodeText) {
         if(StringUtil.isEmpty(nodeText)){
             return nodeText;
         }

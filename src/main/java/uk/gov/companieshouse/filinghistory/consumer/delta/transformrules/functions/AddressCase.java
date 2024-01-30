@@ -4,12 +4,20 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Pattern;
+import org.apache.commons.text.WordUtils;
 import org.springframework.stereotype.Component;
 @Component
 public class AddressCase implements Transformer {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
+    private final TitleCase titleCase = new TitleCase();
+
+    private static final Pattern POST_CODE_PATTERN = Pattern.compile(
+            "(\\b[A-Z][A-Z]?\\d[A-Z\\d]?\\s*\\d[A-Z]{2}\\b)", Pattern.CASE_INSENSITIVE);
+    private static final Pattern PO_BOX_PATTERN = Pattern.compile("\\bPo\\s+Box\\b", Pattern.CASE_INSENSITIVE);
 
     @Override
     public void transform(JsonNode source,
@@ -22,4 +30,19 @@ public class AddressCase implements Transformer {
 
         outputNode.put(finalField, "TODO: Address case: " + arguments.getFirst());
     }
+
+    String transformAddressCase(String nodeText){
+        if(nodeText.isEmpty()){
+            return nodeText;
+        }
+        nodeText = titleCase.transformTitleCase(nodeText);
+        nodeText = Transformer.mapToken(POST_CODE_PATTERN, nodeText, (word, matcher)
+                -> matcher.group(1).toUpperCase(Locale.UK), true);
+        nodeText = Transformer.mapToken(PO_BOX_PATTERN, nodeText, (word, matcher)
+                -> matcher.replaceFirst("PO Box") ,false);
+
+
+        return nodeText.trim();
+    }
+
 }

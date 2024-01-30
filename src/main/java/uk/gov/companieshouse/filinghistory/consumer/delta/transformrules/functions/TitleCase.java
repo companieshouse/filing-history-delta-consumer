@@ -20,14 +20,11 @@ public class TitleCase implements Transformer {
     private static final Pattern IDENTIFYING_WORDS_PATTERN = Pattern.compile(
             "(\\p{L}[\\p{L}']*)", Pattern.CASE_INSENSITIVE);
     private static final Pattern PERL_PATTERN = Pattern.compile("((?:\\pL|&[a-z]+;)(?:[\\pL']|&[a-z]+;)*)");
-
     private static final Pattern FIND_FIRST_WORD_PATTERN = Pattern.compile("^(\\p{L}[\\p{L}']*)");
-
     private static final Pattern FIND_LAST_WORD_PATTERN = Pattern.compile("(\\p{L}[\\p{L}']*)$");
     private static final Pattern OPENING_PARENTHESIS = Pattern.compile("[(](\\p{L}[\\p{L}']*)");
     private static final Pattern CLOSING_PARENTHESIS = Pattern.compile("(\\p{L}[\\p{L}']*)[)]");
     private static final Pattern COLON = Pattern.compile("([:;]\\s+)(\\p{L}[\\p{L}']*)");
-
 
     private static final Set<String> STOP_WORDS = new HashSet<>(Arrays.asList("A", "AN", "AT",
             "AS", "AND", "ARE", "BUT", "BY", "ERE", "FOR", "FROM", "IN", "INTO", "IS", "OF", "ON",
@@ -46,7 +43,7 @@ public class TitleCase implements Transformer {
         outputNode.put(finalField, "Title case: " + arguments.getFirst());
     }
 
-    public String transformTitleCase(String jsonFieldWeWantToTransform) {
+     String transformTitleCase(String jsonFieldWeWantToTransform) {
         if(StringUtil.isEmpty(jsonFieldWeWantToTransform)){
             return jsonFieldWeWantToTransform;
         }
@@ -54,17 +51,16 @@ public class TitleCase implements Transformer {
         jsonFieldWeWantToTransform = Transformer.mapToken(IDENTIFYING_WORDS_PATTERN, jsonFieldWeWantToTransform, (word, matcher)
                 -> STOP_WORDS.contains(word) ? word.toLowerCase(Locale.UK) :
                 WordUtils.capitalizeFully(word), true);
-        jsonFieldWeWantToTransform = Transformer.mapToken(FIND_FIRST_WORD_PATTERN, jsonFieldWeWantToTransform, //this first word pattern will work apart from instances when the string does not
-                // begin with a word, in which case you will need a different regex.
+        jsonFieldWeWantToTransform = Transformer.mapToken(FIND_FIRST_WORD_PATTERN, jsonFieldWeWantToTransform,
                 (word, matcher) -> WordUtils.capitalizeFully(word), false);
         jsonFieldWeWantToTransform = Transformer.mapToken(FIND_LAST_WORD_PATTERN, jsonFieldWeWantToTransform,
                 (word, matcher) -> WordUtils.capitalizeFully(word), false);
         jsonFieldWeWantToTransform = Transformer.mapToken(OPENING_PARENTHESIS, jsonFieldWeWantToTransform, (token, matcher) ->
-                "(" + org.apache.commons.text.WordUtils.capitalizeFully(matcher.group(1)), false);
+                "(" + WordUtils.capitalizeFully(matcher.group(1)), false);
         jsonFieldWeWantToTransform = Transformer.mapToken(CLOSING_PARENTHESIS, jsonFieldWeWantToTransform, (token, matcher) ->
-                org.apache.commons.text.WordUtils.capitalizeFully(matcher.group(1)) + ")", false);
+                WordUtils.capitalizeFully(matcher.group(1)) + ")", false);
         jsonFieldWeWantToTransform = Transformer.mapToken(COLON, jsonFieldWeWantToTransform, (token, matcher) ->
-                matcher.group(1) + org.apache.commons.text.WordUtils.capitalizeFully(matcher.group(2)), false);
+                matcher.group(1) + WordUtils.capitalizeFully(matcher.group(2)), false);
         return jsonFieldWeWantToTransform.trim();
     }
 }

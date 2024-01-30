@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class LowerCase implements Transformer {
     private static final ObjectMapper objectMapper = new ObjectMapper();
-    private static final Pattern MIXED_ALPHANUMERIC = Pattern.compile("(\\w+\\d+\\w*|\\d+\\w+)");
     @Override
     public void transform(JsonNode source,
             ObjectNode outputNode,
@@ -25,13 +24,10 @@ public class LowerCase implements Transformer {
         outputNode.put(finalField, "TODO: Lower case: " + arguments.getFirst());
     }
 
-    public String transformLowerCase(String nodeText){
-        if(StringUtil.isEmpty(nodeText)){
+     String transformLowerCase(String nodeText){
+        if(StringUtil.isBlank(nodeText)){
             return nodeText;
         }
-        nodeText = Transformer.mapToken(MIXED_ALPHANUMERIC, nodeText, (token, matcher) ->
-                matcher.group(1).toLowerCase(Locale.UK), true);
-        return nodeText.trim();
+        return nodeText.toLowerCase();
     }
-
 }

@@ -1,4 +1,4 @@
-package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules;
+package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -30,7 +30,6 @@ class TitleCaseTransformerTest {
 
         //then
         assertEquals(expected, output);
-        System.out.println(output);
     }
 
     //need these to be parameters from the actual data we are going to feed in like from CIDEV, this seems to be just what Doug could think of before.

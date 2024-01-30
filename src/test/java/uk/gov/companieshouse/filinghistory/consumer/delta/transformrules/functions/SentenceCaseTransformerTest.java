@@ -1,4 +1,4 @@
-package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules;
+package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -31,7 +31,6 @@ class SentenceCaseTransformerTest {
 
         //then
         assertEquals(expected, output);
-        System.out.println(output);
     }
 
     private static Stream<Arguments> sentenceCaseFormatting() {
