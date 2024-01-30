@@ -1,6 +1,7 @@
 package uk.gov.companieshouse.filinghistory.consumer.delta;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -54,5 +55,17 @@ class OriginalValuesMapperTest {
 
         // then
         assertEquals(expected, actual);
+        assertNull(jsonNode.get("original_values"));
+    }
+
+    @Test
+    void shouldReturnNullIfJsonNodeIsNull() {
+        // given
+
+        // when
+        final InternalDataOriginalValues actual = originalValuesMapper.map(null);
+
+        // then
+        assertNull(actual);
     }
 }

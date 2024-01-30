@@ -1,6 +1,7 @@
 package uk.gov.companieshouse.filinghistory.consumer.delta;
 
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,5 +28,18 @@ class DeltaServiceRouterTest {
 
         // then
         verify(upsertDeltaService).process(delta);
+    }
+
+    @Test
+    void processDeleteDelta() {
+        // given
+        ChsDelta delta = new ChsDelta();
+        delta.setIsDelete(true);
+
+        // when
+        router.route(delta);
+
+        // then
+        verifyNoInteractions(upsertDeltaService);
     }
 }

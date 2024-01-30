@@ -1,6 +1,7 @@
 package uk.gov.companieshouse.filinghistory.consumer.delta;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -43,8 +44,7 @@ class DescriptionValuesMapperTest {
     @Test
     void shouldMapFilingHistoryItemDataDescriptionValuesObjectWhenFieldsAreEmpty() {
         // given
-        final JsonNode jsonNode = objectMapper.createObjectNode()
-                .putObject("description_values");
+        final JsonNode jsonNode = objectMapper.createObjectNode();
 
         final FilingHistoryItemDataDescriptionValues expected = new FilingHistoryItemDataDescriptionValues()
                 .officerName(null)
@@ -55,5 +55,17 @@ class DescriptionValuesMapperTest {
 
         // then
         assertEquals(expected, actual);
+        assertNull(jsonNode.get("description_values"));
+    }
+
+    @Test
+    void shouldReturnNullIfJsonNodeIsNull() {
+        // given
+
+        // when
+        final FilingHistoryItemDataDescriptionValues actual = descriptionValuesMapper.map(null);
+
+        // then
+        assertNull(actual);
     }
 }

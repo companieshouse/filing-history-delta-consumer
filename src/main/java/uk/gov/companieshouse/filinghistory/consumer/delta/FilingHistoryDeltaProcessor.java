@@ -26,15 +26,19 @@ public class FilingHistoryDeltaProcessor {
         final FilingHistory filingHistory = delta.getFilingHistory().getFirst();
         final JsonNode transformedJsonNode = transformerService.transform(
                 preTransformMapper.mapDeltaToObjectNode(filingHistory));
+        InternalFilingHistoryApiMapperArguments arguments = new InternalFilingHistoryApiMapperArguments(
+                transformedJsonNode,
+                kindService.encodeIdByTransactionKind(buildTransactionCriteria(filingHistory)),
+                delta.getFilingHistory().getFirst().getCompanyNumber(),
+                delta.getDeltaAt(),
+                updatedBy);
 
-        return internalFilingHistoryApiMapper.mapJsonNodeToInternalFilingHistoryApi(
-                transformedJsonNode, buildKindResult(filingHistory), delta.getDeltaAt(), updatedBy);
+        return internalFilingHistoryApiMapper.mapJsonNodeToInternalFilingHistoryApi(arguments);
     }
 
-    private TransactionKindResult buildKindResult(final FilingHistory filingHistory) {
-        return kindService.encodeIdByTransactionKind(
-                new TransactionKindCriteria(
-                    filingHistory.getEntityId(), filingHistory.getParentEntityId(), filingHistory.getFormType(),
-                    filingHistory.getParentFormType(), filingHistory.getBarcode()));
+    private static TransactionKindCriteria buildTransactionCriteria(final FilingHistory filingHistory) {
+        return new TransactionKindCriteria(
+                filingHistory.getEntityId(), filingHistory.getParentEntityId(), filingHistory.getFormType(),
+                filingHistory.getParentFormType(), filingHistory.getBarcode());
     }
 }

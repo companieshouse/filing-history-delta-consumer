@@ -54,6 +54,8 @@ class InternalFilingHistoryApiMapperTest {
     private LinksMapper linksMapper;
     @Mock
     private OriginalValuesMapper originalValuesMapper;
+    @Mock
+    private PaperFiledMapper paperFiledMapper;
 
     @Mock
     private FilingHistoryItemDataDescriptionValues filingHistoryItemDataDescriptionValues;
@@ -67,32 +69,40 @@ class InternalFilingHistoryApiMapperTest {
     void shouldMapTransformedJsonNodeToInternalFilingHistoryApiObject() {
         // given
         when(descriptionValuesMapper.map(any())).thenReturn(filingHistoryItemDataDescriptionValues);
-        when(linksMapper.map(any(), any())).thenReturn(filingHistoryItemDataLinks);
         when(originalValuesMapper.map(any())).thenReturn(internalDataOriginalValues);
+        when(paperFiledMapper.map(any(), any())).thenReturn(false);
+        when(linksMapper.map(any(), any())).thenReturn(filingHistoryItemDataLinks);
 
         final JsonNode topLevelNode = buildJsonNode(BARCODE, DOCUMENT_ID, COMPANY_NUMBER);
         final JsonNode descriptionValuesNode = topLevelNode.get("data").get("description_values");
         final JsonNode originalValuesNode = topLevelNode.get("original_values");
 
         final InternalFilingHistoryApi expectedRequestBody = buildExpectedTM01RequestBody(BARCODE, DOCUMENT_ID, false);
+        InternalFilingHistoryApiMapperArguments arguments = new InternalFilingHistoryApiMapperArguments(
+                topLevelNode,
+                buildTransactionKindResult(ENCODED_ID),
+                COMPANY_NUMBER,
+                DELTA_AT,
+                UPDATED_BY);
 
         // when
-        final InternalFilingHistoryApi actualRequestBody = mapper.mapJsonNodeToInternalFilingHistoryApi(topLevelNode, buildTransactionKindResult(ENCODED_ID), DELTA_AT, UPDATED_BY);
+        final InternalFilingHistoryApi actualRequestBody = mapper.mapJsonNodeToInternalFilingHistoryApi(arguments);
 
         // then
         assertEquals(expectedRequestBody, actualRequestBody);
         verify(descriptionValuesMapper).map(descriptionValuesNode);
-        verify(linksMapper).map(COMPANY_NUMBER, ENCODED_ID);
         verify(originalValuesMapper).map(originalValuesNode);
+        verify(paperFiledMapper).map(BARCODE, DOCUMENT_ID);
+        verify(linksMapper).map(COMPANY_NUMBER, ENCODED_ID);
     }
 
     @Test
     void shouldHandleNullInputFieldsBySettingNonRequiredFieldsToNullOnInternalFilingHistoryApiObject() {
         // given
         when(descriptionValuesMapper.map(any())).thenReturn(filingHistoryItemDataDescriptionValues);
-        when(linksMapper.map(any(), any())).thenReturn(filingHistoryItemDataLinks);
         when(originalValuesMapper.map(any())).thenReturn(internalDataOriginalValues);
-
+        when(paperFiledMapper.map(any(), any())).thenReturn(false);
+        when(linksMapper.map(any(), any())).thenReturn(filingHistoryItemDataLinks);
 
         final JsonNode topLevelNode = buildJsonNodeWithNoNonRequiredFields();
         final JsonNode descriptionValuesNode = topLevelNode.get("data").get("description_values");
@@ -122,37 +132,53 @@ class InternalFilingHistoryApiMapperTest {
                         .documentId(null)
                         .updatedBy(UPDATED_BY));
 
+        InternalFilingHistoryApiMapperArguments arguments = new InternalFilingHistoryApiMapperArguments(
+                topLevelNode,
+                buildTransactionKindResult(ENCODED_ID),
+                COMPANY_NUMBER,
+                DELTA_AT,
+                UPDATED_BY);
+
         // when
-        final InternalFilingHistoryApi actualRequestBody = mapper.mapJsonNodeToInternalFilingHistoryApi(topLevelNode, buildTransactionKindResult(ENCODED_ID), DELTA_AT, UPDATED_BY);
+        final InternalFilingHistoryApi actualRequestBody = mapper.mapJsonNodeToInternalFilingHistoryApi(arguments);
 
         // then
         assertEquals(expectedRequestBody, actualRequestBody);
         verify(descriptionValuesMapper).map(descriptionValuesNode);
-        verify(linksMapper).map(COMPANY_NUMBER, ENCODED_ID);
         verify(originalValuesMapper).map(originalValuesNode);
+        verify(paperFiledMapper).map(null, null);
+        verify(linksMapper).map(COMPANY_NUMBER, ENCODED_ID);
     }
 
     @Test
     void shouldMapTransformedJsonNodeToInternalFilingHistoryApiObjectWhenBarcodeDoesNotStartWithXAndSetPaperFiledToTrue() {
         // given
         when(descriptionValuesMapper.map(any())).thenReturn(filingHistoryItemDataDescriptionValues);
-        when(linksMapper.map(any(), any())).thenReturn(filingHistoryItemDataLinks);
         when(originalValuesMapper.map(any())).thenReturn(internalDataOriginalValues);
+        when(paperFiledMapper.map(any(), any())).thenReturn(true);
+        when(linksMapper.map(any(), any())).thenReturn(filingHistoryItemDataLinks);
 
         final JsonNode topLevelNode = buildJsonNode("TAITVXAX", "000TAITVXAX4682", COMPANY_NUMBER);
         final JsonNode descriptionValuesNode = topLevelNode.get("data").get("description_values");
         final JsonNode originalValuesNode = topLevelNode.get("original_values");
 
         final InternalFilingHistoryApi expectedRequestBody = buildExpectedTM01RequestBody("TAITVXAX", "000TAITVXAX4682", true);
+        InternalFilingHistoryApiMapperArguments arguments = new InternalFilingHistoryApiMapperArguments(
+                topLevelNode,
+                buildTransactionKindResult(ENCODED_ID),
+                COMPANY_NUMBER,
+                DELTA_AT,
+                UPDATED_BY);
 
         // when
-        final InternalFilingHistoryApi actualRequestBody = mapper.mapJsonNodeToInternalFilingHistoryApi(topLevelNode, buildTransactionKindResult(ENCODED_ID), DELTA_AT, UPDATED_BY);
+        final InternalFilingHistoryApi actualRequestBody = mapper.mapJsonNodeToInternalFilingHistoryApi(arguments);
 
         // then
         assertEquals(expectedRequestBody, actualRequestBody);
         verify(descriptionValuesMapper).map(descriptionValuesNode);
-        verify(linksMapper).map(COMPANY_NUMBER, ENCODED_ID);
         verify(originalValuesMapper).map(originalValuesNode);
+        verify(paperFiledMapper).map("TAITVXAX", "000TAITVXAX4682");
+        verify(linksMapper).map(COMPANY_NUMBER, ENCODED_ID);
     }
 
     @ParameterizedTest
@@ -162,46 +188,111 @@ class InternalFilingHistoryApiMapperTest {
     void shouldMapTransformedJsonNodeToInternalFilingHistoryApiObjectWhenBarcodeIsEmptyButDocumentIdIsNot(final String documentId, final boolean isPaperFiled) {
         // given
         when(descriptionValuesMapper.map(any())).thenReturn(filingHistoryItemDataDescriptionValues);
-        when(linksMapper.map(any(), any())).thenReturn(filingHistoryItemDataLinks);
         when(originalValuesMapper.map(any())).thenReturn(internalDataOriginalValues);
+        when(paperFiledMapper.map(any(), any())).thenReturn(isPaperFiled);
+        when(linksMapper.map(any(), any())).thenReturn(filingHistoryItemDataLinks);
 
         final JsonNode topLevelNode = buildJsonNode("", documentId, COMPANY_NUMBER);
         final JsonNode descriptionValuesNode = topLevelNode.get("data").get("description_values");
         final JsonNode originalValuesNode = topLevelNode.get("original_values");
 
         final InternalFilingHistoryApi expectedRequestBody = buildExpectedTM01RequestBody("", documentId, isPaperFiled);
+        InternalFilingHistoryApiMapperArguments arguments = new InternalFilingHistoryApiMapperArguments(
+                topLevelNode,
+                buildTransactionKindResult(ENCODED_ID),
+                COMPANY_NUMBER,
+                DELTA_AT,
+                UPDATED_BY);
 
         // when
-        final InternalFilingHistoryApi actualRequestBody = mapper.mapJsonNodeToInternalFilingHistoryApi(topLevelNode, buildTransactionKindResult(ENCODED_ID), DELTA_AT, UPDATED_BY);
+        final InternalFilingHistoryApi actualRequestBody = mapper.mapJsonNodeToInternalFilingHistoryApi(arguments);
 
         // then
         assertEquals(expectedRequestBody, actualRequestBody);
         verify(descriptionValuesMapper).map(descriptionValuesNode);
-        verify(linksMapper).map(COMPANY_NUMBER, ENCODED_ID);
         verify(originalValuesMapper).map(originalValuesNode);
+        verify(paperFiledMapper).map("", documentId);
+        verify(linksMapper).map(COMPANY_NUMBER, ENCODED_ID);
     }
 
     @ParameterizedTest
-    @CsvSource({
-            "12345678 , ",
-            " , MzA1Njc0Mjg0N3NqYXNqamQ"
-    })
+    @CsvSource(value = {
+            "12345678 , null",
+            "null , MzA1Njc0Mjg0N3NqYXNqamQ",
+            "null , null"
+    },
+    nullValues = {"null"})
     void shouldThrowIllegalArgumentExceptionWhenNullOrEmptyCompanyNumberOrTransactionId(final String companyNumber, final String transactionId) {
         // given
         when(descriptionValuesMapper.map(any())).thenReturn(filingHistoryItemDataDescriptionValues);
-        when(linksMapper.map(any(), any())).thenThrow(new IllegalArgumentException());
+        when(paperFiledMapper.map(any(), any())).thenReturn(false);
+        when(linksMapper.map(any(), any())).thenThrow(IllegalArgumentException.class);
 
         final JsonNode topLevelNode = buildJsonNode(BARCODE, DOCUMENT_ID, companyNumber);
-        final JsonNode descriptionValuesNode = topLevelNode.get("data").get("description_values");
+        InternalFilingHistoryApiMapperArguments arguments = new InternalFilingHistoryApiMapperArguments(
+                topLevelNode,
+                buildTransactionKindResult(transactionId),
+                companyNumber,
+                DELTA_AT,
+                UPDATED_BY);
 
         // when
-        Executable executable = () -> mapper.mapJsonNodeToInternalFilingHistoryApi(topLevelNode, buildTransactionKindResult(transactionId), DELTA_AT, UPDATED_BY);
+        Executable executable = () -> mapper.mapJsonNodeToInternalFilingHistoryApi(arguments);
 
         // then
         assertThrows(IllegalArgumentException.class, executable);
-        verify(descriptionValuesMapper).map(descriptionValuesNode);
+        verify(descriptionValuesMapper).map(topLevelNode.get("data").get("description_values"));
+        verify(paperFiledMapper).map(BARCODE, DOCUMENT_ID);
         verify(linksMapper).map(companyNumber, transactionId);
         verifyNoInteractions(originalValuesMapper);
+    }
+
+    @Test
+    void shouldMapTransformedJsonNodeToInternalFilingHistoryApiObjectWithNullFieldsWhenJsonNodeObjectsAreNull() {
+        // given
+        when(paperFiledMapper.map(any(), any())).thenReturn(true);
+        when(linksMapper.map(any(), any())).thenReturn(filingHistoryItemDataLinks);
+
+        final InternalFilingHistoryApi expectedRequestBody = new InternalFilingHistoryApi()
+                .externalData(new ExternalData()
+                        .transactionId(ENCODED_ID)
+                        .barcode(null)
+                        .type(null)
+                        .date(null)
+                        .category(null)
+                        .subcategory(null)
+                        .description(null)
+                        .descriptionValues(null)
+                        .actionDate(null)
+                        .links(filingHistoryItemDataLinks)
+                        .paperFiled(true))
+                .internalData(new InternalData()
+                        .transactionKind(TOP_LEVEL)
+                        .deltaAt(DELTA_AT)
+                        .originalValues(null)
+                        .originalDescription(null)
+                        .companyNumber(COMPANY_NUMBER)
+                        .parentEntityId(null)
+                        .entityId(null)
+                        .documentId(null)
+                        .updatedBy(UPDATED_BY));
+
+        InternalFilingHistoryApiMapperArguments arguments = new InternalFilingHistoryApiMapperArguments(
+                null,
+                buildTransactionKindResult(ENCODED_ID),
+                COMPANY_NUMBER,
+                DELTA_AT,
+                UPDATED_BY);
+
+        // when
+        final InternalFilingHistoryApi actualRequestBody = mapper.mapJsonNodeToInternalFilingHistoryApi(arguments);
+
+        // then
+        assertEquals(expectedRequestBody, actualRequestBody);
+        verify(descriptionValuesMapper).map(null);
+        verify(originalValuesMapper).map(null);
+        verify(paperFiledMapper).map(null, null);
+        verify(linksMapper).map(COMPANY_NUMBER, ENCODED_ID);
     }
 
     private static JsonNode buildJsonNode(final String barcode, final String documentId, final String companyNumber) {

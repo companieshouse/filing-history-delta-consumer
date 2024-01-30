@@ -34,12 +34,12 @@ public class PreTransformMapper {
 
     private void mapBarcodeAndDocumentId(ObjectNode objectNode, final FilingHistory filingHistory) {
         final String barcode = filingHistory.getBarcode();
-        if (!StringUtils.isBlank(barcode)) {
+        if (StringUtils.isNotBlank(barcode)) {
             objectNode.put("_barcode", barcode);
         }
 
         final String documentId = filingHistory.getDocumentId();
-        if (!StringUtils.isBlank(documentId)) {
+        if (StringUtils.isNotBlank(documentId)) {
             objectNode.put("_document_id", documentId);
         }
     }
@@ -52,7 +52,7 @@ public class PreTransformMapper {
         final String resignationDate = descriptionValues.getResignationDate();
         final String officerName = descriptionValues.getOFFICERNAME();
 
-        if (!StringUtils.isBlank(resignationDate) && !StringUtils.isBlank(officerName)) {
+        if (StringUtils.isNotBlank(resignationDate) && StringUtils.isNotBlank(officerName)) {
             objectNode
                 .putObject("original_values")
                 .put("resignation_date", resignationDate)

@@ -20,7 +20,7 @@ import uk.gov.companieshouse.api.filinghistory.InternalFilingHistoryApi;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.TransformerService;
 
 @ExtendWith(MockitoExtension.class)
-class FilingHistoryDeltaMapperTest {
+class FilingHistoryDeltaProcessorTest {
 
     private static final String DELTA_AT = "";
     private static final String CATEGORY = "2";
@@ -63,13 +63,18 @@ class FilingHistoryDeltaMapperTest {
     void shouldProcessDeltaObjectAndReturnMappedInternalFilingHistoryApiObject() {
         // given
         final TransactionKindCriteria criteria = new TransactionKindCriteria(ENTITY_ID, PARENT_ENTITY_ID, TM01_FORM_TYPE, PARENT_FORM_TYPE, BARCODE);
-
+        InternalFilingHistoryApiMapperArguments expectedArguments = new InternalFilingHistoryApiMapperArguments(
+                postTransformNode,
+                kindResult,
+                COMPANY_NUMBER,
+                DELTA_AT,
+                "contextId");
         final FilingHistoryDelta delta = buildFilingHistoryDelta();
 
         when(kindService.encodeIdByTransactionKind(any())).thenReturn(kindResult);
         when(preTransformMapper.mapDeltaToObjectNode(any())).thenReturn(preTransformNode);
         when(transformerService.transform(any())).thenReturn(postTransformNode);
-        when(internalFilingHistoryApiMapper.mapJsonNodeToInternalFilingHistoryApi(any(), any(), any(), any())).thenReturn(expected);
+        when(internalFilingHistoryApiMapper.mapJsonNodeToInternalFilingHistoryApi(any())).thenReturn(expected);
 
         // when
         final InternalFilingHistoryApi actual = mapper.processDelta(delta, "contextId");
@@ -79,7 +84,7 @@ class FilingHistoryDeltaMapperTest {
         verify(kindService).encodeIdByTransactionKind(criteria);
         verify(preTransformMapper).mapDeltaToObjectNode(delta.getFilingHistory().getFirst());
         verify(transformerService).transform(preTransformNode);
-        verify(internalFilingHistoryApiMapper).mapJsonNodeToInternalFilingHistoryApi(postTransformNode, kindResult, DELTA_AT, "contextId");
+        verify(internalFilingHistoryApiMapper).mapJsonNodeToInternalFilingHistoryApi(expectedArguments);
     }
 
     private static FilingHistoryDelta buildFilingHistoryDelta() {
