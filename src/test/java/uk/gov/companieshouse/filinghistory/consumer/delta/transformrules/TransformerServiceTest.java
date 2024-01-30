@@ -1,5 +1,6 @@
 package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -33,7 +34,6 @@ class TransformerServiceTest {
                 "_document_id" : "000AAAAAAAA1234"
             }""";
 
-    // TODO The dates might not have the correct structure
     private static final String aaRequestBody = """
             {
                 "_id" : "MTUxMjg0MTM5YWRpcXprY3g",
@@ -117,7 +117,11 @@ class TransformerServiceTest {
 
         // then
         assertNotNull(requestBody);
-        System.out.println(requestBody);
+
+        assertEquals("AA", requestBody.at(TransformerUtils.toJsonPtr("data/type")).textValue());
+        assertEquals("accounts-with-accounts-type-small-group",
+                requestBody.at(TransformerUtils.toJsonPtr("data/description")).textValue());
+        assertEquals("accounts", requestBody.at(TransformerUtils.toJsonPtr("data/category")).textValue());
     }
 
     @Test

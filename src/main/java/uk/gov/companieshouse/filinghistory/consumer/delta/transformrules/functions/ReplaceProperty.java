@@ -1,18 +1,28 @@
 package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions;
 
+import static uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.TransformerUtils.toJsonPtr;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.util.List;
+import com.fasterxml.jackson.databind.node.TextNode;
+import jakarta.annotation.Nonnull;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Component;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.rules.SetterArgs;
 
 @Component
 public class ReplaceProperty implements Transformer {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
+    private static final Pattern SUBSTITUTION_PATTERN =
+            Pattern.compile("[\\w-]+(?<substitution>\\[% (?<placeHolder>\\w+) \\| (?<function>\\w+) %]).*");
+    private static final String FUNCTION = "function";
+    private static final String PLACE_HOLDER = "placeHolder";
+    private static final String SUBSTITUTION = "substitution";
 
     @Override
     public void transform(JsonNode source,
@@ -21,22 +31,35 @@ public class ReplaceProperty implements Transformer {
             List<String> arguments,
             Map<String, String> contextValue) {
 
-        String finalField = getFinalField(objectMapper, field, outputNode);
+        String[] fields = field.split("\\."); // len = 2
+        for (int i = 0; i < fields.length - 1; i++) {
+            outputNode.putIfAbsent(fields[i], objectMapper.createObjectNode());
+            outputNode = (ObjectNode) outputNode.at(toJsonPtr(fields[i]));
+        }
 
-        if (arguments.size() == 1) {
+        String finalField = fields[fields.length - 1];
 
-//            TODO
-//            data.category: accounts tick
-//            data.description: 'accounts-with-accounts-type-[% accounts_type | lc %]-group'
-//            original_description: '[% data.description | sentence_case %]'
-//            data.action_date: '[% made_up_date | bson_date %]'
-
-            outputNode.put(finalField, arguments.getFirst());
+        if (setterArgs.arguments().size() == 1) {
+            outputNode.set(finalField, new TextNode(getReplacementValue(setterArgs, contextValues)));
         } else {
             ArrayNode leafNode = outputNode.putArray(finalField);
-//          TODO test with a unit test using line 134 values of transform_rules.yml
-//           to replace value with an array instead of a string.
-            arguments.forEach(leafNode::add);
+            setterArgs.arguments().forEach(leafNode::add);
         }
+    }
+
+    @Nonnull
+    private static String getReplacementValue(SetterArgs setterArgs, Map<String, String> contextValues) {
+        String replacementValue = setterArgs.arguments().getFirst();
+        Matcher matcher = SUBSTITUTION_PATTERN.matcher(replacementValue);
+        if (matcher.matches()) {
+            if ("lc".equals(matcher.group(FUNCTION))) {
+                String placeHolder = matcher.group(PLACE_HOLDER);
+                replacementValue = replacementValue.replace(matcher.group(SUBSTITUTION),
+                        contextValues.get(placeHolder).toLowerCase());
+            } else {
+                throw new IllegalArgumentException("Unexpected function type of %s".formatted(matcher.group(FUNCTION)));
+            }
+        }
+        return replacementValue;
     }
 }
