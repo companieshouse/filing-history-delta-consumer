@@ -47,7 +47,7 @@ public class SentenceCase implements Transformer {
                     "(?:[A-Z][.])(?:[A-Z][.])+|",
                     "(^[^a-zA-Z]*([a-z][.])+))[^a-z]*\\s"),
             Pattern.CASE_INSENSITIVE);
-    static final Possessiveness NON_POSSESSIVE = new Possessiveness(false, false, false);
+    static final Possessiveness NON_POSSESSIVE = new Possessiveness();
 
     @Override
     public void transform(JsonNode source,
@@ -191,6 +191,10 @@ public class SentenceCase implements Transformer {
             this.endOfSentence = endOfSentence;
         }
 
+        Possessiveness() {
+            this(false, false, false);
+        }
+
         @Override
         public boolean equals(Object other) {
             if (this == other) {
@@ -233,7 +237,7 @@ public class SentenceCase implements Transformer {
         }
     }
     static Possessiveness isPossessive(String token) {
-        Possessiveness result = new Possessiveness(false, false, false);
+        Possessiveness result = new Possessiveness();
         if (StringUtils.isEmpty(token)) {
             return NON_POSSESSIVE;
         }
