@@ -18,7 +18,7 @@ class LowerCaseTest {
         lowerCase = new LowerCase();
     }
 
-    @ParameterizedTest(name = "Map [{0}] to [{1}]")
+    @ParameterizedTest
     @MethodSource("lowerCaseFormatting")
     @DisplayName("Format text as lower case")
     void testTransformSpecificMethodWithinTitleCaseTransformer(String input, String expected) {
@@ -31,7 +31,6 @@ class LowerCaseTest {
         assertEquals(expected, output);
     }
 
-    //TODO check with test data whether or not we ever receive milliseconds in the delta in test data.
     private static Stream<Arguments> lowerCaseFormatting() {
         return Stream.of(
                 Arguments.of(null, null),
