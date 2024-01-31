@@ -35,6 +35,7 @@ class TitleCaseTransformerTest {
         assertEquals(expected, output);
     }
 
+    // TODO Can these examples be cross-checked with the Perl implementation?
     //need these to be parameters from the actual data we are going to feed in like from CIDEV, this seems to be just what Doug could think of before.
     private static Stream<Arguments> titleCaseFormatting() {
         return Stream.of(
@@ -59,13 +60,22 @@ class TitleCaseTransformerTest {
                 Arguments.of("An apple; and; an orange", "An Apple; And; an Orange"),
                 Arguments.of("java coffee 4l1f3", "Java Coffee 4L1F3"),
                 Arguments.of("java coffee \"4l1f3\"", "Java Coffee \"4L1F3\""),
+//                Arguments.of("llp", "LLP"),
+//                Arguments.of("Director is from the uk", "Director is from the UK"),
+//                Arguments.of("a\nb", "A B"),
                 Arguments.of("d.r.", "D.R."),
+//                Arguments.of("a  \t b", "A B"),
+//                Arguments.of("b.sc", "B.SC"),
+//                Arguments.of("d.r john smith b.sc of london", "D.R John Smith B.SC of London"),
+//                Arguments.of("b.sc.", "B.SC."),
                 Arguments.of("b.sci.", "B.Sci."),
                 Arguments.of("a.b.c.d.sci.", "A.B.C.D.Sci."),
-//                Arguments.of("sci.d.c.b.a.", "Sci.D.C.B.A."),
-//                Arguments.of("the word is sci.d.c.b.a.", "The Word is Sci.D.C.B.A."),
-//                Arguments.of("the word is; sci.d.c.b.a.", "The Word is; Sci.D.C.B.A."), // stop words surrounded with punctuation must not be capitalised
-//                Arguments.of("the word is s.ci.d.c.b.a.", "The Word is S.Ci.D.C.B.A."),
+                Arguments.of("sci.d.c.b.a.", "Sci.D.C.B.A."),
+                Arguments.of("the word is sci.d.c.b.a.", "The Word is Sci.D.C.B.A."),
+                Arguments.of("the word is; sci.d.c.b.a.", "The Word is; Sci.D.C.B.A."),
+                // stop words surrounded with punctuation must not be capitalised
+                Arguments.of("the word is s.ci.d.c.b.a.", "The Word is S.Ci.D.C.B.A."),
+//                Arguments.of("b.a.!b.\"sc.m?.a.?m.sc.", "B.A.!B.\"SC.M?.A.?M.SC."),
                 Arguments.of("harrow-on-the-hill", "Harrow-on-the-Hill"), // delimited stop words must not be capitalised
                 Arguments.of("the presenter is from harrow-on-the-hill", "The Presenter is from Harrow-on-the-Hill"),
                 Arguments.of("the presenter is from \"harrow\"-\"on-the\"-\"hill!!!", "The Presenter is from \"Harrow\"-\"on-the\"-\"Hill!!!"),
@@ -77,5 +87,4 @@ class TitleCaseTransformerTest {
                 Arguments.of("10/12/12 STATEMENT OF CAPITAL;GBP 50000", "10/12/12 Statement of Capital;Gbp 50000")
         );
     }
-
 }

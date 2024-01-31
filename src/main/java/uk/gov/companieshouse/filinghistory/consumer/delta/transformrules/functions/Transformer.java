@@ -40,7 +40,7 @@ public interface Transformer {
             start = matcher.start();
             end = matcher.end();
             if (start > 0) {
-                result.append(word.substring(prevEnd, start));
+                result.append(word, prevEnd, start);
             }
             result.append(matchRemappingFunction.apply(
                     word.substring(start, end), matcher));

@@ -22,6 +22,7 @@ public class TitleCase implements Transformer {
     private static final Pattern OPENING_PARENTHESIS = Pattern.compile("[(](\\p{L}[\\p{L}']*)");
     private static final Pattern CLOSING_PARENTHESIS = Pattern.compile("(\\p{L}[\\p{L}']*)\\)");
     private static final Pattern COLON = Pattern.compile("([:;]\\s+)(\\p{L}[\\p{L}']*)");
+    private static final Pattern ABBREVIATIONS = Pattern.compile("\\b(\\p{L})[.]");
 
     private static final Set<String> STOP_WORDS = Set.of("A", "AN", "AT",
             "AS", "AND", "ARE", "BUT", "BY", "ERE", "FOR", "FROM", "IN", "INTO", "IS", "OF", "ON",
@@ -46,27 +47,29 @@ public class TitleCase implements Transformer {
         outputNode.put(finalField, transformTitleCase(arguments.getFirst()));
     }
 
-    String transformTitleCase(String jsonFieldWeWantToTransform) {
-        if (StringUtils.isEmpty(jsonFieldWeWantToTransform)) {
-            return jsonFieldWeWantToTransform;
+    String transformTitleCase(String field) {
+        if (StringUtils.isEmpty(field)) {
+            return field;
         }
-        jsonFieldWeWantToTransform = jsonFieldWeWantToTransform.toUpperCase(Locale.UK);
-        jsonFieldWeWantToTransform = mapToken(IDENTIFYING_WORDS_PATTERN, jsonFieldWeWantToTransform,
+        field = field.toUpperCase(Locale.UK);
+        field = mapToken(IDENTIFYING_WORDS_PATTERN, field,
                 (word, matcher)
                         -> STOP_WORDS.contains(word) ? word.toLowerCase(Locale.UK) :
                         WordUtils.capitalizeFully(word), true);
-        jsonFieldWeWantToTransform = mapToken(FIND_FIRST_WORD_PATTERN, jsonFieldWeWantToTransform,
+        field = mapToken(FIND_FIRST_WORD_PATTERN, field,
                 (word, matcher) -> WordUtils.capitalizeFully(word), false);
-        jsonFieldWeWantToTransform = mapToken(FIND_LAST_WORD_PATTERN, jsonFieldWeWantToTransform,
+        field = mapToken(FIND_LAST_WORD_PATTERN, field,
                 (word, matcher) -> WordUtils.capitalizeFully(word), false);
-        jsonFieldWeWantToTransform = mapToken(OPENING_PARENTHESIS, jsonFieldWeWantToTransform,
+        field = mapToken(OPENING_PARENTHESIS, field,
                 (token, matcher) ->
                         "(" + WordUtils.capitalizeFully(matcher.group(1)), false);
-        jsonFieldWeWantToTransform = mapToken(CLOSING_PARENTHESIS, jsonFieldWeWantToTransform,
+        field = mapToken(CLOSING_PARENTHESIS, field,
                 (token, matcher) ->
                         WordUtils.capitalizeFully(matcher.group(1)) + ")", false);
-        jsonFieldWeWantToTransform = mapToken(COLON, jsonFieldWeWantToTransform, (token, matcher) ->
+        field = mapToken(COLON, field, (token, matcher) ->
                 matcher.group(1) + WordUtils.capitalizeFully(matcher.group(2)), false);
-        return jsonFieldWeWantToTransform.trim();
+        field = mapToken(ABBREVIATIONS, field, (token, matcher) ->
+                matcher.group(1).toUpperCase(Locale.UK) + ".", true);
+        return field.trim();
     }
 }
