@@ -11,7 +11,6 @@ import uk.gov.companieshouse.filinghistory.consumer.logging.DataMapHolder;
 @Component
 public class FilingHistoryApiClient {
 
-    private static final String PUT_REQUEST_URI = "/company/%s/filing-history/%s";
     private static final String FAILED_MSG = "Failed to upsert filing history for resource URI %s";
     private static final String ERROR_MSG = "HTTP response code %s when upserting filing history for resource URI %s";
 
@@ -27,20 +26,18 @@ public class FilingHistoryApiClient {
         InternalApiClient client = internalApiClientFactory.get();
         client.getHttpClient().setRequestId(DataMapHolder.getRequestId());
 
-        final String formattedUri = PUT_REQUEST_URI.formatted(
-                requestBody.getInternalData().getCompanyNumber(),
-                requestBody.getExternalData().getTransactionId());
+        final String uri = requestBody.getExternalData().getLinks().getSelf();
 
         try {
             client.privateDeltaResourceHandler()
-                    .putFilingHistory(formattedUri, requestBody)
+                    .putFilingHistory(uri, requestBody)
                     .execute();
         } catch (ApiErrorResponseException ex) {
-            responseHandler.handle(ERROR_MSG.formatted(ex.getStatusCode(), formattedUri), ex);
+            responseHandler.handle(ERROR_MSG.formatted(ex.getStatusCode(), uri), ex);
         } catch (URIValidationException ex) {
-            responseHandler.handle(FAILED_MSG.formatted(formattedUri), ex);
+            responseHandler.handle(FAILED_MSG.formatted(uri), ex);
         } catch (IllegalArgumentException ex) {
-            responseHandler.handle(FAILED_MSG.formatted(formattedUri), ex);
+            responseHandler.handle(FAILED_MSG.formatted(uri), ex);
         }
     }
 }
