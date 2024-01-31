@@ -8,7 +8,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import org.springframework.stereotype.Component;
 import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class SentenceCase implements Transformer {
 
-    private static final ObjectMapper objectMapper = new ObjectMapper();
     private static final Set<String> ENTITIES = new HashSet<>(Arrays.asList("ARD", "NI", "SE",
             "GB", "SC", "UK", "LTD", "L.T.D", "PLC", "P.L.C", "UNLTD", "CIC", "C.I.C", "LLP",
             "L.P", "LP", "EEIG", "OEIC", "ICVC", "AEIE", "C.B.C", "C.C.C", "CBC", "CBCN", "CBP",
@@ -49,6 +47,12 @@ public class SentenceCase implements Transformer {
                     "(^[^a-zA-Z]*([a-z][.])+))[^a-z]*\\s"),
             Pattern.CASE_INSENSITIVE);
     static final Possessiveness NON_POSSESSIVE = new Possessiveness();
+
+    private final ObjectMapper objectMapper;
+
+    public SentenceCase(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
 
     @Override
     public void transform(JsonNode source,

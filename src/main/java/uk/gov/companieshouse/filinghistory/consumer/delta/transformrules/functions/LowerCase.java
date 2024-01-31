@@ -5,14 +5,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.List;
 import java.util.Map;
-import org.springframework.stereotype.Component;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 
 @Component
 public class LowerCase implements Transformer {
 
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
+
+    public LowerCase(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
 
     @Override
     public void transform(JsonNode source,

@@ -7,7 +7,6 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.ReplaceProperty;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.Transformer;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.TransformerFactory;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.rules.ExecArgs;
@@ -46,7 +45,7 @@ public record ThenProperties(@JsonProperty("define") Map<String, String> define,
             TransformerFactory transformerFactory) {
         SetterArgs setterArgs;
         if (entry.getValue() instanceof List) {
-            setterArgs = new SetterArgs(new ReplaceProperty(), (List<String>) entry.getValue());
+            setterArgs = new SetterArgs(transformerFactory.getReplaceProperty(), (List<String>) entry.getValue());
         } else {
             String value = entry.getValue().toString();
             Matcher matcher = PLACEHOLDER_PATTERN.matcher(value);

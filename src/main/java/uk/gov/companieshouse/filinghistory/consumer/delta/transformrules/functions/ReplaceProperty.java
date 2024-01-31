@@ -16,12 +16,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class ReplaceProperty implements Transformer {
 
-    private static final ObjectMapper objectMapper = new ObjectMapper();
     private static final Pattern SUBSTITUTION_PATTERN =
             Pattern.compile("[\\w-]+(?<substitution>\\[% (?<placeHolder>\\w+) \\| (?<function>\\w+) %]).*");
     private static final String FUNCTION = "function";
     private static final String PLACE_HOLDER = "placeHolder";
     private static final String SUBSTITUTION = "substitution";
+
+    private final ObjectMapper objectMapper;
+    private final LowerCase lowerCase;
+
+    public ReplaceProperty(ObjectMapper objectMapper, LowerCase lowerCase) {
+        this.objectMapper = objectMapper;
+        this.lowerCase = lowerCase;
+    }
 
     @Override
     public void transform(JsonNode source,
@@ -47,14 +54,14 @@ public class ReplaceProperty implements Transformer {
     }
 
     @Nonnull
-    private static String getReplacementValue(List<String> arguments, Map<String, String> context) {
+    private String getReplacementValue(List<String> arguments, Map<String, String> context) {
         String replacementValue = arguments.getFirst();
         Matcher matcher = SUBSTITUTION_PATTERN.matcher(replacementValue);
         if (matcher.matches()) {
             if ("lc".equals(matcher.group(FUNCTION))) {
                 String placeHolder = matcher.group(PLACE_HOLDER);
                 replacementValue = replacementValue.replace(matcher.group(SUBSTITUTION),
-                        context.get(placeHolder).toLowerCase());
+                        lowerCase.transformLowerCase(context.get(placeHolder).toLowerCase()));
             } else {
                 throw new IllegalArgumentException("Unexpected function type of %s".formatted(matcher.group(FUNCTION)));
             }

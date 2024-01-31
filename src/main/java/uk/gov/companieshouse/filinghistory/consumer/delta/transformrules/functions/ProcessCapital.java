@@ -18,11 +18,12 @@ import org.springframework.stereotype.Component;
 public class ProcessCapital {
 
     private static final Pattern TREASURY_PATTERN = Pattern.compile("treasury", Pattern.CASE_INSENSITIVE);
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
 
     private final FormatNumber formatNumber;
 
-    public ProcessCapital(FormatNumber formatNumber) {
+    public ProcessCapital(ObjectMapper objectMapper, FormatNumber formatNumber) {
+        this.objectMapper = objectMapper;
         this.formatNumber = formatNumber;
     }
 
@@ -35,8 +36,7 @@ public class ProcessCapital {
             outputNode = (ObjectNode) outputNode.at("/" + fields[i]);
         }
 
-        String sourceDescriptionPath = "/%s".formatted(fieldPath).replace(".", "/");
-        String sourceDescription = source.at(sourceDescriptionPath).textValue();
+        String sourceDescription = source.at(toJsonPtr(fieldPath)).textValue();
 
         Matcher matcher = extract.matcher(sourceDescription);
 

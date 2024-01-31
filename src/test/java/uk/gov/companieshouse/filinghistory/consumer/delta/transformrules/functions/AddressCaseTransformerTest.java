@@ -2,6 +2,7 @@ package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functi
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -11,11 +12,15 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class AddressCaseTransformerTest {
 
+    private static final ObjectMapper MAPPER = new ObjectMapper();
+
+    private static final TitleCase titleCase = new TitleCase(MAPPER);
+
     private AddressCase addressCase;
 
     @BeforeEach
     void beforeEach() {
-        addressCase = new AddressCase();
+        addressCase = new AddressCase(MAPPER, titleCase);
     }
 
     @ParameterizedTest(name = "Map [{0}] to [{1}]")

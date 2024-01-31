@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class TitleCase implements Transformer {
 
-    private static final ObjectMapper objectMapper = new ObjectMapper();
     private static final Pattern IDENTIFYING_WORDS_PATTERN = Pattern.compile(
             "(\\p{L}[\\p{L}']*)", Pattern.CASE_INSENSITIVE);
     private static final Pattern FIND_FIRST_WORD_PATTERN = Pattern.compile("^(\\p{L}[\\p{L}']*)");
@@ -28,6 +27,12 @@ public class TitleCase implements Transformer {
             "AS", "AND", "ARE", "BUT", "BY", "ERE", "FOR", "FROM", "IN", "INTO", "IS", "OF", "ON",
             "ONTO", "OR", "OVER", "PER", "THE", "TO", "THAT", "THAN", "UNTIL", "UNTO", "UPON",
             "VIA", "WITH", "WHILE", "WHILST", "WITHIN", "WITHOUT");
+
+    private final ObjectMapper objectMapper;
+
+    public TitleCase(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
 
     @Override
     public void transform(JsonNode source,

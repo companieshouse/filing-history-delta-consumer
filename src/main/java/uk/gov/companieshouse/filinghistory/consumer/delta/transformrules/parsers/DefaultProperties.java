@@ -7,7 +7,6 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.ReplaceProperty;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.Transformer;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.TransformerFactory;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.rules.Default;
@@ -35,7 +34,7 @@ record DefaultProperties(@JsonProperty("set") Map<String, String> set) {
             Transformer transformer = transformerFactory.mapTransformer(matcher.group(2));
             setterArgs = new SetterArgs(transformer, List.of(sourcePath));
         } else {
-            setterArgs = new SetterArgs(new ReplaceProperty(), List.of(entry.getValue()));
+            setterArgs = new SetterArgs(transformerFactory.getReplaceProperty(), List.of(entry.getValue()));
         }
         return setterArgs;
     }

@@ -14,16 +14,20 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
-import org.springframework.stereotype.Component;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 
 @Component
 public class BsonDate implements Transformer {
 
-    private static final ObjectMapper objectMapper = new ObjectMapper();
     private static final DateTimeFormatter INPUT_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
     private static final DateTimeFormatter SLASHES_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+    private final ObjectMapper objectMapper;
+
+    public BsonDate(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
 
     @Override
     public void transform(JsonNode source,
