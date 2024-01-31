@@ -5,17 +5,16 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.util.regex.Pattern;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.TransformerTestingUtils;
 
 @ExtendWith(MockitoExtension.class)
 class ProcessCapitalTest {
@@ -27,14 +26,17 @@ class ProcessCapitalTest {
     public static final String DATA_DESCRIPTION_FIELD_PATH = "data.description";
     public static final String FIGURE = "1,000";
     private static final String ALT_DESCRIPTION = "capital-cancellation-treasury-shares-with-date-treasury-capital-figure";
-    private static final ObjectMapper objectMapper = new ObjectMapper()
-            .setSerializationInclusion(JsonInclude.Include.NON_NULL)
-            .registerModule(new JavaTimeModule());
+    private static final ObjectMapper objectMapper = TransformerTestingUtils.getMapper();
 
-    @InjectMocks
-    private ProcessCapital processCapital;
     @Mock
     private FormatNumber formatNumber;
+
+    private ProcessCapital processCapital = new ProcessCapital(objectMapper, formatNumber);
+
+    @BeforeEach
+    void setup() {
+        processCapital = new ProcessCapital(objectMapper, formatNumber);
+    }
 
     @Test
     void shouldTransformCaptureGroupsIntoCapitalNode() {

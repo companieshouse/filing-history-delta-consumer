@@ -1,5 +1,7 @@
 package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.rules;
 
+import static uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.TransformerUtils.toJsonPtr;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,13 +13,13 @@ import java.util.stream.Collectors;
 public record When(String field, String formType, Map<String, Pattern> like) {
 
     public Result match(JsonNode putRequest) {
-        String deltaFormType = putRequest.at("/" + field.replace(".", "/")).textValue();
+        String deltaFormType = putRequest.at(toJsonPtr(field)).textValue();
 
         if (formType.equals(deltaFormType)) {
             Map<String, String> captureGroups = new HashMap<>();
             boolean matched = like.entrySet().stream()
                     .allMatch(e -> {
-                        JsonNode deltaLikeField = putRequest.at("/" + e.getKey().replace(".", "/"));
+                        JsonNode deltaLikeField = putRequest.at(toJsonPtr(e.getKey()));
                         if (deltaLikeField != null && deltaLikeField.textValue() != null) {
                             Matcher matcher = e.getValue().matcher(deltaLikeField.textValue());
                             if (matcher.find()) {

@@ -7,13 +7,9 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.AddressCase;
-import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.BsonDate;
-import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.LowerCase;
-import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.ReplaceProperty;
-import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.SentenceCase;
-import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.TitleCase;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.Transformer;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.TransformerFactory;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.rules.ExecArgs;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.rules.SetterArgs;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.rules.Then;
 
@@ -21,51 +17,55 @@ public record ThenProperties(@JsonProperty("define") Map<String, String> define,
                              @JsonProperty("set") Map<String, Object> set,
                              @JsonProperty("exec") Map<String, List<String>> exec) {
 
-    private static final Pattern PLACEHOLDER_PATTERN = Pattern.compile("^\\[%\\s([\\w.]*)\\s\\|\\s([\\w_]*)\\s%]$");
+    private static final Pattern PLACEHOLDER_PATTERN = Pattern.compile("^\\[%\\s([\\w.]+)\\s\\|\\s(\\w+)\\s%]$");
+    private static final Pattern EXEC_PLACEHOLDER_PATTERN = Pattern.compile("^\\[%\\s([\\w.]+)\\s%]$");
 
-    public Then compile() {
-        // Parse the entries in the set, define and exec to:
+    public Then compile(TransformerFactory transformerFactory) {
 
-        //  - define: ?? Apply regex to some field. Check Perl ??
-        Map<String, Pattern> defineElements = define != null ? define.entrySet().stream()
-                .collect(Collectors.toMap(
-                        Entry::getKey,
-                        e -> Pattern.compile(e.getValue())
-                )) : Map.of();
+        ExecArgs execArgs;
+        if (define != null && exec != null) {
+            Pattern extract = define.containsKey("extract") ? Pattern.compile(
+                    define.get("extract")) : null;
+            String altDescription = define.get("alt_description");
+            execArgs = new ExecArgs(transformerFactory.getProcessCapital(),
+                    extractFieldPath(exec.get("process_capital").getFirst()), extract,
+                    altDescription);
+        } else {
+            execArgs = null;
+        }
 
         Map<String, SetterArgs> setElements = set.entrySet().stream()
-                .collect(Collectors.toMap(
-                        Entry::getKey,
-                        ThenProperties::buildSetterArgs));
+                .collect(Collectors.toMap(Entry::getKey, e -> buildSetterArgs(e, transformerFactory)));
 
-        //  - exec: ?? field name -> Call a custom method to build the value. Check Perl ??
-
-        return new Then(defineElements, setElements, Map.of());
+        return new Then(setElements, execArgs);
     }
 
     @SuppressWarnings("unchecked")
-    private static SetterArgs buildSetterArgs(Entry<String, Object> entry) {
+    private static SetterArgs buildSetterArgs(Entry<String, Object> entry,
+            TransformerFactory transformerFactory) {
         SetterArgs setterArgs;
         if (entry.getValue() instanceof List) {
-            setterArgs = new SetterArgs(new ReplaceProperty(), (List<String>) entry.getValue());
+            setterArgs = new SetterArgs(transformerFactory.getReplaceProperty(), (List<String>) entry.getValue());
         } else {
             String value = entry.getValue().toString();
             Matcher matcher = PLACEHOLDER_PATTERN.matcher(value);
             if (matcher.matches()) {
                 String sourcePath = matcher.group(1);
-                Transformer transformer = switch (matcher.group(2)) {
-                    case "address_case" -> new AddressCase(); // TODO Make functions Beans and inject
-                    case "bson_date" -> new BsonDate();
-                    case "lc" -> new LowerCase();
-                    case "sentence_case" -> new SentenceCase();
-                    case "title_case" -> new TitleCase();
-                    default -> throw new IllegalArgumentException("Unexpected function " + matcher.group(2));
-                };
+                Transformer transformer = transformerFactory.mapTransformer(matcher.group(2));
                 setterArgs = new SetterArgs(transformer, List.of(sourcePath));
             } else {
-                setterArgs = new SetterArgs(new ReplaceProperty(), List.of(value));
+                setterArgs = new SetterArgs(transformerFactory.getReplaceProperty(),
+                        List.of(value));
             }
         }
         return setterArgs;
+    }
+
+    private static String extractFieldPath(String rawFieldPath) {
+        Matcher matcher = EXEC_PLACEHOLDER_PATTERN.matcher(rawFieldPath);
+        if (matcher.matches()) {
+            return matcher.group(1);
+        }
+        throw new IllegalArgumentException("Invalid field path in exec %s".formatted(rawFieldPath));
     }
 }

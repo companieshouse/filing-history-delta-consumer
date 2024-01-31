@@ -13,12 +13,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class AddressCase implements Transformer {
 
-    private static final ObjectMapper objectMapper = new ObjectMapper();
-    private final TitleCase titleCase = new TitleCase();
     private static final Pattern POST_CODE_PATTERN = Pattern.compile(
             "(\\b[A-Z][A-Z]?\\d[A-Z\\d]?\\s*\\d[A-Z]{2}\\b)", Pattern.CASE_INSENSITIVE);
     private static final Pattern PO_BOX_PATTERN = Pattern.compile("\\bPo\\s+Box\\b", Pattern.CASE_INSENSITIVE);
-    private static final Pattern NUMBER_SUFFIX_PATTERN = Pattern.compile("(\\b\\d+\\s*(nd|th|rd|st)\\b)", Pattern.CASE_INSENSITIVE);
+    private static final Pattern NUMBER_SUFFIX_PATTERN = Pattern.compile("(\\b\\d+\\s*(nd|th|rd|st)\\b)",
+            Pattern.CASE_INSENSITIVE);
+
+    private final TitleCase titleCase;
+    private final ObjectMapper objectMapper;
+
+    public AddressCase(ObjectMapper objectMapper, TitleCase titleCase) {
+        this.titleCase = titleCase;
+        this.objectMapper = objectMapper;
+    }
 
     @Override
     public void transform(JsonNode source,
@@ -29,20 +36,19 @@ public class AddressCase implements Transformer {
 
         String finalField = getFinalField(objectMapper, field, outputNode);
 
-        outputNode.put(finalField, "TODO: Address case: " + arguments.getFirst());
+        outputNode.put(finalField, transformAddressCase(arguments.getFirst()));
     }
 
-    String transformAddressCase(String nodeText){
-        if(StringUtils.isEmpty(nodeText)){
+    String transformAddressCase(String nodeText) {
+        if (StringUtils.isEmpty(nodeText)) {
             return nodeText;
         }
         nodeText = titleCase.transformTitleCase(nodeText);
-        nodeText = Transformer.mapToken(POST_CODE_PATTERN, nodeText, (word, matcher)
+        nodeText = mapToken(POST_CODE_PATTERN, nodeText, (word, matcher)
                 -> matcher.group(1).toUpperCase(Locale.UK), true);
         nodeText = PO_BOX_PATTERN.matcher(nodeText).replaceFirst("PO Box");
-        nodeText = Transformer.mapToken(NUMBER_SUFFIX_PATTERN, nodeText, (word, matcher)
+        nodeText = mapToken(NUMBER_SUFFIX_PATTERN, nodeText, (word, matcher)
                 -> matcher.group(1).toLowerCase(Locale.UK), true);
         return nodeText.trim();
     }
-
 }
