@@ -15,7 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import uk.gov.companieshouse.api.InternalApiClient;
 import uk.gov.companieshouse.api.error.ApiErrorResponseException;
 import uk.gov.companieshouse.api.filinghistory.ExternalData;
-import uk.gov.companieshouse.api.filinghistory.FilingHistoryItemDataLinks;
+import uk.gov.companieshouse.api.filinghistory.InternalData;
 import uk.gov.companieshouse.api.filinghistory.InternalFilingHistoryApi;
 import uk.gov.companieshouse.api.handler.delta.PrivateDeltaResourceHandler;
 import uk.gov.companieshouse.api.handler.delta.filinghistory.request.PrivateFilingHistoryPut;
@@ -26,7 +26,7 @@ import uk.gov.companieshouse.filinghistory.consumer.logging.DataMapHolder;
 @ExtendWith(MockitoExtension.class)
 class FilingHistoryApiClientTest {
 
-    private static final String PRE_FORMAT_URI = "/company/%s/filing-history/%s";
+    private static final String PRE_FORMAT_URI = "/filing-history-data-api/company/%s/filing-history/%s/internal";
     private static final String COMPANY_NUMBER = "12345678";
     private static final String TRANSACTION_ID = "MzA0Mzk3MjY3NXNhbHQ";
     private static final String REQUEST_ID = "request_id";
@@ -40,6 +40,12 @@ class FilingHistoryApiClientTest {
     private ResponseHandler responseHandler;
 
     @Mock
+    private InternalFilingHistoryApi requestBody;
+    @Mock
+    private ExternalData externalData;
+    @Mock
+    private InternalData internalData;
+    @Mock
     private InternalApiClient internalApiClient;
     @Mock
     private HttpClient apiClient;
@@ -51,15 +57,17 @@ class FilingHistoryApiClientTest {
     @Test
     void shouldSendSuccessfulPutRequest() throws Exception {
         // given
+        doReturn(externalData).when(requestBody).getExternalData();
+        doReturn(TRANSACTION_ID).when(externalData).getTransactionId();
+        doReturn(internalData).when(requestBody).getInternalData();
+        doReturn(COMPANY_NUMBER).when(internalData).getCompanyNumber();
         doReturn(internalApiClient).when(internalApiClientFactory).get();
         doReturn(apiClient).when(internalApiClient).getHttpClient();
         doReturn(privateDeltaResourceHandler).when(internalApiClient).privateDeltaResourceHandler();
         doReturn(privateFilingHistoryPut).when(privateDeltaResourceHandler).putFilingHistory(any(), any());
 
-        final String expectedUri = PRE_FORMAT_URI.formatted(COMPANY_NUMBER, TRANSACTION_ID);
-        InternalFilingHistoryApi requestBody = buildRequiredRequestBody(expectedUri);
         DataMapHolder.get().requestId(REQUEST_ID);
-
+        final String expectedUri = PRE_FORMAT_URI.formatted(COMPANY_NUMBER, TRANSACTION_ID);
 
         // when
         filingHistoryApiClient.upsertFilingHistory(requestBody);
@@ -77,15 +85,18 @@ class FilingHistoryApiClientTest {
         // given
         Class<ApiErrorResponseException> exceptionClass = ApiErrorResponseException.class;
 
+        doReturn(externalData).when(requestBody).getExternalData();
+        doReturn(TRANSACTION_ID).when(externalData).getTransactionId();
+        doReturn(internalData).when(requestBody).getInternalData();
+        doReturn(COMPANY_NUMBER).when(internalData).getCompanyNumber();
         doReturn(internalApiClient).when(internalApiClientFactory).get();
         doReturn(apiClient).when(internalApiClient).getHttpClient();
         doReturn(privateDeltaResourceHandler).when(internalApiClient).privateDeltaResourceHandler();
         doReturn(privateFilingHistoryPut).when(privateDeltaResourceHandler).putFilingHistory(any(), any());
         doThrow(exceptionClass).when(privateFilingHistoryPut).execute();
 
-        final String expectedUri = PRE_FORMAT_URI.formatted(COMPANY_NUMBER, TRANSACTION_ID);
-        InternalFilingHistoryApi requestBody = buildRequiredRequestBody(expectedUri);
         DataMapHolder.get().requestId(REQUEST_ID);
+        final String expectedUri = PRE_FORMAT_URI.formatted(COMPANY_NUMBER, TRANSACTION_ID);
 
         // when
         filingHistoryApiClient.upsertFilingHistory(requestBody);
@@ -103,15 +114,18 @@ class FilingHistoryApiClientTest {
         // given
         Class<URIValidationException> exceptionClass = URIValidationException.class;
 
+        doReturn(externalData).when(requestBody).getExternalData();
+        doReturn(TRANSACTION_ID).when(externalData).getTransactionId();
+        doReturn(internalData).when(requestBody).getInternalData();
+        doReturn(COMPANY_NUMBER).when(internalData).getCompanyNumber();
         doReturn(internalApiClient).when(internalApiClientFactory).get();
         doReturn(apiClient).when(internalApiClient).getHttpClient();
         doReturn(privateDeltaResourceHandler).when(internalApiClient).privateDeltaResourceHandler();
         doReturn(privateFilingHistoryPut).when(privateDeltaResourceHandler).putFilingHistory(any(), any());
         doThrow(exceptionClass).when(privateFilingHistoryPut).execute();
 
-        final String expectedUri = PRE_FORMAT_URI.formatted(COMPANY_NUMBER, TRANSACTION_ID);
-        InternalFilingHistoryApi requestBody = buildRequiredRequestBody(expectedUri);
         DataMapHolder.get().requestId(REQUEST_ID);
+        final String expectedUri = PRE_FORMAT_URI.formatted(COMPANY_NUMBER, TRANSACTION_ID);
 
         // when
         filingHistoryApiClient.upsertFilingHistory(requestBody);
@@ -129,15 +143,18 @@ class FilingHistoryApiClientTest {
         // given
         Class<IllegalArgumentException> exceptionClass = IllegalArgumentException.class;
 
+        doReturn(externalData).when(requestBody).getExternalData();
+        doReturn(TRANSACTION_ID).when(externalData).getTransactionId();
+        doReturn(internalData).when(requestBody).getInternalData();
+        doReturn(COMPANY_NUMBER).when(internalData).getCompanyNumber();
         doReturn(internalApiClient).when(internalApiClientFactory).get();
         doReturn(apiClient).when(internalApiClient).getHttpClient();
         doReturn(privateDeltaResourceHandler).when(internalApiClient).privateDeltaResourceHandler();
         doReturn(privateFilingHistoryPut).when(privateDeltaResourceHandler).putFilingHistory(any(), any());
         doThrow(exceptionClass).when(privateFilingHistoryPut).execute();
 
-        final String expectedUri = PRE_FORMAT_URI.formatted(COMPANY_NUMBER, TRANSACTION_ID);
-        InternalFilingHistoryApi requestBody = buildRequiredRequestBody(expectedUri);
         DataMapHolder.get().requestId(REQUEST_ID);
+        final String expectedUri = PRE_FORMAT_URI.formatted(COMPANY_NUMBER, TRANSACTION_ID);
 
         // when
         filingHistoryApiClient.upsertFilingHistory(requestBody);
@@ -148,12 +165,5 @@ class FilingHistoryApiClientTest {
         verify(privateDeltaResourceHandler).putFilingHistory(expectedUri, requestBody);
         verify(privateFilingHistoryPut).execute();
         verify(responseHandler).handle(any(), any(exceptionClass));
-    }
-
-    private static InternalFilingHistoryApi buildRequiredRequestBody(final String selfLink) {
-        return new InternalFilingHistoryApi()
-                .externalData(new ExternalData()
-                        .links(new FilingHistoryItemDataLinks()
-                                .self(selfLink)));
     }
 }
