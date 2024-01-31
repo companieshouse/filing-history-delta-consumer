@@ -4,17 +4,17 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
 import uk.gov.companieshouse.delta.ChsDelta;
-import uk.gov.companieshouse.filinghistory.consumer.delta.Service;
+import uk.gov.companieshouse.filinghistory.consumer.delta.DeltaServiceRouter;
 import uk.gov.companieshouse.filinghistory.consumer.exception.RetryableException;
 
 @Component
 public class Consumer {
 
-    private final Service service;
+    private final DeltaServiceRouter router;
     private final MessageFlags messageFlags;
 
-    public Consumer(Service service, MessageFlags messageFlags) {
-        this.service = service;
+    public Consumer(DeltaServiceRouter router, MessageFlags messageFlags) {
+        this.router = router;
         this.messageFlags = messageFlags;
     }
 
@@ -26,7 +26,7 @@ public class Consumer {
     )
     public void consume(Message<ChsDelta> message) {
         try {
-            service.process(message.getPayload());
+            router.route(message.getPayload());
         } catch (RetryableException exception) {
             messageFlags.setRetryable(true);
             throw exception;
