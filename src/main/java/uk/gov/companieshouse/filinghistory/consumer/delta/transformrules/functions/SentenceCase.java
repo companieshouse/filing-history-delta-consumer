@@ -185,13 +185,14 @@ public class SentenceCase implements Transformer {
         boolean openingBrackets;
         boolean endOfSentence;
 
-        Possessiveness() {
-        }
-
         Possessiveness(boolean possessive, boolean openingBrackets, boolean endOfSentence) {
             this.possessive = possessive;
             this.openingBrackets = openingBrackets;
             this.endOfSentence = endOfSentence;
+        }
+
+        Possessiveness() {
+            this(false, false, false);
         }
 
         @Override
