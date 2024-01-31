@@ -8,7 +8,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -121,11 +120,11 @@ public class SentenceCase implements Transformer {
         return token;
     }
 
-    enum SentenceTerminationState {
+    private enum SentenceTerminationState {
         NOT_TERMINATED, TERMINATED, TERMINATED_WITH_BRACKET
     }
 
-    static SentenceTerminationState isEndOfSentence(String token) {
+    private static SentenceTerminationState isEndOfSentence(String token) {
         if (StringUtils.isEmpty(token)) {
             return SentenceTerminationState.NOT_TERMINATED;
         }
@@ -183,7 +182,7 @@ public class SentenceCase implements Transformer {
         }
     }
 
-    static class Possessiveness {
+    private static class Possessiveness {
 
         boolean possessive;
         boolean openingBrackets;
@@ -198,50 +197,9 @@ public class SentenceCase implements Transformer {
         Possessiveness() {
             this(false, false, false);
         }
-
-        @Override
-        public boolean equals(Object other) {
-            if (this == other) {
-                return true;
-            }
-            if (other == null || getClass() != other.getClass()) {
-                return false;
-            }
-            Possessiveness that = (Possessiveness) other;
-            return possessive == that.possessive
-                    && openingBrackets == that.openingBrackets
-                    && endOfSentence == that.endOfSentence;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(possessive, openingBrackets, endOfSentence);
-        }
-
-        @Override
-        public String toString() {
-            StringBuilder result = new StringBuilder();
-            if (possessive) {
-                result.append("possessive");
-            } else {
-                result.append("not possessive");
-                return result.toString();
-            }
-            if (openingBrackets) {
-                result.append(", opening brackets");
-            } else {
-                result.append(", no opening brackets");
-            }
-            if (endOfSentence) {
-                result.append(", end of sentence");
-            } else {
-                result.append(", not end of sentence");
-            }
-            return result.toString();
-        }
     }
 
-    static Possessiveness isPossessive(String token) {
+    private static Possessiveness isPossessive(String token) {
         Possessiveness result = new Possessiveness();
         if (StringUtils.isEmpty(token)) {
             return NON_POSSESSIVE;
