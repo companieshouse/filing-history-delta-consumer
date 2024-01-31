@@ -60,7 +60,7 @@ class ConsumerRetryableExceptionIT extends AbstractKafkaIT {
     }
 
     @Test
-    void testRepublishToCompanyProfileErrorTopicThroughRetryTopics() throws Exception {
+    void testRepublishToFilingHistoryDeltaErrorTopicThroughRetryTopics() throws Exception {
         //given
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         Encoder encoder = EncoderFactory.get().directBinaryEncoder(outputStream, null);
