@@ -1,8 +1,9 @@
 package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions;
 
+import static uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.TransformerUtils.toJsonPtr;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -15,7 +16,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SentenceCase implements Transformer {
+public class SentenceCase extends AbstractTransformer {
 
     private static final Set<String> ENTITIES = new HashSet<>(Arrays.asList("ARD", "NI", "SE",
             "GB", "SC", "UK", "LTD", "L.T.D", "PLC", "P.L.C", "UNLTD", "CIC", "C.I.C", "LLP",
@@ -47,24 +48,16 @@ public class SentenceCase implements Transformer {
             Pattern.CASE_INSENSITIVE);
     static final Possessiveness NON_POSSESSIVE = new Possessiveness();
 
-    private final ObjectMapper objectMapper;
-
     public SentenceCase(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
+        super(objectMapper);
     }
 
     @Override
-    public void transform(JsonNode source,
-            ObjectNode outputNode,
-            String field,
-            List<String> arguments,
-            Map<String, String> contextValue) {
+    protected void doTransform(JsonNode source, TransformTarget target, List<String> arguments,
+            Map<String, String> context) {
 
-        String finalField = getFinalField(objectMapper, field, outputNode);
-        String nodeText = outputNode.at("/" + arguments.getFirst().replace(".", "/"))
-                .textValue();
-
-        outputNode.put(finalField, transformSentenceCase(nodeText));
+        String nodeText = target.objectNode().at(toJsonPtr(arguments.getFirst())).textValue();
+        target.objectNode().put(target.field(), transformSentenceCase(nodeText));
     }
 
     String transformSentenceCase(String nodeText) {

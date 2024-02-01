@@ -4,7 +4,6 @@ import static java.time.ZoneOffset.UTC;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,7 +16,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BsonDate implements Transformer {
+public class BsonDate extends AbstractTransformer {
 
     private static final DateTimeFormatter INPUT_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
     private static final DateTimeFormatter SLASHES_FORMATTER = DateTimeFormatter.ofPattern("d/M/yyyy");
@@ -26,22 +25,14 @@ public class BsonDate implements Transformer {
             .appendValueReduced(ChronoField.YEAR, 2, 2, 1970)
             .toFormatter();
 
-    private final ObjectMapper objectMapper;
-
     public BsonDate(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
+        super(objectMapper);
     }
 
     @Override
-    public void transform(JsonNode source,
-            ObjectNode outputNode,
-            String field,
-            List<String> arguments,
+    protected void doTransform(JsonNode source, TransformTarget target, List<String> arguments,
             Map<String, String> context) {
-
-        String finalField = getFinalField(objectMapper, field, outputNode);
-
-        outputNode.put(finalField, transformBsonDate(
+        target.objectNode().put(target.field(), transformBsonDate(
                 context.get(arguments.getFirst())));
     }
 
