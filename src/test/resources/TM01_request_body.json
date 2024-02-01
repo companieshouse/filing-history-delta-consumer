@@ -1,0 +1,34 @@
+{
+  "external_data": {
+    "transaction_id": "MzA0Mzk3MjY3NXNhbHQ",
+    "barcode": "XHJYVXAY",
+    "type": "TM01",
+    "date": "20120604053919",
+    "category": "officers",
+    "subcategory": "termination",
+    "description": "termination-director-company-with-name-termination-date",
+    "description_values": {
+      "officer_name": "[% officerName | title_case  %]",
+      "termination_date": null
+    },
+    "paper_filed": false,
+    "action_date": null,
+    "links": {
+      "self": "/company/12345678/filing-history/MzA0Mzk3MjY3NXNhbHQ"
+    }
+  },
+  "internal_data": {
+    "original_values": {
+      "resignation_date": "04/06/2012",
+      "officer_name": "John Tester"
+    },
+    "original_description": "Appointment terminated, director john tester",
+    "company_number": "12345678",
+    "parent_entity_id": "",
+    "entity_id": "3043972675",
+    "document_id": "000XHJYVXAY4378",
+    "delta_at": "20120705053919",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

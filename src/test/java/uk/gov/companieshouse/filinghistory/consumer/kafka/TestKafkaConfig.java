@@ -8,6 +8,7 @@ import static uk.gov.companieshouse.filinghistory.consumer.kafka.KafkaUtils.RETR
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.Supplier;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -19,6 +20,8 @@ import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import uk.gov.companieshouse.api.InternalApiClient;
+import uk.gov.companieshouse.sdk.manager.ApiClientManager;
 
 @TestConfiguration
 public class TestKafkaConfig {

@@ -3,59 +3,75 @@ package uk.gov.companieshouse.filinghistory.consumer.kafka;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
-import static uk.gov.companieshouse.api.filinghistory.ExternalData.CategoryEnum.OFFICERS;
-import static uk.gov.companieshouse.api.filinghistory.ExternalData.SubcategoryEnum.TERMINATION;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static uk.gov.companieshouse.filinghistory.consumer.kafka.KafkaUtils.ERROR_TOPIC;
 import static uk.gov.companieshouse.filinghistory.consumer.kafka.KafkaUtils.INVALID_TOPIC;
 import static uk.gov.companieshouse.filinghistory.consumer.kafka.KafkaUtils.MAIN_TOPIC;
 import static uk.gov.companieshouse.filinghistory.consumer.kafka.KafkaUtils.RETRY_TOPIC;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 import org.apache.avro.io.DatumWriter;
 import org.apache.avro.io.Encoder;
 import org.apache.avro.io.EncoderFactory;
 import org.apache.avro.reflect.ReflectDatumWriter;
+import org.apache.commons.io.IOUtils;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
-import uk.gov.companieshouse.api.filinghistory.ExternalData;
-import uk.gov.companieshouse.api.filinghistory.FilingHistoryItemDataDescriptionValues;
-import uk.gov.companieshouse.api.filinghistory.FilingHistoryItemDataLinks;
-import uk.gov.companieshouse.api.filinghistory.InternalData;
-import uk.gov.companieshouse.api.filinghistory.InternalDataOriginalValues;
+import uk.gov.companieshouse.api.InternalApiClient;
 import uk.gov.companieshouse.api.filinghistory.InternalFilingHistoryApi;
+import uk.gov.companieshouse.api.handler.delta.PrivateDeltaResourceHandler;
+import uk.gov.companieshouse.api.handler.delta.filinghistory.request.PrivateFilingHistoryPut;
+import uk.gov.companieshouse.api.http.HttpClient;
 import uk.gov.companieshouse.delta.ChsDelta;
-import uk.gov.companieshouse.filinghistory.consumer.delta.DeltaServiceRouter;
+import uk.gov.companieshouse.filinghistory.consumer.delta.ResponseHandler;
 
 @SpringBootTest
 class ConsumerPositiveIT extends AbstractKafkaIT {
 
     private static final String TRANSACTION_ID = "MzA0Mzk3MjY3NXNhbHQ";
     private static final String COMPANY_NUMBER = "12345678";
+    private static final String PUT_REQUEST_URI = "/filing-history-data-api/company/%s/filing-history/%s/internal".formatted(COMPANY_NUMBER, TRANSACTION_ID);
 
     @Autowired
     private KafkaConsumer<String, byte[]> testConsumer;
-
     @Autowired
     private KafkaProducer<String, byte[]> testProducer;
-
     @Autowired
     private LatchAspect latchAspect;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @MockBean
-    private DeltaServiceRouter router;
+    private Supplier<InternalApiClient> internalApiClientSupplier;
+    @Mock
+    private InternalApiClient internalApiClient;
+    @Mock
+    private HttpClient apiClient;
+    @Mock
+    private PrivateDeltaResourceHandler privateDeltaResourceHandler;
+    @Mock
+    private PrivateFilingHistoryPut privateFilingHistoryPut;
+    @Mock
+    private ResponseHandler responseHandler;
 
     @DynamicPropertySource
     static void props(DynamicPropertyRegistry registry) {
@@ -67,13 +83,26 @@ class ConsumerPositiveIT extends AbstractKafkaIT {
         testConsumer.poll(Duration.ofSeconds(1));
     }
 
-    @Test
-    void testConsumeFromStreamFilingHistoryDeltaTopic() throws Exception {
+    @ParameterizedTest
+    @CsvSource({
+            "TM01"
+    })
+    void testConsumeFromStreamFilingHistoryDeltaTopic(final String prefix) throws Exception {
         //given
+        final String delta = IOUtils.resourceToString("/%s_delta.json".formatted(prefix), StandardCharsets.UTF_8);
+        // TODO: Replace incorrect values in expected request body once transform rules are fully implemented e.g. [% officerName | title_case  %] or the TODOs
+        final String requestBody = IOUtils.resourceToString("/%s_request_body.json".formatted(prefix), StandardCharsets.UTF_8);
+        final InternalFilingHistoryApi expectedRequestBody = objectMapper.readValue(requestBody, InternalFilingHistoryApi.class);
+
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         Encoder encoder = EncoderFactory.get().directBinaryEncoder(outputStream, null);
         DatumWriter<ChsDelta> writer = new ReflectDatumWriter<>(ChsDelta.class);
-        writer.write(new ChsDelta("", 0, "context_id", false), encoder);
+        writer.write(new ChsDelta(delta, 0, "context_id", false), encoder);
+
+        doReturn(internalApiClient).when(internalApiClientSupplier).get();
+        doReturn(apiClient).when(internalApiClient).getHttpClient();
+        doReturn(privateDeltaResourceHandler).when(internalApiClient).privateDeltaResourceHandler();
+        doReturn(privateFilingHistoryPut).when(privateDeltaResourceHandler).putFilingHistory(any(), any());
 
         //when
         testProducer.send(new ProducerRecord<>(MAIN_TOPIC, 0, System.currentTimeMillis(),
@@ -89,40 +118,8 @@ class ConsumerPositiveIT extends AbstractKafkaIT {
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, ERROR_TOPIC)).isZero();
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, INVALID_TOPIC)).isZero();
 
-        // TODO: Remove Mockbean and verify api request body
-        verify(router).route(any());
+        verify(privateDeltaResourceHandler).putFilingHistory(PUT_REQUEST_URI, expectedRequestBody);
+        verify(privateFilingHistoryPut).execute();
+        verifyNoInteractions(responseHandler);
     }
-
-    private static InternalFilingHistoryApi buildExpectedRequestBody() {
-        // TODO: Replace incorrect values once transform rules are fully implemented e.g. [% officerName | title_case  %] or the TODOs
-        return new InternalFilingHistoryApi()
-                .externalData(new ExternalData()
-                        .transactionId(TRANSACTION_ID)
-                        .barcode("XHJYVXAY")
-                        .type("TM01")
-                        .date("20120604053919")
-                        .category(OFFICERS)
-                        .subcategory(TERMINATION)
-                        .description("termination-director-company-with-name-termination-date")
-                        .descriptionValues(new FilingHistoryItemDataDescriptionValues()
-                                .officerName("[% officerName | title_case  %]")
-                                .terminationDate("TODO: BSON date: terminationDate"))
-                        .paperFiled(false)
-                        .actionDate("TODO: BSON date: terminationDate")
-                        .links(new FilingHistoryItemDataLinks()
-                                .self("/company/%s/filing-history/%s".formatted(COMPANY_NUMBER, TRANSACTION_ID))))
-                .internalData(new InternalData()
-                        .originalValues(new InternalDataOriginalValues()
-                                .resignationDate("04/06/2012")
-                                .officerName("John Tester"))
-                        .originalDescription("TODO: Sentence case: Appointment Terminated, Director JOHN TESTER")
-                        .companyNumber(COMPANY_NUMBER)
-                        .parentEntityId("")
-                        .entityId("3043972675")
-                        .documentId("000XHJYVXAY4378")
-                        .deltaAt("20120705053919")
-                        .updatedBy("context_id")
-                        .transactionKind(InternalData.TransactionKindEnum.TOP_LEVEL));
-    }
-
 }
