@@ -2,22 +2,24 @@ package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functi
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.SentenceCase;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.TransformerTestingUtils;
 
 class SentenceCaseTransformerTest {
 
+    private static final ObjectMapper MAPPER = TransformerTestingUtils.getMapper();
 
     private SentenceCase sentenceCase;
 
     @BeforeEach
     void beforeEach() {
-        sentenceCase = new SentenceCase();
+        sentenceCase = new SentenceCase(MAPPER);
     }
 
     @ParameterizedTest(name = "Map [{0}] to [{1}]")

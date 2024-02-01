@@ -18,7 +18,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class SentenceCase implements Transformer {
 
-    private static final ObjectMapper objectMapper = new ObjectMapper();
     private static final Set<String> ENTITIES = new HashSet<>(Arrays.asList("ARD", "NI", "SE",
             "GB", "SC", "UK", "LTD", "L.T.D", "PLC", "P.L.C", "UNLTD", "CIC", "C.I.C", "LLP",
             "L.P", "LP", "EEIG", "OEIC", "ICVC", "AEIE", "C.B.C", "C.C.C", "CBC", "CBCN", "CBP",
@@ -34,7 +33,7 @@ public class SentenceCase implements Transformer {
     private static final Pattern MATCHES_ENTITY = Pattern.compile(
             "(\\b(?i:" + String.join("|", ENTITIES) + ")\\b)");
 
-//    private static final Pattern MATCHES_ENDING = Pattern.compile("(\\b(?i:' . join('|',reverse sort @endings) . ')\\b)")
+    //    private static final Pattern MATCHES_ENDING = Pattern.compile("(\\b(?i:' . join('|',reverse sort @endings) . ')\\b)")
     private static final Pattern OPENING_BRACKET = Pattern.compile("[(\\[]");
     private static final Pattern SENTENCE_TERMINATOR = Pattern.compile("[.!?]");
     private static final Pattern FIRST_LETTER = Pattern.compile("([a-z])",
@@ -49,6 +48,12 @@ public class SentenceCase implements Transformer {
             Pattern.CASE_INSENSITIVE);
     static final Possessiveness NON_POSSESSIVE = new Possessiveness();
 
+    private final ObjectMapper objectMapper;
+
+    public SentenceCase(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
+
     @Override
     public void transform(JsonNode source,
             ObjectNode outputNode,
@@ -60,14 +65,11 @@ public class SentenceCase implements Transformer {
         String nodeText = outputNode.at("/" + arguments.getFirst().replace(".", "/"))
                 .textValue();
 
-        // TODO Apply Perl sentence_case transformation to node text
-        String transformedText = "TODO: Sentence case: " + nodeText;
-
-        outputNode.put(finalField, transformedText);
+        outputNode.put(finalField, transformSentenceCase(nodeText));
     }
 
     String transformSentenceCase(String nodeText) {
-        if(StringUtils.isEmpty(nodeText)){
+        if (StringUtils.isEmpty(nodeText)) {
             return nodeText;
         }
         nodeText = nodeText.toUpperCase(Locale.UK);
@@ -78,26 +80,26 @@ public class SentenceCase implements Transformer {
             nodeText = forwardslashAbbreviationMatcher.group(2);
         }
         SentenceState sentenceState = new SentenceState();
-        nodeText = Transformer.mapToken(TOKENISATION_PATTERN, nodeText,
+        nodeText = mapToken(TOKENISATION_PATTERN, nodeText,
                 (token, matcher) ->
                         mapWord(token, sentenceState), true);
         if (!start.isEmpty()) {
             nodeText = start + nodeText;
         }
-        nodeText = Transformer.mapToken(NEWLINE, nodeText, (token, matcher) -> " ", true);
-        nodeText = Transformer.mapToken(ABBREVIATIONS, nodeText, (token, matcher) ->
+        nodeText = mapToken(NEWLINE, nodeText, (token, matcher) -> " ", true);
+        nodeText = mapToken(ABBREVIATIONS, nodeText, (token, matcher) ->
                 matcher.group(1).toUpperCase(Locale.UK) + ".", true);
-        nodeText = Transformer.mapToken(MULTIPLE_SPACES, nodeText, (token, matcher) -> " ", true);
-        nodeText = Transformer.mapToken(MIXED_ALPHANUMERIC, nodeText, (token, matcher) ->
+        nodeText = mapToken(MULTIPLE_SPACES, nodeText, (token, matcher) -> " ", true);
+        nodeText = mapToken(MIXED_ALPHANUMERIC, nodeText, (token, matcher) ->
                 matcher.group(1).toUpperCase(Locale.UK), true);
-        nodeText = Transformer.mapToken(MATCHES_ENTITY, nodeText, (token, matcher) ->
+        nodeText = mapToken(MATCHES_ENTITY, nodeText, (token, matcher) ->
                 ENTITIES.contains(token.toUpperCase(Locale.UK))
                         ? token.toUpperCase(Locale.UK)
                         : token, true);
-        return  nodeText.trim();
+        return nodeText.trim();
     }
 
-    private static String mapWord(String token, SentenceState sentenceState) {
+    private String mapWord(String token, SentenceState sentenceState) {
         Possessiveness possessive = isPossessive(token);
         if (possessive.possessive) {
             sentenceState.setEndOfSentence(possessive.endOfSentence);
@@ -106,7 +108,7 @@ public class SentenceCase implements Transformer {
         }
         token = token.toLowerCase(Locale.UK);
         if (sentenceState.isEndOfSentence()) {
-            token = Transformer.mapToken(FIRST_LETTER,
+            token = mapToken(FIRST_LETTER,
                     token, (t, m) -> t.toUpperCase(Locale.UK), false);
             sentenceState.setMatchingBracket(token.matches("^[\\[(].*$"));
         }
@@ -160,6 +162,7 @@ public class SentenceCase implements Transformer {
     }
 
     private static class SentenceState {
+
         private boolean endOfSentence = true;
         private boolean matchingBracket = false;
 
@@ -181,17 +184,19 @@ public class SentenceCase implements Transformer {
     }
 
     static class Possessiveness {
+
         boolean possessive;
         boolean openingBrackets;
         boolean endOfSentence;
-
-        Possessiveness() {
-        }
 
         Possessiveness(boolean possessive, boolean openingBrackets, boolean endOfSentence) {
             this.possessive = possessive;
             this.openingBrackets = openingBrackets;
             this.endOfSentence = endOfSentence;
+        }
+
+        Possessiveness() {
+            this(false, false, false);
         }
 
         @Override
@@ -235,6 +240,7 @@ public class SentenceCase implements Transformer {
             return result.toString();
         }
     }
+
     static Possessiveness isPossessive(String token) {
         Possessiveness result = new Possessiveness();
         if (StringUtils.isEmpty(token)) {

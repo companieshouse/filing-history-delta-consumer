@@ -10,7 +10,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class LowerCase implements Transformer {
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+
+    private final ObjectMapper objectMapper;
+
+    public LowerCase(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
+
     @Override
     public void transform(JsonNode source,
             ObjectNode outputNode,
@@ -20,11 +26,11 @@ public class LowerCase implements Transformer {
 
         String finalField = getFinalField(objectMapper, field, outputNode);
 
-        outputNode.put(finalField, "TODO: Lower case: " + arguments.getFirst());
+        outputNode.put(finalField, transformLowerCase(arguments.getFirst()));
     }
 
-     String transformLowerCase(String nodeText){
-        if(StringUtils.isBlank(nodeText)){
+    String transformLowerCase(String nodeText) {
+        if (StringUtils.isBlank(nodeText)) {
             return nodeText;
         }
         return nodeText.toLowerCase();

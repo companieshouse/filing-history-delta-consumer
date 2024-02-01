@@ -17,7 +17,7 @@ public interface Transformer {
             List<String> arguments,
             Map<String, String> contextValue);
 
-    default String getFinalField(ObjectMapper objectMapper, String field, ObjectNode outputNode){
+    default String getFinalField(ObjectMapper objectMapper, String field, ObjectNode outputNode) {
         String[] fields = field.split("\\."); // len = 2
         for (int i = 0; i < fields.length - 1; i++) {
             outputNode.putIfAbsent(fields[i], objectMapper.createObjectNode());
@@ -27,7 +27,7 @@ public interface Transformer {
         return fields[fields.length - 1];
     }
 
-    static String mapToken(Pattern pattern,
+    default String mapToken(Pattern pattern,
             String word,
             BiFunction<String, Matcher, String> matchRemappingFunction,
             boolean global) {
@@ -40,7 +40,7 @@ public interface Transformer {
             start = matcher.start();
             end = matcher.end();
             if (start > 0) {
-                result.append(word.substring(prevEnd, start));
+                result.append(word, prevEnd, start);
             }
             result.append(matchRemappingFunction.apply(
                     word.substring(start, end), matcher));

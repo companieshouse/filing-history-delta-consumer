@@ -1,5 +1,6 @@
 package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -8,10 +9,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.TransformerFactory;
 
 class TransformerServiceTest {
 
-    private static final String tm01RequestBody = """
+    private static final String TM01_REQUEST_BODY = """
             {
                 "_id" : "mongo_id",
                 "company_number" : "12345678",
@@ -26,8 +28,7 @@ class TransformerServiceTest {
                 "_document_id" : "000AAAAAAAA1234"
             }""";
 
-    // TODO The dates might not have the correct structure
-    private static final String aaRequestBody = """
+    private static final String AA_REQUEST_BODY = """
             {
                 "_id" : "MTUxMjg0MTM5YWRpcXprY3g",
                 "company_number" : "14388379",
@@ -43,18 +44,52 @@ class TransformerServiceTest {
                 }
             }""";
 
+    private static final String REQUEST_WITH_DEFINE_EXEC = """
+            {
+                "_id" : "MzA0MTc3MzgzMmFkaXF6a2N4",
+                "_entity_id" : "3041773832",
+                "data" : {
+                    "type" : "SH01",
+                    "description" : "29/07/11 Statement of Capital gbp 13337"
+                }
+            }
+            """;
+
+    private static final String REQUEST_WITH_TWO_LIKE_CAPTURE_GROUPS = """
+            {
+                "_id" : "MzA0MTc3MzgzMmFkaXF6a2N4",
+                "_entity_id" : "3041773832",
+                "data" : {
+                    "type" : "AA01",
+                    "description" : "PREVSHO FROM 29/07/11 TO 1/07/12"
+                }
+            }
+            """;
+
+    private static final String MATCH_DEFAULT_RULE = """
+            {
+                "_id" : "MzA0MTc3MzgzMmFkaXF6a2N4",
+                "_entity_id" : "3041773832",
+                "data" : {
+                    "type" : "DEFAULT",
+                    "description" : "Some unrecognised string"
+                }
+            }
+            """;
+
+    private final TransformerFactory transformerFactory = TransformerTestingUtils.getTransformerFactory();
     private TransformerService service;
 
     @BeforeEach
     void setUp() throws IOException {
-        service = new TransformerConfig().transformRules("transform_rules.yml");
+        service = new TransformerConfig().transformRules("transform_rules.yml", transformerFactory);
     }
 
     @Test
     void transformTM01() throws JsonProcessingException {
         // given
         ObjectMapper mapper = new ObjectMapper();
-        JsonNode delta = mapper.readTree(tm01RequestBody);
+        JsonNode delta = mapper.readTree(TM01_REQUEST_BODY);
 
         // when
         JsonNode requestBody = service.transform(delta);
@@ -67,12 +102,59 @@ class TransformerServiceTest {
     void transformAA() throws JsonProcessingException {
         // given
         ObjectMapper mapper = new ObjectMapper();
-        JsonNode delta = mapper.readTree(aaRequestBody);
+        JsonNode delta = mapper.readTree(AA_REQUEST_BODY);
 
         // when
         JsonNode requestBody = service.transform(delta);
 
         // then
         assertNotNull(requestBody);
+
+        assertEquals("AA", requestBody.at(TransformerUtils.toJsonPtr("data/type")).textValue());
+        assertEquals("accounts-with-accounts-type-small-group",
+                requestBody.at(TransformerUtils.toJsonPtr("data/description")).textValue());
+        assertEquals("accounts", requestBody.at(TransformerUtils.toJsonPtr("data/category")).textValue());
+    }
+
+    @Test
+    void transformWithDefineAndExec() throws JsonProcessingException {
+        // given
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode delta = mapper.readTree(REQUEST_WITH_DEFINE_EXEC);
+
+        // when
+        JsonNode requestBody = service.transform(delta);
+
+        // then
+        assertNotNull(requestBody);
+    }
+
+    @Test
+    void transformAA01() throws JsonProcessingException {
+        // given
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode delta = mapper.readTree(REQUEST_WITH_TWO_LIKE_CAPTURE_GROUPS);
+
+        // when
+        JsonNode requestBody = service.transform(delta);
+
+        // then
+        assertNotNull(requestBody);
+        System.out.println(requestBody);
+    }
+
+
+    @Test
+    void transformUsingDefaultRule() throws JsonProcessingException {
+        // given
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode delta = mapper.readTree(MATCH_DEFAULT_RULE);
+
+        // when
+        JsonNode requestBody = service.transform(delta);
+
+        // then
+        assertNotNull(requestBody);
+        System.out.println(requestBody);
     }
 }
