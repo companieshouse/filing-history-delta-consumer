@@ -40,7 +40,7 @@ class UpsertDeltaServiceTest {
         when(deserialiser.deserialiseFilingHistoryDelta(any())).thenReturn(delta);
         when(mapper.processDelta(any(), anyString())).thenReturn(apiRequest);
 
-        final String jsonString = IOUtils.resourceToString("/tm01_delta.json", StandardCharsets.UTF_8);
+        final String jsonString = IOUtils.resourceToString("/TM01_delta.json", StandardCharsets.UTF_8);
 
         ChsDelta chsDelta = new ChsDelta(jsonString, 0, "contextId", false);
 
