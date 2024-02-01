@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.regex.Pattern;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,28 +25,45 @@ class ProcessCapitalTest {
     private static final Pattern ALT_EXTRACT = Pattern.compile(
             "(?i:(?<capitalDate>\\d+\\D\\d+\\D\\d+) (?:(?<capitalDesc>STATEMENT OF CAPITAL)|(?<capitalAltDesc>TREASURY CAPITAL)) (?<capitalCurrency>\\w+) (?<capitalFigure>\\d+\\.\\d+|\\.\\d+|\\d+))");
     public static final String DATA_DESCRIPTION_FIELD_PATH = "data.description";
-    public static final String FIGURE = "1,000";
     private static final String ALT_DESCRIPTION = "capital-cancellation-treasury-shares-with-date-treasury-capital-figure";
     private static final ObjectMapper objectMapper = TransformerTestingUtils.getMapper();
+    public static final String SOURCE_DESCRIPTION = """
+            Second filed SH02 - 03/02/16\s
+            Statement of Capital gbp 1000 03/02/16\s
+            Statement of Capital eur 2000 03/02/16\s
+            Statement of Capital usd 3000""";
+    public static final String ALT_SOURCE_DESCRIPTION = """
+            13/05/14 Statement of Capital USD 1000\s
+            13/05/14 Treasury Capital GBP 50000\s
+            13/05/14 Statement of Capital HKD 3333\s
+            13/05/14 Statement of Capital JPY 221""";
 
+    private ProcessCapital processCapital;
     @Mock
-    private FormatNumber formatNumber;
-
-    private ProcessCapital processCapital = new ProcessCapital(objectMapper, formatNumber);
+    private CapitalCaptor capitalCaptor;
+    @Mock
+    private CapitalCaptures capitalCaptures;
+    @Mock
+    private JsonNode capture;
 
     @BeforeEach
     void setup() {
-        processCapital = new ProcessCapital(objectMapper, formatNumber);
+        processCapital = new ProcessCapital(objectMapper, capitalCaptor);
     }
 
     @Test
     void shouldTransformCaptureGroupsIntoCapitalNode() {
         // given
-        when(formatNumber.apply(any())).thenReturn(FIGURE);
+        ArrayNode captures = objectMapper.createArrayNode()
+                .add(capture);
+
+        when(capitalCaptor.captureCapital(any(), any(), any())).thenReturn(capitalCaptures);
+        when(capitalCaptures.captures()).thenReturn(captures);
+        when(capitalCaptures.altCaptures()).thenReturn(objectMapper.createArrayNode());
 
         JsonNode source = buildSourceNode();
 
-        JsonNode expected = buildExpectedNode();
+        JsonNode expected = buildExpectedNode(captures);
 
         // when
         ObjectNode actual = source.deepCopy();
@@ -53,19 +71,24 @@ class ProcessCapitalTest {
 
         // then
         assertEquals(expected, actual);
-        verify(formatNumber).apply("1000");
-        verify(formatNumber).apply("2000");
-        verify(formatNumber).apply("3000");
+        verify(capitalCaptor).captureCapital(EXTRACT, null, SOURCE_DESCRIPTION);
     }
 
     @Test
-    void shouldTransformAltCaptureGroupsIntoAltCapitalNode() {
+    void shouldTransformBothCaptureAndAltCaptureGroupsIntoCapitalAndAltCapitalNodes() {
         // given
-        when(formatNumber.apply(any())).thenReturn(FIGURE);
+        ArrayNode altCaptures = objectMapper.createArrayNode()
+                .add(capture);
+        ArrayNode captures = objectMapper.createArrayNode()
+                .add(capture);
+
+        when(capitalCaptor.captureCapital(any(), any(), any())).thenReturn(capitalCaptures);
+        when(capitalCaptures.captures()).thenReturn(captures);
+        when(capitalCaptures.altCaptures()).thenReturn(altCaptures);
 
         JsonNode source = buildSourceAltNode();
 
-        JsonNode expected = buildExpectedAltNode();
+        JsonNode expected = buildExpectedAltNode(altCaptures, captures);
 
         // when
         ObjectNode actual = source.deepCopy();
@@ -73,10 +96,7 @@ class ProcessCapitalTest {
 
         // then
         assertEquals(expected, actual);
-        verify(formatNumber).apply("1000");
-        verify(formatNumber).apply("50000");
-        verify(formatNumber).apply("3333");
-        verify(formatNumber).apply("221");
+        verify(capitalCaptor).captureCapital(ALT_EXTRACT, ALT_DESCRIPTION, ALT_SOURCE_DESCRIPTION);
     }
 
     private static JsonNode buildSourceNode() {
@@ -88,10 +108,7 @@ class ProcessCapitalTest {
                 .putObject("data")
                 .put("type", "RP04SH02")
                 .put("description",
-                        """
-                                Second filed SH02 - 03/02/16\s
-                                Statement of Capital gbp 1000 03/02/16\s
-                                Statement of Capital eur 2000 03/02/16 Statement of Capital usd 3000""");
+                        SOURCE_DESCRIPTION);
 
         return topLevelNode;
     }
@@ -105,50 +122,29 @@ class ProcessCapitalTest {
                 .putObject("data")
                 .put("type", "SH05")
                 .put("description",
-                        """
-                                13/05/14 Statement of Capital USD 1000\s
-                                13/05/14 Treasury Capital GBP 50000\s
-                                13/05/14 Statement of Capital HKD 3333\s
-                                13/05/14 Statement of Capital JPY 221""");
+                        ALT_SOURCE_DESCRIPTION);
 
         return topLevelNode;
     }
 
-    private static JsonNode buildExpectedNode() {
+    private JsonNode buildExpectedNode(ArrayNode captures) {
         final ObjectNode topLevelNode = objectMapper.createObjectNode()
                 .put("_entity_id", "3063732185")
                 .put("_barcode", "XAITVXAX");
-
-        ObjectNode capital1 = objectMapper.createObjectNode()
-                .put("currency", "GBP")
-                .put("figure", FIGURE);
-
-        ObjectNode capital2 = objectMapper.createObjectNode()
-                .put("currency", "EUR")
-                .put("figure", FIGURE);
-
-        ObjectNode capital3 = objectMapper.createObjectNode()
-                .put("currency", "USD")
-                .put("figure", FIGURE);
 
         topLevelNode
                 .putObject("data")
                 .put("type", "RP04SH02")
                 .put("description", // this gets set to its enum value when applying the set rules
-                        """
-                                Second filed SH02 - 03/02/16\s
-                                Statement of Capital gbp 1000 03/02/16\s
-                                Statement of Capital eur 2000 03/02/16 Statement of Capital usd 3000""")
+                        SOURCE_DESCRIPTION)
                 .putObject("description_values")
                 .putArray("capital")
-                .add(capital1)
-                .add(capital2)
-                .add(capital3);
+                .addAll(captures);
 
         return topLevelNode;
     }
 
-    private static JsonNode buildExpectedAltNode() {
+    private static JsonNode buildExpectedAltNode(ArrayNode altCaptures, ArrayNode captures) {
         final ObjectNode topLevelNode = objectMapper.createObjectNode()
                 .put("_entity_id", "3081501305")
                 .put("_barcode", "13CMU31L");
@@ -157,42 +153,16 @@ class ProcessCapitalTest {
                 .putObject("data")
                 .put("type", "SH05")
                 .put("description", // this gets set to its enum value when applying the set rules
-                        """
-                                13/05/14 Statement of Capital USD 1000\s
-                                13/05/14 Treasury Capital GBP 50000\s
-                                13/05/14 Statement of Capital HKD 3333\s
-                                13/05/14 Statement of Capital JPY 221""");
-
-        ObjectNode altCapital = objectMapper.createObjectNode()
-                .put("currency", "GBP")
-                // has a date because of 'treasury' within the description
-                // has nothing to do with if it's an alt_capital or not
-                .put("date", "13/05/14")
-                .put("description", "capital-cancellation-treasury-shares-with-date-treasury-capital-figure")
-                .put("figure", FIGURE);
-
-        ObjectNode capital1 = objectMapper.createObjectNode()
-                .put("currency", "USD")
-                .put("figure", FIGURE);
-
-        ObjectNode capital2 = objectMapper.createObjectNode()
-                .put("currency", "HKD")
-                .put("figure", FIGURE);
-
-        ObjectNode capital3 = objectMapper.createObjectNode()
-                .put("currency", "JPY")
-                .put("figure", FIGURE);
+                        ALT_SOURCE_DESCRIPTION);
 
         ObjectNode descriptionValues = ((ObjectNode) topLevelNode.at("/data")).putObject("description_values");
 
         descriptionValues
                 .putArray("alt_capital")
-                .add(altCapital);
+                .addAll(altCaptures);
         descriptionValues
                 .putArray("capital")
-                .add(capital1)
-                .add(capital2)
-                .add(capital3);
+                .addAll(captures);
 
         return topLevelNode;
     }
