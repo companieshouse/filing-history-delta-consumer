@@ -35,12 +35,8 @@
     <!--explicit versions of transitive dependencies with vulnerabilities in previous versions-->
     <logback.version>1.4.14</logback.version>
     <jackson-databind.version>2.16.1</jackson-databind.version>
-    <grpc.version>1.60.1</grpc.version>
-    <jetty-xml.version>12.0.5</jetty-xml.version>
-    <jetty-client.version>12.0.5</jetty-client.version>
-    <http2-server.version>11.0.19</http2-server.version>
-    <jetty-webapp.version>11.0.19</jetty-webapp.version>
     <jayway-jsonpath.version>2.9.0</jayway-jsonpath.version>
+
     <!--sonar configuration-->
     <sonar.coverage.jacoco.xmlReportPaths>
       ${project.build.directory}/site/jacoco/jacoco.xml
@@ -99,36 +95,6 @@
       <artifactId>jackson-dataformat-yaml</artifactId>
       <version>${jackson-databind.version}</version>
     </dependency>
-    <dependency>
-      <groupId>io.grpc</groupId>
-      <artifactId>grpc-api</artifactId>
-      <version>${grpc.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>io.grpc</groupId>
-      <artifactId>grpc-context</artifactId>
-      <version>${grpc.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-xml</artifactId>
-      <version>${jetty-xml.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-client</artifactId>
-      <version>${jetty-client.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jetty.http2</groupId>
-      <artifactId>http2-server</artifactId>
-      <version>${http2-server.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-webapp</artifactId>
-      <version>${jetty-webapp.version}</version>
-    </dependency>
     <!--end transitive dependencies-->
 
     <dependency>
@@ -170,6 +136,14 @@
           <groupId>commons-collections</groupId>
           <artifactId>commons-collections</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>io.grpc</groupId>
+          <artifactId>grpc-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>io.grpc</groupId>
+          <artifactId>grpc-context</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
@@ -185,6 +159,22 @@
         <exclusion>
           <groupId>commons-fileupload</groupId>
           <artifactId>commons-fileupload</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.eclipse.jetty</groupId>
+          <artifactId>jetty-xml</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.eclipse.jetty</groupId>
+          <artifactId>jetty-client</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.eclipse.jetty.http2</groupId>
+          <artifactId>http2-server</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.eclipse.jetty</groupId>
+          <artifactId>jetty-webapp</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
