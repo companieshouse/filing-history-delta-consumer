@@ -1,7 +1,7 @@
 package uk.gov.companieshouse.filinghistory.consumer.delta;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,11 +39,10 @@ class ResponseHandlerTest {
     })
     void shouldHandleApiErrorResponseByThrowingRetryableExceptionWhen5xxStatusCode(final int httpStatusCode) {
         // given
-        doReturn(httpStatusCode)
-                .when(apiErrorResponseException).getStatusCode();
+        when(apiErrorResponseException.getStatusCode()).thenReturn(httpStatusCode);
 
         // when
-        Executable executable = () -> responseHandler.handle("Error message", apiErrorResponseException);
+        Executable executable = () -> responseHandler.handle(apiErrorResponseException);
 
         // then
         assertThrows(RetryableException.class, executable);
@@ -60,11 +59,10 @@ class ResponseHandlerTest {
     })
     void shouldHandleApiErrorResponseByThrowingNonRetryableExceptionWhenNot5xxStatusCode(final int httpStatusCode) {
         // given
-        doReturn(httpStatusCode)
-                .when(apiErrorResponseException).getStatusCode();
+        when(apiErrorResponseException.getStatusCode()).thenReturn(httpStatusCode);
 
         // when
-        Executable executable = () -> responseHandler.handle("Error message", apiErrorResponseException);
+        Executable executable = () -> responseHandler.handle(apiErrorResponseException);
 
         // then
         assertThrows(NonRetryableException.class, executable);
@@ -75,7 +73,7 @@ class ResponseHandlerTest {
         // given
 
         // when
-        Executable executable = () -> responseHandler.handle("Error message", uriValidationException);
+        Executable executable = () -> responseHandler.handle(uriValidationException);
 
         // then
         assertThrows(NonRetryableException.class, executable);
@@ -84,11 +82,10 @@ class ResponseHandlerTest {
     @Test
     void shouldHandleIllegalArgumentExceptionByThrowingRetryableExceptionWhenCauseIsNotNull() {
         // given
-        doReturn(throwable)
-                .when(illegalArgumentException).getCause();
+        when(illegalArgumentException.getCause()).thenReturn(throwable);
 
         // when
-        Executable executable = () -> responseHandler.handle("Error message", illegalArgumentException);
+        Executable executable = () -> responseHandler.handle(illegalArgumentException);
 
         // then
         assertThrows(RetryableException.class, executable);
@@ -97,11 +94,10 @@ class ResponseHandlerTest {
     @Test
     void shouldHandleIllegalArgumentExceptionByThrowingRetryableExceptionWhenCauseIsNull() {
         // given
-        doReturn(null)
-                .when(illegalArgumentException).getCause();
+        when(illegalArgumentException.getCause()).thenReturn(null);
 
         // when
-        Executable executable = () -> responseHandler.handle("Error message", illegalArgumentException);
+        Executable executable = () -> responseHandler.handle(illegalArgumentException);
 
         // then
         assertThrows(RetryableException.class, executable);

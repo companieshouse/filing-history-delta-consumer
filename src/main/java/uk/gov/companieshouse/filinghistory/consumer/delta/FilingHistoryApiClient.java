@@ -12,8 +12,6 @@ import uk.gov.companieshouse.filinghistory.consumer.logging.DataMapHolder;
 public class FilingHistoryApiClient {
 
     private static final String PUT_REQUEST_URI = "/filing-history-data-api/company/%s/filing-history/%s/internal";
-    private static final String FAILED_MSG = "Failed to upsert filing history for resource URI %s";
-    private static final String ERROR_MSG = "HTTP response code %s when upserting filing history for resource URI %s";
 
     private final Supplier<InternalApiClient> internalApiClientFactory;
     private final ResponseHandler responseHandler;
@@ -36,11 +34,11 @@ public class FilingHistoryApiClient {
                     .putFilingHistory(formattedUri, requestBody)
                     .execute();
         } catch (ApiErrorResponseException ex) {
-            responseHandler.handle(ERROR_MSG.formatted(ex.getStatusCode(), formattedUri), ex);
+            responseHandler.handle(ex);
         } catch (URIValidationException ex) {
-            responseHandler.handle(FAILED_MSG.formatted(formattedUri), ex);
+            responseHandler.handle(ex);
         } catch (IllegalArgumentException ex) {
-            responseHandler.handle(FAILED_MSG.formatted(formattedUri), ex);
+            responseHandler.handle(ex);
         }
     }
 }
