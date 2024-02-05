@@ -12,7 +12,7 @@ public record WhenProperties(@JsonProperty("eq") Map<String, String> eq,
                              @JsonProperty("like") Map<String, String> like) {
 
     public When compile() {
-        Objects.requireNonNull(eq, "Missing eq field");
+        Objects.requireNonNull(eq, "Missing eq fieldKey");
 
         Entry<String, String> eqEntry = eq.entrySet().stream()
                 .filter(e -> (e.getKey().equals("data.type") || e.getKey().equals("type"))).findFirst()

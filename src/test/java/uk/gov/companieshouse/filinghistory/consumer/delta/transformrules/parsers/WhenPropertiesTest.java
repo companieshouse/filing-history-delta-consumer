@@ -129,6 +129,6 @@ class WhenPropertiesTest {
 
         // then
         Exception exception = assertThrows(NullPointerException.class, executable);
-        assertEquals("Missing eq field", exception.getMessage());
+        assertEquals("Missing eq fieldKey", exception.getMessage());
     }
 }

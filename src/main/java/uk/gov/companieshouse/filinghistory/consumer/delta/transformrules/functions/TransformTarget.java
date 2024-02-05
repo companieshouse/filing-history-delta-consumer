@@ -2,6 +2,6 @@ package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functi
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-public record TransformTarget(String field, ObjectNode objectNode) {
+public record TransformTarget(String fieldKey, String fieldValue, ObjectNode objectNode) {
 
 }

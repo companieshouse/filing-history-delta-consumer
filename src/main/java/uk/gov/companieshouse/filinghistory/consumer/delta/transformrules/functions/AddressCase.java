@@ -29,7 +29,7 @@ public class AddressCase extends AbstractTransformer {
     protected void doTransform(JsonNode source, TransformTarget target, List<String> arguments,
             Map<String, String> context) {
         String targetValue = getFieldToTransform(source, arguments, context);
-        target.objectNode().put(target.field(), transformAddressCase(targetValue));
+        target.objectNode().put(target.fieldKey(), transformAddressCase(targetValue));
     }
 
     String transformAddressCase(String nodeText) {

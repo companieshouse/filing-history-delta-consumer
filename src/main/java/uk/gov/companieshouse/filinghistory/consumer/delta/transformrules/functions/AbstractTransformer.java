@@ -23,21 +23,24 @@ public abstract class AbstractTransformer implements Transformer {
     @Override
     public void transform(JsonNode source, ObjectNode outputNode, String field, List<String> arguments,
             Map<String, String> context) {
-        TransformTarget transformTarget = getTransformTarget(field, outputNode);
+        String[] fields = field.split("\\."); // len = 2
+        String finalField = fields[fields.length - 1];
+        String fieldValue = getFieldToTransform(source, arguments, context);
+        ObjectNode traversed = traverseOutputNode(fields, outputNode);
+
+        TransformTarget transformTarget = new TransformTarget(finalField, fieldValue, traversed);
         doTransform(source, transformTarget, arguments, context);
     }
 
     protected abstract void doTransform(JsonNode source, TransformTarget target, List<String> arguments,
             Map<String, String> context);
 
-    protected TransformTarget getTransformTarget(String field, ObjectNode outputNode) {
-        String[] fields = field.split("\\."); // len = 2
+    protected ObjectNode traverseOutputNode(String[] fields, ObjectNode outputNode) {
         for (int i = 0; i < fields.length - 1; i++) {
             outputNode.putIfAbsent(fields[i], objectMapper.createObjectNode());
             outputNode = (ObjectNode) outputNode.at("/" + fields[i]);
         }
-
-        return new TransformTarget(fields[fields.length - 1], outputNode);
+        return outputNode;
     }
 
     protected String getFieldToTransform(JsonNode source, List<String> arguments, Map<String, String> context) {
@@ -51,7 +54,7 @@ public abstract class AbstractTransformer implements Transformer {
         } else if (!(sourceValue instanceof MissingNode) && sourceValue != null) {
             fieldToTransform = sourceValue.textValue();
         } else {
-            throw new IllegalArgumentException("Failed to find capture or source field to transform");
+            fieldToTransform = sourceFieldOrCapture; // is a substitution
         }
         return fieldToTransform;
     }

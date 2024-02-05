@@ -30,9 +30,9 @@ public class ReplaceProperty extends AbstractTransformer {
             Map<String, String> context) {
 
         if (arguments.size() == 1) {
-            target.objectNode().put(target.field(), getReplacementValue(arguments, context));
+            target.objectNode().put(target.fieldKey(), getReplacementValue(arguments, context));
         } else {
-            ArrayNode leafNode = target.objectNode().putArray(target.field());
+            ArrayNode leafNode = target.objectNode().putArray(target.fieldKey());
             arguments.forEach(leafNode::add);
         }
     }

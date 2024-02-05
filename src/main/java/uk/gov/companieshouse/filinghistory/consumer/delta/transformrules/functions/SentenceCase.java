@@ -111,7 +111,7 @@ public class SentenceCase extends AbstractTransformer {
     protected void doTransform(JsonNode source, TransformTarget target, List<String> arguments,
             Map<String, String> context) {
         String targetValue = getFieldToTransform(source, arguments, context);
-        target.objectNode().put(target.field(), transformSentenceCase(targetValue));
+        target.objectNode().put(target.fieldKey(), transformSentenceCase(targetValue));
     }
 
     String transformSentenceCase(String nodeText) {

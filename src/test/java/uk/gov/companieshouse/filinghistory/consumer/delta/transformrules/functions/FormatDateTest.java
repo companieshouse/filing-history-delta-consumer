@@ -1,7 +1,6 @@
 package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -11,7 +10,6 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -68,20 +66,6 @@ class FormatDateTest {
 
         // then
         assertEquals(expected, actual);
-    }
-
-    @Test
-    void shouldThrowExceptionWhenFieldToTransformIsNeitherCaptureValueNorFieldValue() {
-        // given
-        ObjectNode source = MAPPER.createObjectNode();
-        ObjectNode actual = source.deepCopy();
-
-        // when
-        Executable executable = () -> formatDate.transform(source, actual, "data.description",
-                List.of("original_description"), Map.of());
-
-        // then
-        assertThrows(IllegalArgumentException.class, executable);
     }
 
     @ParameterizedTest(name = "Map [{0}] to [{1}]")
