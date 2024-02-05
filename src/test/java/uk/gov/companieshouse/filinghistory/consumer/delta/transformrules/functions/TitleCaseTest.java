@@ -1,17 +1,23 @@
 package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.TransformerTestingUtils;
 
-class TitleCaseTransformerTest {
+class TitleCaseTest {
 
     private static final ObjectMapper MAPPER = TransformerTestingUtils.getMapper();
 
@@ -22,10 +28,68 @@ class TitleCaseTransformerTest {
         titleCase = new TitleCase(MAPPER);
     }
 
+    @Test
+    void shouldTransformCaptureGroupValueToTitleCaseAndSetOnOutputNode() {
+        // given
+
+        ObjectNode source = MAPPER.createObjectNode();
+        ObjectNode actual = source.deepCopy();
+
+        ObjectNode expected = MAPPER.createObjectNode();
+        expected
+                .putObject("data")
+                .putObject("description_values")
+                .put("old_jurisdiction", "England Scotland Wales");
+        // when
+        titleCase.transform(source, actual, "data.description_values.old_jurisdiction", List.of("oldJurisdiction"),
+                Map.of("oldJurisdiction", "england SCOTLAND wales"));
+
+        // then
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldTransformSourceNodeValueToTitleCaseAndSetOnOutputNode() {
+        // given
+
+        ObjectNode source = MAPPER.createObjectNode();
+        source.putObject("original_values")
+                .put("psc_name", "significant person is john tester");
+        ObjectNode actual = source.deepCopy();
+
+        ObjectNode expected = MAPPER.createObjectNode();
+        expected.putObject("original_values")
+                .put("psc_name", "significant person is john tester");
+        expected
+                .putObject("data")
+                .putObject("description_values")
+                .put("psc_name", "Significant Person is John Tester");
+        // when
+        titleCase.transform(source, actual, "data.description_values.psc_name", List.of("original_values.psc_name"),
+                Map.of());
+
+        // then
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenFieldToTransformIsNeitherCaptureValueNorFieldValue() {
+        // given
+        ObjectNode source = MAPPER.createObjectNode();
+        ObjectNode actual = source.deepCopy();
+
+        // when
+        Executable executable = () -> titleCase.transform(source, actual, "data.description",
+                List.of("original_description"), Map.of());
+
+        // then
+        assertThrows(IllegalArgumentException.class, executable);
+    }
+
     @ParameterizedTest(name = "Map [{0}] to [{1}]")
     @MethodSource("titleCaseFormatting")
     @DisplayName("Format text as an title case")
-    void testTransformSpecificMethodWithinTitleCaseTransformer(String input, String expected){
+    void shouldTransformInputStringToTitleCase(String input, String expected) {
         //given
 
         //when
@@ -76,9 +140,11 @@ class TitleCaseTransformerTest {
                 // stop words surrounded with punctuation must not be capitalised
                 Arguments.of("the word is s.ci.d.c.b.a.", "The Word is S.Ci.D.C.B.A."),
 //                Arguments.of("b.a.!b.\"sc.m?.a.?m.sc.", "B.A.!B.\"SC.M?.A.?M.SC."),
-                Arguments.of("harrow-on-the-hill", "Harrow-on-the-Hill"), // delimited stop words must not be capitalised
+                Arguments.of("harrow-on-the-hill", "Harrow-on-the-Hill"),
+                // delimited stop words must not be capitalised
                 Arguments.of("the presenter is from harrow-on-the-hill", "The Presenter is from Harrow-on-the-Hill"),
-                Arguments.of("the presenter is from \"harrow\"-\"on-the\"-\"hill!!!", "The Presenter is from \"Harrow\"-\"on-the\"-\"Hill!!!"),
+                Arguments.of("the presenter is from \"harrow\"-\"on-the\"-\"hill!!!",
+                        "The Presenter is from \"Harrow\"-\"on-the\"-\"Hill!!!"),
                 Arguments.of("don't tell me.", "Don't Tell Me."),
                 Arguments.of("c,om,mas", "C,Om,Mas"),
                 Arguments.of("the trees, the branches and the leaves", "The Trees, the Branches and the Leaves"),

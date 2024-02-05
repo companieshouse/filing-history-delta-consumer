@@ -3,7 +3,6 @@ package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functi
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import jakarta.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -38,7 +37,6 @@ public class ReplaceProperty extends AbstractTransformer {
         }
     }
 
-    @Nonnull
     private String getReplacementValue(List<String> arguments, Map<String, String> context) {
         String replacementValue = arguments.getFirst();
         Matcher matcher = SUBSTITUTION_PATTERN.matcher(replacementValue);
@@ -46,7 +44,7 @@ public class ReplaceProperty extends AbstractTransformer {
             if ("lc".equals(matcher.group(FUNCTION))) {
                 String placeHolder = matcher.group(PLACE_HOLDER);
                 replacementValue = replacementValue.replace(matcher.group(SUBSTITUTION),
-                        lowerCase.transformLowerCase(context.get(placeHolder).toLowerCase()));
+                        lowerCase.transformLowerCase(context.get(placeHolder)));
             } else {
                 throw new IllegalArgumentException("Unexpected function type of %s".formatted(matcher.group(FUNCTION)));
             }

@@ -1,7 +1,5 @@
 package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions;
 
-import static uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.TransformerUtils.toJsonPtr;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Arrays;
@@ -18,6 +16,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class SentenceCase extends AbstractTransformer {
 
+    static final Possessiveness NON_POSSESSIVE = new Possessiveness();
     private static final Set<String> ENTITIES = new HashSet<>(Arrays.asList("ARD", "NI", "SE",
             "GB", "SC", "UK", "LTD", "L.T.D", "PLC", "P.L.C", "UNLTD", "CIC", "C.I.C", "LLP",
             "L.P", "LP", "EEIG", "OEIC", "ICVC", "AEIE", "C.B.C", "C.C.C", "CBC", "CBCN", "CBP",
@@ -32,7 +31,6 @@ public class SentenceCase extends AbstractTransformer {
     private static final Pattern MIXED_ALPHANUMERIC = Pattern.compile("(\\w+\\d+\\w*|\\d+\\w+)");
     private static final Pattern MATCHES_ENTITY = Pattern.compile(
             "(\\b(?i:" + String.join("|", ENTITIES) + ")\\b)");
-
     //    private static final Pattern MATCHES_ENDING = Pattern.compile("(\\b(?i:' . join('|',reverse sort @endings) . ')\\b)")
     private static final Pattern OPENING_BRACKET = Pattern.compile("[(\\[]");
     private static final Pattern SENTENCE_TERMINATOR = Pattern.compile("[.!?]");
@@ -46,18 +44,74 @@ public class SentenceCase extends AbstractTransformer {
                     "(?:[A-Z][.])(?:[A-Z][.])+|",
                     "(^[^a-zA-Z]*([a-z][.])+))[^a-z]*\\s"),
             Pattern.CASE_INSENSITIVE);
-    static final Possessiveness NON_POSSESSIVE = new Possessiveness();
 
     public SentenceCase(ObjectMapper objectMapper) {
         super(objectMapper);
     }
 
+    private static SentenceTerminationState isEndOfSentence(String token) {
+        if (StringUtils.isEmpty(token)) {
+            return SentenceTerminationState.NOT_TERMINATED;
+        }
+
+        boolean singleLetter = false;
+        boolean terminator = false;
+        boolean endSpace = false;
+        boolean closingBracket = false;
+
+        String current;
+        for (int i = 0; i < token.length(); i++) {
+            current = Character.toString(token.charAt(i));
+            if (FIRST_LETTER.matcher(current).matches()) {
+                singleLetter = true;
+                terminator = false;
+                endSpace = false;
+                closingBracket = false;
+            } else if (SENTENCE_TERMINATOR.matcher(current).matches()) {
+                terminator = true;
+                closingBracket = false;
+            } else if (CLOSING_BRACKET.matcher(current).matches()) {
+                closingBracket = true;
+            } else if (WHITESPACE.matcher(current).matches() && i == token.length() - 1) {
+                endSpace = true;
+            }
+        }
+        if (singleLetter && terminator && closingBracket && endSpace) {
+            return SentenceTerminationState.TERMINATED_WITH_BRACKET;
+        } else if (singleLetter && terminator && endSpace) {
+            return SentenceTerminationState.TERMINATED;
+        } else {
+            return SentenceTerminationState.NOT_TERMINATED;
+        }
+    }
+
+    private static Possessiveness isPossessive(String token) {
+        Possessiveness result = new Possessiveness();
+        if (StringUtils.isEmpty(token)) {
+            return NON_POSSESSIVE;
+        }
+        token = token.toUpperCase(Locale.UK);
+        for (int i = 0; i < token.length(); i++) {
+            String letter = Character.toString(token.charAt(i));
+            if (OPENING_BRACKET.matcher(letter).matches() && !result.possessive) {
+                result.openingBrackets = true;
+            } else if ("I".equals(letter.toUpperCase(Locale.UK)) && !result.possessive) {
+                result.possessive = true;
+                result.endOfSentence = false;
+            } else if (SENTENCE_TERMINATOR.matcher(letter).matches()) {
+                result.endOfSentence = true;
+            } else if (FIRST_LETTER.matcher(letter).matches()) {
+                return NON_POSSESSIVE;
+            }
+        }
+        return result;
+    }
+
     @Override
     protected void doTransform(JsonNode source, TransformTarget target, List<String> arguments,
             Map<String, String> context) {
-
-        String nodeText = target.objectNode().at(toJsonPtr(arguments.getFirst())).textValue();
-        target.objectNode().put(target.field(), transformSentenceCase(nodeText));
+        String targetValue = getFieldToTransform(source, arguments, context);
+        target.objectNode().put(target.field(), transformSentenceCase(targetValue));
     }
 
     String transformSentenceCase(String nodeText) {
@@ -117,42 +171,6 @@ public class SentenceCase extends AbstractTransformer {
         NOT_TERMINATED, TERMINATED, TERMINATED_WITH_BRACKET
     }
 
-    private static SentenceTerminationState isEndOfSentence(String token) {
-        if (StringUtils.isEmpty(token)) {
-            return SentenceTerminationState.NOT_TERMINATED;
-        }
-
-        boolean singleLetter = false;
-        boolean terminator = false;
-        boolean endSpace = false;
-        boolean closingBracket = false;
-
-        String current;
-        for (int i = 0; i < token.length(); i++) {
-            current = Character.toString(token.charAt(i));
-            if (FIRST_LETTER.matcher(current).matches()) {
-                singleLetter = true;
-                terminator = false;
-                endSpace = false;
-                closingBracket = false;
-            } else if (SENTENCE_TERMINATOR.matcher(current).matches()) {
-                terminator = true;
-                closingBracket = false;
-            } else if (CLOSING_BRACKET.matcher(current).matches()) {
-                closingBracket = true;
-            } else if (WHITESPACE.matcher(current).matches() && i == token.length() - 1) {
-                endSpace = true;
-            }
-        }
-        if (singleLetter && terminator && closingBracket && endSpace) {
-            return SentenceTerminationState.TERMINATED_WITH_BRACKET;
-        } else if (singleLetter && terminator && endSpace) {
-            return SentenceTerminationState.TERMINATED;
-        } else {
-            return SentenceTerminationState.NOT_TERMINATED;
-        }
-    }
-
     private static class SentenceState {
 
         private boolean endOfSentence = true;
@@ -190,27 +208,5 @@ public class SentenceCase extends AbstractTransformer {
         Possessiveness() {
             this(false, false, false);
         }
-    }
-
-    private static Possessiveness isPossessive(String token) {
-        Possessiveness result = new Possessiveness();
-        if (StringUtils.isEmpty(token)) {
-            return NON_POSSESSIVE;
-        }
-        token = token.toUpperCase(Locale.UK);
-        for (int i = 0; i < token.length(); i++) {
-            String letter = Character.toString(token.charAt(i));
-            if (OPENING_BRACKET.matcher(letter).matches() && !result.possessive) {
-                result.openingBrackets = true;
-            } else if ("I".equals(letter.toUpperCase(Locale.UK)) && !result.possessive) {
-                result.possessive = true;
-                result.endOfSentence = false;
-            } else if (SENTENCE_TERMINATOR.matcher(letter).matches()) {
-                result.endOfSentence = true;
-            } else if (FIRST_LETTER.matcher(letter).matches()) {
-                return NON_POSSESSIVE;
-            }
-        }
-        return result;
     }
 }

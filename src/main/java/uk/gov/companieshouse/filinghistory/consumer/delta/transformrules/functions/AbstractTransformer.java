@@ -1,7 +1,10 @@
 package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions;
 
+import static uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.TransformerUtils.toJsonPtr;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.MissingNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +38,22 @@ public abstract class AbstractTransformer implements Transformer {
         }
 
         return new TransformTarget(fields[fields.length - 1], outputNode);
+    }
+
+    protected String getFieldToTransform(JsonNode source, List<String> arguments, Map<String, String> context) {
+        String sourceFieldOrCapture = arguments.getFirst();
+        String captureValue = context.get(sourceFieldOrCapture);
+        JsonNode sourceValue = source.at(toJsonPtr(sourceFieldOrCapture));
+
+        String fieldToTransform;
+        if (captureValue != null) {
+            fieldToTransform = captureValue;
+        } else if (!(sourceValue instanceof MissingNode) && sourceValue != null) {
+            fieldToTransform = sourceValue.textValue();
+        } else {
+            throw new IllegalArgumentException("Failed to find capture or source field to transform");
+        }
+        return fieldToTransform;
     }
 
     protected String mapToken(Pattern pattern,

@@ -8,7 +8,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.TransformerTestingUtils;
 
 class LowerCaseTest {
 
@@ -16,7 +15,7 @@ class LowerCaseTest {
 
     @BeforeEach
     void beforeEach() {
-        lowerCase = new LowerCase(TransformerTestingUtils.getMapper());
+        lowerCase = new LowerCase();
     }
 
     @ParameterizedTest

@@ -16,7 +16,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BsonDate extends AbstractTransformer {
+public class FormatDate extends AbstractTransformer {
 
     private static final DateTimeFormatter INPUT_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
     private static final DateTimeFormatter SLASHES_FORMATTER = DateTimeFormatter.ofPattern("d/M/yyyy");
@@ -25,18 +25,18 @@ public class BsonDate extends AbstractTransformer {
             .appendValueReduced(ChronoField.YEAR, 2, 2, 1970)
             .toFormatter();
 
-    public BsonDate(ObjectMapper objectMapper) {
+    public FormatDate(ObjectMapper objectMapper) {
         super(objectMapper);
     }
 
     @Override
     protected void doTransform(JsonNode source, TransformTarget target, List<String> arguments,
             Map<String, String> context) {
-        target.objectNode().put(target.field(), transformBsonDate(
-                context.get(arguments.getFirst())));
+        String targetValue = getFieldToTransform(source, arguments, context);
+        target.objectNode().put(target.field(), format(targetValue));
     }
 
-    String transformBsonDate(String nodeText) {
+    String format(String nodeText) {
         if (StringUtils.isEmpty(nodeText)) {
             return nodeText;
         }
