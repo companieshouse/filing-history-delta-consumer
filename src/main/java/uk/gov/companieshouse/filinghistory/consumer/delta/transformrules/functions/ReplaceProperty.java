@@ -1,12 +1,8 @@
 package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions;
 
-import static uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.TransformerUtils.toJsonPtr;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import jakarta.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -14,7 +10,7 @@ import java.util.regex.Pattern;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ReplaceProperty implements Transformer {
+public class ReplaceProperty extends AbstractTransformer {
 
     private static final Pattern SUBSTITUTION_PATTERN =
             Pattern.compile("[\\w-]+(?<substitution>\\[% (?<placeHolder>\\w+) \\| (?<function>\\w+) %]).*");
@@ -22,38 +18,25 @@ public class ReplaceProperty implements Transformer {
     private static final String PLACE_HOLDER = "placeHolder";
     private static final String SUBSTITUTION = "substitution";
 
-    private final ObjectMapper objectMapper;
     private final LowerCase lowerCase;
 
     public ReplaceProperty(ObjectMapper objectMapper, LowerCase lowerCase) {
-        this.objectMapper = objectMapper;
+        super(objectMapper);
         this.lowerCase = lowerCase;
     }
 
     @Override
-    public void transform(JsonNode source,
-            ObjectNode outputNode,
-            String field,
-            List<String> arguments,
+    protected void doTransform(JsonNode source, TransformTarget target, List<String> arguments,
             Map<String, String> context) {
 
-        String[] fields = field.split("\\."); // len = 2
-        for (int i = 0; i < fields.length - 1; i++) {
-            outputNode.putIfAbsent(fields[i], objectMapper.createObjectNode());
-            outputNode = (ObjectNode) outputNode.at(toJsonPtr(fields[i]));
-        }
-
-        String finalField = fields[fields.length - 1];
-
         if (arguments.size() == 1) {
-            outputNode.put(finalField, getReplacementValue(arguments, context));
+            target.objectNode().put(target.fieldKey(), getReplacementValue(arguments, context));
         } else {
-            ArrayNode leafNode = outputNode.putArray(finalField);
+            ArrayNode leafNode = target.objectNode().putArray(target.fieldKey());
             arguments.forEach(leafNode::add);
         }
     }
 
-    @Nonnull
     private String getReplacementValue(List<String> arguments, Map<String, String> context) {
         String replacementValue = arguments.getFirst();
         Matcher matcher = SUBSTITUTION_PATTERN.matcher(replacementValue);
@@ -61,7 +44,7 @@ public class ReplaceProperty implements Transformer {
             if ("lc".equals(matcher.group(FUNCTION))) {
                 String placeHolder = matcher.group(PLACE_HOLDER);
                 replacementValue = replacementValue.replace(matcher.group(SUBSTITUTION),
-                        lowerCase.transformLowerCase(context.get(placeHolder).toLowerCase()));
+                        lowerCase.transformLowerCase(context.get(placeHolder)));
             } else {
                 throw new IllegalArgumentException("Unexpected function type of %s".formatted(matcher.group(FUNCTION)));
             }

@@ -2,13 +2,11 @@ package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functi
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,8 +14,9 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SentenceCase implements Transformer {
+public class SentenceCase extends AbstractTransformer {
 
+    static final Possessiveness NON_POSSESSIVE = new Possessiveness();
     private static final Set<String> ENTITIES = new HashSet<>(Arrays.asList("ARD", "NI", "SE",
             "GB", "SC", "UK", "LTD", "L.T.D", "PLC", "P.L.C", "UNLTD", "CIC", "C.I.C", "LLP",
             "L.P", "LP", "EEIG", "OEIC", "ICVC", "AEIE", "C.B.C", "C.C.C", "CBC", "CBCN", "CBP",
@@ -32,7 +31,6 @@ public class SentenceCase implements Transformer {
     private static final Pattern MIXED_ALPHANUMERIC = Pattern.compile("(\\w+\\d+\\w*|\\d+\\w+)");
     private static final Pattern MATCHES_ENTITY = Pattern.compile(
             "(\\b(?i:" + String.join("|", ENTITIES) + ")\\b)");
-
     //    private static final Pattern MATCHES_ENDING = Pattern.compile("(\\b(?i:' . join('|',reverse sort @endings) . ')\\b)")
     private static final Pattern OPENING_BRACKET = Pattern.compile("[(\\[]");
     private static final Pattern SENTENCE_TERMINATOR = Pattern.compile("[.!?]");
@@ -46,26 +44,16 @@ public class SentenceCase implements Transformer {
                     "(?:[A-Z][.])(?:[A-Z][.])+|",
                     "(^[^a-zA-Z]*([a-z][.])+))[^a-z]*\\s"),
             Pattern.CASE_INSENSITIVE);
-    static final Possessiveness NON_POSSESSIVE = new Possessiveness();
-
-    private final ObjectMapper objectMapper;
 
     public SentenceCase(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
+        super(objectMapper);
     }
 
     @Override
-    public void transform(JsonNode source,
-            ObjectNode outputNode,
-            String field,
-            List<String> arguments,
-            Map<String, String> contextValue) {
-
-        String finalField = getFinalField(objectMapper, field, outputNode);
-        String nodeText = outputNode.at("/" + arguments.getFirst().replace(".", "/"))
-                .textValue();
-
-        outputNode.put(finalField, transformSentenceCase(nodeText));
+    protected void doTransform(JsonNode source, TransformTarget target, List<String> arguments,
+            Map<String, String> context) {
+        String targetValue = getFieldToTransform(source, arguments, context);
+        target.objectNode().put(target.fieldKey(), transformSentenceCase(targetValue));
     }
 
     String transformSentenceCase(String nodeText) {
@@ -121,11 +109,7 @@ public class SentenceCase implements Transformer {
         return token;
     }
 
-    enum SentenceTerminationState {
-        NOT_TERMINATED, TERMINATED, TERMINATED_WITH_BRACKET
-    }
-
-    static SentenceTerminationState isEndOfSentence(String token) {
+    private static SentenceTerminationState isEndOfSentence(String token) {
         if (StringUtils.isEmpty(token)) {
             return SentenceTerminationState.NOT_TERMINATED;
         }
@@ -161,6 +145,32 @@ public class SentenceCase implements Transformer {
         }
     }
 
+    private static Possessiveness isPossessive(String token) {
+        Possessiveness result = new Possessiveness();
+        if (StringUtils.isEmpty(token)) {
+            return NON_POSSESSIVE;
+        }
+        token = token.toUpperCase(Locale.UK);
+        for (int i = 0; i < token.length(); i++) {
+            String letter = Character.toString(token.charAt(i));
+            if (OPENING_BRACKET.matcher(letter).matches() && !result.possessive) {
+                result.openingBrackets = true;
+            } else if ("I".equals(letter.toUpperCase(Locale.UK)) && !result.possessive) {
+                result.possessive = true;
+                result.endOfSentence = false;
+            } else if (SENTENCE_TERMINATOR.matcher(letter).matches()) {
+                result.endOfSentence = true;
+            } else if (FIRST_LETTER.matcher(letter).matches()) {
+                return NON_POSSESSIVE;
+            }
+        }
+        return result;
+    }
+
+    private enum SentenceTerminationState {
+        NOT_TERMINATED, TERMINATED, TERMINATED_WITH_BRACKET
+    }
+
     private static class SentenceState {
 
         private boolean endOfSentence = true;
@@ -183,7 +193,7 @@ public class SentenceCase implements Transformer {
         }
     }
 
-    static class Possessiveness {
+    private static class Possessiveness {
 
         boolean possessive;
         boolean openingBrackets;
@@ -198,68 +208,5 @@ public class SentenceCase implements Transformer {
         Possessiveness() {
             this(false, false, false);
         }
-
-        @Override
-        public boolean equals(Object other) {
-            if (this == other) {
-                return true;
-            }
-            if (other == null || getClass() != other.getClass()) {
-                return false;
-            }
-            Possessiveness that = (Possessiveness) other;
-            return possessive == that.possessive
-                    && openingBrackets == that.openingBrackets
-                    && endOfSentence == that.endOfSentence;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(possessive, openingBrackets, endOfSentence);
-        }
-
-        @Override
-        public String toString() {
-            StringBuilder result = new StringBuilder();
-            if (possessive) {
-                result.append("possessive");
-            } else {
-                result.append("not possessive");
-                return result.toString();
-            }
-            if (openingBrackets) {
-                result.append(", opening brackets");
-            } else {
-                result.append(", no opening brackets");
-            }
-            if (endOfSentence) {
-                result.append(", end of sentence");
-            } else {
-                result.append(", not end of sentence");
-            }
-            return result.toString();
-        }
-    }
-
-    static Possessiveness isPossessive(String token) {
-        Possessiveness result = new Possessiveness();
-        if (StringUtils.isEmpty(token)) {
-            return NON_POSSESSIVE;
-        }
-        token = token.toUpperCase(Locale.UK);
-        for (int i = 0; i < token.length(); i++) {
-            String letter = Character.toString(token.charAt(i));
-            if (OPENING_BRACKET.matcher(letter).matches() && !result.possessive) {
-                result.openingBrackets = true;
-            } else if ("I".equals(letter.toUpperCase(Locale.UK)) && !result.possessive) {
-                result.possessive = true;
-                result.endOfSentence = false;
-            } else if (SENTENCE_TERMINATOR.matcher(letter).matches()) {
-                result.endOfSentence = true;
-            } else if (FIRST_LETTER.matcher(letter).matches()) {
-                return NON_POSSESSIVE;
-            }
-        }
-        return result;
     }
 }

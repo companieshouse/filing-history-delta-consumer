@@ -6,20 +6,18 @@ import org.springframework.stereotype.Component;
 public class TransformerFactory {
 
     private final AddressCase addressCase;
-    private final BsonDate bsonDate;
-    private final LowerCase lowerCase;
+    private final FormatDate formatDate;
     private final SentenceCase sentenceCase;
     private final TitleCase titleCase;
     private final ReplaceProperty replaceProperty;
 
     private final ProcessCapital processCapital;
 
-    public TransformerFactory(AddressCase addressCase, BsonDate bsonDate, LowerCase lowerCase,
+    public TransformerFactory(AddressCase addressCase, FormatDate formatDate,
             SentenceCase sentenceCase, TitleCase titleCase, ReplaceProperty replaceProperty,
             ProcessCapital processCapital) {
         this.addressCase = addressCase;
-        this.bsonDate = bsonDate;
-        this.lowerCase = lowerCase;
+        this.formatDate = formatDate;
         this.sentenceCase = sentenceCase;
         this.titleCase = titleCase;
         this.replaceProperty = replaceProperty;
@@ -29,8 +27,7 @@ public class TransformerFactory {
     public Transformer mapTransformer(String function) {
         return switch (function) {
             case "address_case" -> addressCase;
-            case "bson_date" -> bsonDate;
-            case "lc" -> lowerCase;
+            case "bson_date" -> formatDate;
             case "sentence_case" -> sentenceCase;
             case "title_case" -> titleCase;
             default -> throw new IllegalArgumentException("Unexpected function " + function);

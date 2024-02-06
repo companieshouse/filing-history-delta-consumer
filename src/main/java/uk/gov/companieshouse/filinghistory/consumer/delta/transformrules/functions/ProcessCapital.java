@@ -4,27 +4,19 @@ import static uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ProcessCapital {
 
-    private static final Pattern TREASURY_PATTERN = Pattern.compile("treasury", Pattern.CASE_INSENSITIVE);
     private final ObjectMapper objectMapper;
+    private final CapitalCaptor capitalCaptor;
 
-    private final FormatNumber formatNumber;
-
-    public ProcessCapital(ObjectMapper objectMapper, FormatNumber formatNumber) {
+    public ProcessCapital(ObjectMapper objectMapper, CapitalCaptor capitalCaptor) {
         this.objectMapper = objectMapper;
-        this.formatNumber = formatNumber;
+        this.capitalCaptor = capitalCaptor;
     }
 
     public void transform(JsonNode source, ObjectNode outputNode,
@@ -38,56 +30,19 @@ public class ProcessCapital {
 
         String sourceDescription = source.at(toJsonPtr(fieldPath)).textValue();
 
-        Matcher matcher = extract.matcher(sourceDescription);
-
-        ArrayNode captures = objectMapper.createArrayNode();
-        ArrayNode altCaptures = objectMapper.createArrayNode();
-
-        while (matcher.find()) {
-            Map<String, Integer> namedGroups = matcher.namedGroups();
-
-            ObjectNode capture = objectMapper.createObjectNode();
-
-            List<String> currentlyMatchedGroups = new ArrayList<>();
-
-            namedGroups.forEach((key, value) -> {
-                if (matcher.group(value) != null) {
-                    currentlyMatchedGroups.add(key);
-                    switch (key) {
-                        case "capitalDate" -> {
-                            if (TREASURY_PATTERN.matcher(matcher.group()).find()) {
-                                capture.put("date", matcher.group(value));
-                            }
-                        }
-                        case "capitalCurrency" -> capture.put("currency", StringUtils.upperCase(matcher.group(value)));
-                        case "capitalFigure" -> capture.put("figure", formatNumber.apply(matcher.group(value)));
-                        default -> {
-                            // do nothing with the capitalDesc group
-                            // capitalAltDesc used last to determine which array node push to
-                        }
-                    }
-                }
-            });
-
-            if (currentlyMatchedGroups.contains("capitalAltDesc")) {
-                capture.put("description", altDescription);
-                altCaptures.add(capture);
-            } else {
-                captures.add(capture);
-            }
-        }
+        CapitalCaptures capitalCaptures = capitalCaptor.captureCapital(extract, altDescription, sourceDescription);
 
         outputNode.putIfAbsent("description_values", objectMapper.createObjectNode());
         ObjectNode descriptionValues = (ObjectNode) outputNode.at(toJsonPtr("description_values"));
 
         descriptionValues
                 .putArray("capital")
-                .addAll(captures);
+                .addAll(capitalCaptures.captures());
 
-        if (!altCaptures.isEmpty()) {
+        if (!capitalCaptures.altCaptures().isEmpty()) {
             descriptionValues.
                     putArray("alt_capital")
-                    .addAll(altCaptures);
+                    .addAll(capitalCaptures.altCaptures());
         }
     }
 }
