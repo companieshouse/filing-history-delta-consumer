@@ -66,6 +66,6 @@ public record ThenProperties(@JsonProperty("define") Map<String, String> define,
         if (matcher.matches()) {
             return matcher.group(1);
         }
-        throw new IllegalArgumentException("Invalid fieldKey path in exec %s".formatted(rawFieldPath));
+        throw new IllegalArgumentException("Invalid field path in exec %s".formatted(rawFieldPath));
     }
 }
