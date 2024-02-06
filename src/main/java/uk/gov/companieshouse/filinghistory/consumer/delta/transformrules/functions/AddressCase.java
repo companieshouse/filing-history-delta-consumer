@@ -2,7 +2,6 @@ package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functi
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -11,7 +10,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AddressCase implements Transformer {
+public class AddressCase extends AbstractTransformer {
 
     private static final Pattern POST_CODE_PATTERN = Pattern.compile(
             "(\\b[A-Z][A-Z]?\\d[A-Z\\d]?\\s*\\d[A-Z]{2}\\b)", Pattern.CASE_INSENSITIVE);
@@ -20,23 +19,17 @@ public class AddressCase implements Transformer {
             Pattern.CASE_INSENSITIVE);
 
     private final TitleCase titleCase;
-    private final ObjectMapper objectMapper;
 
     public AddressCase(ObjectMapper objectMapper, TitleCase titleCase) {
+        super(objectMapper);
         this.titleCase = titleCase;
-        this.objectMapper = objectMapper;
     }
 
     @Override
-    public void transform(JsonNode source,
-            ObjectNode outputNode,
-            String field,
-            List<String> arguments,
-            Map<String, String> contextValue) {
-
-        String finalField = getFinalField(objectMapper, field, outputNode);
-
-        outputNode.put(finalField, transformAddressCase(arguments.getFirst()));
+    protected void doTransform(JsonNode source, TransformTarget target, List<String> arguments,
+            Map<String, String> context) {
+        String targetValue = getFieldToTransform(source, arguments, context);
+        target.objectNode().put(target.fieldKey(), transformAddressCase(targetValue));
     }
 
     String transformAddressCase(String nodeText) {

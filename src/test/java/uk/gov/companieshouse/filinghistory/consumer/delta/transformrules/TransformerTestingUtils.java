@@ -4,7 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.AddressCase;
-import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.BsonDate;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.CapitalCaptor;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.FormatDate;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.FormatNumber;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.LowerCase;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.ProcessCapital;
@@ -19,18 +20,16 @@ public class TransformerTestingUtils {
             .setSerializationInclusion(JsonInclude.Include.NON_NULL)
             .registerModule(new JavaTimeModule());
 
-    private static final BsonDate BSON_DATE = new BsonDate(MAPPER);
-
-    private static final FormatNumber FORMAT_NUMBER = new FormatNumber();
-    private static final LowerCase LOWER_CASE = new LowerCase(MAPPER);
+    private static final FormatDate BSON_DATE = new FormatDate(MAPPER);
+    private static final LowerCase LOWER_CASE = new LowerCase();
     private static final SentenceCase SENTENCE_CASE = new SentenceCase(MAPPER);
     private static final TitleCase TITLE_CASE = new TitleCase(MAPPER);
     private static final ReplaceProperty REPLACE_PROPERTY = new ReplaceProperty(MAPPER, LOWER_CASE);
-    private static final ProcessCapital PROCESS_CAPITAL = new ProcessCapital(MAPPER, FORMAT_NUMBER);
+    private static final ProcessCapital PROCESS_CAPITAL = new ProcessCapital(MAPPER, new CapitalCaptor(MAPPER, new FormatNumber()));
     private static final AddressCase ADDRESS_CASE = new AddressCase(MAPPER, TITLE_CASE);
 
     private static final TransformerFactory TRANSFORMER_FACTORY = new TransformerFactory(ADDRESS_CASE, BSON_DATE,
-            LOWER_CASE, SENTENCE_CASE, TITLE_CASE, REPLACE_PROPERTY, PROCESS_CAPITAL);
+            SENTENCE_CASE, TITLE_CASE, REPLACE_PROPERTY, PROCESS_CAPITAL);
 
     private TransformerTestingUtils() {
     }
@@ -43,12 +42,8 @@ public class TransformerTestingUtils {
         return MAPPER;
     }
 
-    public static BsonDate getBsonDate() {
+    public static FormatDate getBsonDate() {
         return BSON_DATE;
-    }
-
-    public static FormatNumber getFormatNumber() {
-        return FORMAT_NUMBER;
     }
 
     public static LowerCase getLowerCase() {

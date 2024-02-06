@@ -2,7 +2,6 @@ package uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functi
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -13,7 +12,7 @@ import org.apache.commons.text.WordUtils;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TitleCase implements Transformer {
+public class TitleCase extends AbstractTransformer {
 
     private static final Pattern IDENTIFYING_WORDS_PATTERN = Pattern.compile(
             "(\\p{L}[\\p{L}']*)", Pattern.CASE_INSENSITIVE);
@@ -29,22 +28,15 @@ public class TitleCase implements Transformer {
             "ONTO", "OR", "OVER", "PER", "THE", "TO", "THAT", "THAN", "UNTIL", "UNTO", "UPON",
             "VIA", "WITH", "WHILE", "WHILST", "WITHIN", "WITHOUT");
 
-    private final ObjectMapper objectMapper;
-
     public TitleCase(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
+        super(objectMapper);
     }
 
     @Override
-    public void transform(JsonNode source,
-            ObjectNode outputNode,
-            String field,
-            List<String> arguments,
-            Map<String, String> captureGroups) {
-
-        String finalField = getFinalField(objectMapper, field, outputNode);
-
-        outputNode.put(finalField, transformTitleCase(arguments.getFirst()));
+    protected void doTransform(JsonNode source, TransformTarget target, List<String> arguments,
+            Map<String, String> context) {
+        String targetValue = getFieldToTransform(source, arguments, context);
+        target.objectNode().put(target.fieldKey(), transformTitleCase(targetValue));
     }
 
     String transformTitleCase(String field) {
