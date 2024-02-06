@@ -86,7 +86,6 @@ class AddressCaseTest {
         assertEquals(expected, output);
     }
 
-    //TODO check with test data whether or not we ever receive milliseconds in the delta in test data.
     private static Stream<Arguments> addressCaseFormatting() {
         return Stream.of(
                 Arguments.of(null, null),
