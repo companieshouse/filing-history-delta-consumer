@@ -7024,7 +7024,7 @@
     set:
       data.category: annual-return
       data.description: annual-return-add-person-authorised-to-represent-to-uk-establishment
-      data.description_values.branch_number: '[% branchNumber  %]'
+      data.description_values.branch_number: '[% branchNumber %]'
       data.description_values.representative_details: '[% personDetails | address_case %]'
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -7035,7 +7035,7 @@
   then:
     set:
       data.category: annual-return
-      data.description_values.branch_number: '[% branchNumber  %]'
+      data.description_values.branch_number: '[% branchNumber %]'
       data.description_values.representative_details: '[% personDetails | address_case %]'
       data.description: annual-return-add-person-authorised-to-accept-service-to-uk-establishment
       original_description: '[% data.description | sentence_case %]'
@@ -7058,7 +7058,7 @@
     set:
       data.category: annual-return
       data.description: annual-return-update-with-change-details
-      data.description_values.branch_number: '[% branchNumber  %]'
+      data.description_values.branch_number: '[% branchNumber %]'
       data.description_values.representative_details: '[% personDetails | address_case %]'
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -7144,7 +7144,7 @@
     set:
       data.category: officers
       data.description: appoint-person-director-company-with-name-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% appointmentDate | bson_date %]'
@@ -7158,7 +7158,7 @@
     set:
       data.category: officers
       data.description: appoint-person-director-company-with-name
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -7172,7 +7172,7 @@
     set:
       data.category: officers
       data.description: appoint-person-member-societas-europaea-with-name-appointment-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% appointmentDate | bson_date %]'
@@ -7186,7 +7186,7 @@
     set:
       data.category: officers
       data.description: appoint-person-member-societas-europaea-with-name
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -7230,7 +7230,7 @@
     set:
       data.category: officers
       data.description: appoint-person-secretary-company-with-name-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% appointmentDate | bson_date %]'
@@ -7244,7 +7244,7 @@
     set:
       data.category: officers
       data.description: appoint-person-secretary-company-with-name
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -7266,7 +7266,7 @@
     set:
       data.category: officers
       data.description: appoint-corporate-director-company-with-name-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% appointmentDate | bson_date %]'
@@ -7280,7 +7280,7 @@
     set:
       data.category: officers
       data.description: appoint-corporate-director-company-with-name
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -7293,7 +7293,7 @@
     set:
       data.category: officers
       data.description: appoint-corporate-member-societas-europaea-with-name-appointment-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% appointmentDate | bson_date %]'
@@ -7307,7 +7307,7 @@
     set:
       data.category: officers
       data.description: appoint-corporate-member-societas-europaea-with-name
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -7351,7 +7351,7 @@
     set:
       data.category: officers
       data.description: appoint-corporate-secretary-company-with-name-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% appointmentDate | bson_date %]'
@@ -7365,7 +7365,7 @@
     set:
       data.category: officers
       data.description: appoint-corporate-secretary-company-with-name-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% appointmentDate | bson_date %]'
@@ -7379,7 +7379,7 @@
     set:
       data.category: officers
       data.description: appoint-corporate-secretary-company-with-name
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -7401,7 +7401,7 @@
     set:
       data.category: officers
       data.description: appoint-person-member-limited-liability-partnership-with-appointment-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% appointmentDate | bson_date %]'
@@ -7415,7 +7415,7 @@
     set:
       data.category: officers
       data.description: appoint-person-member-limited-liability-partnership
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -7428,7 +7428,7 @@
     set:
       data.category: officers
       data.description: appoint-corporate-member-limited-liability-partnership-with-appointment-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% appointmentDate | bson_date %]'
@@ -7442,7 +7442,7 @@
     set:
       data.category: officers
       data.description: appoint-corporate-member-limited-liability-partnership
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -7455,7 +7455,7 @@
     set:
       data.category: officers
       data.description: appoint-judicial-factor-with-name-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% appointmentDate | bson_date %]'
@@ -7469,7 +7469,7 @@
     set:
       data.category: officers
       data.description: appoint-judicial-factor-with-name
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -7482,7 +7482,7 @@
     set:
       data.category: officers
       data.description: appoint-manager-company-with-name-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% appointmentDate | bson_date %]'
@@ -7496,7 +7496,7 @@
     set:
       data.category: officers
       data.description: appoint-manager-company-with-name
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -7518,7 +7518,7 @@
     set:
       data.category: officers
       data.description: appoint-person-director-overseas-company-with-name-appointment-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% appointmentDate | bson_date %]'
@@ -7532,7 +7532,7 @@
     set:
       data.category: officers
       data.description: appoint-person-director-overseas-company-with-name
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -7554,7 +7554,7 @@
     set:
       data.category: officers
       data.description: appoint-corporate-director-overseas-company-with-appointment-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% appointmentDate | bson_date %]'
@@ -7568,7 +7568,7 @@
     set:
       data.category: officers
       data.description: appoint-corporate-director-overseas-company
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -7581,7 +7581,7 @@
     set:
       data.category: officers
       data.description: appoint-person-secretary-overseas-company-with-appointment-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% appointmentDate | bson_date %]'
@@ -7596,7 +7596,7 @@
     set:
       data.category: officers
       data.description: appoint-person-secretary-overseas-company-with-appointment-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% appointmentDate | bson_date %]'
@@ -7610,7 +7610,7 @@
     set:
       data.category: officers
       data.description: appoint-person-secretary-overseas-company
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -7623,7 +7623,7 @@
     set:
       data.category: officers
       data.description: appoint-corporate-secretary-overseas-company-with-appointment-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% appointmentDate | bson_date %]'
@@ -7637,7 +7637,7 @@
     set:
       data.category: officers
       data.description: appoint-corporate-secretary-overseas-company
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -7653,8 +7653,8 @@
       original_description: '[% data.description | sentence_case %]'
       data.description_values.change_date: '[% changeDate | bson_date %]'
       data.description_values.branch_number: '[% branchNumber %]'
-      data.description_values.officer_name: '[% officerName | title_case  %]'
-      data.description_values.new_address: '[% newAddress | address_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
+      data.description_values.new_address: '[% newAddress | address_case %]'
 - when:
     eq:
       data.type: OSAP05
@@ -7676,7 +7676,7 @@
       data.category: officers
       data.description: appoint-judicial-factor-overseas-company-with-appointment-date
       data.subcategory: appointments
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% appointmentDate | bson_date %]'
       data.description_values.appointment_date: '[% appointmentDate | bson_date %]'
@@ -7710,8 +7710,8 @@
       data.category: officers
       data.subcategory: appointments
       data.description: appoint-person-authorised-accept-overseas-company-with-appointment-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
-      data.description_values.new_address: '[% newAddress | address_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
+      data.description_values.new_address: '[% newAddress | address_case %]'
       data.description_values.change_date: '[% changeDate | bson_date %]'
       data.description_values.branch_number: '[% branchNumber %]'
       original_description: '[% data.description | sentence_case %]'
@@ -7735,7 +7735,7 @@
     set:
       data.category: officers
       data.description: appoint-corporate-member-societas-europaea-with-name-appointment-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% appointmentDate | bson_date %]'
@@ -7749,7 +7749,7 @@
     set:
       data.category: officers
       data.description: appoint-corporate-member-societas-europaea-with-name
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -7773,7 +7773,7 @@
     set:
       data.category: officers
       data.description: appoint-person-member-societas-europaea-with-name-appointment-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% appointmentDate | bson_date %]'
@@ -7787,7 +7787,7 @@
     set:
       data.category: officers
       data.description: appoint-person-member-societas-europaea-with-name
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -7830,7 +7830,7 @@
     set:
       data.category: officers
       data.description: change-person-director-company-with-change-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% changeDate | bson_date %]'
@@ -7864,7 +7864,7 @@
     set:
       data.category: officers
       data.description: change-person-secretary-company-with-change-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% changeDate | bson_date %]'
@@ -7887,7 +7887,7 @@
     set:
       data.category: officers
       data.description: change-corporate-director-company-with-change-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% changeDate | bson_date %]'
@@ -7910,7 +7910,7 @@
     set:
       data.category: officers
       data.description: change-corporate-secretary-company-with-change-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: officers
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% changeDate | bson_date %]'
@@ -7978,7 +7978,7 @@
     set:
       data.category: officers
       data.description: change-person-director-overseas-company-with-change-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% changeDate | bson_date %]'
@@ -7992,7 +7992,7 @@
     set:
       data.category: officers
       data.description: change-person-director-overseas-company-with-change-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% changeDate | bson_date %]'
@@ -8016,7 +8016,7 @@
     set:
       data.category: officers
       data.description: change-corporate-director-overseas-company-with-change-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% changeDate | bson_date %]'
@@ -8030,7 +8030,7 @@
     set:
       data.category: officers
       data.description: change-corporate-director-overseas-company-with-change-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% changeDate | bson_date %]'
@@ -8054,7 +8054,7 @@
     set:
       data.category: officers
       data.description: change-person-secretary-overseas-company-with-change-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% changeDate | bson_date %]'
@@ -8068,7 +8068,7 @@
     set:
       data.category: officers
       data.description: change-person-secretary-overseas-company-with-change-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
       data.description_values.change_date: '[% changeDate | bson_date %]'
@@ -8090,7 +8090,7 @@
     set:
       data.category: officers
       data.description: change-corporate-secretary-overseas-company-with-change-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% changeDate | bson_date %]'
@@ -8114,7 +8114,7 @@
       data.category: officers
       data.description: change-person-authorised-overseas-company-with-change-date
       data.subcategory: change
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.description_values.change_date: '[% changeDate | bson_date %]'
       data.description_values.branch_number: '[% branchNumber %]'
       data.description_values.officer_address: '[% officerAddress | address_case %]'
@@ -8148,7 +8148,7 @@
       data.category: officers
       data.subcategory: change
       data.description: change-person-authorised-to-represent-overseas-company-with-change-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.description_values.change_date: '[% changeDate | bson_date %]'
       data.description_values.branch_number: '[% branchNumber %]'
       original_description: '[% data.description | sentence_case %]'
@@ -8180,7 +8180,7 @@
     set:
       data.category: officers
       data.description: change-person-member-limited-liability-partnership-with-name-change-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% changeDate | bson_date %]'
@@ -8203,7 +8203,7 @@
     set:
       data.category: officers
       data.description: change-corporate-member-limited-liability-partnership-with-name-change-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% changeDate | bson_date %]'
@@ -8236,7 +8236,7 @@
     set:
       data.category: officers
       data.description: change-person-member-societas-europaea-with-name-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% changeDate | bson_date %]'
@@ -8250,7 +8250,7 @@
     set:
       data.category: officers
       data.description: change-person-member-societas-europaea-with-name-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% changeDate | bson_date %]'
@@ -8274,7 +8274,7 @@
     set:
       data.category: officers
       data.description: change-corporate-member-societas-europaea-with-name-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% changeDate | bson_date %]'
@@ -8288,7 +8288,7 @@
     set:
       data.category: officers
       data.description: change-corporate-member-societas-europaea-with-name-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% changeDate | bson_date %]'
@@ -8321,7 +8321,7 @@
     set:
       data.category: officers
       data.description: termination-person-director-overseas-company-with-name-termination-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% terminationDate | bson_date %]'
@@ -8335,7 +8335,7 @@
     set:
       data.category: officers
       data.description: termination-person-director-overseas-company-with-name
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -8357,7 +8357,7 @@
     set:
       data.category: officers
       data.description: termination-person-secretary-overseas-company-with-name-termination-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% terminationDate | bson_date %]'
@@ -8371,7 +8371,7 @@
     set:
       data.category: officers
       data.description: termination-person-secretary-overseas-company-with-name
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -8403,7 +8403,7 @@
     set:
       data.category: officers
       data.description: termination-person-judicial-factor-overseas-company-with-name-termination-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% terminationDate | bson_date %]'
@@ -8436,7 +8436,7 @@
     set:
       data.category: officers
       data.description: termination-director-company-with-name-termination-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% terminationDate | bson_date %]'
@@ -8450,7 +8450,7 @@
     set:
       data.category: officers
       data.description: termination-director-company-with-name
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -8472,7 +8472,7 @@
     set:
       data.category: officers
       data.description: termination-member-limited-liability-partnership-with-name-termination-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% terminationDate | bson_date %]'
@@ -8486,7 +8486,7 @@
     set:
       data.category: officers
       data.description: termination-member-limited-liability-partnership-with-name
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -8508,7 +8508,7 @@
     set:
       data.category: officers
       data.description: termination-secretary-company-with-name-termination-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% terminationDate | bson_date %]'
@@ -8522,7 +8522,7 @@
     set:
       data.category: officers
       data.description: termination-secretary-company-with-name
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -8562,7 +8562,7 @@
     set:
       data.category: officers
       data.description: termination-member-societas-europaea-with-name-termination-date
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% terminationDate | bson_date %]'
@@ -8576,7 +8576,7 @@
     set:
       data.category: officers
       data.description: termination-member-societas-europaea-with-name
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -8974,7 +8974,7 @@
     set:
       data.category: annual-return
       data.description: appointment-at-registration-of-person-authorised-to-represent
-      data.description_values.branch_number: '[% branchNumber  %]'
+      data.description_values.branch_number: '[% branchNumber %]'
       data.description_values.representative_details: '[% personDetails | address_case %]'
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -8985,7 +8985,7 @@
   then:
     set:
       data.category: annual-return
-      data.description_values.branch_number: '[% branchNumber  %]'
+      data.description_values.branch_number: '[% branchNumber %]'
       data.description_values.representative_details: '[% personDetails | address_case %]'
       data.description: appointment-at-registration-of-person-authorised-to-accept-service
       original_description: '[% data.description | sentence_case %]'
@@ -9863,8 +9863,8 @@
     set:
       data.category: address
       data.description: change-registered-office-situation-company-with-old-jurisdiction-new-jurisdiction-date
-      data.description_values.new_jurisdiction: '[% newJurisdiction | title_case  %]'
-      data.description_values.old_jurisdiction: '[% oldJurisdiction | title_case  %]'
+      data.description_values.new_jurisdiction: '[% newJurisdiction | title_case %]'
+      data.description_values.old_jurisdiction: '[% oldJurisdiction | title_case %]'
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% changeDate | bson_date %]'
       data.description_values.change_date: '[% changeDate | bson_date %]'
@@ -9877,8 +9877,8 @@
     set:
       data.category: address
       data.description: change-registered-office-situation-company-with-old-jurisdiction-new-jurisdiction
-      data.description_values.new_jurisdiction: '[% newJurisdiction | title_case  %]'
-      data.description_values.old_jurisdiction: '[% oldJurisdiction | title_case  %]'
+      data.description_values.new_jurisdiction: '[% newJurisdiction | title_case %]'
+      data.description_values.old_jurisdiction: '[% oldJurisdiction | title_case %]'
       original_description: '[% data.description | sentence_case %]'
 - when:
     eq:
@@ -9889,7 +9889,7 @@
     set:
       data.category: address
       data.description: change-registered-office-situation-company-with-new-jurisdiction
-      data.description_values.new_jurisdiction: '[% newJurisdiction | title_case  %]'
+      data.description_values.new_jurisdiction: '[% newJurisdiction | title_case %]'
       original_description: '[% data.description | sentence_case %]'
 - when:
     eq:
@@ -16448,7 +16448,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: notification-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: notifications
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.notification_date | bson_date %]'
@@ -16460,7 +16460,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: notification-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: notifications
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.notification_date | bson_date %]'
@@ -16472,7 +16472,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: notification-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: notifications
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.notification_date | bson_date %]'
@@ -16506,7 +16506,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: change-to-a-person-with-significant-control
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.change_date | bson_date %]'
@@ -16529,7 +16529,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: change-to-a-person-with-significant-control
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.change_date | bson_date %]'
@@ -16552,7 +16552,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: change-to-a-person-with-significant-control
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.change_date | bson_date %]'
@@ -16575,7 +16575,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: cessation-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.cessation_date | bson_date %]'
@@ -16618,7 +16618,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: notification-of-a-person-with-significant-control-limited-liability-partnership
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: notifications
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.notification_date | bson_date %]'
@@ -16630,7 +16630,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: notification-of-a-person-with-significant-control-limited-liability-partnership
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: notifications
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.notification_date | bson_date %]'
@@ -16642,7 +16642,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: notification-of-a-person-with-significant-control-limited-liability-partnership
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: notifications
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.notification_date | bson_date %]'
@@ -16676,7 +16676,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: change-to-a-person-with-significant-control-limited-liability-partnership
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.change_date | bson_date %]'
@@ -16699,7 +16699,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: change-to-a-person-with-significant-control-limited-liability-partnership
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.change_date | bson_date %]'
@@ -16722,7 +16722,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: change-to-a-person-with-significant-control-limited-liability-partnership
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.change_date | bson_date %]'
@@ -16745,7 +16745,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: cessation-of-a-person-with-significant-control-limited-liability-partnership
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.cessation_date | bson_date %]'
@@ -16788,7 +16788,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: notification-of-a-person-with-significant-control-scottish-limited-partnership
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: notifications
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.notification_date | bson_date %]'
@@ -16800,7 +16800,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: notification-of-a-person-with-significant-control-scottish-limited-partnership
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: notifications
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.notification_date | bson_date %]'
@@ -16812,7 +16812,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: notification-of-a-person-with-significant-control-scottish-limited-partnership
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: notifications
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.notification_date | bson_date %]'
@@ -16846,7 +16846,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: change-to-a-person-with-significant-control-scottish-limited-partnership
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.change_date | bson_date %]'
@@ -16869,7 +16869,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: change-to-a-person-with-significant-control-scottish-limited-partnership
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.change_date | bson_date %]'
@@ -16892,7 +16892,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: change-to-a-person-with-significant-control-scottish-limited-partnership
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.change_date | bson_date %]'
@@ -16915,7 +16915,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: cessation-of-a-person-with-significant-control-scottish-limited-partnership
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.cessation_date | bson_date %]'
@@ -17103,7 +17103,7 @@
     set:
       data.category: officers
       data.description: second-filing-of-director-appointment-with-name
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -17115,7 +17115,7 @@
     set:
       data.category: officers
       data.description: second-filing-of-director-appointment-with-name
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -17127,7 +17127,7 @@
     set:
       data.category: officers
       data.description: second-filing-of-secretary-appointment-with-name
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -17139,7 +17139,7 @@
     set:
       data.category: officers
       data.description: second-filing-of-secretary-appointment-with-name
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -17151,7 +17151,7 @@
     set:
       data.category: officers
       data.description: second-filing-of-change-of-director-details-with-name
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -17163,7 +17163,7 @@
     set:
       data.category: officers
       data.description: second-filing-of-change-of-director-details-with-name
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -17175,7 +17175,7 @@
     set:
       data.category: officers
       data.description: second-filing-of-change-of-secretary-details-with-name
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -17187,7 +17187,7 @@
     set:
       data.category: officers
       data.description: second-filing-of-change-of-secretary-details-with-name
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -17199,7 +17199,7 @@
     set:
       data.category: officers
       data.description: second-filing-of-director-termination-with-name
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -17211,7 +17211,7 @@
     set:
       data.category: officers
       data.description: second-filing-of-secretary-termination-with-name
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -17236,7 +17236,7 @@
     set:
       data.category: officers
       data.description: second-filing-of-member-appointment-with-name
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -17248,7 +17248,7 @@
     set:
       data.category: officers
       data.description: second-filing-of-member-appointment-with-name
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -17260,7 +17260,7 @@
     set:
       data.category: officers
       data.description: second-filing-of-change-of-member-details-with-name
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -17272,7 +17272,7 @@
     set:
       data.category: officers
       data.description: second-filing-of-change-of-member-details-with-name
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -17284,7 +17284,7 @@
     set:
       data.category: officers
       data.description: second-filing-of-member-termination-with-name
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -17448,7 +17448,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-notification-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.notification_date | bson_date %]'
@@ -17471,7 +17471,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-notification-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.notification_date | bson_date %]'
@@ -17494,7 +17494,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-notification-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.notification_date | bson_date %]'
@@ -17506,7 +17506,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-notification-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.notification_date | bson_date %]'
@@ -17518,7 +17518,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-notification-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.notification_date | bson_date %]'
@@ -17530,7 +17530,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-notification-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.notification_date | bson_date %]'
@@ -17542,7 +17542,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-notification-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.notification_date | bson_date %]'
@@ -17554,7 +17554,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-notification-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.notification_date | bson_date %]'
@@ -17566,7 +17566,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-notification-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.notification_date | bson_date %]'
@@ -17600,7 +17600,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-change-details-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.change_date | bson_date %]'
@@ -17634,7 +17634,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-change-details-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.change_date | bson_date %]'
@@ -17668,7 +17668,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-change-details-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.change_date | bson_date %]'
@@ -17691,7 +17691,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-change-details-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.change_date | bson_date %]'
@@ -17714,7 +17714,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-change-details-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.change_date | bson_date %]'
@@ -17737,7 +17737,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-change-details-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.change_date | bson_date %]'
@@ -17760,7 +17760,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-change-details-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.change_date | bson_date %]'
@@ -17783,7 +17783,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-change-details-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.change_date | bson_date %]'
@@ -17806,7 +17806,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-change-details-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.change_date | bson_date %]'
@@ -17829,7 +17829,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-cessation-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.cessation_date | bson_date %]'
@@ -17852,7 +17852,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-cessation-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.cessation_date | bson_date %]'
@@ -17875,7 +17875,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-cessation-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.cessation_date | bson_date %]'
@@ -17958,7 +17958,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-notification-of-a-person-with-significant-control-limited-liability-partnership
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.notification_date | bson_date %]'
@@ -17970,7 +17970,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-notification-of-a-person-with-significant-control-limited-liability-partnership
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.notification_date | bson_date %]'
@@ -17982,7 +17982,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-notification-of-a-person-with-significant-control-limited-liability-partnership
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.notification_date | bson_date %]'
@@ -18016,7 +18016,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-change-details-of-a-person-with-significant-control-limited-liability-partnership
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.change_date | bson_date %]'
@@ -18039,7 +18039,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-change-details-of-a-person-with-significant-control-limited-liability-partnership
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.change_date | bson_date %]'
@@ -18062,7 +18062,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-change-details-of-a-person-with-significant-control-limited-liability-partnership
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.change_date | bson_date %]'
@@ -18085,7 +18085,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-cessation-of-a-person-with-significant-control-limited-liability-partnership
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.cessation_date | bson_date %]'
@@ -18595,7 +18595,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: notification-of-a-person-with-significant-control-scottish-partnership
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: notifications
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.notification_date | bson_date %]'
@@ -18607,7 +18607,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: notification-of-a-person-with-significant-control-scottish-partnership
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: notifications
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.notification_date | bson_date %]'
@@ -18619,7 +18619,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: notification-of-a-person-with-significant-control-scottish-partnership
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: notifications
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.notification_date | bson_date %]'
@@ -18653,7 +18653,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: change-to-a-person-with-significant-control-scottish-partnership
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.change_date | bson_date %]'
@@ -18676,7 +18676,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: change-to-a-person-with-significant-control-scottish-partnership
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.change_date | bson_date %]'
@@ -18699,7 +18699,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: change-to-a-person-with-significant-control-scottish-partnership
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.change_date | bson_date %]'
@@ -18722,7 +18722,7 @@
     set:
       data.category: persons-with-significant-control
       data.description: cessation-of-a-person-with-significant-control-scottish-partnership
-      data.description_values.psc_name: '[% original_values.psc_name | title_case  %]'
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% original_values.cessation_date | bson_date %]'
@@ -19021,7 +19021,7 @@
       data.description: default-companies-house-service-address-applied-officer
       original_description: '[% data.description | sentence_case %]'
       data.description_values.company_number: '[% companyNumber | sentence_case %]'
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.description_values.default_address: '[% defaultAddress | address_case %]'
       data.description_values.change_date: '[% changeDate | bson_date %]'
 - when:
@@ -19035,7 +19035,7 @@
       data.description: default-companies-house-service-address-applied-officer
       original_description: '[% data.description | sentence_case %]'
       data.description_values.company_number: '[% companyNumber | sentence_case %]'
-      data.description_values.officer_name: '[% officerName | title_case  %]'
+      data.description_values.officer_name: '[% officerName | title_case %]'
       data.description_values.default_address: '[% defaultAddress | address_case %]'
       data.description_values.change_date: '[% changeDate | bson_date %]'
 - when:
@@ -19049,7 +19049,7 @@
       data.description: default-companies-house-service-address-applied-psc
       original_description: '[% data.description | sentence_case %]'
       data.description_values.company_number: '[% companyNumber | sentence_case %]'
-      data.description_values.psc_name: '[% pscName | title_case  %]'
+      data.description_values.psc_name: '[% pscName | title_case %]'
       data.description_values.default_address: '[% defaultAddress | address_case %]'
       data.description_values.change_date: '[% changeDate | bson_date %]'
 - when:
@@ -19063,7 +19063,7 @@
       data.description: default-companies-house-service-address-applied-psc
       original_description: '[% data.description | sentence_case %]'
       data.description_values.company_number: '[% companyNumber | sentence_case %]'
-      data.description_values.psc_name: '[% pscName | title_case  %]'
+      data.description_values.psc_name: '[% pscName | title_case %]'
       data.description_values.default_address: '[% defaultAddress | address_case %]'
       data.description_values.change_date: '[% changeDate | bson_date %]'
 - when:
@@ -19077,6 +19077,6 @@
       data.description: default-companies-house-service-address-applied-psc
       original_description: '[% data.description | sentence_case %]'
       data.description_values.company_number: '[% companyNumber | sentence_case %]'
-      data.description_values.psc_name: '[% pscName | title_case  %]'
+      data.description_values.psc_name: '[% pscName | title_case %]'
       data.description_values.default_address: '[% defaultAddress | address_case %]'
       data.description_values.change_date: '[% changeDate | bson_date %]'

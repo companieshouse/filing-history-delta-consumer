@@ -8,11 +8,11 @@
     "subcategory": "termination",
     "description": "termination-director-company-with-name-termination-date",
     "description_values": {
-      "officer_name": "[% officerName | title_case  %]",
-      "termination_date": null
+      "officer_name": "John Tester",
+      "termination_date": "2012-06-04T00:00:00Z"
     },
     "paper_filed": false,
-    "action_date": null,
+    "action_date": "2012-06-04T00:00:00Z",
     "links": {
       "self": "/company/12345678/filing-history/MzA0Mzk3MjY3NXNhbHQ"
     }
