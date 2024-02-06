@@ -90,7 +90,6 @@ class ConsumerPositiveIT extends AbstractKafkaIT {
     void testConsumeFromStreamFilingHistoryDeltaTopic(final String prefix) throws Exception {
         //given
         final String delta = IOUtils.resourceToString("/%s_delta.json".formatted(prefix), StandardCharsets.UTF_8);
-        // TODO: Replace incorrect values in expected request body once transform rules are fully implemented e.g. [% officerName | title_case  %] or the TODOs
         final String requestBody = IOUtils.resourceToString("/%s_request_body.json".formatted(prefix), StandardCharsets.UTF_8);
         final InternalFilingHistoryApi expectedRequestBody = objectMapper.readValue(requestBody, InternalFilingHistoryApi.class);
 
