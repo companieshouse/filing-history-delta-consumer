@@ -49,7 +49,7 @@ class ConsumerInvalidPayloadExceptionIT extends AbstractKafkaIT {
     }
 
     @Test
-    void testPublishToCompanyProfileInvalidMessageTopicIfInvalidDataDeserialised() throws Exception {
+    void testPublishToFilingHistoryInvalidMessageTopicIfInvalidDataDeserialised() throws Exception {
         //given
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         Encoder encoder = EncoderFactory.get().directBinaryEncoder(outputStream, null);
