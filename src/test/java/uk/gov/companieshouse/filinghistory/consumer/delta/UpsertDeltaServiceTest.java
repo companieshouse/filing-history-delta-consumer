@@ -5,8 +5,6 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.nio.charset.StandardCharsets;
-import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -40,15 +38,13 @@ class UpsertDeltaServiceTest {
         when(deserialiser.deserialiseFilingHistoryDelta(any())).thenReturn(delta);
         when(mapper.processDelta(any(), anyString())).thenReturn(apiRequest);
 
-        final String jsonString = IOUtils.resourceToString("/tm01_delta.json", StandardCharsets.UTF_8);
-
-        ChsDelta chsDelta = new ChsDelta(jsonString, 0, "contextId", false);
+        ChsDelta chsDelta = new ChsDelta("delta", 0, "contextId", false);
 
         // when
         service.process(chsDelta);
 
         // then
-        verify(deserialiser).deserialiseFilingHistoryDelta(jsonString);
+        verify(deserialiser).deserialiseFilingHistoryDelta("delta");
         verify(mapper).processDelta(delta, "contextId");
         verify(apiClient).upsertFilingHistory(apiRequest);
     }
