@@ -1,4 +1,6 @@
 ---
+# NOTE: Please be careful to only use one whitespace character between operators within regexes
+# e.g. original_description: '[% data.description | sentence_case %]'
 - default:
     set:
       matched_default: 1          # Identify cases where no matching rule was found
