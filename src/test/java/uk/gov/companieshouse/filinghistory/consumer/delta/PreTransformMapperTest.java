@@ -5,10 +5,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,24 +18,21 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import uk.gov.companieshouse.api.delta.DescriptionValues;
 import uk.gov.companieshouse.api.delta.FilingHistory;
 import uk.gov.companieshouse.api.delta.FilingHistoryDelta;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.TransformerTestingUtils;
 import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.FormatDate;
 
 @ExtendWith(MockitoExtension.class)
 class PreTransformMapperTest {
 
+    private static final ObjectMapper MAPPER = TransformerTestingUtils.getMapper();
+
     private PreTransformMapper preTransformMapper;
     @Mock
     private FormatDate formatDate;
 
-    private final ObjectMapper objectMapper =
-            new ObjectMapper()
-                    .setSerializationInclusion(JsonInclude.Include.NON_NULL)
-                    .registerModule(new JavaTimeModule());
-
-
     @BeforeEach
     void setUp() {
-        preTransformMapper = new PreTransformMapper(objectMapper, formatDate);
+        preTransformMapper = new PreTransformMapper(MAPPER, formatDate);
     }
 
     @Test
@@ -63,7 +58,7 @@ class PreTransformMapperTest {
                                 .preScannedBatch("0")
                 ));
 
-        final ObjectNode expectedTopLevelNode = objectMapper.createObjectNode()
+        final ObjectNode expectedTopLevelNode = MAPPER.createObjectNode()
                 .put("company_number", "12345678")
                 .put("_entity_id", "3063732185")
                 .put("_barcode", "XAITVXAX")
@@ -116,7 +111,7 @@ class PreTransformMapperTest {
                                 .preScannedBatch("0")
                 ));
 
-        final ObjectNode expectedTopLevelNode = objectMapper.createObjectNode()
+        final ObjectNode expectedTopLevelNode = MAPPER.createObjectNode()
                 .put("company_number", "12345678")
                 .put("_entity_id", "3063732185")
                 .put("pre_scanned_batch", "0")
@@ -169,7 +164,7 @@ class PreTransformMapperTest {
                                 .preScannedBatch("0")
                 ));
 
-        final ObjectNode expectedTopLevelNode = objectMapper.createObjectNode()
+        final ObjectNode expectedTopLevelNode = MAPPER.createObjectNode()
                 .put("company_number", "12345678")
                 .put("_entity_id", "3063732185")
                 .put("pre_scanned_batch", "0")
@@ -215,7 +210,7 @@ class PreTransformMapperTest {
                                 .preScannedBatch("0")
                 ));
 
-        final ObjectNode expectedTopLevelNode = objectMapper.createObjectNode()
+        final ObjectNode expectedTopLevelNode = MAPPER.createObjectNode()
                 .put("company_number", "12345678")
                 .put("_entity_id", "3063732185")
                 .put("parent_entity_id", "")
