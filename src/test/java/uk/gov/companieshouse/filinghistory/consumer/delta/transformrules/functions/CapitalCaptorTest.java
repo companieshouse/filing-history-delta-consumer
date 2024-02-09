@@ -26,7 +26,7 @@ class CapitalCaptorTest {
     public static final String DATA_DESCRIPTION_FIELD_PATH = "data.description";
     public static final String FIGURE = "1,000";
     private static final String ALT_DESCRIPTION = "capital-cancellation-treasury-shares-with-date-treasury-capital-figure";
-    private static final ObjectMapper objectMapper = TransformerTestingUtils.getMapper();
+    private static final ObjectMapper MAPPER = TransformerTestingUtils.getMapper();
     public static final String SOURCE_DESCRIPTION = """
             Second filed SH02 - 03/02/16\s
             Statement of Capital gbp 1000 03/02/16\s
@@ -81,28 +81,28 @@ class CapitalCaptorTest {
     }
 
     private static CapitalCaptures buildExpected() {
-        ObjectNode capital1 = objectMapper.createObjectNode()
+        ObjectNode capital1 = MAPPER.createObjectNode()
                 .put("currency", "GBP")
                 .put("figure", FIGURE);
 
-        ObjectNode capital2 = objectMapper.createObjectNode()
+        ObjectNode capital2 = MAPPER.createObjectNode()
                 .put("currency", "EUR")
                 .put("figure", FIGURE);
 
-        ObjectNode capital3 = objectMapper.createObjectNode()
+        ObjectNode capital3 = MAPPER.createObjectNode()
                 .put("currency", "USD")
                 .put("figure", FIGURE);
 
-        ArrayNode captures = objectMapper.createArrayNode()
+        ArrayNode captures = MAPPER.createArrayNode()
                 .add(capital1)
                 .add(capital2)
                 .add(capital3);
 
-        return new CapitalCaptures(captures, objectMapper.createArrayNode());
+        return new CapitalCaptures(captures, MAPPER.createArrayNode());
     }
 
     private static CapitalCaptures buildExpectedAlt() {
-        ObjectNode altCapital = objectMapper.createObjectNode()
+        ObjectNode altCapital = MAPPER.createObjectNode()
                 .put("currency", "GBP")
                 // has a date because of 'treasury' within the description
                 // has nothing to do with if it's an alt_capital or not
@@ -110,24 +110,24 @@ class CapitalCaptorTest {
                 .put("description", "capital-cancellation-treasury-shares-with-date-treasury-capital-figure")
                 .put("figure", FIGURE);
 
-        ObjectNode capital1 = objectMapper.createObjectNode()
+        ObjectNode capital1 = MAPPER.createObjectNode()
                 .put("currency", "USD")
                 .put("figure", FIGURE);
 
-        ObjectNode capital2 = objectMapper.createObjectNode()
+        ObjectNode capital2 = MAPPER.createObjectNode()
                 .put("currency", "HKD")
                 .put("figure", FIGURE);
 
-        ObjectNode capital3 = objectMapper.createObjectNode()
+        ObjectNode capital3 = MAPPER.createObjectNode()
                 .put("currency", "JPY")
                 .put("figure", FIGURE);
 
-        ArrayNode captures = objectMapper.createArrayNode()
+        ArrayNode captures = MAPPER.createArrayNode()
                 .add(capital1)
                 .add(capital2)
                 .add(capital3);
 
-        ArrayNode altCaptures = objectMapper.createArrayNode()
+        ArrayNode altCaptures = MAPPER.createArrayNode()
                 .add(altCapital);
 
         return new CapitalCaptures(captures, altCaptures);

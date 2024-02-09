@@ -8,11 +8,9 @@ import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 import static uk.gov.companieshouse.api.filinghistory.InternalData.TransactionKindEnum.TOP_LEVEL;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
@@ -27,6 +25,7 @@ import uk.gov.companieshouse.api.filinghistory.FilingHistoryItemDataLinks;
 import uk.gov.companieshouse.api.filinghistory.InternalData;
 import uk.gov.companieshouse.api.filinghistory.InternalDataOriginalValues;
 import uk.gov.companieshouse.api.filinghistory.InternalFilingHistoryApi;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.TransformerTestingUtils;
 
 @ExtendWith(MockitoExtension.class)
 class InternalFilingHistoryApiMapperTest {
@@ -44,6 +43,7 @@ class InternalFilingHistoryApiMapperTest {
     private static final String CATEGORY = "officers";
     private static final String SUBCATEGORY = "termination";
     private static final String UPDATED_BY = "updatedBy";
+    private static final ObjectMapper MAPPER = TransformerTestingUtils.getMapper();
 
     @InjectMocks
     private InternalFilingHistoryApiMapper mapper;
@@ -162,7 +162,8 @@ class InternalFilingHistoryApiMapperTest {
         final JsonNode descriptionValuesNode = topLevelNode.get("data").get("description_values");
         final JsonNode originalValuesNode = topLevelNode.get("original_values");
 
-        final InternalFilingHistoryApi expectedRequestBody = buildExpectedTM01RequestBody("TAITVXAX", "000TAITVXAX4682", true);
+        final InternalFilingHistoryApi expectedRequestBody = buildExpectedTM01RequestBody("TAITVXAX", "000TAITVXAX4682",
+                true);
         InternalFilingHistoryApiMapperArguments arguments = new InternalFilingHistoryApiMapperArguments(
                 topLevelNode,
                 buildTransactionKindResult(ENCODED_ID),
@@ -185,7 +186,8 @@ class InternalFilingHistoryApiMapperTest {
     @CsvSource({
             "000XAITVXAX4682 , false",
             "000TAITVXAX4682 , true"})
-    void shouldMapTransformedJsonNodeToInternalFilingHistoryApiObjectWhenBarcodeIsEmptyButDocumentIdIsNot(final String documentId, final boolean isPaperFiled) {
+    void shouldMapTransformedJsonNodeToInternalFilingHistoryApiObjectWhenBarcodeIsEmptyButDocumentIdIsNot(
+            final String documentId, final boolean isPaperFiled) {
         // given
         when(descriptionValuesMapper.map(any())).thenReturn(filingHistoryItemDataDescriptionValues);
         when(originalValuesMapper.map(any())).thenReturn(internalDataOriginalValues);
@@ -221,8 +223,9 @@ class InternalFilingHistoryApiMapperTest {
             "null , MzA1Njc0Mjg0N3NqYXNqamQ",
             "null , null"
     },
-    nullValues = {"null"})
-    void shouldThrowIllegalArgumentExceptionWhenNullOrEmptyCompanyNumberOrTransactionId(final String companyNumber, final String transactionId) {
+            nullValues = {"null"})
+    void shouldThrowIllegalArgumentExceptionWhenNullOrEmptyCompanyNumberOrTransactionId(final String companyNumber,
+            final String transactionId) {
         // given
         when(descriptionValuesMapper.map(any())).thenReturn(filingHistoryItemDataDescriptionValues);
         when(paperFiledMapper.map(any(), any())).thenReturn(false);
@@ -296,12 +299,7 @@ class InternalFilingHistoryApiMapperTest {
     }
 
     private static JsonNode buildJsonNode(final String barcode, final String documentId, final String companyNumber) {
-        final ObjectMapper objectMapper =
-                new ObjectMapper()
-                        .setSerializationInclusion(JsonInclude.Include.NON_NULL)
-                        .registerModule(new JavaTimeModule());
-
-        ObjectNode topLevelNode = objectMapper.createObjectNode()
+        ObjectNode topLevelNode = MAPPER.createObjectNode()
                 .put("_barcode", barcode)
                 .put("original_description", ORIGINAL_DESCRIPTION)
                 .put("parent_entity_id", "")
@@ -324,12 +322,7 @@ class InternalFilingHistoryApiMapperTest {
     }
 
     private static JsonNode buildJsonNodeWithNoNonRequiredFields() {
-        final ObjectMapper objectMapper =
-                new ObjectMapper()
-                        .setSerializationInclusion(JsonInclude.Include.NON_NULL)
-                        .registerModule(new JavaTimeModule());
-
-        ObjectNode topLevelNode = objectMapper.createObjectNode()
+        ObjectNode topLevelNode = MAPPER.createObjectNode()
                 .put("_entity_id", ENTITY_ID)
                 .put("company_number", COMPANY_NUMBER);
 
@@ -345,7 +338,8 @@ class InternalFilingHistoryApiMapperTest {
         return new TransactionKindResult(transactionId, TOP_LEVEL);
     }
 
-    private InternalFilingHistoryApi buildExpectedTM01RequestBody(final String barcode, final String documentId, final boolean isPaperFiled) {
+    private InternalFilingHistoryApi buildExpectedTM01RequestBody(final String barcode, final String documentId,
+            final boolean isPaperFiled) {
         return new InternalFilingHistoryApi()
                 .externalData(new ExternalData()
                         .transactionId(ENCODED_ID)

@@ -36,7 +36,7 @@ public class FormatDate extends AbstractTransformer {
         target.objectNode().put(target.fieldKey(), format(targetValue));
     }
 
-    String format(String nodeText) {
+    public String format(String nodeText) {
         if (StringUtils.isEmpty(nodeText)) {
             return nodeText;
         }

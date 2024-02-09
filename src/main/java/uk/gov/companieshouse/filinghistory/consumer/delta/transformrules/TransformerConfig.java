@@ -23,7 +23,6 @@ public class TransformerConfig {
         InputStream stream = getClass().getResourceAsStream("/%s".formatted(rulesFile));
         List<RuleProperties> ruleProperties = mapper.readValue(stream, new TypeReference<>() {
         });
-
         List<Rule> rules = ruleProperties.stream()
                 .map(ruleProperty -> ruleProperty.compile(transformerFactory))
                 .toList();

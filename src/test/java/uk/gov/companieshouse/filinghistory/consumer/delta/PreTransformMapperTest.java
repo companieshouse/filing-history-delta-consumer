@@ -1,33 +1,38 @@
 package uk.gov.companieshouse.filinghistory.consumer.delta;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import uk.gov.companieshouse.api.delta.DescriptionValues;
 import uk.gov.companieshouse.api.delta.FilingHistory;
 import uk.gov.companieshouse.api.delta.FilingHistoryDelta;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.TransformerTestingUtils;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.FormatDate;
 
+@ExtendWith(MockitoExtension.class)
 class PreTransformMapperTest {
 
+    private static final ObjectMapper MAPPER = TransformerTestingUtils.getMapper();
+
     private PreTransformMapper preTransformMapper;
-
-    private final ObjectMapper objectMapper =
-            new ObjectMapper()
-                    .setSerializationInclusion(JsonInclude.Include.NON_NULL)
-                    .registerModule(new JavaTimeModule());
-
+    @Mock
+    private FormatDate formatDate;
 
     @BeforeEach
     void setUp() {
-        preTransformMapper = new PreTransformMapper(objectMapper);
+        preTransformMapper = new PreTransformMapper(MAPPER, formatDate);
     }
 
     @Test
@@ -53,7 +58,7 @@ class PreTransformMapperTest {
                                 .preScannedBatch("0")
                 ));
 
-        final ObjectNode expectedTopLevelNode = objectMapper.createObjectNode()
+        final ObjectNode expectedTopLevelNode = MAPPER.createObjectNode()
                 .put("company_number", "12345678")
                 .put("_entity_id", "3063732185")
                 .put("_barcode", "XAITVXAX")
@@ -70,15 +75,19 @@ class PreTransformMapperTest {
         expectedTopLevelNode
                 .putObject("data")
                 .put("type", "TM01")
-                .put("date", "20110905053919")
+                .put("date", "2011-09-05T05:39:19Z")
                 .put("description", "Appointment Terminated, Director JOHN DOE")
                 .put("category", "2");
 
+        when(formatDate.format(any())).thenReturn("2011-09-05T05:39:19Z");
+
         // when
-        final ObjectNode actualObjectNode = preTransformMapper.mapDeltaToObjectNode(delta.getFilingHistory().getFirst());
+        final ObjectNode actualObjectNode = preTransformMapper.mapDeltaToObjectNode(
+                delta.getFilingHistory().getFirst());
 
         // then
         assertEquals(expectedTopLevelNode, actualObjectNode);
+        verify(formatDate).format("20110905053919");
     }
 
     @Test
@@ -102,7 +111,7 @@ class PreTransformMapperTest {
                                 .preScannedBatch("0")
                 ));
 
-        final ObjectNode expectedTopLevelNode = objectMapper.createObjectNode()
+        final ObjectNode expectedTopLevelNode = MAPPER.createObjectNode()
                 .put("company_number", "12345678")
                 .put("_entity_id", "3063732185")
                 .put("pre_scanned_batch", "0")
@@ -112,15 +121,19 @@ class PreTransformMapperTest {
         expectedTopLevelNode
                 .putObject("data")
                 .put("type", "TM01")
-                .put("date", "20110905053919")
+                .put("date", "2011-09-05T05:39:19Z")
                 .put("description", "Appointment Terminated, Director JOHN DOE")
                 .put("category", "2");
 
+        when(formatDate.format(any())).thenReturn("2011-09-05T05:39:19Z");
+
         // when
-        final ObjectNode actualObjectNode = preTransformMapper.mapDeltaToObjectNode(delta.getFilingHistory().getFirst());
+        final ObjectNode actualObjectNode = preTransformMapper.mapDeltaToObjectNode(
+                delta.getFilingHistory().getFirst());
 
         // then
         assertEquals(expectedTopLevelNode, actualObjectNode);
+        verify(formatDate).format("20110905053919");
     }
 
     @ParameterizedTest
@@ -128,7 +141,8 @@ class PreTransformMapperTest {
             "02/07/2011 , ",
             " , John Doe"
     })
-    void shouldMapDeltaObjectOntoObjectNodeWhenDeltaMissingFieldsOnDescriptionValues(final String resignationDate, final String officerName) {
+    void shouldMapDeltaObjectOntoObjectNodeWhenDeltaMissingFieldsOnDescriptionValues(final String resignationDate,
+            final String officerName) {
         // given
         final FilingHistoryDelta delta = new FilingHistoryDelta()
                 .deltaAt("20140916230459600643")
@@ -150,7 +164,7 @@ class PreTransformMapperTest {
                                 .preScannedBatch("0")
                 ));
 
-        final ObjectNode expectedTopLevelNode = objectMapper.createObjectNode()
+        final ObjectNode expectedTopLevelNode = MAPPER.createObjectNode()
                 .put("company_number", "12345678")
                 .put("_entity_id", "3063732185")
                 .put("pre_scanned_batch", "0")
@@ -160,15 +174,19 @@ class PreTransformMapperTest {
         expectedTopLevelNode
                 .putObject("data")
                 .put("type", "TM01")
-                .put("date", "20110905053919")
+                .put("date", "2011-09-05T05:39:19Z")
                 .put("description", "Appointment Terminated, Director JOHN DOE")
                 .put("category", "2");
 
+        when(formatDate.format(any())).thenReturn("2011-09-05T05:39:19Z");
+
         // when
-        final ObjectNode actualObjectNode = preTransformMapper.mapDeltaToObjectNode(delta.getFilingHistory().getFirst());
+        final ObjectNode actualObjectNode = preTransformMapper.mapDeltaToObjectNode(
+                delta.getFilingHistory().getFirst());
 
         // then
         assertEquals(expectedTopLevelNode, actualObjectNode);
+        verify(formatDate).format("20110905053919");
     }
 
     @Test
@@ -192,7 +210,7 @@ class PreTransformMapperTest {
                                 .preScannedBatch("0")
                 ));
 
-        final ObjectNode expectedTopLevelNode = objectMapper.createObjectNode()
+        final ObjectNode expectedTopLevelNode = MAPPER.createObjectNode()
                 .put("company_number", "12345678")
                 .put("_entity_id", "3063732185")
                 .put("parent_entity_id", "")
@@ -202,14 +220,18 @@ class PreTransformMapperTest {
         expectedTopLevelNode
                 .putObject("data")
                 .put("type", "TM01")
-                .put("date", "20110905053919")
+                .put("date", "2011-09-05T05:39:19Z")
                 .put("description", "Appointment Terminated, Director JOHN DOE")
                 .put("category", "2");
 
+        when(formatDate.format(any())).thenReturn("2011-09-05T05:39:19Z");
+
         // when
-        final ObjectNode actualObjectNode = preTransformMapper.mapDeltaToObjectNode(delta.getFilingHistory().getFirst());
+        final ObjectNode actualObjectNode = preTransformMapper.mapDeltaToObjectNode(
+                delta.getFilingHistory().getFirst());
 
         // then
         assertEquals(expectedTopLevelNode, actualObjectNode);
+        verify(formatDate).format("20110905053919");
     }
 }

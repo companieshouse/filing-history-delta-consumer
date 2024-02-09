@@ -3,29 +3,25 @@ package uk.gov.companieshouse.filinghistory.consumer.delta;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
 import uk.gov.companieshouse.api.filinghistory.InternalDataOriginalValues;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.TransformerTestingUtils;
 
 class OriginalValuesMapperTest {
 
     private final static String RESIGNATION_DATE = "03/02/2013";
     private final static String OFFICER_NAME = "John Tester";
+    private static final ObjectMapper MAPPER = TransformerTestingUtils.getMapper();
 
     private final OriginalValuesMapper originalValuesMapper = new OriginalValuesMapper();
 
-    private final ObjectMapper objectMapper =
-            new ObjectMapper()
-                    .setSerializationInclusion(JsonInclude.Include.NON_NULL)
-                    .registerModule(new JavaTimeModule());
 
     @Test
     void shouldMapOriginalValuesFromJsonNode() {
         // given
-        final JsonNode jsonNode = objectMapper.createObjectNode()
+        final JsonNode jsonNode = MAPPER.createObjectNode()
                 .putObject("original_values")
                 .put("resignation_date", RESIGNATION_DATE)
                 .put("officer_name", OFFICER_NAME);
@@ -44,7 +40,7 @@ class OriginalValuesMapperTest {
     @Test
     void shouldMapNullValuesIfJsonNodeFieldsAreNull() {
         // given
-        final JsonNode jsonNode = objectMapper.createObjectNode();
+        final JsonNode jsonNode = MAPPER.createObjectNode();
 
         final InternalDataOriginalValues expected = new InternalDataOriginalValues()
                 .resignationDate(null)

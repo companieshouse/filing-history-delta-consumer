@@ -26,7 +26,7 @@ class ProcessCapitalTest {
             "(?i:(?<capitalDate>\\d+\\D\\d+\\D\\d+) (?:(?<capitalDesc>STATEMENT OF CAPITAL)|(?<capitalAltDesc>TREASURY CAPITAL)) (?<capitalCurrency>\\w+) (?<capitalFigure>\\d+\\.\\d+|\\.\\d+|\\d+))");
     public static final String DATA_DESCRIPTION_FIELD_PATH = "data.description";
     private static final String ALT_DESCRIPTION = "capital-cancellation-treasury-shares-with-date-treasury-capital-figure";
-    private static final ObjectMapper objectMapper = TransformerTestingUtils.getMapper();
+    private static final ObjectMapper MAPPER = TransformerTestingUtils.getMapper();
     public static final String SOURCE_DESCRIPTION = """
             Second filed SH02 - 03/02/16\s
             Statement of Capital gbp 1000 03/02/16\s
@@ -48,18 +48,18 @@ class ProcessCapitalTest {
 
     @BeforeEach
     void setup() {
-        processCapital = new ProcessCapital(objectMapper, capitalCaptor);
+        processCapital = new ProcessCapital(MAPPER, capitalCaptor);
     }
 
     @Test
     void shouldTransformCaptureGroupsIntoCapitalNode() {
         // given
-        ArrayNode captures = objectMapper.createArrayNode()
+        ArrayNode captures = MAPPER.createArrayNode()
                 .add(capture);
 
         when(capitalCaptor.captureCapital(any(), any(), any())).thenReturn(capitalCaptures);
         when(capitalCaptures.captures()).thenReturn(captures);
-        when(capitalCaptures.altCaptures()).thenReturn(objectMapper.createArrayNode());
+        when(capitalCaptures.altCaptures()).thenReturn(MAPPER.createArrayNode());
 
         JsonNode source = buildSourceNode();
 
@@ -77,9 +77,9 @@ class ProcessCapitalTest {
     @Test
     void shouldTransformBothCaptureAndAltCaptureGroupsIntoCapitalAndAltCapitalNodes() {
         // given
-        ArrayNode altCaptures = objectMapper.createArrayNode()
+        ArrayNode altCaptures = MAPPER.createArrayNode()
                 .add(capture);
-        ArrayNode captures = objectMapper.createArrayNode()
+        ArrayNode captures = MAPPER.createArrayNode()
                 .add(capture);
 
         when(capitalCaptor.captureCapital(any(), any(), any())).thenReturn(capitalCaptures);
@@ -100,7 +100,7 @@ class ProcessCapitalTest {
     }
 
     private static JsonNode buildSourceNode() {
-        final ObjectNode topLevelNode = objectMapper.createObjectNode()
+        final ObjectNode topLevelNode = MAPPER.createObjectNode()
                 .put("_entity_id", "3063732185")
                 .put("_barcode", "XAITVXAX");
 
@@ -114,7 +114,7 @@ class ProcessCapitalTest {
     }
 
     private static JsonNode buildSourceAltNode() {
-        final ObjectNode topLevelNode = objectMapper.createObjectNode()
+        final ObjectNode topLevelNode = MAPPER.createObjectNode()
                 .put("_entity_id", "3081501305")
                 .put("_barcode", "13CMU31L");
 
@@ -128,7 +128,7 @@ class ProcessCapitalTest {
     }
 
     private JsonNode buildExpectedNode(ArrayNode captures) {
-        final ObjectNode topLevelNode = objectMapper.createObjectNode()
+        final ObjectNode topLevelNode = MAPPER.createObjectNode()
                 .put("_entity_id", "3063732185")
                 .put("_barcode", "XAITVXAX");
 
@@ -145,7 +145,7 @@ class ProcessCapitalTest {
     }
 
     private static JsonNode buildExpectedAltNode(ArrayNode altCaptures, ArrayNode captures) {
-        final ObjectNode topLevelNode = objectMapper.createObjectNode()
+        final ObjectNode topLevelNode = MAPPER.createObjectNode()
                 .put("_entity_id", "3081501305")
                 .put("_barcode", "13CMU31L");
 

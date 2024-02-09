@@ -6,24 +6,27 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import uk.gov.companieshouse.api.delta.DescriptionValues;
 import uk.gov.companieshouse.api.delta.FilingHistory;
+import uk.gov.companieshouse.filinghistory.consumer.delta.transformrules.functions.FormatDate;
 
 @Component
 public class PreTransformMapper {
 
     private final ObjectMapper objectMapper;
+    private final FormatDate formatDate;
 
-    public PreTransformMapper(ObjectMapper objectMapper) {
+    public PreTransformMapper(ObjectMapper objectMapper, FormatDate formatDate) {
         this.objectMapper = objectMapper;
+        this.formatDate = formatDate;
     }
 
     public ObjectNode mapDeltaToObjectNode(final FilingHistory filingHistory) {
         final ObjectNode objectNode = objectMapper.createObjectNode();
         objectNode
-            .put("company_number", filingHistory.getCompanyNumber())
-            .put("_entity_id", filingHistory.getEntityId())
-            .put("parent_entity_id", filingHistory.getParentEntityId())
-            .put("parent_form_type", filingHistory.getParentFormType())
-            .put("pre_scanned_batch", filingHistory.getPreScannedBatch());
+                .put("company_number", filingHistory.getCompanyNumber())
+                .put("_entity_id", filingHistory.getEntityId())
+                .put("parent_entity_id", filingHistory.getParentEntityId())
+                .put("parent_form_type", filingHistory.getParentFormType())
+                .put("pre_scanned_batch", filingHistory.getPreScannedBatch());
 
         mapBarcodeAndDocumentId(objectNode, filingHistory);
         mapDescriptionValuesObject(objectNode, filingHistory.getDescriptionValues());
@@ -54,18 +57,18 @@ public class PreTransformMapper {
 
         if (StringUtils.isNotBlank(resignationDate) && StringUtils.isNotBlank(officerName)) {
             objectNode
-                .putObject("original_values")
-                .put("resignation_date", resignationDate)
-                .put("officer_name", officerName);
+                    .putObject("original_values")
+                    .put("resignation_date", resignationDate)
+                    .put("officer_name", officerName);
         }
     }
 
     private void mapDataObject(ObjectNode objectNode, final FilingHistory filingHistory) {
         objectNode
-            .putObject("data")
-            .put("type", filingHistory.getFormType())
-            .put("date", filingHistory.getReceiveDate())
-            .put("description", filingHistory.getDescription())
-            .put("category", filingHistory.getCategory());
+                .putObject("data")
+                .put("type", filingHistory.getFormType())
+                .put("date", formatDate.format(filingHistory.getReceiveDate()))
+                .put("description", filingHistory.getDescription())
+                .put("category", filingHistory.getCategory());
     }
 }
