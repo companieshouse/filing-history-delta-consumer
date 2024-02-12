@@ -73,8 +73,8 @@ class ConsumerPositiveIT extends AbstractKafkaIT {
     })
     void testConsumeFromStreamFilingHistoryDeltaTopic(final String prefix) throws Exception {
         // given
-        final String delta = IOUtils.resourceToString("/%s_delta.json".formatted(prefix), StandardCharsets.UTF_8);
-        final String requestBody = IOUtils.resourceToString("/%s_request_body.json".formatted(prefix),
+        final String delta = IOUtils.resourceToString("/data/%s_delta.json".formatted(prefix), StandardCharsets.UTF_8);
+        final String requestBody = IOUtils.resourceToString("/data/%s_request_body.json".formatted(prefix),
                 StandardCharsets.UTF_8);
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

@@ -4,7 +4,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
 import uk.gov.companieshouse.delta.ChsDelta;
-import uk.gov.companieshouse.filinghistory.consumer.delta.DeltaServiceRouter;
+import uk.gov.companieshouse.filinghistory.consumer.service.DeltaServiceRouter;
 import uk.gov.companieshouse.filinghistory.consumer.exception.RetryableException;
 
 @Component
