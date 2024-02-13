@@ -26,6 +26,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -53,17 +54,21 @@ class ConsumerPositiveIT extends AbstractKafkaIT {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private WireMockServer server;
+    private static final WireMockServer server = new WireMockServer(8888);
 
     @DynamicPropertySource
     static void props(DynamicPropertyRegistry registry) {
         registry.add("steps", () -> 1);
     }
 
+    @BeforeAll
+    static void beforeAll() {
+        server.start();
+    }
+
     @BeforeEach
     public void setup() {
-        server = new WireMockServer();
-        server.start();
+        server.resetAll();
         testConsumer.poll(Duration.ofSeconds(1));
     }
 
