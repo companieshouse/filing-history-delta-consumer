@@ -1,0 +1,56 @@
+package uk.gov.companieshouse.filinghistory.consumer.service;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import uk.gov.companieshouse.api.filinghistory.InternalData.TransactionKindEnum;
+import uk.gov.companieshouse.filinghistory.consumer.service.TransactionKindCriteria;
+import uk.gov.companieshouse.filinghistory.consumer.service.TransactionKindResult;
+import uk.gov.companieshouse.filinghistory.consumer.service.TransactionKindService;
+
+class TransactionKindServiceTest {
+
+    private static final String SALT = "salt";
+    private TransactionKindService kindService;
+
+    @BeforeEach
+    void setUp() {
+        kindService = new TransactionKindService(SALT);
+    }
+
+    @Test
+    void shouldSuccessfullyEncodeIdByTransactionKind() {
+        // given
+        TransactionKindCriteria criteria = new TransactionKindCriteria("entityId", "", "TM01", "", "");
+
+        TransactionKindResult expected = new TransactionKindResult("ZW50aXR5SWRzYWx0", TransactionKindEnum.TOP_LEVEL);
+
+        // when
+        TransactionKindResult actual = kindService.encodeIdByTransactionKind(criteria);
+
+        // then
+        assertEquals(expected, actual);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {
+            "null",
+            "''"
+    },
+    nullValues = {"null"})
+    void shouldReturnUnchangedIdIfNullOrEmpty(final String entityId) {
+        // given
+        TransactionKindCriteria criteria = new TransactionKindCriteria(entityId, "", "TM01", "", "");
+
+        TransactionKindResult expected = new TransactionKindResult(entityId, TransactionKindEnum.TOP_LEVEL);
+
+        // when
+        TransactionKindResult actual = kindService.encodeIdByTransactionKind(criteria);
+
+        // then
+        assertEquals(expected, actual);
+    }
+}
