@@ -7,13 +7,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.gov.companieshouse.api.filinghistory.FilingHistoryItemDataDescriptionValues;
-import uk.gov.companieshouse.filinghistory.consumer.mapper.DescriptionValuesMapper;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.TransformerTestingUtils;
 
 class DescriptionValuesMapperTest {
 
-    private static final String OFFICER_NAME = "John Tester";
-    private static final String TERMINATION_DATE = "06/05/2013";
     private static final ObjectMapper MAPPER = TransformerTestingUtils.getMapper();
 
     private final DescriptionValuesMapper descriptionValuesMapper = new DescriptionValuesMapper();
@@ -24,12 +21,82 @@ class DescriptionValuesMapperTest {
         // given
         final JsonNode jsonNode = MAPPER.createObjectNode()
                 .putObject("description_values")
-                .put("officer_name", OFFICER_NAME)
-                .put("termination_date", TERMINATION_DATE);
+                .put("appointment_date", "01/01/2010")
+                .put("branch_number", "50")
+                .put("brought_down_date", "02/02/2011")
+                .put("case_end_date", "06/05/2013")
+                .put("case_number", "123")
+                .put("cessation_date", "05/06/2013")
+                .put("change_address", "11 Test Lane")
+                .put("change_date", "04/04/2013")
+                .put("change_details", "5 Test St")
+                .put("change_name", "John Tester")
+                .put("change_type", "type")
+                .put("charge_creation_date", "05/05/2014")
+                .put("charge_number", "1")
+                .put("close_date", "06/06/2015")
+                .put("company_number", "12345678")
+                .put("company_type", "LLP")
+                .put("date", "07/07/2016")
+                .put("default_address", "5 Default Road")
+                .put("description", "description")
+                .put("form_attached", "attached form")
+                .put("form_type", "TM01")
+                .put("incorporation_date", "08/08/2017")
+                .put("made_up_date", "09/09/2018")
+                .put("new_address", "6 New town Crescent")
+                .put("new_date", "10/10/2019")
+                .put("new_jurisdiction", "Cardiff")
+                .put("notification_date", "11/11/2020")
+                .put("officer_address", "201 Officer Drive")
+                .put("officer_name", "John Doe")
+                .put("old_address", "5 Old Kent Road")
+                .put("old_jurisdiction", "London")
+                .put("original_description", "original")
+                .put("property_acquired_date", "12/12/2021")
+                .put("psc_name", "Significant Person")
+                .put("representative_details", "details representing")
+                .put("termination_date", "31/01/2022")
+                .put("withdrawal_date", "01/02/2023");
 
         final FilingHistoryItemDataDescriptionValues expected = new FilingHistoryItemDataDescriptionValues()
-                .officerName(OFFICER_NAME)
-                .terminationDate(TERMINATION_DATE);
+                .appointmentDate("01/01/2010")
+                .branchNumber("50")
+                .broughtDownDate("02/02/2011")
+                .caseEndDate("06/05/2013")
+                .caseNumber("123")
+                .cessationDate("05/06/2013")
+                .changeAddress("11 Test Lane")
+                .changeDate("04/04/2013")
+                .changeDetails("5 Test St")
+                .changeName("John Tester")
+                .changeType("type")
+                .chargeCreationDate("05/05/2014")
+                .chargeNumber("1")
+                .closeDate("06/06/2015")
+                .companyNumber("12345678")
+                .companyType("LLP")
+                .date("07/07/2016")
+                .defaultAddress("5 Default Road")
+                .description("description")
+                .formAttached("attached form")
+                .formType("TM01")
+                .incorporationDate("08/08/2017")
+                .madeUpDate("09/09/2018")
+                .newAddress("6 New town Crescent")
+                .newDate("10/10/2019")
+                .newJurisdiction("Cardiff")
+                .notificationDate("11/11/2020")
+                .officerAddress("201 Officer Drive")
+                .officerName("John Doe")
+                .oldAddress("5 Old Kent Road")
+                .oldJurisdiction("London")
+                .originalDescription("original")
+                .propertyAcquiredDate("12/12/2021")
+                .pscName("Significant Person")
+                .representativeDetails("details representing")
+                .terminationDate("31/01/2022")
+                .withdrawalDate("01/02/2023");
 
         // when
         final FilingHistoryItemDataDescriptionValues actual = descriptionValuesMapper.map(jsonNode);
@@ -43,9 +110,7 @@ class DescriptionValuesMapperTest {
         // given
         final JsonNode jsonNode = MAPPER.createObjectNode();
 
-        final FilingHistoryItemDataDescriptionValues expected = new FilingHistoryItemDataDescriptionValues()
-                .officerName(null)
-                .terminationDate(null);
+        final FilingHistoryItemDataDescriptionValues expected = new FilingHistoryItemDataDescriptionValues();
 
         // when
         final FilingHistoryItemDataDescriptionValues actual = descriptionValuesMapper.map(jsonNode);

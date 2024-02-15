@@ -36,31 +36,49 @@ public class PreTransformMapper {
     }
 
     private void mapBarcodeAndDocumentId(ObjectNode objectNode, final FilingHistory filingHistory) {
-        final String barcode = filingHistory.getBarcode();
-        if (StringUtils.isNotBlank(barcode)) {
-            objectNode.put("_barcode", barcode);
-        }
-
-        final String documentId = filingHistory.getDocumentId();
-        if (StringUtils.isNotBlank(documentId)) {
-            objectNode.put("_document_id", documentId);
-        }
+        putIfNotBlank(objectNode, "_barcode", filingHistory.getBarcode());
+        putIfNotBlank(objectNode, "_document_id", filingHistory.getDocumentId());
     }
 
     private void mapDescriptionValuesObject(ObjectNode objectNode, final DescriptionValues descriptionValues) {
         if (descriptionValues == null) {
             return;
         }
+        ObjectNode originalValuesNode = objectNode.putObject("original_values");
 
-        final String resignationDate = descriptionValues.getResignationDate();
-        final String officerName = descriptionValues.getOFFICERNAME();
+        // below are on the YAML and the spec
+        putIfNotBlank(originalValuesNode, "resignation_date", descriptionValues.getResignationDate());
+        putIfNotBlank(originalValuesNode, "officer_name", descriptionValues.getOFFICERNAME());
+        putIfNotBlank(originalValuesNode, "cessation_date", descriptionValues.getCessationDate());
+        putIfNotBlank(originalValuesNode, "change_date", descriptionValues.getChangeDate());
+        putIfNotBlank(originalValuesNode, "notification_date", descriptionValues.getNotificationDate());
+        putIfNotBlank(originalValuesNode, "psc_name", descriptionValues.getPscName());
+        putIfNotBlank(originalValuesNode, "acc_type", descriptionValues.getAccType());
+        putIfNotBlank(originalValuesNode, "case_end_date", descriptionValues.getCaseEndDate());
+        putIfNotBlank(originalValuesNode, "made_up_date", descriptionValues.getMadeUpDate());
+        putIfNotBlank(originalValuesNode, "new_ro_address", descriptionValues.getNewRoAddress());
 
-        if (StringUtils.isNotBlank(resignationDate) && StringUtils.isNotBlank(officerName)) {
-            objectNode
-                    .putObject("original_values")
-                    .put("resignation_date", resignationDate)
-                    .put("officer_name", officerName);
-        }
+        // below are on the YAML but aren't on the spec
+        putIfNotBlank(originalValuesNode, "appointment_date", descriptionValues.getAppointmentDate());
+        putIfNotBlank(originalValuesNode, "charge_creation_date", descriptionValues.getChargeCreationDate());
+        putIfNotBlank(originalValuesNode, "property_acquired_date", descriptionValues.getPropertyAcquiredDate());
+
+        // below are not on YAML file but are on the spec
+//        descriptionValues.getAccountingPeriod();
+//        descriptionValues.getExtended();
+//        descriptionValues.getNotificationDate();
+//        descriptionValues.getNewDate();
+//        descriptionValues.getPeriodType();
+//        descriptionValues.getOfficerName(); // comes across as all caps, check for this casing
+//
+        // below appear on the YAML and are on the spec but should be mapped for children
+//        descriptionValues.getCaseStartDate();
+//        descriptionValues.getResType();
+
+        // below are on the YAML but aren't on the spec and should be mapped for children
+//        descriptionValues.getDescription();
+//        descriptionValues.getDate();
+//        descriptionValues.getResolutionDate();
     }
 
     private void mapDataObject(ObjectNode objectNode, final FilingHistory filingHistory) {
@@ -70,5 +88,11 @@ public class PreTransformMapper {
                 .put("date", formatDate.format(filingHistory.getReceiveDate()))
                 .put("description", filingHistory.getDescription())
                 .put("category", filingHistory.getCategory());
+    }
+
+    private static void putIfNotBlank(ObjectNode node, String key, String value) {
+        if (StringUtils.isNotBlank(key) && StringUtils.isNotBlank(value)) {
+            node.put(key, value);
+        }
     }
 }
