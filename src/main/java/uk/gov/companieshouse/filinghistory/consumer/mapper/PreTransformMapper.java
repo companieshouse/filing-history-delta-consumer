@@ -46,9 +46,9 @@ public class PreTransformMapper {
         }
         ObjectNode originalValuesNode = objectNode.putObject("original_values");
 
-        // below are on the YAML and the spec
         putIfNotBlank(originalValuesNode, "resignation_date", descriptionValues.getResignationDate());
         putIfNotBlank(originalValuesNode, "officer_name", descriptionValues.getOFFICERNAME());
+        putIfNotBlank(originalValuesNode, "officer_name", descriptionValues.getOfficerName());
         putIfNotBlank(originalValuesNode, "cessation_date", descriptionValues.getCessationDate());
         putIfNotBlank(originalValuesNode, "change_date", descriptionValues.getChangeDate());
         putIfNotBlank(originalValuesNode, "notification_date", descriptionValues.getNotificationDate());
@@ -57,20 +57,17 @@ public class PreTransformMapper {
         putIfNotBlank(originalValuesNode, "case_end_date", descriptionValues.getCaseEndDate());
         putIfNotBlank(originalValuesNode, "made_up_date", descriptionValues.getMadeUpDate());
         putIfNotBlank(originalValuesNode, "new_ro_address", descriptionValues.getNewRoAddress());
-
-        // below are on the YAML but aren't on the spec
         putIfNotBlank(originalValuesNode, "appointment_date", descriptionValues.getAppointmentDate());
         putIfNotBlank(originalValuesNode, "charge_creation_date", descriptionValues.getChargeCreationDate());
         putIfNotBlank(originalValuesNode, "property_acquired_date", descriptionValues.getPropertyAcquiredDate());
+        putIfNotBlank(originalValuesNode, "notification_date", descriptionValues.getNotificationDate());
+        putIfNotBlank(originalValuesNode, "accounting_period", descriptionValues.getAccountingPeriod());
+        putIfNotBlank(originalValuesNode, "period_type", descriptionValues.getPeriodType());
+        putIfNotBlank(originalValuesNode, "new_date", descriptionValues.getNewDate());
 
         // below are not on YAML file but are on the spec
-//        descriptionValues.getAccountingPeriod();
 //        descriptionValues.getExtended();
-//        descriptionValues.getNotificationDate();
-//        descriptionValues.getNewDate();
-//        descriptionValues.getPeriodType();
-//        descriptionValues.getOfficerName(); // comes across as all caps, check for this casing
-//
+        
         // below appear on the YAML and are on the spec but should be mapped for children
 //        descriptionValues.getCaseStartDate();
 //        descriptionValues.getResType();

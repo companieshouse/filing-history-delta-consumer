@@ -2,24 +2,50 @@ package uk.gov.companieshouse.filinghistory.consumer.mapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.util.List;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import uk.gov.companieshouse.api.filinghistory.AltCapitalDescriptionValue;
+import uk.gov.companieshouse.api.filinghistory.CapitalDescriptionValue;
 import uk.gov.companieshouse.api.filinghistory.FilingHistoryItemDataDescriptionValues;
+import uk.gov.companieshouse.filinghistory.consumer.serdes.CapitalDeserialiser;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.TransformerTestingUtils;
 
+@ExtendWith(MockitoExtension.class)
 class DescriptionValuesMapperTest {
 
     private static final ObjectMapper MAPPER = TransformerTestingUtils.getMapper();
 
-    private final DescriptionValuesMapper descriptionValuesMapper = new DescriptionValuesMapper();
+    @InjectMocks
+    private DescriptionValuesMapper descriptionValuesMapper;
+    @Mock
+    private CapitalDeserialiser capitalDeserialiser;
+
+    @Mock
+    private ArrayNode capitalArray;
+    @Mock
+    private ArrayNode altCapitalArray;
+    @Mock
+    private CapitalDescriptionValue capitalDescriptionValue;
+    @Mock
+    private AltCapitalDescriptionValue altCapitalDescriptionValue;
 
 
     @Test
     void shouldMapFilingHistoryItemDataDescriptionValuesObject() {
         // given
-        final JsonNode jsonNode = MAPPER.createObjectNode()
+        final ObjectNode jsonNode = MAPPER.createObjectNode()
                 .putObject("description_values")
                 .put("appointment_date", "01/01/2010")
                 .put("branch_number", "50")
@@ -59,10 +85,15 @@ class DescriptionValuesMapperTest {
                 .put("termination_date", "31/01/2022")
                 .put("withdrawal_date", "01/02/2023");
 
+        jsonNode.putIfAbsent("alt_capital", altCapitalArray);
+        jsonNode.putIfAbsent("capital", capitalArray);
+
         final FilingHistoryItemDataDescriptionValues expected = new FilingHistoryItemDataDescriptionValues()
+                .altCapital(List.of(altCapitalDescriptionValue))
                 .appointmentDate("01/01/2010")
                 .branchNumber("50")
                 .broughtDownDate("02/02/2011")
+                .capital(List.of(capitalDescriptionValue))
                 .caseEndDate("06/05/2013")
                 .caseNumber("123")
                 .cessationDate("05/06/2013")
@@ -98,11 +129,16 @@ class DescriptionValuesMapperTest {
                 .terminationDate("31/01/2022")
                 .withdrawalDate("01/02/2023");
 
+        when(capitalDeserialiser.deserialiseAltCapitalArray(any())).thenReturn(List.of(altCapitalDescriptionValue));
+        when(capitalDeserialiser.deserialiseCapitalArray(any())).thenReturn(List.of(capitalDescriptionValue));
+
         // when
         final FilingHistoryItemDataDescriptionValues actual = descriptionValuesMapper.map(jsonNode);
 
         // then
         assertEquals(expected, actual);
+        verify(capitalDeserialiser).deserialiseAltCapitalArray(altCapitalArray);
+        verify(capitalDeserialiser).deserialiseCapitalArray(capitalArray);
     }
 
     @Test

@@ -31,8 +31,8 @@ import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import uk.gov.companieshouse.delta.ChsDelta;
-import uk.gov.companieshouse.filinghistory.consumer.service.DeltaService;
 import uk.gov.companieshouse.filinghistory.consumer.exception.RetryableException;
+import uk.gov.companieshouse.filinghistory.consumer.service.DeltaService;
 
 @SpringBootTest
 class ConsumerRetryableExceptionIT extends AbstractKafkaIT {

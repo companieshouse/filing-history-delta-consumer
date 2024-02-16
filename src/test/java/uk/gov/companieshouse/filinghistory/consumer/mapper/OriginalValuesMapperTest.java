@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.gov.companieshouse.api.filinghistory.InternalDataOriginalValues;
-import uk.gov.companieshouse.filinghistory.consumer.mapper.OriginalValuesMapper;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.TransformerTestingUtils;
 
 class OriginalValuesMapperTest {

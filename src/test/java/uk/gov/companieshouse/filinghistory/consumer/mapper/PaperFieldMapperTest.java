@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import uk.gov.companieshouse.filinghistory.consumer.mapper.PaperFiledMapper;
 
 class PaperFieldMapperTest {
 
@@ -27,7 +26,7 @@ class PaperFieldMapperTest {
             "TAITVXAX , '' , true",
             "'' , '' , true",
     },
-    nullValues = {"null"})
+            nullValues = {"null"})
     void testPaperFieldReturnsBooleanCorrectly(final String barcode, final String documentId, final boolean expected) {
         // given
 

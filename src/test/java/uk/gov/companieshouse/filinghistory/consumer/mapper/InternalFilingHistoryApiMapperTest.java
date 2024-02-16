@@ -25,12 +25,6 @@ import uk.gov.companieshouse.api.filinghistory.FilingHistoryItemDataLinks;
 import uk.gov.companieshouse.api.filinghistory.InternalData;
 import uk.gov.companieshouse.api.filinghistory.InternalDataOriginalValues;
 import uk.gov.companieshouse.api.filinghistory.InternalFilingHistoryApi;
-import uk.gov.companieshouse.filinghistory.consumer.mapper.DescriptionValuesMapper;
-import uk.gov.companieshouse.filinghistory.consumer.mapper.InternalFilingHistoryApiMapper;
-import uk.gov.companieshouse.filinghistory.consumer.mapper.InternalFilingHistoryApiMapperArguments;
-import uk.gov.companieshouse.filinghistory.consumer.mapper.LinksMapper;
-import uk.gov.companieshouse.filinghistory.consumer.mapper.OriginalValuesMapper;
-import uk.gov.companieshouse.filinghistory.consumer.mapper.PaperFiledMapper;
 import uk.gov.companieshouse.filinghistory.consumer.service.TransactionKindResult;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.TransformerTestingUtils;
 

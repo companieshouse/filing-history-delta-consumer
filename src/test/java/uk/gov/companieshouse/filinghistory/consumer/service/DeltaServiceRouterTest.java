@@ -12,8 +12,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import uk.gov.companieshouse.delta.ChsDelta;
 import uk.gov.companieshouse.filinghistory.consumer.exception.NonRetryableException;
-import uk.gov.companieshouse.filinghistory.consumer.service.DeltaServiceRouter;
-import uk.gov.companieshouse.filinghistory.consumer.service.UpsertDeltaService;
 
 @ExtendWith(MockitoExtension.class)
 class DeltaServiceRouterTest {
