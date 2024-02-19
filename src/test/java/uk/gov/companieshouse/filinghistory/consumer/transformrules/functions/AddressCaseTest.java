@@ -77,12 +77,12 @@ class AddressCaseTest {
     @MethodSource("addressCaseFormatting")
     @DisplayName("Format text as a address case")
     void testTransformSpecificMethodWithinTitleCaseTransformer(String input, String expected) {
-        //given
+        // given
 
-        //when
+        // when
         String output = addressCase.transformAddressCase(input);
 
-        //then
+        // then
         assertEquals(expected, output);
     }
 

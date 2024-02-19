@@ -22,7 +22,7 @@ public class ProcessCapital {
     public void transform(JsonNode source, ObjectNode outputNode,
             String fieldPath, Pattern extract, String altDescription) {
 
-        String[] fields = fieldPath.split("\\."); // len = 2
+        String[] fields = fieldPath.split("\\.");
         for (int i = 0; i < fields.length - 1; i++) {
             outputNode.putIfAbsent(fields[i], objectMapper.createObjectNode());
             outputNode = (ObjectNode) outputNode.at("/" + fields[i]);

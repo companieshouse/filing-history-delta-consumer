@@ -64,18 +64,6 @@ public class PreTransformMapper {
         putIfNotBlank(originalValuesNode, "accounting_period", descriptionValues.getAccountingPeriod());
         putIfNotBlank(originalValuesNode, "period_type", descriptionValues.getPeriodType());
         putIfNotBlank(originalValuesNode, "new_date", descriptionValues.getNewDate());
-
-        // below are not on YAML file but are on the spec
-//        descriptionValues.getExtended();
-        
-        // below appear on the YAML and are on the spec but should be mapped for children
-//        descriptionValues.getCaseStartDate();
-//        descriptionValues.getResType();
-
-        // below are on the YAML but aren't on the spec and should be mapped for children
-//        descriptionValues.getDescription();
-//        descriptionValues.getDate();
-//        descriptionValues.getResolutionDate();
     }
 
     private void mapDataObject(ObjectNode objectNode, final FilingHistory filingHistory) {

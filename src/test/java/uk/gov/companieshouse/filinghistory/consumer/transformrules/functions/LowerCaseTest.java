@@ -22,12 +22,12 @@ class LowerCaseTest {
     @MethodSource("lowerCaseFormatting")
     @DisplayName("Format text as lower case")
     void testTransformSpecificMethodWithinTitleCaseTransformer(String input, String expected) {
-        //given
+        // given
 
-        //when
+        // when
         String output = lowerCase.transformLowerCase(input);
 
-        //then
+        // then
         assertEquals(expected, output);
     }
 

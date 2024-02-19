@@ -42,11 +42,9 @@ public class DescriptionValuesMapper {
                 .appointmentDate(getFieldValueFromJsonNode(jsonNode, "appointment_date"))
                 .branchNumber(getFieldValueFromJsonNode(jsonNode, "branch_number"))
                 .broughtDownDate(getFieldValueFromJsonNode(jsonNode, "brought_down_date"))
-//                .capitalCurrency(getFieldValueFromJsonNode(jsonNode, "capital_currency")) // in Mongo, not in perl?
-//                .capitalFigure(getFieldValueFromJsonNode(jsonNode, "capital_figure")) // ^^
                 .capital(capital)
                 .caseEndDate(getFieldValueFromJsonNode(jsonNode, "case_end_date"))
-                .caseNumber(getFieldValueFromJsonNode(jsonNode, "case_number")) // missing from Mongo
+                .caseNumber(getFieldValueFromJsonNode(jsonNode, "case_number"))
                 .cessationDate(getFieldValueFromJsonNode(jsonNode, "cessation_date"))
                 .changeAddress(getFieldValueFromJsonNode(jsonNode, "change_address"))
                 .changeDate(getFieldValueFromJsonNode(jsonNode, "change_date"))
@@ -57,13 +55,13 @@ public class DescriptionValuesMapper {
                 .chargeNumber(getFieldValueFromJsonNode(jsonNode, "charge_number"))
                 .closeDate(getFieldValueFromJsonNode(jsonNode, "close_date"))
                 .companyNumber(getFieldValueFromJsonNode(jsonNode, "company_number"))
-                .companyType(getFieldValueFromJsonNode(jsonNode, "company_type"))  // missing from Mongo
+                .companyType(getFieldValueFromJsonNode(jsonNode, "company_type"))
                 .date(getFieldValueFromJsonNode(jsonNode, "date"))
                 .defaultAddress(getFieldValueFromJsonNode(jsonNode, "default_address"))
                 .description(getFieldValueFromJsonNode(jsonNode, "description"))
                 .formAttached(getFieldValueFromJsonNode(jsonNode, "form_attached"))
                 .formType(getFieldValueFromJsonNode(jsonNode, "form_type"))
-                .incorporationDate(getFieldValueFromJsonNode(jsonNode, "incorporation_date")) // missing from Mongo
+                .incorporationDate(getFieldValueFromJsonNode(jsonNode, "incorporation_date"))
                 .madeUpDate(getFieldValueFromJsonNode(jsonNode, "made_up_date"))
                 .newAddress(getFieldValueFromJsonNode(jsonNode, "new_address"))
                 .newDate(getFieldValueFromJsonNode(jsonNode, "new_date"))
