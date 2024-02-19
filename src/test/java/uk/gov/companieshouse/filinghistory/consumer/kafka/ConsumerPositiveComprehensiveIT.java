@@ -59,6 +59,7 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
 
     @BeforeEach
     public void setup() {
+        latchAspect.resetLatch();
         testConsumer.poll(Duration.ofSeconds(1));
     }
 
