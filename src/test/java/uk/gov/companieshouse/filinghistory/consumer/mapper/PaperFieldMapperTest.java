@@ -31,7 +31,7 @@ class PaperFieldMapperTest {
         // given
 
         // when
-        final boolean actual = mapper.map(barcode, documentId);
+        final boolean actual = mapper.isPaperFiled(barcode, documentId);
 
         // then
         assertEquals(expected, actual);

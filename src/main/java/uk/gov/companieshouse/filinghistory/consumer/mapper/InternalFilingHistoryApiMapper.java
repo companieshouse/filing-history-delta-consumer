@@ -57,7 +57,7 @@ public class InternalFilingHistoryApiMapper {
                 .transactionId(encodedId)
                 .barcode(barcode)
                 .descriptionValues(descriptionValuesMapper.map(getNestedJsonNodeFromJsonNode(dataNode, "description_values")))
-                .paperFiled(paperFiledMapper.map(barcode, documentId))
+                .paperFiled(paperFiledMapper.isPaperFiled(barcode, documentId) ? true : null)
                 .links(linksMapper.map(companyNumber, encodedId));
 
         requestObject.getInternalData()
