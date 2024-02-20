@@ -46,24 +46,27 @@ public class PreTransformMapper {
         }
         ObjectNode originalValuesNode = objectNode.putObject("original_values");
 
-        putIfNotBlank(originalValuesNode, "resignation_date", descriptionValues.getResignationDate());
-        putIfNotBlank(originalValuesNode, "officer_name", descriptionValues.getOFFICERNAME());
-        putIfNotBlank(originalValuesNode, "officer_name", descriptionValues.getOfficerName());
+        putIfNotBlank(originalValuesNode, "acc_type", descriptionValues.getAccType());
+        putIfNotBlank(originalValuesNode, "accounting_period", descriptionValues.getAccountingPeriod());
+        putIfNotBlank(originalValuesNode, "action", descriptionValues.getAction());
+        putIfNotBlank(originalValuesNode, "appointment_date", descriptionValues.getAppointmentDate());
+        putIfNotBlank(originalValuesNode, "capital_type", descriptionValues.getCapitalType());
+        putIfNotBlank(originalValuesNode, "case_start_date", descriptionValues.getCaseStartDate());
+        putIfNotBlank(originalValuesNode, "case_end_date", descriptionValues.getCaseEndDate());
         putIfNotBlank(originalValuesNode, "cessation_date", descriptionValues.getCessationDate());
         putIfNotBlank(originalValuesNode, "change_date", descriptionValues.getChangeDate());
-        putIfNotBlank(originalValuesNode, "notification_date", descriptionValues.getNotificationDate());
-        putIfNotBlank(originalValuesNode, "psc_name", descriptionValues.getPscName());
-        putIfNotBlank(originalValuesNode, "acc_type", descriptionValues.getAccType());
-        putIfNotBlank(originalValuesNode, "case_end_date", descriptionValues.getCaseEndDate());
-        putIfNotBlank(originalValuesNode, "made_up_date", descriptionValues.getMadeUpDate());
-        putIfNotBlank(originalValuesNode, "new_ro_address", descriptionValues.getNewRoAddress());
-        putIfNotBlank(originalValuesNode, "appointment_date", descriptionValues.getAppointmentDate());
         putIfNotBlank(originalValuesNode, "charge_creation_date", descriptionValues.getChargeCreationDate());
-        putIfNotBlank(originalValuesNode, "property_acquired_date", descriptionValues.getPropertyAcquiredDate());
-        putIfNotBlank(originalValuesNode, "notification_date", descriptionValues.getNotificationDate());
-        putIfNotBlank(originalValuesNode, "accounting_period", descriptionValues.getAccountingPeriod());
-        putIfNotBlank(originalValuesNode, "period_type", descriptionValues.getPeriodType());
+        putIfNotBlank(originalValuesNode, "made_up_date", descriptionValues.getMadeUpDate());
+        putIfNotBlank(originalValuesNode, "mortgage_satisfaction_date", descriptionValues.getMortgageSatisfactionDate());
+        putIfNotBlank(originalValuesNode, "new_ro_address", descriptionValues.getNewRoAddress());
         putIfNotBlank(originalValuesNode, "new_date", descriptionValues.getNewDate());
+        putIfNotBlank(originalValuesNode, "notification_date", descriptionValues.getNotificationDate());
+        putIfNotBlank(originalValuesNode, "officer_name", descriptionValues.getOFFICERNAME());
+        putIfNotBlank(originalValuesNode, "officer_name", descriptionValues.getOfficerName());
+        putIfNotBlank(originalValuesNode, "period_type", descriptionValues.getPeriodType());
+        putIfNotBlank(originalValuesNode, "property_acquired_date", descriptionValues.getPropertyAcquiredDate());
+        putIfNotBlank(originalValuesNode, "psc_name", descriptionValues.getPscName());
+        putIfNotBlank(originalValuesNode, "resignation_date", descriptionValues.getResignationDate());
     }
 
     private void mapDataObject(ObjectNode objectNode, final FilingHistory filingHistory) {
@@ -76,7 +79,7 @@ public class PreTransformMapper {
     }
 
     private static void putIfNotBlank(ObjectNode node, String key, String value) {
-        if (StringUtils.isNotBlank(key) && StringUtils.isNotBlank(value)) {
+        if (StringUtils.isNotBlank(value)) {
             node.put(key, value);
         }
     }

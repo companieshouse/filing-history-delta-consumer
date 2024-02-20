@@ -5,9 +5,16 @@ import static uk.gov.companieshouse.filinghistory.consumer.mapper.MapperUtils.ge
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.stereotype.Component;
 import uk.gov.companieshouse.api.filinghistory.InternalDataOriginalValues;
+import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.FormatDate;
 
 @Component
 public class OriginalValuesMapper {
+
+    private final FormatDate formatDate;
+
+    public OriginalValuesMapper(FormatDate formatDate) {
+        this.formatDate = formatDate;
+    }
 
     public InternalDataOriginalValues map(JsonNode jsonNode) {
         if (jsonNode == null) {
@@ -23,7 +30,7 @@ public class OriginalValuesMapper {
                 .caseEndDate(getFieldValueFromJsonNode(jsonNode, "case_end_date"))
                 .cessationDate(getFieldValueFromJsonNode(jsonNode, "cessation_date"))
                 .changeDate(getFieldValueFromJsonNode(jsonNode, "change_date"))
-                .chargeCreationDate(getFieldValueFromJsonNode(jsonNode, "charge_creation_date"))
+                .chargeCreationDate(formatDate.format(getFieldValueFromJsonNode(jsonNode, "charge_creation_date")))
                 .madeUpDate(getFieldValueFromJsonNode(jsonNode, "made_up_date"))
                 .mortgageSatisfactionDate(getFieldValueFromJsonNode(jsonNode, "mortgage_satisfaction_date"))
                 .newRoAddress(getFieldValueFromJsonNode(jsonNode, "new_ro_address"))
@@ -31,7 +38,7 @@ public class OriginalValuesMapper {
                 .notificationDate(getFieldValueFromJsonNode(jsonNode, "notification_date"))
                 .officerName(getFieldValueFromJsonNode(jsonNode, "officer_name"))
                 .periodType(getFieldValueFromJsonNode(jsonNode, "period_type"))
-                .propertyAcquiredDate(getFieldValueFromJsonNode(jsonNode, "property_acquired_date"))
+                .propertyAcquiredDate(formatDate.format(getFieldValueFromJsonNode(jsonNode, "property_acquired_date")))
                 .pscName(getFieldValueFromJsonNode(jsonNode, "psc_name"))
                 .resignationDate(getFieldValueFromJsonNode(jsonNode, "resignation_date"));
     }
