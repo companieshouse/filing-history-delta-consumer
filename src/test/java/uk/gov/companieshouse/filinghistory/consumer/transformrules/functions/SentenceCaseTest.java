@@ -72,12 +72,12 @@ class SentenceCaseTest {
     @MethodSource("sentenceCaseFormatting")
     @DisplayName("Format text as sentence case")
     void testTransformSpecificMethodWithinTitleCaseTransformer(String input, String expected) {
-        //given
+        // given
 
-        //when
+        // when
         String output = sentenceCase.transformSentenceCase(input);
 
-        //then
+        // then
         assertEquals(expected, output);
     }
 

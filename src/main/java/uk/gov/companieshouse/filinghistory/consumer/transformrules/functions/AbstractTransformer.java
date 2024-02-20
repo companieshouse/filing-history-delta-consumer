@@ -23,7 +23,7 @@ public abstract class AbstractTransformer implements Transformer {
     @Override
     public void transform(JsonNode source, ObjectNode outputNode, String field, List<String> arguments,
             Map<String, String> context) {
-        String[] fields = field.split("\\."); // len = 2
+        String[] fields = field.split("\\.");
         String finalField = fields[fields.length - 1];
         String fieldValue = getFieldToTransform(source, arguments, context);
         ObjectNode traversed = traverseOutputNode(fields, outputNode);

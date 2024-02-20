@@ -3,7 +3,9 @@ package uk.gov.companieshouse.filinghistory.consumer.kafka;
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.put;
 import static com.github.tomakehurst.wiremock.client.WireMock.requestMadeFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
+import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
 import static uk.gov.companieshouse.filinghistory.consumer.kafka.KafkaUtils.ERROR_TOPIC;
@@ -12,7 +14,7 @@ import static uk.gov.companieshouse.filinghistory.consumer.kafka.KafkaUtils.MAIN
 import static uk.gov.companieshouse.filinghistory.consumer.kafka.KafkaUtils.RETRY_TOPIC;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
@@ -26,7 +28,6 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -35,15 +36,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import uk.gov.companieshouse.api.filinghistory.InternalFilingHistoryApi;
 import uk.gov.companieshouse.delta.ChsDelta;
 
 @SpringBootTest
-class ConsumerPositiveIT extends AbstractKafkaIT {
-
-    private static final String TRANSACTION_ID = "MzA0Mzk3MjY3NXNhbHQ";
-    private static final String COMPANY_NUMBER = "12345678";
-    private static final String PUT_REQUEST_URI = "/filing-history-data-api/company/%s/filing-history/%s/internal".formatted(
-            COMPANY_NUMBER, TRANSACTION_ID);
+@WireMockTest(httpPort = 8888)
+class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
 
     @Autowired
     private KafkaConsumer<String, byte[]> testConsumer;
@@ -54,40 +52,40 @@ class ConsumerPositiveIT extends AbstractKafkaIT {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private static final WireMockServer server = new WireMockServer(8888);
-
     @DynamicPropertySource
     static void props(DynamicPropertyRegistry registry) {
         registry.add("steps", () -> 1);
     }
 
-    @BeforeAll
-    static void beforeAll() {
-        server.start();
-    }
-
     @BeforeEach
     public void setup() {
-        server.resetAll();
+        latchAspect.resetLatch();
         testConsumer.poll(Duration.ofSeconds(1));
     }
 
     @ParameterizedTest
     @CsvSource({
-            "TM01"
+            "TM01",
+            "SH07"
     })
     void testConsumeFromStreamFilingHistoryDeltaTopic(final String prefix) throws Exception {
         // given
         final String delta = IOUtils.resourceToString("/data/%s_delta.json".formatted(prefix), StandardCharsets.UTF_8);
-        final String requestBody = IOUtils.resourceToString("/data/%s_request_body.json".formatted(prefix),
-                StandardCharsets.UTF_8);
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         Encoder encoder = EncoderFactory.get().directBinaryEncoder(outputStream, null);
         DatumWriter<ChsDelta> writer = new ReflectDatumWriter<>(ChsDelta.class);
         writer.write(new ChsDelta(delta, 0, "context_id", false), encoder);
 
-        server.stubFor(put(urlEqualTo(PUT_REQUEST_URI))
+        final String expectedRequestBody = IOUtils.resourceToString("/data/%s_request_body.json".formatted(prefix),
+                StandardCharsets.UTF_8);
+        InternalFilingHistoryApi request = objectMapper.readValue(expectedRequestBody, InternalFilingHistoryApi.class);
+
+        final String expectedRequestUri = "/filing-history-data-api/company/%s/filing-history/%s/internal".formatted(
+                request.getInternalData().getCompanyNumber(),
+                request.getExternalData().getTransactionId());
+
+        stubFor(put(urlEqualTo(expectedRequestUri))
                 .willReturn(aResponse()
                         .withStatus(200)));
 
@@ -105,6 +103,6 @@ class ConsumerPositiveIT extends AbstractKafkaIT {
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, ERROR_TOPIC)).isZero();
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, INVALID_TOPIC)).isZero();
 
-        server.verify(requestMadeFor(new PutRequestMatcher(PUT_REQUEST_URI, requestBody)));
+        verify(requestMadeFor(new PutRequestMatcher(expectedRequestUri, expectedRequestBody)));
     }
 }

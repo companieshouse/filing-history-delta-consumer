@@ -31,7 +31,7 @@
     <!--companies house-->
     <structured-logging.version>3.0.1</structured-logging.version>
     <sdk-manager-java.version>3.0.3</sdk-manager-java.version>
-    <private-api-sdk-java.version>4.0.42</private-api-sdk-java.version>
+    <private-api-sdk-java.version>4.0.57</private-api-sdk-java.version>
     <kafka-models.version>3.0.4</kafka-models.version>
 
     <!--explicit versions of transitive dependencies with vulnerabilities in previous versions-->
@@ -251,6 +251,7 @@
         <artifactId>jib-maven-plugin</artifactId>
         <version>${jib-maven-plugin.version}</version>
         <configuration>
+          <containerizingMode>packaged</containerizingMode>
           <from>
             <image>416670754337.dkr.ecr.eu-west-2.amazonaws.com/ci-corretto-runtime-21:latest</image>
           </from>

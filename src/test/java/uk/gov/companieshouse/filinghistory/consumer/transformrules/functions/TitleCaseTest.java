@@ -74,12 +74,12 @@ class TitleCaseTest {
     @MethodSource("titleCaseFormatting")
     @DisplayName("Format text as an title case")
     void shouldTransformInputStringToTitleCase(String input, String expected) {
-        //given
+        // given
 
-        //when
+        // when
         String output = titleCase.transformTitleCase(input);
 
-        //then
+        // then
         assertEquals(expected, output);
     }
 

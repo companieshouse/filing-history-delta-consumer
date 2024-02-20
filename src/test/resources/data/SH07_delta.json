@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "9",
+      "receive_date": "20130405000000",
+      "form_type": "SH07",
+      "description": "28/03/12 Statement of Capital GBP 195850.20 ",
+      "barcode": "L15RWOBF",
+      "document_id": "000L15RWOBF4813",
+      "company_number": "04996793",
+      "entity_id": "3055429464",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "1"
+    }
+  ],
+  "delta_at": "20240219123045999999"
+}

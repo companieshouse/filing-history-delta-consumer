@@ -8,7 +8,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.LowerCase;
 
 class LowerCaseTest {
 
@@ -23,12 +22,12 @@ class LowerCaseTest {
     @MethodSource("lowerCaseFormatting")
     @DisplayName("Format text as lower case")
     void testTransformSpecificMethodWithinTitleCaseTransformer(String input, String expected) {
-        //given
+        // given
 
-        //when
+        // when
         String output = lowerCase.transformLowerCase(input);
 
-        //then
+        // then
         assertEquals(expected, output);
     }
 

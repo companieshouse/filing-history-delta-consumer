@@ -72,12 +72,12 @@ class FormatDateTest {
     @MethodSource("bsonDateFormatting")
     @DisplayName("Format text as a bson date")
     void testTransformSpecificMethodWithinTitleCaseTransformer(String input, String expected) {
-        //given
+        // given
 
-        //when
+        // when
         String output = formatDate.format(input);
 
-        //then
+        // then
         assertEquals(expected, output);
     }
 

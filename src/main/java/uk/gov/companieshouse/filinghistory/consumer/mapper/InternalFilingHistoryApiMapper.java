@@ -57,7 +57,7 @@ public class InternalFilingHistoryApiMapper {
                 .transactionId(encodedId)
                 .barcode(barcode)
                 .descriptionValues(descriptionValuesMapper.map(getNestedJsonNodeFromJsonNode(dataNode, "description_values")))
-                .paperFiled(paperFiledMapper.map(barcode, documentId))
+                .paperFiled(paperFiledMapper.isPaperFiled(barcode, documentId) ? true : null)
                 .links(linksMapper.map(companyNumber, encodedId));
 
         requestObject.getInternalData()
@@ -69,13 +69,6 @@ public class InternalFilingHistoryApiMapper {
                 .transactionKind(kindResult.kind());
 
         return requestObject;
-    }
-
-    private static <T extends Enum<?>> T getEnumFromField(final JsonNode node, final String field, Function<String, T> fromValue) {
-        return Optional.ofNullable(node.get(field))
-                .map(JsonNode::textValue)
-                .map(fromValue)
-                .orElse(null);
     }
 
     private static void mapTopLevelNode(InternalFilingHistoryApi requestObject, JsonNode topLevelNode) {
@@ -95,5 +88,12 @@ public class InternalFilingHistoryApiMapper {
                     .subcategory(getEnumFromField(dataNode, "subcategory", SubcategoryEnum::fromValue))
                     .description(getFieldValueFromJsonNode(dataNode, "description"))
                     .actionDate(getFieldValueFromJsonNode(dataNode, "action_date"));
+    }
+
+    private static <T extends Enum<?>> T getEnumFromField(final JsonNode node, final String field, Function<String, T> fromValue) {
+        return Optional.ofNullable(node.get(field))
+                .map(JsonNode::textValue)
+                .map(fromValue)
+                .orElse(null);
     }
 }

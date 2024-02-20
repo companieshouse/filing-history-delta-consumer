@@ -10,8 +10,6 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
-import uk.gov.companieshouse.filinghistory.consumer.transformrules.parsers.RuleProperties;
-import uk.gov.companieshouse.filinghistory.consumer.transformrules.parsers.WhenProperties;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.rules.When;
 
 class WhenPropertiesTest {

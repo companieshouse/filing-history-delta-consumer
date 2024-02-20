@@ -11,9 +11,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class LatchAspect {
 
-    private final CountDownLatch latch;
+    private final int steps;
+    private CountDownLatch latch;
 
     public LatchAspect(@Value("${steps:1}") int steps) {
+        this.steps = steps;
         this.latch = new CountDownLatch(steps);
     }
 
@@ -24,5 +26,9 @@ public class LatchAspect {
 
     public CountDownLatch getLatch() {
         return latch;
+    }
+
+    public void resetLatch() {
+        latch = new CountDownLatch(steps);
     }
 }

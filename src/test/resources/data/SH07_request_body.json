@@ -1,0 +1,34 @@
+{
+  "external_data": {
+    "transaction_id": "MzA1NTQyOTQ2NHNhbHQ",
+    "barcode": "L15RWOBF",
+    "category": "capital",
+    "action_date": "2012-03-28T00:00:00Z",
+    "date": "2013-04-05T00:00:00Z",
+    "description": "capital-cancellation-shares-by-plc",
+    "type": "SH07",
+    "description_values": {
+      "date": "2012-03-28T00:00:00Z",
+      "capital": [
+        {
+          "currency": "GBP",
+          "figure": "195,850.20"
+        }
+      ]
+    },
+    "links": {
+      "self": "/company/04996793/filing-history/MzA1NTQyOTQ2NHNhbHQ"
+    },
+    "paper_filed": true
+  },
+  "internal_data": {
+    "original_description": "28/03/12 statement of capital gbp 195850.20",
+    "company_number": "04996793",
+    "entity_id": "3055429464",
+    "parent_entity_id": "",
+    "document_id": "000L15RWOBF4813",
+    "delta_at": "20240219123045999999",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

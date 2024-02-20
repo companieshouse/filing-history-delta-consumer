@@ -31,8 +31,8 @@ import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import uk.gov.companieshouse.delta.ChsDelta;
-import uk.gov.companieshouse.filinghistory.consumer.service.DeltaService;
 import uk.gov.companieshouse.filinghistory.consumer.exception.RetryableException;
+import uk.gov.companieshouse.filinghistory.consumer.service.DeltaService;
 
 @SpringBootTest
 class ConsumerRetryableExceptionIT extends AbstractKafkaIT {
@@ -61,7 +61,7 @@ class ConsumerRetryableExceptionIT extends AbstractKafkaIT {
 
     @Test
     void testRepublishToFilingHistoryDeltaErrorTopicThroughRetryTopics() throws Exception {
-        //given
+        // given
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         Encoder encoder = EncoderFactory.get().directBinaryEncoder(outputStream, null);
         DatumWriter<ChsDelta> writer = new ReflectDatumWriter<>(ChsDelta.class);
@@ -69,14 +69,14 @@ class ConsumerRetryableExceptionIT extends AbstractKafkaIT {
 
         doThrow(new RetryableException("Retryable exception", new Throwable())).when(deltaService).process(any());
 
-        //when
+        // when
         testProducer.send(new ProducerRecord<>(MAIN_TOPIC, 0, System.currentTimeMillis(),
                 "key", outputStream.toByteArray()));
         if (!latchAspect.getLatch().await(5L, TimeUnit.SECONDS)) {
             fail("Timed out waiting for latch");
         }
 
-        //then
+        // then
         ConsumerRecords<?, ?> consumerRecords = KafkaTestUtils.getRecords(testConsumer, Duration.ofMillis(10000L), 6);
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, MAIN_TOPIC)).isOne();
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, RETRY_TOPIC)).isEqualTo(4);

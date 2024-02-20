@@ -7,9 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import uk.gov.companieshouse.api.filinghistory.InternalData.TransactionKindEnum;
-import uk.gov.companieshouse.filinghistory.consumer.service.TransactionKindCriteria;
-import uk.gov.companieshouse.filinghistory.consumer.service.TransactionKindResult;
-import uk.gov.companieshouse.filinghistory.consumer.service.TransactionKindService;
 
 class TransactionKindServiceTest {
 
