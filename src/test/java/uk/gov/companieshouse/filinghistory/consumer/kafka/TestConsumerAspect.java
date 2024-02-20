@@ -9,12 +9,12 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-public class LatchAspect {
+public class TestConsumerAspect {
 
     private final int steps;
     private CountDownLatch latch;
 
-    public LatchAspect(@Value("${steps:1}") int steps) {
+    public TestConsumerAspect(@Value("${steps:1}") int steps) {
         this.steps = steps;
         this.latch = new CountDownLatch(steps);
     }

@@ -44,7 +44,7 @@ class ConsumerRetryableExceptionIT extends AbstractKafkaIT {
     private KafkaProducer<String, byte[]> testProducer;
 
     @Autowired
-    private LatchAspect latchAspect;
+    private TestConsumerAspect testConsumerAspect;
 
     @MockBean
     private DeltaService deltaService;
@@ -72,7 +72,7 @@ class ConsumerRetryableExceptionIT extends AbstractKafkaIT {
         // when
         testProducer.send(new ProducerRecord<>(MAIN_TOPIC, 0, System.currentTimeMillis(),
                 "key", outputStream.toByteArray()));
-        if (!latchAspect.getLatch().await(5L, TimeUnit.SECONDS)) {
+        if (!testConsumerAspect.getLatch().await(5L, TimeUnit.SECONDS)) {
             fail("Timed out waiting for latch");
         }
 

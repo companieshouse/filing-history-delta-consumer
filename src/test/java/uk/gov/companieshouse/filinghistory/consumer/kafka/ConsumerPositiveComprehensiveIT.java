@@ -48,7 +48,7 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
     @Autowired
     private KafkaProducer<String, byte[]> testProducer;
     @Autowired
-    private LatchAspect latchAspect;
+    private TestConsumerAspect testConsumerAspect;
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -59,16 +59,17 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
 
     @BeforeEach
     public void setup() {
-        latchAspect.resetLatch();
+        testConsumerAspect.resetLatch();
         testConsumer.poll(Duration.ofSeconds(1));
     }
 
     @ParameterizedTest
     @CsvSource({
             "TM01",
-            "SH07"
+            "SH07",
+            "AA/AA_rule_17"
     })
-    void testConsumeFromStreamFilingHistoryDeltaTopic(final String prefix) throws Exception {
+    void shouldConsumeFilingHistoryDeltaTopicAndProcessDelta(final String prefix) throws Exception {
         // given
         final String delta = IOUtils.resourceToString("/data/%s_delta.json".formatted(prefix), StandardCharsets.UTF_8);
 
@@ -92,7 +93,7 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
         // when
         testProducer.send(new ProducerRecord<>(MAIN_TOPIC, 0, System.currentTimeMillis(),
                 "key", outputStream.toByteArray()));
-        if (!latchAspect.getLatch().await(5L, TimeUnit.SECONDS)) {
+        if (!testConsumerAspect.getLatch().await(5L, TimeUnit.SECONDS)) {
             fail("Timed out waiting for latch");
         }
 

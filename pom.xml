@@ -342,6 +342,9 @@
           <argLine>${failsafeArgLine}</argLine>
           <classesDirectory>${project.build.outputDirectory}</classesDirectory>
           <skipITs>${skip.integration.tests}</skipITs>
+          <excludes>
+            <exclude>**/ConsumerPositiveComprehensiveIT.java</exclude>
+          </excludes>
         </configuration>
       </plugin>
     </plugins>

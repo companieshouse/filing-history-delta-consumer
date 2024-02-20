@@ -41,11 +41,9 @@ public class PutRequestMatcher implements ValueMatcher<Request> {
                 .setSerializationInclusion(Include.NON_EMPTY)
                 .registerModule(new JavaTimeModule());
 
-        InternalFilingHistoryApi expected;
-        InternalFilingHistoryApi actual;
         try {
-            expected = mapper.readValue(expectedBody, InternalFilingHistoryApi.class);
-            actual = mapper.readValue(actualBody, InternalFilingHistoryApi.class);
+            InternalFilingHistoryApi expected = mapper.readValue(expectedBody, InternalFilingHistoryApi.class);
+            InternalFilingHistoryApi actual = mapper.readValue(actualBody, InternalFilingHistoryApi.class);
             return MatchResult.of(expected.equals(actual));
         } catch (JsonProcessingException e) {
             return MatchResult.of(false);

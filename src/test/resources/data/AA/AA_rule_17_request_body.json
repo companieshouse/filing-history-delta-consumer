@@ -1,0 +1,30 @@
+{
+  "external_data": {
+    "transaction_id": "NDAxMzE4NzEwMXNhbHQ",
+    "barcode": "XCF8RBEB",
+    "action_date": "2023-06-30T00:00:00Z",
+    "category": "accounts",
+    "date": "2023-10-30T09:32:27Z",
+    "description": "accounts-with-accounts-type-total-exemption-full",
+    "description_values": {
+      "made_up_date": "2023-06-30T00:00:00Z"
+    },
+    "links": {
+      "self": "/company/08366357/filing-history/NDAxMzE4NzEwMXNhbHQ"
+    },
+    "type": "AA"
+  },
+  "internal_data": {
+    "company_number": "08366357",
+    "entity_id": "4013187101",
+    "parent_entity_id": "",
+    "original_description": "30/06/23 total exemption full",
+    "original_values": {
+      "acc_type": "TOTAL EXEMPTION FULL",
+      "made_up_date": "30/06/23"
+    },
+    "delta_at": "20231030093528249496",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}
