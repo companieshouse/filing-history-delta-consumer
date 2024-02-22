@@ -38,12 +38,10 @@ public class InvalidMessageRouter implements ProducerInterceptor<String, Object>
             String exception = Optional.ofNullable(producerRecord.headers().lastHeader(EXCEPTION_MESSAGE))
                     .map(h -> new String(h.value())).orElse("unknown");
 
-            LOGGER.info("""
-                    Moving record into topic: [%s]
-                                        
-                    From: original topic: [%s], partition: [%s], offset: [%s], exception: [%s]
-                                        
-                    Message content: %s""".formatted(invalidTopic, originalTopic, partition, offset, exception,
+            LOGGER.error(("Republishing record into topic: [%s] "
+                    + "From: original topic: [%s], partition: [%s], offset: [%s], "
+                    + "exception: [%s] Message content: %s")
+                    .formatted(invalidTopic, originalTopic, partition, offset, exception,
                     producerRecord.value()));
 
             return new ProducerRecord<>(invalidTopic, producerRecord.key(), producerRecord.value());
