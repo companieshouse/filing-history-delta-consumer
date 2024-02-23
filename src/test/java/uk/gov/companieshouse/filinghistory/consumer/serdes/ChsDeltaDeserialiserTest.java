@@ -54,7 +54,7 @@ class ChsDeltaDeserialiserTest {
         // then
         InvalidPayloadException exception = assertThrows(InvalidPayloadException.class, actual);
         // Note the '\n' is the length prefix of the invalid data sent to the deserialiser
-        assertThat(exception.getMessage(), is(equalTo("Invalid payload: [\nhello] was provided.")));
+        assertThat(exception.getMessage(), is(equalTo("Invalid payload: [\nhello]")));
         assertThat(exception.getCause(), is(CoreMatchers.instanceOf(IOException.class)));
     }
 
@@ -68,7 +68,7 @@ class ChsDeltaDeserialiserTest {
 
         // then
         InvalidPayloadException exception = assertThrows(InvalidPayloadException.class, actual);
-        assertThat(exception.getMessage(), is(equalTo("Invalid payload: [invalid] was provided.")));
+        assertThat(exception.getMessage(), is(equalTo("Invalid payload: [invalid]")));
         assertThat(exception.getCause(), is(CoreMatchers.instanceOf(AvroRuntimeException.class)));
     }
 }

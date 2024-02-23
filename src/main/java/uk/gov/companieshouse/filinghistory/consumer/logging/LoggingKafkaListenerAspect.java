@@ -20,7 +20,7 @@ class LoggingKafkaListenerAspect {
     private static final Logger LOGGER = LoggerFactory.getLogger(NAMESPACE);
     private static final String LOG_MESSAGE_RECEIVED = "Processing delta";
     private static final String LOG_MESSAGE_PROCESSED = "Processed delta";
-    private static final String EXCEPTION_MESSAGE = "%s exception thrown: %s";
+    private static final String EXCEPTION_MESSAGE = "%s exception thrown";
 
     @Around("@annotation(org.springframework.kafka.annotation.KafkaListener)")
     public Object manageStructuredLogging(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -35,16 +35,15 @@ class LoggingKafkaListenerAspect {
                     .partition((Integer) message.getHeaders().get("kafka_receivedPartitionId"))
                     .offset((Long) message.getHeaders().get("kafka_offset"));
 
-            LOGGER.debug(LOG_MESSAGE_RECEIVED, DataMapHolder.getLogMap());
+            LOGGER.info(LOG_MESSAGE_RECEIVED, DataMapHolder.getLogMap());
 
             Object result = joinPoint.proceed();
 
-            LOGGER.debug(LOG_MESSAGE_PROCESSED, DataMapHolder.getLogMap());
+            LOGGER.info(LOG_MESSAGE_PROCESSED, DataMapHolder.getLogMap());
 
             return result;
         } catch (Exception ex) {
-            LOGGER.debug(EXCEPTION_MESSAGE.formatted(ex.getClass().getSimpleName(), ex.getMessage()),
-                    DataMapHolder.getLogMap());
+            LOGGER.error(EXCEPTION_MESSAGE.formatted(ex.getClass().getSimpleName()), ex, DataMapHolder.getLogMap());
             throw ex;
         } finally {
             DataMapHolder.clear();

@@ -28,7 +28,7 @@ public class CapitalDeserialiser {
         try {
             return mapper.readerForListOf(CapitalDescriptionValue.class).readValue(capital);
         } catch (IOException ex) {
-            LOGGER.errorContext("Unable to deserialise capital array: [%s]".formatted(capital.toPrettyString()),
+            LOGGER.error("Unable to deserialise capital array: [%s]".formatted(capital.toPrettyString()),
                     ex,
                     DataMapHolder.getLogMap());
             throw new NonRetryableException(
@@ -40,7 +40,7 @@ public class CapitalDeserialiser {
         try {
             return mapper.readerForListOf(AltCapitalDescriptionValue.class).readValue(altCapital);
         } catch (IOException ex) {
-            LOGGER.errorContext("Unable to deserialise alt capital array: [%s]".formatted(altCapital.toPrettyString()),
+            LOGGER.error("Unable to deserialise alt capital array: [%s]".formatted(altCapital.toPrettyString()),
                     ex,
                     DataMapHolder.getLogMap());
             throw new NonRetryableException(
