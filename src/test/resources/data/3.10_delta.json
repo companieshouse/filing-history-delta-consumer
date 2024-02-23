@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20011017115951",
+      "form_type": "3.10",
+      "description": "ADMINISTRATIVE RECEIVER'S REPORT",
+      "barcode": "",
+      "document_id": "000AUADT4YM1780",
+      "company_number": "01718369",
+      "entity_id": "104113413",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

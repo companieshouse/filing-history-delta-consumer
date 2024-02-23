@@ -67,7 +67,9 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
     @CsvSource({
             "TM01",
             "SH07",
-            "AA/AA_rule_17"
+            "AA/AA_rule_17",
+            "3.10",
+            "REC1"
     })
     void shouldConsumeFilingHistoryDeltaTopicAndProcessDelta(final String prefix) throws Exception {
         // given

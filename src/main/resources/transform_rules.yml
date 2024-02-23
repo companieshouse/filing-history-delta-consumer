@@ -28,7 +28,7 @@
       original_description: '[% data.description | sentence_case %]'
 - when:
     eq:
-      data.type: REC1(Scot)
+      data.type: REC1(Scot) # TODO
   then:
     set:
       data.category: insolvency

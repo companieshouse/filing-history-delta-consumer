@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20170602164708",
+      "form_type": "REC1",
+      "description": "NOTICE OF ADMINISTRATIVE RECEIVER'S REPORT:LIQ. CASE NO.6",
+      "barcode": "A66TS4TT",
+      "document_id": "000A66TS4TT6661",
+      "company_number": "01059382",
+      "entity_id": "3177273279",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}
