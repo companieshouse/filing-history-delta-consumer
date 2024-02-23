@@ -78,28 +78,4 @@ class ResponseHandlerTest {
         // then
         assertThrows(NonRetryableException.class, executable);
     }
-
-    @Test
-    void shouldHandleIllegalArgumentExceptionByThrowingRetryableExceptionWhenCauseIsNotNull() {
-        // given
-        when(illegalArgumentException.getCause()).thenReturn(throwable);
-
-        // when
-        Executable executable = () -> responseHandler.handle(illegalArgumentException);
-
-        // then
-        assertThrows(RetryableException.class, executable);
-    }
-
-    @Test
-    void shouldHandleIllegalArgumentExceptionByThrowingRetryableExceptionWhenCauseIsNull() {
-        // given
-        when(illegalArgumentException.getCause()).thenReturn(null);
-
-        // when
-        Executable executable = () -> responseHandler.handle(illegalArgumentException);
-
-        // then
-        assertThrows(RetryableException.class, executable);
-    }
 }

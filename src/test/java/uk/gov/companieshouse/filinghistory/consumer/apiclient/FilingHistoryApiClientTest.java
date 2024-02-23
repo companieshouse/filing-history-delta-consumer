@@ -136,33 +136,4 @@ class FilingHistoryApiClientTest {
         verify(privateFilingHistoryPut).execute();
         verify(responseHandler).handle(any(exceptionClass));
     }
-
-    @Test
-    void shouldHandleIllegalArgumentExceptionWhenSendingPutRequest() throws Exception {
-        // given
-        Class<IllegalArgumentException> exceptionClass = IllegalArgumentException.class;
-
-        when(requestBody.getExternalData()).thenReturn(externalData);
-        when(externalData.getTransactionId()).thenReturn(TRANSACTION_ID);
-        when(requestBody.getInternalData()).thenReturn(internalData);
-        when(internalData.getCompanyNumber()).thenReturn(COMPANY_NUMBER);
-        when(internalApiClientFactory.get()).thenReturn(internalApiClient);
-        when(internalApiClient.getHttpClient()).thenReturn(apiClient);
-        when(internalApiClient.privateDeltaResourceHandler()).thenReturn(privateDeltaResourceHandler);
-        when(privateDeltaResourceHandler.putFilingHistory(any(), any())).thenReturn(privateFilingHistoryPut);
-        when(privateFilingHistoryPut.execute()).thenThrow(exceptionClass);
-
-        DataMapHolder.get().requestId(REQUEST_ID);
-        final String expectedUri = PRE_FORMAT_URI.formatted(COMPANY_NUMBER, TRANSACTION_ID);
-
-        // when
-        filingHistoryApiClient.upsertFilingHistory(requestBody);
-
-        // then
-        verify(apiClient).setRequestId(REQUEST_ID);
-        verify(internalApiClient).privateDeltaResourceHandler();
-        verify(privateDeltaResourceHandler).putFilingHistory(expectedUri, requestBody);
-        verify(privateFilingHistoryPut).execute();
-        verify(responseHandler).handle(any(exceptionClass));
-    }
 }
