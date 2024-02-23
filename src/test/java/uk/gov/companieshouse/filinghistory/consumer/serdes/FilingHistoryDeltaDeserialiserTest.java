@@ -53,7 +53,7 @@ class FilingHistoryDeltaDeserialiserTest {
 
         // then
         NonRetryableException actual = assertThrows(NonRetryableException.class, executable);
-        assertEquals("Unable to parse message payload data", actual.getMessage());
+        assertEquals("Unable to deserialise delta", actual.getMessage());
         verify(objectMapper).readValue(FILING_HISTORY_DELTA, FilingHistoryDelta.class);
     }
 }

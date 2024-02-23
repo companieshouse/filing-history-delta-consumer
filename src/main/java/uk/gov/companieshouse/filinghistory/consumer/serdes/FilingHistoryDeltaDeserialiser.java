@@ -24,9 +24,9 @@ public class FilingHistoryDeltaDeserialiser {
     public FilingHistoryDelta deserialiseFilingHistoryDelta(String data) {
         try {
             return objectMapper.readValue(data, FilingHistoryDelta.class);
-        } catch (JsonProcessingException e) {
-            LOGGER.errorContext("Unable to parse message payload data", e, DataMapHolder.getLogMap());
-            throw new NonRetryableException("Unable to parse message payload data", e);
+        } catch (JsonProcessingException ex) {
+            LOGGER.error("Unable to deserialise delta: [%s]".formatted(data), ex, DataMapHolder.getLogMap());
+            throw new NonRetryableException("Unable to deserialise delta", ex);
         }
     }
 }

@@ -37,8 +37,6 @@ public class FilingHistoryApiClient {
             responseHandler.handle(ex);
         } catch (URIValidationException ex) {
             responseHandler.handle(ex);
-        } catch (IllegalArgumentException ex) {
-            responseHandler.handle(ex);
         }
     }
 }

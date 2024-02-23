@@ -27,9 +27,9 @@ public class Consumer {
     public void consume(Message<ChsDelta> message) {
         try {
             router.route(message.getPayload());
-        } catch (RetryableException exception) {
+        } catch (RetryableException ex) {
             messageFlags.setRetryable(true);
-            throw exception;
+            throw ex;
         }
     }
 }

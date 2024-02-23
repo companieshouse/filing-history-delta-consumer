@@ -19,8 +19,8 @@ public class ChsDeltaSerialiser implements Serializer<ChsDelta> {
         DatumWriter<ChsDelta> writer = getDatumWriter();
         try {
             writer.write(data, encoder);
-        } catch (IOException e) {
-            throw new NonRetryableException("Error serialising delta", e);
+        } catch (IOException ex) {
+            throw new NonRetryableException("Error serialising delta", ex);
         }
         return outputStream.toByteArray();
     }
