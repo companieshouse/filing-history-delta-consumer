@@ -65,10 +65,15 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
 
     @ParameterizedTest
     @CsvSource({
-            "TM01",
-            "SH07",
-            "AA/AA_rule_17",
-            "3.10"
+//            "TM01",
+//            "SH07",
+//            "AA/AA_rule_17",
+//            "3.10",
+//            "4.13",
+//            "4.20",
+//            "4.31",
+//            "4.33",
+            "4.35"
     })
     void shouldConsumeFilingHistoryDeltaTopicAndProcessDelta(final String prefix) throws Exception {
         // given

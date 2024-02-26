@@ -28,11 +28,11 @@
       original_description: '[% data.description | sentence_case %]'
 - when:
     eq:
-      data.type: REC1(Scot) # TODO
+      data.type: REC1(Scot)
   then:
     set:
       data.category: insolvency
-      data.description: liquidation-receiver-administrative-receivers-report-scotland
+      data.description: liquidation-receiver-administrative-receivers-report-scotland # TODO
       data.subcategory: receiver
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -46,7 +46,7 @@
       original_description: '[% data.description | sentence_case %]'
 - when:
     eq:
-      data.type: 4.20
+      data.type: 4.20 # TODO
     like:
       data.description: '^(?i:STATEMENT OF AFFAIRS/(?<formAttached>.+?))$'
   then:

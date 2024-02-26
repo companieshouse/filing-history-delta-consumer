@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20131022152241",
+      "form_type": "4.35",
+      "description": "ORDER OF COURT GRANTING VOLUNTARY LIQUIDATOR LEAVE TO RESIGN",
+      "barcode": "A2JAJET5",
+      "document_id": "000A2JAJET55347",
+      "company_number": "02743122",
+      "entity_id": "3087409406",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

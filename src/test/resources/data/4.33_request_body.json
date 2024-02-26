@@ -1,0 +1,25 @@
+{
+  "external_data": {
+    "transaction_id": "MTA0ODU0NDE2c2FsdA",
+    "barcode": "LHLAMWU9",
+    "category": "insolvency",
+    "date": "2004-07-20T11:59:52Z",
+    "description": "liquidation-voluntary-resignation-liquidator",
+    "links": {
+      "self": "/company/00592044/filing-history/MTA0ODU0NDE2c2FsdA"
+    },
+    "paper_filed": true,
+    "subcategory": "voluntary",
+    "type": "4.33"
+  },
+  "internal_data": {
+    "original_description": "Notice of resignation as voluntary liquidator",
+    "company_number": "00592044",
+    "document_id": "000LHLAMWU92516",
+    "entity_id": "104854416",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

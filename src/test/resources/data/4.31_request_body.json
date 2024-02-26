@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTA0MDAxMTY3c2FsdA",
+    "barcode" : "A77KB7C2",
+    "category" : "insolvency",
+    "date" : "1998-06-26T11:59:56Z",
+    "description" : "liquidation-compulsory-appointment-liquidator",
+    "links" : {
+      "self" : "/company/02765081/filing-history/MTA0MDAxMTY3c2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "compulsory",
+    "type" : "4.31"
+  },
+  "internal_data": {
+    "original_description" : "Appointment of liquidator",
+    "company_number" : "02765081",
+    "document_id" : "000A77KB7C20904",
+    "entity_id" : "104001167",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

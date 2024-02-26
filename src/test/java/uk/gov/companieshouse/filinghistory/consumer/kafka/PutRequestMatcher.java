@@ -44,7 +44,12 @@ public class PutRequestMatcher implements ValueMatcher<Request> {
         try {
             InternalFilingHistoryApi expected = mapper.readValue(expectedBody, InternalFilingHistoryApi.class);
             InternalFilingHistoryApi actual = mapper.readValue(actualBody, InternalFilingHistoryApi.class);
-            return MatchResult.of(expected.equals(actual));
+            MatchResult result = MatchResult.of(expected.equals(actual));
+            if (!result.isExactMatch()) {
+                System.out.printf("%nExpected: [%s]%n", expected);
+                System.out.printf("%nActual: [%s]", actual);
+            }
+            return result;
         } catch (JsonProcessingException ex) {
             return MatchResult.of(false);
         }
