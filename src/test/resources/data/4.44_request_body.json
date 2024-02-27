@@ -1,0 +1,23 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTA4MzMyMTQ3c2FsdA",
+    "category" : "insolvency",
+    "date" : "1994-08-04T11:59:38Z",
+    "description" : "liquidation-voluntary-death-liquidator",
+    "links" : {
+      "self" : "/company/00095420/filing-history/MTA4MzMyMTQ3c2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "voluntary",
+    "type" : "4.44"
+  },
+  "internal_data": {
+    "original_description" : "Notice of death of liquidator",
+    "company_number" : "00095420",
+    "entity_id" : "108332147",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

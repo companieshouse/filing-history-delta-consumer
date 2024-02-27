@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTA0MTE5MTc3c2FsdA",
+    "barcode" : "AOOX94SO",
+    "category" : "insolvency",
+    "date" : "2001-10-11T11:59:51Z",
+    "description" : "liquidation-voluntary-cease-to-act-as-liquidator",
+    "links" : {
+      "self" : "/company/03027759/filing-history/MTA0MTE5MTc3c2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "voluntary",
+    "type" : "4.40"
+  },
+  "internal_data": {
+    "original_description" : "Notice of ceasing to act as a voluntary liquidator",
+    "company_number" : "03027759",
+    "document_id" : "000AOOX94SO1776",
+    "entity_id" : "104119177",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

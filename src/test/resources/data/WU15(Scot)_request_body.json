@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzI0MDEwMjc5MXNhbHQ",
+    "barcode" : "S8AETV9C",
+    "category" : "insolvency",
+    "date" : "2019-07-24T12:10:28Z",
+    "description" : "liquidation-compulsory-return-final-meeting-court-scotland",
+    "links" : {
+      "self" : "/company/SC357562/filing-history/MzI0MDEwMjc5MXNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "compulsory",
+    "type" : "WU15(Scot)"
+  },
+  "internal_data": {
+    "original_description" : "Notice of final account prior to dissolution in a winding up by the court:liq. Case no.3",
+    "company_number" : "SC357562",
+    "document_id" : "000S8AETV9C7443",
+    "entity_id" : "3240102791",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

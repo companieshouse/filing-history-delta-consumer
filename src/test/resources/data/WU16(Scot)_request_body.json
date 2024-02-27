@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzI0MDQ0NzMyMnNhbHQ",
+    "barcode" : "S8AJV41L",
+    "category" : "insolvency",
+    "date" : "2019-07-29T12:36:06Z",
+    "description" : "liquidation-compulsory-early-dissolution-court-scotland",
+    "links" : {
+      "self" : "/company/SC061159/filing-history/MzI0MDQ0NzMyMnNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "compulsory",
+    "type" : "WU16(Scot)"
+  },
+  "internal_data": {
+    "original_description" : "Notice of court order for early dissolution in a winding up by the court:liq. Case no.1",
+    "company_number" : "SC061159",
+    "document_id" : "000S8AJV41L7448",
+    "entity_id" : "3240447322",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

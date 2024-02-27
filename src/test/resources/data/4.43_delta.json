@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20050824115958",
+      "form_type": "4.43",
+      "description": "FINAL MEETING OF CREDITORS",
+      "barcode": "AF93G7ZN",
+      "document_id": "000AF93G7ZN2806",
+      "company_number": "02666944",
+      "entity_id": "104981300",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

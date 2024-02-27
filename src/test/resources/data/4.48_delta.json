@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "19991229115937",
+      "form_type": "4.48",
+      "description": "CONSTITUTION OF LIQUIDATION COMMITTEE",
+      "barcode": "AQDH9MJ8",
+      "document_id": "000AQDH9MJ81310",
+      "company_number": "00313318",
+      "entity_id": "104501710",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

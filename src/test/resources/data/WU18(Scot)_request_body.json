@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzI0MjYzMzUxOXNhbHQ",
+    "barcode" : "S8CHV021",
+    "category" : "insolvency",
+    "date" : "2019-08-27T12:27:17Z",
+    "description" : "liquidation-compulsory-staying-or-sisting-proceedings-scotland",
+    "links" : {
+      "self" : "/company/SC444402/filing-history/MzI0MjYzMzUxOXNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "compulsory",
+    "type" : "WU18(Scot)"
+  },
+  "internal_data": {
+    "original_description" : "Notice of court order staying or sisting proceedings in a winding up by the court:liq. Case no.1",
+    "company_number" : "SC444402",
+    "document_id" : "000S8CHV0217477",
+    "entity_id" : "3242633519",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

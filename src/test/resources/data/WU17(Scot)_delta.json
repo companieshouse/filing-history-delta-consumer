@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20200116130532",
+      "form_type": "WU17(Scot)",
+      "description": "NOTICE OF COURT ORDER TO DEFER DISSOLUTION IN A WINDING UP BY THE COURT:LIQ. CASE NO.1: DEFER TO 03/01/2021: DEFER TO 03/01/2021",
+      "barcode": "S8WRM57U",
+      "document_id": "000S8WRM57U7618",
+      "company_number": "SC195476",
+      "entity_id": "3254751756",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

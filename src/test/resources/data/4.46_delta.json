@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "19960508115959",
+      "form_type": "4.46",
+      "description": "VACATION OF OFFICE BY VOLUNTARY LIQUIDATOR",
+      "barcode": "",
+      "document_id": "101028453200314",
+      "company_number": "02845320",
+      "entity_id": "104201056",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTA0NTAxNzEwc2FsdA",
+    "barcode" : "AQDH9MJ8",
+    "category" : "insolvency",
+    "date" : "1999-12-29T11:59:37Z",
+    "description" : "liquidation-voluntary-constitution-liquidation-committee",
+    "links" : {
+      "self" : "/company/00313318/filing-history/MTA0NTAxNzEwc2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "voluntary",
+    "type" : "4.48"
+  },
+  "internal_data": {
+    "original_description" : "Constitution of liquidation committee",
+    "company_number" : "00313318",
+    "document_id" : "000AQDH9MJ81310",
+    "entity_id" : "104501710",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

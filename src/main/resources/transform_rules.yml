@@ -141,7 +141,7 @@
   then:
     set:
       data.category: insolvency
-      data.description: liquidation-compulsory-removal-of-liquidator-by-creditors
+      data.description: liquidation-compulsory-removal-of-liquidator-by-creditors # TODO
       data.subcategory:
         - compulsory
         - court-order
@@ -183,7 +183,7 @@
   then:
     set:
       data.category: insolvency
-      data.description: liquidation-voluntary-removal-of-liquidator-by-court
+      data.description: liquidation-voluntary-removal-of-liquidator-by-court # TODO
       data.subcategory: voluntary
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -192,7 +192,7 @@
   then:
     set:
       data.category: insolvency
-      data.description: liquidation-voluntary-removal-of-liquidator-by-company-meeting
+      data.description: liquidation-voluntary-removal-of-liquidator-by-company-meeting # TODO
       data.subcategory: voluntary
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -201,7 +201,7 @@
   then:
     set:
       data.category: insolvency
-      data.description: liquidation-voluntary-release-of-liquidator-by-secretary-of-state
+      data.description: liquidation-voluntary-release-of-liquidator-by-secretary-of-state # TODO
       data.subcategory: voluntary
       original_description: '[% data.description | sentence_case %]'
 - when:

@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20031113115955",
+      "form_type": "4.38",
+      "description": "REMOVAL OF VOLUNTARY LIQUIDATOR FROM OFFICE",
+      "barcode": "",
+      "document_id": "000ATDOUPYL2344",
+      "company_number": "02109979",
+      "entity_id": "131854271",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}
