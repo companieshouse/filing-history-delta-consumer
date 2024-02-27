@@ -1,0 +1,28 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTY5MTU0NjFzYWx0",
+    "barcode" : "AZ67552Y",
+    "category" : "insolvency",
+    "date" : "2005-05-11T11:59:56Z",
+    "description" : "liquidation-voluntary-creditors-paid-in-full",
+    "links" : {
+      "self" : "/company/00176864/filing-history/MTY5MTU0NjFzYWx0"
+    },
+    "paper_filed" : true,
+    "subcategory" : [
+      "voluntary",
+      "certificate"
+    ],
+    "type" : "4.51"
+  },
+  "internal_data": {
+    "original_description" : "Certificate that creditors have been paid in full",
+    "company_number" : "00176864",
+    "document_id" : "000AZ67552Y2726",
+    "entity_id" : "16915461",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

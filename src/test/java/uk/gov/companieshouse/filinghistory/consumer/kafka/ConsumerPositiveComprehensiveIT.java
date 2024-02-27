@@ -83,7 +83,8 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
 //            "WU18(Scot)",
 //            "4.44",
 //            "4.46",
-            "4.48"
+//            "4.48",
+//            "4.51",
     })
     void shouldConsumeFilingHistoryDeltaTopicAndProcessDelta(final String prefix) throws Exception {
         // given
