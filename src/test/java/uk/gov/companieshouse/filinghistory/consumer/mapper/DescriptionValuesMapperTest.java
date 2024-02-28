@@ -11,15 +11,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import uk.gov.companieshouse.api.filinghistory.AltCapitalDescriptionValue;
 import uk.gov.companieshouse.api.filinghistory.CapitalDescriptionValue;
 import uk.gov.companieshouse.api.filinghistory.FilingHistoryItemDataDescriptionValues;
-import uk.gov.companieshouse.filinghistory.consumer.serdes.CapitalDeserialiser;
+import uk.gov.companieshouse.filinghistory.consumer.serdes.ArrayNodeDeserialiser;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.TransformerTestingUtils;
 
 @ExtendWith(MockitoExtension.class)
@@ -27,10 +27,11 @@ class DescriptionValuesMapperTest {
 
     private static final ObjectMapper MAPPER = TransformerTestingUtils.getMapper();
 
-    @InjectMocks
     private DescriptionValuesMapper descriptionValuesMapper;
     @Mock
-    private CapitalDeserialiser capitalDeserialiser;
+    private ArrayNodeDeserialiser<AltCapitalDescriptionValue> altCapitalArrayNodeDeserialiser;
+    @Mock
+    private ArrayNodeDeserialiser<CapitalDescriptionValue> capitalArrayNodeDeserialiser;
 
     @Mock
     private ArrayNode capitalArray;
@@ -41,6 +42,11 @@ class DescriptionValuesMapperTest {
     @Mock
     private AltCapitalDescriptionValue altCapitalDescriptionValue;
 
+    @BeforeEach
+    void setUp() {
+        descriptionValuesMapper = new DescriptionValuesMapper(altCapitalArrayNodeDeserialiser,
+                capitalArrayNodeDeserialiser);
+    }
 
     @Test
     void shouldMapFilingHistoryItemDataDescriptionValuesObject() {
@@ -129,16 +135,16 @@ class DescriptionValuesMapperTest {
                 .terminationDate("31/01/2022")
                 .withdrawalDate("01/02/2023");
 
-        when(capitalDeserialiser.deserialiseAltCapitalArray(any())).thenReturn(List.of(altCapitalDescriptionValue));
-        when(capitalDeserialiser.deserialiseCapitalArray(any())).thenReturn(List.of(capitalDescriptionValue));
+        when(altCapitalArrayNodeDeserialiser.deserialise(any())).thenReturn(List.of(altCapitalDescriptionValue));
+        when(capitalArrayNodeDeserialiser.deserialise(any())).thenReturn(List.of(capitalDescriptionValue));
 
         // when
         final FilingHistoryItemDataDescriptionValues actual = descriptionValuesMapper.map(jsonNode);
 
         // then
         assertEquals(expected, actual);
-        verify(capitalDeserialiser).deserialiseAltCapitalArray(altCapitalArray);
-        verify(capitalDeserialiser).deserialiseCapitalArray(capitalArray);
+        verify(altCapitalArrayNodeDeserialiser).deserialise(altCapitalArray);
+        verify(capitalArrayNodeDeserialiser).deserialise(capitalArray);
     }
 
     @Test

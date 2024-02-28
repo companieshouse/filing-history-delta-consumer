@@ -11,15 +11,18 @@ import org.springframework.stereotype.Component;
 import uk.gov.companieshouse.api.filinghistory.AltCapitalDescriptionValue;
 import uk.gov.companieshouse.api.filinghistory.CapitalDescriptionValue;
 import uk.gov.companieshouse.api.filinghistory.FilingHistoryItemDataDescriptionValues;
-import uk.gov.companieshouse.filinghistory.consumer.serdes.CapitalDeserialiser;
+import uk.gov.companieshouse.filinghistory.consumer.serdes.ArrayNodeDeserialiser;
 
 @Component
 public class DescriptionValuesMapper {
 
-    private final CapitalDeserialiser capitalDeserialiser;
+    private final ArrayNodeDeserialiser<AltCapitalDescriptionValue> altCapitalArrayNodeDeserialiser;
+    private final ArrayNodeDeserialiser<CapitalDescriptionValue> capitalArrayNodeDeserialiser;
 
-    public DescriptionValuesMapper(CapitalDeserialiser capitalDeserialiser) {
-        this.capitalDeserialiser = capitalDeserialiser;
+    public DescriptionValuesMapper(ArrayNodeDeserialiser<AltCapitalDescriptionValue> altCapitalArrayNodeDeserialiser,
+            ArrayNodeDeserialiser<CapitalDescriptionValue> capitalArrayNodeDeserialiser) {
+        this.altCapitalArrayNodeDeserialiser = altCapitalArrayNodeDeserialiser;
+        this.capitalArrayNodeDeserialiser = capitalArrayNodeDeserialiser;
     }
 
     public FilingHistoryItemDataDescriptionValues map(final JsonNode jsonNode) {
@@ -29,12 +32,12 @@ public class DescriptionValuesMapper {
 
         List<AltCapitalDescriptionValue> altCapital = Optional.ofNullable(
                         getNestedJsonNodeFromJsonNode(jsonNode, "alt_capital"))
-                .map(altCapitalArray -> capitalDeserialiser.deserialiseAltCapitalArray((ArrayNode) altCapitalArray))
+                .map(altCapitalArray -> altCapitalArrayNodeDeserialiser.deserialise((ArrayNode) altCapitalArray))
                 .orElse(null);
 
         List<CapitalDescriptionValue> capital = Optional.ofNullable(
                         getNestedJsonNodeFromJsonNode(jsonNode, "capital"))
-                .map(capitalArray -> capitalDeserialiser.deserialiseCapitalArray((ArrayNode) capitalArray))
+                .map(capitalArray -> capitalArrayNodeDeserialiser.deserialise((ArrayNode) capitalArray))
                 .orElse(null);
 
         return new FilingHistoryItemDataDescriptionValues()

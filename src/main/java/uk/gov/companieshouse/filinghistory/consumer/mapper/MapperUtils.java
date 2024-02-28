@@ -4,9 +4,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 public final class MapperUtils {
 
-    private MapperUtils() {}
+    private MapperUtils() {
+    }
 
     static String getFieldValueFromJsonNode(final JsonNode node, final String field) {
+        if (node == null) {
+            return null;
+        }
         return node.get(field) != null ? node.get(field).textValue() : null;
     }
 
