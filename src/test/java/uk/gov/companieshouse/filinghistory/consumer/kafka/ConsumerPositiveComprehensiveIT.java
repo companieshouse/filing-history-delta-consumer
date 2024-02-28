@@ -85,6 +85,7 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
 //            "4.46",
 //            "4.48",
 //            "4.51",
+//            "OE01"
     })
     void shouldConsumeFilingHistoryDeltaTopicAndProcessDelta(final String prefix) throws Exception {
         // given

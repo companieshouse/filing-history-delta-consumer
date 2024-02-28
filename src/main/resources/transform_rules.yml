@@ -18970,7 +18970,7 @@
       original_description: '[% data.description | sentence_case %]'
 - when:
     eq:
-      data.type: MT09
+      data.type: MT09 # <--- ST stopped here - test case not added yet
   then:
     set:
       data.category: liquidation
@@ -18978,7 +18978,7 @@
       original_description: '[% data.description | sentence_case %]'
 - when:
     eq:
-      data.type: OE01
+      data.type: OE01 # <--- ST Started here ascending - No examples in chips cidev for the types below
   then:
     set:
       data.category: incorporation
