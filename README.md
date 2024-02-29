@@ -80,7 +80,12 @@ Due to the complex nature of the filing history transformation logic, and the si
 a `@ParameterisedTest` has been implemented
 within `kafka/ConsumerPositiveComprehensiveIT.java` to cover as many of
 the [transformation rules](https://github.com/companieshouse/filing-history-delta-consumer/blob/df6ee016f916e303474034ace5c3cc346b50d441/src/main/resources/transform_rules.yml)
-as possible.\
+as possible.
+
+### IMPORTANT
+Before committing any documents to GitHub, please ensure any fields containing sensitive data are
+anonymised.
+\
 \
 **Complete the following steps to add another test case**:
 
@@ -89,13 +94,16 @@ as possible.\
        the [API specification](https://github.com/companieshouse/private.api.ch.gov.uk-specifications/blob/c2e3f3558e13efba075c23227709448273d5fdfb/src/main/resources/delta/filing-history-delta-spec.yml).
     2. Note the `delta_at` field is at the top level whereas the old Perl backend had it within the `filing_history`
        array.
-    3. Deltas can be found be querying the `queue` collection in MongoDB or by running the `f_get_one_transaction`
+    3. Deltas can be found within the `fh_deltas` table in Kermit by querying by form
+       type, [see confluence page](https://companieshouse.atlassian.net/wiki/spaces/TEAM4/pages/4403200517/SQL+Queries+to+find+Filing+History+deltas).
+       Alternatively, they can be found in the `queue`collection in MongoDB or by running the `f_get_one_transaction`
        package in CHIPS.
 2. Create a json file called `X_request_body.json` where `X` is the same as above.
     1. The file should contain a valid filing history PUT request body with respect to
        the [API specification](https://github.com/companieshouse/private.api.ch.gov.uk-specifications/blob/1361e79e495b61cdd8101d1814d7d7aeddd8a639/src/main/resources/filing-history/internal-filing-history.json#L55).
     2. As the PUT request body structure is similar to that of a document within the `company_filing_history` collection
-       in MongoDB, its easy enough to copy a document and make the following changes:
+       in MongoDB. A quick way to generate a document is to send it through the old backend locally by enabled the
+       backend module on tilt. Its easy enough to copy a document and make the following changes:
         1. `data` &rarr; `external_data`.
         2. `_id` &rarr; `external_data.transaction_id`
         3. `_barcode` &rarr; `external_data.barcode`
