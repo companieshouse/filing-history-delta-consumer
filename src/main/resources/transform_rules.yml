@@ -32,7 +32,7 @@
   then:
     set:
       data.category: insolvency
-      data.description: liquidation-receiver-administrative-receivers-report-scotland
+      data.description: liquidation-receiver-administrative-receivers-report-scotland # TODO
       data.subcategory: receiver
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -46,7 +46,7 @@
       original_description: '[% data.description | sentence_case %]'
 - when:
     eq:
-      data.type: 4.20
+      data.type: 4.20 # TODO
     like:
       data.description: '^(?i:STATEMENT OF AFFAIRS/(?<formAttached>.+?))$'
   then:
@@ -141,7 +141,7 @@
   then:
     set:
       data.category: insolvency
-      data.description: liquidation-compulsory-removal-of-liquidator-by-creditors
+      data.description: liquidation-compulsory-removal-of-liquidator-by-creditors # TODO
       data.subcategory:
         - compulsory
         - court-order
@@ -183,7 +183,7 @@
   then:
     set:
       data.category: insolvency
-      data.description: liquidation-voluntary-removal-of-liquidator-by-court
+      data.description: liquidation-voluntary-removal-of-liquidator-by-court # TODO
       data.subcategory: voluntary
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -192,7 +192,7 @@
   then:
     set:
       data.category: insolvency
-      data.description: liquidation-voluntary-removal-of-liquidator-by-company-meeting
+      data.description: liquidation-voluntary-removal-of-liquidator-by-company-meeting # TODO
       data.subcategory: voluntary
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -201,7 +201,7 @@
   then:
     set:
       data.category: insolvency
-      data.description: liquidation-voluntary-release-of-liquidator-by-secretary-of-state
+      data.description: liquidation-voluntary-release-of-liquidator-by-secretary-of-state # TODO
       data.subcategory: voluntary
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -18970,7 +18970,7 @@
       original_description: '[% data.description | sentence_case %]'
 - when:
     eq:
-      data.type: MT09
+      data.type: MT09 # <--- ST stopped here - test case not added yet
   then:
     set:
       data.category: liquidation
@@ -18978,7 +18978,7 @@
       original_description: '[% data.description | sentence_case %]'
 - when:
     eq:
-      data.type: OE01
+      data.type: OE01 # <--- ST Started here ascending - No examples in chips cidev for the types below
   then:
     set:
       data.category: incorporation

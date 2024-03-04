@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20040720115952",
+      "form_type": "4.33",
+      "description": "NOTICE OF RESIGNATION AS VOLUNTARY LIQUIDATOR",
+      "barcode": "LHLAMWU9",
+      "document_id": "000LHLAMWU92516",
+      "company_number": "00592044",
+      "entity_id": "104854416",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

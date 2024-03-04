@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTA0MDQwNDA4c2FsdA",
+    "barcode" : "A3YSG8XO",
+    "category" : "insolvency",
+    "date" : "2002-03-12T11:59:48Z",
+    "description" : "liquidation-voluntary-statement-of-affairs",
+    "links" : {
+      "self" : "/company/01627890/filing-history/MTA0MDQwNDA4c2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "voluntary",
+    "type" : "4.20"
+  },
+  "internal_data": {
+    "original_description" : "Statement of affairs",
+    "company_number" : "01627890",
+    "document_id" : "000A3YSG8XO1885",
+    "entity_id" : "104040408",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

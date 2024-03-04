@@ -1,0 +1,27 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTMxODU0Mjcxc2FsdA",
+    "category" : "insolvency",
+    "date" : "2003-11-13T11:59:55Z",
+    "description" : "liquidation-voluntary-removal-liquidator",
+    "links" : {
+      "self" : "/company/02109979/filing-history/MTMxODU0Mjcxc2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : [
+      "voluntary",
+      "certificate"
+    ],
+    "type" : "4.38"
+  },
+  "internal_data": {
+    "original_description" : "Removal of voluntary liquidator from office",
+    "company_number" : "02109979",
+    "document_id" : "000ATDOUPYL2344",
+    "entity_id" : "131854271",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "filing_history": [
+    {
+      "category": "0",
+      "receive_date": "20231030093227",
+      "form_type": "AA",
+      "description": "30/06/23 TOTAL EXEMPTION FULL",
+      "barcode": "XCF8RBEB",
+      "document_id": "",
+      "company_number": "08366357",
+      "entity_id": "4013187101",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "description_values": {
+        "made_up_date": "30/06/23",
+        "acc_type": "TOTAL EXEMPTION FULL"
+      },
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20231030093528249496"
+}

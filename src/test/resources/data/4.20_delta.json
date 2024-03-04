@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20020312115948",
+      "form_type": "4.20",
+      "description": "STATEMENT OF AFFAIRS",
+      "barcode": "A3YSG8XO",
+      "document_id": "000A3YSG8XO1885",
+      "company_number": "01627890",
+      "entity_id": "104040408",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

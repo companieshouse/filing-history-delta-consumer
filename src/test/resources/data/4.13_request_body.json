@@ -1,0 +1,23 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTA0MDA4MDg5c2FsdA",
+    "category" : "insolvency",
+    "date" : "1992-05-05T11:59:58Z",
+    "description" : "liquidation-compulsory-notice-winding-up",
+    "links" : {
+      "self" : "/company/02542416/filing-history/MTA0MDA4MDg5c2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "compulsory",
+    "type" : "4.13"
+  },
+  "internal_data": {
+    "original_description" : "Cert by accountant of court of release of liq'r",
+    "company_number" : "02542416",
+    "entity_id" : "104008089",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

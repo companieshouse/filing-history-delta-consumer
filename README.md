@@ -39,6 +39,7 @@ immediately to the <br>`filing-history-delta-filing-history-delta-consumer-inval
     * `chs-delta-api`
     * `filing-history-delta-consumer`
     * `filing-history-data-api`
+    * `chs-kafka-api`
 3. Boot up the services' containers on docker using tilt `tilt up`.
 4. Messages can be produced to the filing-history-delta topic using the instructions given
    in [CHS Delta API](https://github.com/companieshouse/chs-delta-api).
@@ -47,6 +48,7 @@ immediately to the <br>`filing-history-delta-filing-history-delta-consumer-inval
 
 | Variable                      | Description                                                                         | Example (from docker-chs-development) |
 |-------------------------------|-------------------------------------------------------------------------------------|---------------------------------------|
+| TRANSACTION_ID_SALT           | The salt used to encode entity ID's into their MongoDB counterpart                  | abc123                                |
 | CHS_API_KEY                   | The client ID of an API key with internal app privileges                            | abc123def456ghi789                    |
 | API_LOCAL_URL                 | The host through which requests to the filing-history-data-api are sent             | http://api.chs.local:4001             |
 | BOOTSTRAP_SERVER_URL          | The URL to the kafka broker                                                         | kafka:9092                            |
@@ -60,7 +62,7 @@ immediately to the <br>`filing-history-delta-filing-history-delta-consumer-inval
 
 ## Building the docker image
 
-    mvn compile jib:dockerBuild -Dimage=169942020521.dkr.ecr.eu-west-1.amazonaws.com/local/filing-history-delta-consumer
+    mvn compile jib:dockerBuild
 
 ## To make local changes
 
@@ -71,3 +73,51 @@ in [Docker CHS Development](https://github.com/companieshouse/docker-chs-develop
 
 This will clone the `filing-history-delta-consumer` into the repositories folder. Any changes to the code, or resources
 will automatically trigger a rebuild and relaunch.
+
+## Testing
+
+Due to the complex nature of the filing history transformation logic, and the significant number of edge cases,
+a `@ParameterisedTest` has been implemented
+within `kafka/ConsumerPositiveComprehensiveIT.java` to cover as many of
+the [transformation rules](https://github.com/companieshouse/filing-history-delta-consumer/blob/df6ee016f916e303474034ace5c3cc346b50d441/src/main/resources/transform_rules.yml)
+as possible.
+
+### IMPORTANT
+Before committing any documents to GitHub, please ensure any fields containing sensitive data are
+anonymised.
+\
+\
+**Complete the following steps to add another test case**:
+
+1. Create a json file called `X_delta.json` where `X` is the name of the form/rule under test.
+    1. The file should contain a valid filing history delta with respect to
+       the [API specification](https://github.com/companieshouse/private.api.ch.gov.uk-specifications/blob/c2e3f3558e13efba075c23227709448273d5fdfb/src/main/resources/delta/filing-history-delta-spec.yml).
+    2. Note the `delta_at` field is at the top level whereas the old Perl backend had it within the `filing_history`
+       array.
+    3. Deltas can be found within the `fh_deltas` table in Kermit by querying by form
+       type, [see confluence page](https://companieshouse.atlassian.net/wiki/spaces/TEAM4/pages/4403200517/SQL+Queries+to+find+Filing+History+deltas).
+       Alternatively, they can be found in the `queue`collection in MongoDB or by running the `f_get_one_transaction`
+       package in CHIPS.
+2. Create a json file called `X_request_body.json` where `X` is the same as above.
+    1. The file should contain a valid filing history PUT request body with respect to
+       the [API specification](https://github.com/companieshouse/private.api.ch.gov.uk-specifications/blob/1361e79e495b61cdd8101d1814d7d7aeddd8a639/src/main/resources/filing-history/internal-filing-history.json#L55).
+    2. As the PUT request body structure is similar to that of a document within the `company_filing_history` collection
+       in MongoDB. A quick way to generate a document is to send it through the old backend locally by enabled the
+       backend module on tilt. Its easy enough to copy a document and make the following changes:
+        1. `data` &rarr; `external_data`.
+        2. `_id` &rarr; `external_data.transaction_id`
+        3. `_barcode` &rarr; `external_data.barcode`
+        4. Delete `external_data.pages`
+        5. Delete `external_data.links.document_metadata`
+        6. Wrap all other top level fields in `internal_data`
+        7. Add `internal_data.delta_at`:
+        8. Add `internal_data.updated_at` (value should always be "context_id")
+        9. Add `internal_data.transaction_kind` ("top-level" for the most part,
+           see `TransactionKindService`)
+        10. Add `internal_data.parent_entity_id` (usually an empty string)
+        11. Encode the value of `internal_data.entity_id` with the salt `salt`.
+        12. Replace the value of `external_data.transaction_id` with the encoded ID.
+        13. Replace the suffix of the value of `external_data.links.self` with the encoded ID.
+        14. Change MongoDB `ISODate`'s to `ISO_INSTANT` format `.000+0000` &rarr; `Z`. (Instants have trailing zeros
+            removed)
+3. Finally, add the prefix, `X` used above, to the `@CsvSource` annotation within `ConsumerPositiveComprehensiveIT`.

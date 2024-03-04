@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzI1NDc1MTc1NnNhbHQ",
+    "barcode" : "S8WRM57U",
+    "category" : "insolvency",
+    "date" : "2020-01-16T13:05:32Z",
+    "description" : "liquidation-compulsory-defer-dissolution-court-scotland",
+    "links" : {
+      "self" : "/company/SC195476/filing-history/MzI1NDc1MTc1NnNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "compulsory",
+    "type" : "WU17(Scot)"
+  },
+  "internal_data": {
+    "original_description" : "Notice of court order to defer dissolution in a winding up by the court:liq. Case no.1: Defer to 03/01/2021: defer to 03/01/2021",
+    "company_number" : "SC195476",
+    "document_id" : "000S8WRM57U7618",
+    "entity_id" : "3254751756",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

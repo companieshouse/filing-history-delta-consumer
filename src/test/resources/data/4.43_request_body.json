@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTA0OTgxMzAwc2FsdA",
+    "barcode" : "AF93G7ZN",
+    "category" : "insolvency",
+    "date" : "2005-08-24T11:59:58Z",
+    "description" : "liquidation-compulsory-return-final-meeting",
+    "links" : {
+      "self" : "/company/02666944/filing-history/MTA0OTgxMzAwc2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "compulsory",
+    "type" : "4.43"
+  },
+  "internal_data": {
+    "original_description" : "Final meeting of creditors",
+    "company_number" : "02666944",
+    "document_id" : "000AF93G7ZN2806",
+    "entity_id" : "104981300",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

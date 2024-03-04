@@ -1,0 +1,24 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTA0MjAxMDU2c2FsdA",
+    "category" : "insolvency",
+    "date" : "1996-05-08T11:59:59Z",
+    "description" : "liquidation-voluntary-vacation-liquidator",
+    "links" : {
+      "self" : "/company/02845320/filing-history/MTA0MjAxMDU2c2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "voluntary",
+    "type" : "4.46"
+  },
+  "internal_data": {
+    "original_description" : "Vacation of office by voluntary liquidator",
+    "company_number" : "02845320",
+    "document_id" : "101028453200314",
+    "entity_id" : "104201056",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

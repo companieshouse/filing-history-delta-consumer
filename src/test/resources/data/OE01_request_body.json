@@ -1,0 +1,23 @@
+{
+  "internal_data": {
+    "entity_id" : "3347568263",
+    "company_number" : "OE000001",
+    "document_id" : "000XB9KDBKG8546",
+    "original_description" : "Overseas entity registration",
+    "delta_at" : "20211029142043360560",
+    "updated_by" : "context_id",
+    "transaction_kind": "top-level",
+    "parent_entity_id": ""
+  },
+  "external_data" : {
+    "transaction_id" : "MzM0NzU2ODI2M3NhbHQ",
+    "barcode" : "XB9KDBKG",
+    "type" : "OE01",
+    "date" : "2022-08-03T11:31:27Z",
+    "category" : "incorporation",
+    "description" : "registration-overseas-entity",
+    "links" : {
+      "self" : "/company/OE000001/filing-history/MzM0NzU2ODI2M3NhbHQ"
+    }
+  }
+}

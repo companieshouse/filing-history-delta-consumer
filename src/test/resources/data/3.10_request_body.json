@@ -1,0 +1,24 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTA0MTEzNDEzc2FsdA",
+    "category" : "insolvency",
+    "date" : "2001-10-17T11:59:51Z",
+    "description" : "liquidation-receiver-administrative-receivers-report",
+    "links" : {
+      "self" : "/company/01718369/filing-history/MTA0MTEzNDEzc2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "receiver",
+    "type" : "3.10"
+  },
+  "internal_data": {
+    "original_description" : "Administrative receiver's report",
+    "company_number" : "01718369",
+    "document_id" : "000AUADT4YM1780",
+    "entity_id" : "104113413",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

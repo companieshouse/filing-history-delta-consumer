@@ -1,0 +1,28 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzA4NzQwOTQwNnNhbHQ",
+    "barcode" : "A2JAJET5",
+    "category" : "insolvency",
+    "date" : "2013-10-22T15:22:41Z",
+    "description" : "liquidation-voluntary-leave-to-resign-liquidator",
+    "links" : {
+      "self" : "/company/02743122/filing-history/MzA4NzQwOTQwNnNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : [
+      "voluntary",
+      "court-order"
+    ],
+    "type" : "4.35"
+  },
+  "internal_data": {
+    "original_description" : "Order of court granting voluntary liquidator leave to resign",
+    "company_number" : "02743122",
+    "document_id" : "000A2JAJET55347",
+    "entity_id" : "3087409406",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20011011115951",
+      "form_type": "4.40",
+      "description": "NOTICE OF CEASING TO ACT AS A VOLUNTARY LIQUIDATOR",
+      "barcode": "AOOX94SO",
+      "document_id": "000AOOX94SO1776",
+      "company_number": "03027759",
+      "entity_id": "104119177",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}
