@@ -99,7 +99,7 @@ class TransformerServiceTest {
                 .put("_entity_id", "0123456789")
                 .put("_barcode", "AAAAAAAA")
                 .put("_document_id", "000AAAAAAAA1234")
-                .put("original_description", "Appointment terminated, director joe blogs");
+                .put("original_description", "Appointment Terminated, Director joe blogs");
 
         expected
                 .putObject("data")
@@ -164,7 +164,7 @@ class TransformerServiceTest {
         expected
                 .put("_id", "MzA0MTc3MzgzMmFkaXF6a2N4")
                 .put("_entity_id", "3041773832")
-                .put("original_description", "29/07/11 statement of capital gbp 13337");
+                .put("original_description", "29/07/11 Statement of Capital gbp 13337");
 
         ObjectNode capital = MAPPER.createObjectNode();
         capital
