@@ -32,8 +32,7 @@ public class FormatDate extends AbstractTransformer {
     @Override
     protected void doTransform(JsonNode source, TransformTarget target, List<String> arguments,
             Map<String, String> context) {
-        String targetValue = getFieldToTransform(source, arguments, context);
-        target.objectNode().put(target.fieldKey(), format(targetValue));
+        target.objectNode().put(target.fieldKey(), format(target.fieldValue()));
     }
 
     public String format(String nodeText) {

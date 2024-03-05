@@ -28,8 +28,7 @@ public class AddressCase extends AbstractTransformer {
     @Override
     protected void doTransform(JsonNode source, TransformTarget target, List<String> arguments,
             Map<String, String> context) {
-        String targetValue = getFieldToTransform(source, arguments, context);
-        target.objectNode().put(target.fieldKey(), transformAddressCase(targetValue));
+        target.objectNode().put(target.fieldKey(), transformAddressCase(target.fieldValue()));
     }
 
     String transformAddressCase(String nodeText) {

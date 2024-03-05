@@ -18,6 +18,7 @@ public record ThenProperties(@JsonProperty("define") Map<String, String> define,
                              @JsonProperty("exec") Map<String, List<String>> exec) {
 
     private static final Pattern PLACEHOLDER_PATTERN = Pattern.compile("^\\[%\\s([\\w.]+)\\s\\|\\s(\\w+)\\s%]$");
+    private static final Pattern PLACEHOLDER_NO_FUNCTION_PATTERN = Pattern.compile("^\\[%\\s(\\w+)\\s%]$");
     private static final Pattern EXEC_PLACEHOLDER_PATTERN = Pattern.compile("^\\[%\\s([\\w.]+)\\s%]$");
 
     public Then compile(TransformerFactory transformerFactory) {
@@ -48,14 +49,17 @@ public record ThenProperties(@JsonProperty("define") Map<String, String> define,
             setterArgs = new SetterArgs(transformerFactory.getReplaceProperty(), (List<String>) entry.getValue());
         } else {
             String value = entry.getValue().toString();
-            Matcher matcher = PLACEHOLDER_PATTERN.matcher(value);
-            if (matcher.matches()) {
-                String sourcePath = matcher.group(1);
-                Transformer transformer = transformerFactory.mapTransformer(matcher.group(2));
+            Matcher placeholderMatcher = PLACEHOLDER_PATTERN.matcher(value);
+            Matcher placeholderNoFunctionMatcher = PLACEHOLDER_NO_FUNCTION_PATTERN.matcher(value);
+            if (placeholderMatcher.matches()) {
+                String sourcePath = placeholderMatcher.group(1);
+                Transformer transformer = transformerFactory.mapTransformer(placeholderMatcher.group(2));
                 setterArgs = new SetterArgs(transformer, List.of(sourcePath));
+            } else if (placeholderNoFunctionMatcher.matches()) {
+                String sourcePath = placeholderNoFunctionMatcher.group(1);
+                setterArgs = new SetterArgs(transformerFactory.getReplaceProperty(), List.of(sourcePath));
             } else {
-                setterArgs = new SetterArgs(transformerFactory.getReplaceProperty(),
-                        List.of(value));
+                setterArgs = new SetterArgs(transformerFactory.getReplaceProperty(), List.of(value));
             }
         }
         return setterArgs;

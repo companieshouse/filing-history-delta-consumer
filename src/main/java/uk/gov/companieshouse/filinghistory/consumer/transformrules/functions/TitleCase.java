@@ -36,8 +36,7 @@ public class TitleCase extends AbstractTransformer {
     @Override
     protected void doTransform(JsonNode source, TransformTarget target, List<String> arguments,
             Map<String, String> context) {
-        String targetValue = getFieldToTransform(source, arguments, context);
-        target.objectNode().put(target.fieldKey(), transformTitleCase(targetValue));
+        target.objectNode().put(target.fieldKey(), transformTitleCase(target.fieldValue()));
     }
 
     String transformTitleCase(String field) {
