@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20100611104502",
+      "form_type": "4.69",
+      "description": "ORDER OF COURT ON APPEAL AGAINST SECRETARY OF STATE'S DECISION UNDER SECTION 203(4) OR 205(4)",
+      "barcode": "AKOW6KPT",
+      "document_id": "000AKOW6KPT4202",
+      "company_number": "05555131",
+      "entity_id": "3017377077",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

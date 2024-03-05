@@ -1,0 +1,24 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTA0NjI4NTA4c2FsdA",
+    "category" : "insolvency",
+    "date" : "1991-10-10T11:59:32Z",
+    "description" : "liquidation-compulsory-appointment-provisional-liquidator-scotland",
+    "links" : {
+      "self" : "/company/SC069108/filing-history/MTA0NjI4NTA4c2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "compulsory",
+    "type" : "4.9(Scot)"
+  },
+  "internal_data" : {
+    "original_description" : "Appointment of liquidator I",
+    "company_number" : "SC069108",
+    "document_id" : "302SC0691082119",
+    "entity_id" : "104628508",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

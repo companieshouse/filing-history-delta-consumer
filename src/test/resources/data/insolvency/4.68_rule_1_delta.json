@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20090826114942",
+      "form_type": "4.68",
+      "description": "LIQUIDATOR'S STATEMENT OF RECEIPTS AND PAYMENTS:BROUGHT DOWN DATE 12/08/2009",
+      "barcode": "P6MZCCQU",
+      "document_id": "000P6MZCCQU3833",
+      "company_number": "03830203",
+      "entity_id": "2040040850",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

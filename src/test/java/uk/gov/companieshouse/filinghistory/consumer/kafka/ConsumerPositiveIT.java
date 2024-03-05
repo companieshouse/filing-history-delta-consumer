@@ -65,14 +65,14 @@ class ConsumerPositiveIT extends AbstractKafkaIT {
     @Test
     void shouldConsumeFilingHistoryDeltaTopicAndProcessTM01Delta() throws Exception {
         // given
-        final String delta = IOUtils.resourceToString("/data/TM01_delta.json", StandardCharsets.UTF_8);
+        final String delta = IOUtils.resourceToString("/data/officers/TM01_delta.json", StandardCharsets.UTF_8);
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         Encoder encoder = EncoderFactory.get().directBinaryEncoder(outputStream, null);
         DatumWriter<ChsDelta> writer = new ReflectDatumWriter<>(ChsDelta.class);
         writer.write(new ChsDelta(delta, 0, "context_id", false), encoder);
 
-        final String expectedRequestBody = IOUtils.resourceToString("/data/TM01_request_body.json",
+        final String expectedRequestBody = IOUtils.resourceToString("/data/officers/TM01_request_body.json",
                 StandardCharsets.UTF_8);
         InternalFilingHistoryApi request = objectMapper.readValue(expectedRequestBody, InternalFilingHistoryApi.class);
 

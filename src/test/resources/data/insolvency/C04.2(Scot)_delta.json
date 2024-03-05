@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "9",
+      "receive_date": "19951026115953",
+      "form_type": "CO4.2(Scot)",
+      "description": "CRT ORD NOTICE OF WINDING UP",
+      "barcode": "",
+      "document_id": "102SC1355070133",
+      "company_number": "SC135507",
+      "entity_id": "104161798",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

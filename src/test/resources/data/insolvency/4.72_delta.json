@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20040315115958",
+      "form_type": "4.72",
+      "description": "RETURN OF FINAL MEETING RECEIVED",
+      "barcode": "",
+      "document_id": "000AMC16TCK2429",
+      "company_number": "01504096",
+      "entity_id": "104388172",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

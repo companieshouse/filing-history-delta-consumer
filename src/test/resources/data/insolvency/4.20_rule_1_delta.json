@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20090826130105",
+      "form_type": "4.20",
+      "description": "STATEMENT OF AFFAIRS/4.19",
+      "barcode": "P6PKACQG",
+      "document_id": "000P6PKACQG3833",
+      "company_number": "02893396",
+      "entity_id": "2040047667",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}
