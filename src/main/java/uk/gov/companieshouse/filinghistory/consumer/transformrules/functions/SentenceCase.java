@@ -2,7 +2,6 @@ package uk.gov.companieshouse.filinghistory.consumer.transformrules.functions;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -16,22 +15,43 @@ import org.springframework.stereotype.Component;
 @Component
 public class SentenceCase extends AbstractTransformer {
 
-    static final Possessiveness NON_POSSESSIVE = new Possessiveness();
-    private static final Set<String> ENTITIES = new HashSet<>(Arrays.asList("ARD", "NI", "SE",
-            "GB", "SC", "UK", "LTD", "L.T.D", "PLC", "P.L.C", "UNLTD", "CIC", "C.I.C", "LLP",
-            "L.P", "LP", "EEIG", "OEIC", "ICVC", "AEIE", "C.B.C", "C.C.C", "CBC", "CBCN", "CBP",
-            "CCC", "CYF", "EESV", "EOFG", "EOOS", "GEIE", "GELE", "PAC", "PCCLIMITED", "PCCLTD",
-            "PROTECTEDCELLCOMPANY", "CWMNICELLGWARCHODEDIG", "CCGCYFYNGEDIG", "CCGCYF"));
-    private static final Pattern FORWARDSLASH_ABBREVIATION = Pattern.compile("^(.?/)(.*)",
+    private static final Possessiveness NON_POSSESSIVE = new Possessiveness();
+    private static final Set<String> ENDINGS = new HashSet<>(
+            List.of("LIMITED", "LTD", "L.T.D", "PUBLIC LIMITED COMPANY", "PCC", "P.C.C.", "PLC",
+                    "P.L.C", "UNLIMITED", "UNLTD", "COMMUNITY INTEREST COMPANY", "CIC",
+                    "C.I.C", "COMMUNITY INTEREST PUBLIC LIMITED COMPANY", "COMMUNITY INTEREST P.L.C",
+                    "COMMUNITY INTEREST PLC", "LIMITED LIABILITY PARTNERSHIP", "LLP",
+                    "LIMITED PARTNERSHIP", "L.P", "LP", "EUROPEAN ECONOMIC INTEREST GROUPING",
+                    "EEIG", "OPEN-ENDED INVESTMENT COMPANY", "OEIC", "INVESTMENT COMPANY WITH VARIABLE CAPITAL",
+                    "ICVC", "AEIE", "ANGHYFYNGEDIG", "C.B.C", "C.C.C",
+                    "CBC", "CBCN", "CBP", "CCC", "CWMNI BUDDIANT CYMUNEDOL", "CWMNI BUDDIANT CYMUNEDOL C.C.C",
+                    "CWMNI BUDDIANT CYMUNEDOL CCC", "CWMNI BUDDIANT CYMUNEDOL CYHOEDDUS CYFYNGEDIG",
+                    "CWMNI BUDDSODDIA CHYFALAF NEWIDIOL", "CWMNI BUDDSODDIANT PENAGORED",
+                    "CWMNI CYFYNGEDIG CYHOEDDUS", "CYF", "CYFYNGEDIG",
+                    "EESV", "EOFG", "EOOS", "GEIE", "GELE", "PAC", "PARTNERIAETH ATEBOLRWYDD CYFYNGEDIG",
+                    "PARTNERIAETH CYFYNGEDIG",
+
+                    "PCC LIMITED",                // protected cell company
+                    "PCC LTD",                    // protected cell company
+                    "PROTECTED CELL COMPANY",     // protected cell company
+                    "CWMNI CELL GWARCHODEDIG",    // protected cell company
+                    "CCG CYFYNGEDIG",             // protected cell company
+                    "CCG CYF"                     // protected cell company
+            ));
+
+    private static final Set<String> OTHERS = new HashSet<>(List.of("ARD", "NI", "SE", "GB", "SC"));
+    private static final Pattern FORWARD_SLASH_ABBREVIATION = Pattern.compile("^(.?/)(.*)",
             Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
     private static final Pattern TOKENISATION_PATTERN = Pattern.compile("(\\S+(\\s+|$))");
     private static final Pattern NEWLINE = Pattern.compile("\\n");
-    private static final Pattern ABBREVIATIONS = Pattern.compile("\\b(\\p{L})[.]");
+    private static final Pattern ABBREVIATIONS = Pattern.compile("\\b([A-Z])[.]", Pattern.CASE_INSENSITIVE);
     private static final Pattern MULTIPLE_SPACES = Pattern.compile("\\s+");
     private static final Pattern MIXED_ALPHANUMERIC = Pattern.compile("(\\w+\\d+\\w*|\\d+\\w+)");
-    private static final Pattern MATCHES_ENTITY = Pattern.compile(
-            "(\\b(?i:" + String.join("|", ENTITIES) + ")\\b)");
-    //    private static final Pattern MATCHES_ENDING = Pattern.compile("(\\b(?i:' . join('|',reverse sort @endings) . ')\\b)")
+    private static final Pattern MATCHES_ENDING = Pattern.compile(
+            "(\\b(?i:" + String.join("|", ENDINGS) + ")\\b)");
+    private static final Pattern MATCHES_OTHER_CASE = Pattern.compile(
+            "(\\b(?i:" + String.join("|", OTHERS) + ")\\b)");
+    private static final Pattern MIXED_CASE = Pattern.compile("[a-z].*[A-Z]\\s?|[A-Z].*[a-z]\\s?");
     private static final Pattern OPENING_BRACKET = Pattern.compile("[(\\[]");
     private static final Pattern SENTENCE_TERMINATOR = Pattern.compile("[.!?]");
     private static final Pattern FIRST_LETTER = Pattern.compile("([a-z])",
@@ -60,8 +80,7 @@ public class SentenceCase extends AbstractTransformer {
         if (StringUtils.isEmpty(nodeText)) {
             return nodeText;
         }
-        nodeText = nodeText.toUpperCase(Locale.UK);
-        Matcher forwardslashAbbreviationMatcher = FORWARDSLASH_ABBREVIATION.matcher(nodeText);
+        Matcher forwardslashAbbreviationMatcher = FORWARD_SLASH_ABBREVIATION.matcher(nodeText);
         String start = "";
         if (forwardslashAbbreviationMatcher.find()) {
             start = forwardslashAbbreviationMatcher.group(1);
@@ -80,10 +99,11 @@ public class SentenceCase extends AbstractTransformer {
         nodeText = mapToken(MULTIPLE_SPACES, nodeText, (token, matcher) -> " ", true);
         nodeText = mapToken(MIXED_ALPHANUMERIC, nodeText, (token, matcher) ->
                 matcher.group(1).toUpperCase(Locale.UK), true);
-        nodeText = mapToken(MATCHES_ENTITY, nodeText, (token, matcher) ->
-                ENTITIES.contains(token.toUpperCase(Locale.UK))
-                        ? token.toUpperCase(Locale.UK)
-                        : token, true);
+        nodeText = mapToken(MATCHES_ENDING, nodeText, (token, matcher) ->
+                matcher.group(1).toUpperCase(Locale.UK), true);
+        nodeText = mapToken(MATCHES_OTHER_CASE, nodeText, (token, matcher) ->
+                matcher.group(1).toUpperCase(Locale.UK), true);
+
         return nodeText.trim();
     }
 
@@ -94,7 +114,9 @@ public class SentenceCase extends AbstractTransformer {
             sentenceState.setMatchingBracket(possessive.openingBrackets);
             return token.toUpperCase(Locale.UK);
         }
-        token = token.toLowerCase(Locale.UK);
+        if (!MIXED_CASE.matcher(token).find()) {
+            token = token.toLowerCase(Locale.UK);
+        }
         if (sentenceState.isEndOfSentence()) {
             token = mapToken(FIRST_LETTER,
                     token, (t, m) -> t.toUpperCase(Locale.UK), false);
