@@ -89,19 +89,24 @@ anonymised.
 \
 **Complete the following steps to add another test case**:
 
-1. Create a json file called `X_delta.json` where `X` is the name of the form/rule under test.
-    1. The file should contain a valid filing history delta with respect to
+1. Create a json file called `<category>/X_delta.json` where `X` is the name of the form/rule under test.
+    1. To make json snippets easier to organise, we now separate them based on `<category>`.
+       1. This would be the category you find when you locate the form type in the `src/main/resources/transform_rules.yml` file. 
+       2. And can be further cross-checked by looking at [CategoryEnum](https://github.com/companieshouse/private-api-sdk-java/blob/2cb6199837bea4342ce3d4717ad2537dd32f235d/generated_sources/src/main/java/uk/gov/companieshouse/api/filinghistory/ExternalData.java#L45).
+    2. If a directory matching the `<category>` does not exist, it should be created under the `src/test/resources/data` directory. 
+    3. The file should contain a valid filing history delta with respect to
        the [API specification](https://github.com/companieshouse/private.api.ch.gov.uk-specifications/blob/c2e3f3558e13efba075c23227709448273d5fdfb/src/main/resources/delta/filing-history-delta-spec.yml).
-    2. Note the `delta_at` field is at the top level whereas the old Perl backend had it within the `filing_history`
+    4. Note the `delta_at` field is at the top level whereas the old Perl backend had it within the `filing_history`
        array.
-    3. Deltas can be found within the `fh_deltas` table in Kermit by querying by form
+    5. Deltas can be found within the `fh_deltas` table in Kermit by querying by form
        type, [see confluence page](https://companieshouse.atlassian.net/wiki/spaces/TEAM4/pages/4403200517/SQL+Queries+to+find+Filing+History+deltas).
        Alternatively, they can be found in the `queue`collection in MongoDB or by running the `f_get_one_transaction`
        package in CHIPS.
-2. Create a json file called `X_request_body.json` where `X` is the same as above.
-    1. The file should contain a valid filing history PUT request body with respect to
+2. Create a json file called `<category>/X_request_body.json` where `X` is the same as above.
+    1. `<category>` would be the same as what was used for the `X_delta.json` file.
+    2. The file should contain a valid filing history PUT request body with respect to
        the [API specification](https://github.com/companieshouse/private.api.ch.gov.uk-specifications/blob/1361e79e495b61cdd8101d1814d7d7aeddd8a639/src/main/resources/filing-history/internal-filing-history.json#L55).
-    2. As the PUT request body structure is similar to that of a document within the `company_filing_history` collection
+    3. As the PUT request body structure is similar to that of a document within the `company_filing_history` collection
        in MongoDB. A quick way to generate a document is to send it through the old backend locally by enabled the
        backend module on tilt. Its easy enough to copy a document and make the following changes:
         1. `data` &rarr; `external_data`.
