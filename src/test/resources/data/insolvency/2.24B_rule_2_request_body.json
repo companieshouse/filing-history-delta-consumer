@@ -1,0 +1,24 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTA0OTgxNTc5c2FsdA",
+    "category" : "insolvency",
+    "date" : "2005-12-20T11:59:58Z",
+    "description" : "liquidation-in-administration-progress-report",
+    "links" : {
+      "self" : "/company/03386007/filing-history/MTA0OTgxNTc5c2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "2.24B"
+  },
+  "internal_data" : {
+    "original_description" : "Administrators progress report",
+    "company_number" : "03386007",
+    "document_id" : "000A5ID4BC12886",
+    "entity_id" : "104981579",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

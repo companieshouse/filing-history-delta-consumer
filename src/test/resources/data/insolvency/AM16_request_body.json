@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzE3NjE0MjQxMnNhbHQ",
+    "barcode" : "A6645TY9",
+    "category" : "insolvency",
+    "date" : "2017-05-19T08:40:03Z",
+    "description" : "liquidation-in-administration-removal-of-administrator-from-office",
+    "links" : {
+      "self" : "/company/05365778/filing-history/MzE3NjE0MjQxMnNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "AM16"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of order removing administrator from office:liq. Case no.1:ip no.00005544",
+    "company_number" : "05365778",
+    "document_id" : "000A6645TY96647",
+    "entity_id" : "3176142412",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

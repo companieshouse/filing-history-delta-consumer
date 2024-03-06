@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MjAyNjExNzU1OXNhbHQ",
+    "barcode" : "SNY617D4",
+    "category" : "insolvency",
+    "date" : "2009-02-18T13:40:18Z",
+    "description" : "liquidation-in-administration-appointment-of-replacement-additional-administrator-scotland",
+    "links" : {
+      "self" : "/company/SC193076/filing-history/MjAyNjExNzU1OXNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "2.31B(Scot)"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of appointment of replacement/additional administrator",
+    "company_number" : "SC193076",
+    "document_id" : "000SNY617D43471",
+    "entity_id" : "2026117559",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

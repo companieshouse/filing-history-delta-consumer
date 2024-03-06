@@ -1,0 +1,24 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTY0MDczMDcwc2FsdA",
+    "category" : "insolvency",
+    "date" : "2006-08-15T12:00:02Z",
+    "description" : "liquidation-in-administration-change-date-of-dissolution",
+    "links" : {
+      "self" : "/company/03316119/filing-history/MTY0MDczMDcwc2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "2.36B"
+  },
+  "internal_data" : {
+    "original_description" : "Notice in respect of dissolution",
+    "company_number" : "03316119",
+    "document_id" : "000A4WXAHVT3051",
+    "entity_id" : "164073070",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

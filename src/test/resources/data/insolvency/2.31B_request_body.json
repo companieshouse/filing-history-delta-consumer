@@ -1,0 +1,24 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTA0MTY1MTc2c2FsdA",
+    "category" : "insolvency",
+    "date" : "2005-10-11T11:59:58Z",
+    "description" : "liquidation-in-administration-extension-of-period",
+    "links" : {
+      "self" : "/company/04640234/filing-history/MTA0MTY1MTc2c2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "2.31B"
+  },
+  "internal_data" : {
+    "original_description" : "Extension of administration",
+    "company_number" : "04640234",
+    "document_id" : "000AD0CK9B32839",
+    "entity_id" : "104165176",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

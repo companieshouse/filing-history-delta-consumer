@@ -1,0 +1,24 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTM5MDE0MjZzYWx0",
+    "category" : "insolvency",
+    "date" : "2005-12-05T11:59:58Z",
+    "description" : "liquidation-in-administration-move-to-dissolution",
+    "links" : {
+      "self" : "/company/03804007/filing-history/MTM5MDE0MjZzYWx0"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "2.35B"
+  },
+  "internal_data" : {
+    "original_description" : "Administration to dissolution",
+    "company_number" : "03804007",
+    "document_id" : "000AKU94AU52878",
+    "entity_id" : "13901426",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

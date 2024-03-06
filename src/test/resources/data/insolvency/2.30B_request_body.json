@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTE2MTQwNTM5c2FsdA",
+    "barcode" : "A82FM5C2",
+    "category" : "insolvency",
+    "date" : "2005-05-20T11:59:51Z",
+    "description" : "liquidation-in-administration-automatic-end-of-case",
+    "links" : {
+      "self" : "/company/00038991/filing-history/MTE2MTQwNTM5c2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "2.30B"
+  },
+  "internal_data" : {
+    "original_description" : "Automatic end of administration",
+    "company_number" : "00038991",
+    "document_id" : "000A82FM5C22734",
+    "entity_id" : "116140539",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

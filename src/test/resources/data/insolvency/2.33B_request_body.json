@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTA3ODIzNjM3c2FsdA",
+    "barcode" : "AZW5ZYZ6",
+    "category" : "insolvency",
+    "date" : "2004-10-04T11:59:57Z",
+    "description" : "liquidation-in-administration-court-order-ending-administration",
+    "links" : {
+      "self" : "/company/02794399/filing-history/MTA3ODIzNjM3c2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "2.33B"
+  },
+  "internal_data" : {
+    "original_description" : "C/O ending administration",
+    "company_number" : "02794399",
+    "document_id" : "000AZW5ZYZ62571",
+    "entity_id" : "107823637",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

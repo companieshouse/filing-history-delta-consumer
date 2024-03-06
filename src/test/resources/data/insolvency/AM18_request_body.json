@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzI2NjI2ODE4MHNhbHQ",
+    "barcode" : "A95M8CS9",
+    "category" : "insolvency",
+    "date" : "2020-06-01T13:55:52Z",
+    "description" : "liquidation-in-administration-administrator-deceased",
+    "links" : {
+      "self" : "/company/09737373/filing-history/MzI2NjI2ODE4MHNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "AM18"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of deceased administrator:liq. Case no.1:ip no.00005940",
+    "company_number" : "09737373",
+    "document_id" : "000A95M8CS97754",
+    "entity_id" : "3266268180",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

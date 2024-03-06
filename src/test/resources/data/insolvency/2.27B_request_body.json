@@ -1,0 +1,24 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTE5MjU4MDcyc2FsdA",
+    "category" : "insolvency",
+    "date" : "2006-02-07T11:59:59Z",
+    "description" : "liquidation-in-administration-change-in-committee-membership",
+    "links" : {
+      "self" : "/company/02835083/filing-history/MTE5MjU4MDcyc2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "2.27B"
+  },
+  "internal_data" : {
+    "original_description" : "Change in committee membership",
+    "company_number" : "02835083",
+    "document_id" : "000A1N9BCNH2922",
+    "entity_id" : "119258072",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

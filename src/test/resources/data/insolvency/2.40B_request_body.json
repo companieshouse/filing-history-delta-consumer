@@ -1,0 +1,24 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTA3NzUyODZzYWx0",
+    "category" : "insolvency",
+    "date" : "2005-07-22T11:59:56Z",
+    "description" : "liquidation-in-administration-appointment-of-replacement-additional-administrator",
+    "links" : {
+      "self" : "/company/04470414/filing-history/MTA3NzUyODZzYWx0"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "2.40B"
+  },
+  "internal_data" : {
+    "original_description" : "Replacement/extra administrator",
+    "company_number" : "04470414",
+    "document_id" : "000ASBL274B2779",
+    "entity_id" : "10775286",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

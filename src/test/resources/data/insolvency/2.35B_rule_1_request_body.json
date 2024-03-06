@@ -1,0 +1,33 @@
+{
+  "external_data" : {
+    "transaction_id" : "MjA0MjMxNjI1MXNhbHQ",
+    "barcode" : "P30F8DKC",
+    "action_date" : "2009-09-24T00:00:00Z",
+    "category" : "insolvency",
+    "date" : "2009-09-28T13:52:43Z",
+    "description" : "liquidation-in-administration-move-to-dissolution-with-case-end-date",
+    "description_values" : {
+      "case_end_date" : "2009-09-24T00:00:00Z"
+    },
+    "links" : {
+      "self" : "/company/00415256/filing-history/MjA0MjMxNjI1MXNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "2.35B"
+  },
+
+  "internal_data" : {
+    "original_description" : "Notice of move from administration to dissolution",
+    "original_values" : {
+      "case_end_date" : "24/09/09"
+    },
+    "company_number" : "00415256",
+    "document_id" : "000P30F8DKC4017",
+    "entity_id" : "2042316251",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20051011115958",
+      "form_type": "2.31B",
+      "description": "EXTENSION OF ADMINISTRATION",
+      "barcode": "",
+      "document_id": "000AD0CK9B32839",
+      "company_number": "04640234",
+      "entity_id": "104165176",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}
