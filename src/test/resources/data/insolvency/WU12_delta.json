@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20191001113531",
+      "form_type": "WU12",
+      "description": "NOTICE OF LOSS OF QUALIFICATION AS INSOLVENCY PRACTITIONER IN A WINDING UP BY THE COURT:LIQ. CASE NO.1",
+      "barcode": "A8ER08B7",
+      "document_id": "000A8ER08B77512",
+      "company_number": "04045710",
+      "entity_id": "3245694190",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

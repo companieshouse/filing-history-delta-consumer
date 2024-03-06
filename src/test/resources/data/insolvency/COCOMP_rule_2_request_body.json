@@ -1,0 +1,26 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTA0MDU3MzVzYWx0",
+    "category" : "insolvency",
+    "date" : "1990-12-06T11:59:59Z",
+    "description" : "liquidation-compulsory-winding-up-order",
+    "links" : {
+      "self" : "/company/02291698/filing-history/MTA0MDU3MzVzYWx0"
+    },
+    "paper_filed" : true,
+    "subcategory" : [
+      "compulsory",
+      "court-order"
+    ],
+    "type" : "COCOMP"
+  },
+  "internal_data" : {
+    "original_description" : "Court order to compulsory wind up",
+    "company_number" : "02291698",
+    "entity_id" : "10405735",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

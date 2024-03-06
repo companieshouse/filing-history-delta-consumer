@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzI0MDEwMzQzMnNhbHQ",
+    "barcode" : "S8AETXYR",
+    "category" : "insolvency",
+    "date" : "2019-07-24T12:17:52Z",
+    "description" : "liquidation-compulsory-notice-winding-up-order-court-scotland",
+    "links" : {
+      "self" : "/company/SC579644/filing-history/MzI0MDEwMzQzMnNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "compulsory",
+    "type" : "WU01(Scot)"
+  },
+  "internal_data": {
+    "original_description" : "Notice of court order in a winding up:liq. Case no.1:ip no.00008605",
+    "company_number" : "SC579644",
+    "document_id" : "000S8AETXYR7443",
+    "entity_id" : "3240103432",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

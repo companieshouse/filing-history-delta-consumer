@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20050907115959",
+      "form_type": "COLIQ",
+      "description": "CRT ORDER CASE RESCINDE",
+      "barcode": "",
+      "document_id": "000SHKZ78HO2611",
+      "company_number": "SC143332",
+      "entity_id": "104108384",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzE3NTA1MDA5NXNhbHQ",
+    "barcode" : "A656RVRK",
+    "category" : "insolvency",
+    "date" : "2017-05-04T11:17:39Z",
+    "description" : "liquidation-compulsory-winding-up-progress-report",
+    "links" : {
+      "self" : "/company/07031340/filing-history/MzE3NTA1MDA5NXNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "compulsory",
+    "type" : "WU07"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of progress report in a winding up by the court:brought down date 06/03/2017:liq. Case no.2",
+    "company_number" : "07031340",
+    "document_id" : "000A656RVRK6632",
+    "entity_id" : "3175050095",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

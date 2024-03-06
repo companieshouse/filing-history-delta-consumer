@@ -86,7 +86,6 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
             "insolvency/4.48",
             "insolvency/4.51",
             "incorporation/OE01",
-
             "insolvency/4.68_rule_3",
             "insolvency/4.20_rule_1",
             "insolvency/4.68_rule_1",
@@ -96,7 +95,19 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
             "insolvency/4.72",
             "insolvency/4.17(Scot)",
             "insolvency/4.9(Scot)",
-            "insolvency/C04.2(Scot)"
+            "insolvency/C04.2(Scot)",
+            "insolvency/WU01",
+            "insolvency/WU01(Scot)",
+            "insolvency/C0LIQ",
+            "insolvency/COCOMP_rule_2",
+            "insolvency/WU07",
+            "insolvency/WU08",
+            "insolvency/WU09",
+            "insolvency/WU11",
+            "insolvency/WU12",
+            "insolvency/WU14",
+            "insolvency/AM11"
+
     })
     void shouldConsumeFilingHistoryDeltaTopicAndProcessDelta(final String prefix) throws Exception {
         // given

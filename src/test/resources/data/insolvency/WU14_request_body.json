@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzE3NzY4ODk2MnNhbHQ",
+    "barcode" : "A67BQQ3V",
+    "category" : "insolvency",
+    "date" : "2017-06-08T14:09:49Z",
+    "description" : "liquidation-compulsory-removal-of-liquidator-by-court",
+    "links" : {
+      "self" : "/company/04456494/filing-history/MzE3NzY4ODk2MnNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "compulsory",
+    "type" : "WU14"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of order for removal of liquidator by court in a winding up by the court:liq. Case no.2",
+    "company_number" : "04456494",
+    "document_id" : "000A67BQQ3V6667",
+    "entity_id" : "3177688962",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

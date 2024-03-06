@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20190724121752",
+      "form_type": "WU01(Scot)",
+      "description": "NOTICE OF COURT ORDER IN A WINDING UP:LIQ. CASE NO.1:IP NO.00008605",
+      "barcode": "S8AETXYR",
+      "document_id": "000S8AETXYR7443",
+      "company_number": "SC579644",
+      "entity_id": "3240103432",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

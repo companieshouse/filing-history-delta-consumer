@@ -1,0 +1,26 @@
+{
+  "external_data": {
+    "transaction_id": "MzI3NjYwMjg0MXNhbHQ",
+    "barcode": "Y9CP33F6",
+    "category": "insolvency",
+    "date": "2020-09-09T09:14:20Z",
+    "description": "liquidation-compulsory-notice-winding-up-order",
+    "links": {
+      "self": "/company/04162066/filing-history/MzI3NjYwMjg0MXNhbHQ"
+    },
+    "paper_filed": true,
+    "subcategory": "compulsory",
+    "type": "WU01"
+  },
+  "internal_data": {
+    "original_description": "Notice of court order in a winding up:liq. Case no.1:ip no.OR000017",
+    "company_number": "04162066",
+    "document_id": "000Y9CP33F67853",
+    "entity_id": "3276602841",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}
+

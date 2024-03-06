@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "19901206115959",
+      "form_type": "COCOMP",
+      "description": "COURT ORDER TO COMPULSORY WIND UP",
+      "barcode": "",
+      "document_id": "",
+      "company_number": "02291698",
+      "entity_id": "10405735",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

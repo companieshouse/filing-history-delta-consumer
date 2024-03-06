@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzI3NjU5MTUxNnNhbHQ",
+    "barcode" : "A9ARLGXC",
+    "category" : "insolvency",
+    "date" : "2020-09-01T11:06:25Z",
+    "description" : "liquidation-compulsory-death-of-liquidator",
+    "links" : {
+      "self" : "/company/10040567/filing-history/MzI3NjU5MTUxNnNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "compulsory",
+    "type" : "WU11"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of deceased liquidator in a winding up by the court:liq. Case no.1",
+    "company_number" : "10040567",
+    "document_id" : "000A9ARLGXC7846",
+    "entity_id" : "3276591516",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}
