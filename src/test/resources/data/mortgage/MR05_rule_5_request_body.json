@@ -1,0 +1,27 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzA3NjA3NDk0M3NhbHQ",
+    "barcode" : "X2634O94",
+    "category" : "mortgage",
+    "date" : "2013-04-11T00:00:00Z",
+    "description" : "mortgage-charge-part-cease-with-charge-number",
+    "description_values" : {
+      "charge_number" : "6"
+    },
+    "links" : {
+      "self" : "/company/01007146/filing-history/MzA3NjA3NDk0M3NhbHQ"
+    },
+    "subcategory" : "release-cease",
+    "type" : "MR05"
+  },
+  "internal_data": {
+    "original_description" : "Statement of release / cease from charge / part cease / charge no 6",
+    "company_number" : "01007146",
+    "document_id" : "000X2634O945155",
+    "entity_id" : "3076074943",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

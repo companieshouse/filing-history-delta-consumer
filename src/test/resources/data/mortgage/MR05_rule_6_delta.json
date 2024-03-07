@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "4",
+      "receive_date": "20130406000000",
+      "form_type": "MR05",
+      "description": "STATEMENT OF RELEASE / CEASE FROM CHARGE / PART BOTH / CHARGE NO 23",
+      "barcode": "R25R2DA3",
+      "document_id": "000R25R2DA35154",
+      "company_number": "00014504",
+      "entity_id": "3075940501",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

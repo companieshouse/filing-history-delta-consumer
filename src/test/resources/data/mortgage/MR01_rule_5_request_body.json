@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MjUwMjcxMzQzNXNhbHQ",
+    "barcode" : "00646709",
+    "category" : "mortgage",
+    "date" : "2009-05-29T00:00:00Z",
+    "description" : "mortgage-create-with-deed",
+    "links" : {
+      "self" : "/company/NI053407/filing-history/MjUwMjcxMzQzNXNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "create",
+    "type" : "MR01"
+  },
+  "internal_data": {
+    "original_description" : "Pars re mortage",
+    "company_number" : "NI053407",
+    "document_id" : "NIA117565800000",
+    "entity_id" : "2502713435",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

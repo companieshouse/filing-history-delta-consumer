@@ -1,0 +1,24 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzE1MjU5NDY0MnNhbHQ",
+    "category" : "mortgage",
+    "date" : "2016-06-16T00:00:00Z",
+    "description" : "mortgage-satisfy-charge",
+    "links" : {
+      "self" : "/company/SC463020/filing-history/MzE1MjU5NDY0MnNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "satisfy",
+    "type" : "MR04"
+  },
+  "internal_data": {
+    "original_description" : "MR04",
+    "company_number" : "SC463020",
+    "document_id" : "301SC4630205845",
+    "entity_id" : "3152594642",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}
