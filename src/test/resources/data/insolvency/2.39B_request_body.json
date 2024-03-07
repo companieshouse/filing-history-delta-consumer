@@ -1,0 +1,24 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTA1MDY1MzQ4c2FsdA",
+    "category" : "insolvency",
+    "date" : "2005-11-18T11:59:58Z",
+    "description" : "liquidation-in-administration-vacation-of-office",
+    "links" : {
+      "self" : "/company/04302066/filing-history/MTA1MDY1MzQ4c2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "2.39B"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of vacation of office",
+    "company_number" : "04302066",
+    "document_id" : "000AX3XOAGL2866",
+    "entity_id" : "105065348",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

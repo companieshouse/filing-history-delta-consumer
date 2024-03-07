@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTA1NzIyODAyc2FsdA",
+    "barcode" : "A6WNG2WD",
+    "category" : "insolvency",
+    "date" : "2005-02-21T11:59:56Z",
+    "description" : "liquidation-in-administration-move-to-creditors-voluntary-liquidation",
+    "links" : {
+      "self" : "/company/02926918/filing-history/MTA1NzIyODAyc2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "2.34B"
+  },
+  "internal_data" : {
+    "original_description" : "Administration to cvl",
+    "company_number" : "02926918",
+    "document_id" : "000A6WNG2WD2669",
+    "entity_id" : "105722802",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

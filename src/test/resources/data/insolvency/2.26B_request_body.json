@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTAzNzI4MjA5c2FsdA",
+    "barcode" : "AZ91EYYT",
+    "category" : "insolvency",
+    "date" : "2004-10-04T11:59:55Z",
+    "description" : "liquidation-in-administration-amended-certificate-of-constitution-creditors-committee",
+    "links" : {
+      "self" : "/company/00868531/filing-history/MTAzNzI4MjA5c2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "2.26B"
+  },
+  "internal_data" : {
+    "original_description" : "Certificate of constitution",
+    "company_number" : "00868531",
+    "document_id" : "000AZ91EYYT2571",
+    "entity_id" : "103728209",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

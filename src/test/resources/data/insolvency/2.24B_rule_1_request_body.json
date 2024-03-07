@@ -1,0 +1,29 @@
+{
+  "external_data" : {
+    "transaction_id" : "MjA0MDA2NTA4OXNhbHQ",
+    "barcode" : "P6MUCCQP",
+    "action_date" : "2009-06-22T00:00:00Z",
+    "category" : "insolvency",
+    "date" : "2009-08-26T16:07:09Z",
+    "description" : "liquidation-in-administration-progress-report-with-brought-down-date",
+    "description_values" : {
+      "brought_down_date" : "2009-06-22T00:00:00Z"
+    },
+    "links" : {
+      "self" : "/company/05363396/filing-history/MjA0MDA2NTA4OXNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "2.24B"
+  },
+  "internal_data" : {
+    "original_description" : "Administrator's progress report:brought down date 22/06/2009",
+    "company_number" : "05363396",
+    "document_id" : "000P6MUCCQP3833",
+    "entity_id" : "2040065089",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

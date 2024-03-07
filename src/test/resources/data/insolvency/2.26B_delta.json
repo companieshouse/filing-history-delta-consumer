@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20041004115955",
+      "form_type": "2.26B",
+      "description": "CERTIFICATE OF CONSTITUTION",
+      "barcode": "AZ91EYYT",
+      "document_id": "000AZ91EYYT2571",
+      "company_number": "00868531",
+      "entity_id": "103728209",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

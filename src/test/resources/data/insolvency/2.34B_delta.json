@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20050221115956",
+      "form_type": "2.34B",
+      "description": "ADMINISTRATION TO CVL",
+      "barcode": "A6WNG2WD",
+      "document_id": "000A6WNG2WD2669",
+      "company_number": "02926918",
+      "entity_id": "105722802",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

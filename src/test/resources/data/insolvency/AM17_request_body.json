@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzE4OTIyMTc0NXNhbHQ",
+    "barcode" : "A6HDGE22",
+    "category" : "insolvency",
+    "date" : "2017-11-01T14:49:01Z",
+    "description" : "liquidation-in-administration-administrator-ceasing-to-be-qualified-to-act",
+    "links" : {
+      "self" : "/company/09087824/filing-history/MzE4OTIyMTc0NXNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "AM17"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of vacation of office when administrator ceases to be qualified to act:liq. Case no.1:ip no.00009018",
+    "company_number" : "09087824",
+    "document_id" : "000A6HDGE226809",
+    "entity_id" : "3189221745",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

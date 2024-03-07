@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzI1MjkzMTQ4NnNhbHQ",
+    "barcode" : "S8KRI381",
+    "category" : "insolvency",
+    "date" : "2019-12-23T13:19:09Z",
+    "description" : "liquidation-in-administration-removal-of-administrator-from-office-scotland",
+    "links" : {
+      "self" : "/company/SC273791/filing-history/MzI1MjkzMTQ4NnNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "AM16(Scot)"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of order removing administrator from office:liq. Case no.1:ip no.00009630",
+    "company_number" : "SC273791",
+    "document_id" : "000S8KRI3817600",
+    "entity_id" : "3252931486",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

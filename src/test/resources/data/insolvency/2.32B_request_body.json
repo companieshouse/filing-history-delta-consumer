@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTA3MTMxNDQxc2FsdA",
+    "barcode" : "AR8TU77A",
+    "category" : "insolvency",
+    "date" : "2005-07-28T11:59:50Z",
+    "description" : "liquidation-in-administration-end-of-administration",
+    "links" : {
+      "self" : "/company/00482197/filing-history/MTA3MTMxNDQxc2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "2.32B"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of end of administration",
+    "company_number" : "00482197",
+    "document_id" : "000AR8TU77A2783",
+    "entity_id" : "107131441",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

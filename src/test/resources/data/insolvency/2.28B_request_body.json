@@ -1,0 +1,24 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTYxNDcxMDg3c2FsdA",
+    "category" : "insolvency",
+    "date" : "2006-05-31T12:00:02Z",
+    "description" : "liquidation-in-administration-notice-of-order-deal-with-charged-property",
+    "links" : {
+      "self" : "/company/00124022/filing-history/MTYxNDcxMDg3c2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "2.28B"
+  },
+  "internal_data" : {
+    "original_description" : "Order deal with charged property",
+    "company_number" : "00124022",
+    "document_id" : "000A74JV00Z2995",
+    "entity_id" : "161471087",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

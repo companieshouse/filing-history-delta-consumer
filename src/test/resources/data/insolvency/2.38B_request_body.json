@@ -1,0 +1,24 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTIwODgyMDg2c2FsdA",
+    "category" : "insolvency",
+    "date" : "2005-09-16T11:59:56Z",
+    "description" : "liquidation-in-administration-resignation-of-administrator",
+    "links" : {
+      "self" : "/company/03968588/filing-history/MTIwODgyMDg2c2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "2.38B"
+  },
+  "internal_data" : {
+    "original_description" : "Resignation by administrator",
+    "company_number" : "03968588",
+    "document_id" : "000AV4N78P02822",
+    "entity_id" : "120882086",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20171101144901",
+      "form_type": "AM17",
+      "description": "NOTICE OF VACATION OF OFFICE WHEN ADMINISTRATOR CEASES TO BE QUALIFIED TO ACT:LIQ. CASE NO.1:IP NO.00009018",
+      "barcode": "A6HDGE22",
+      "document_id": "000A6HDGE226809",
+      "company_number": "09087824",
+      "entity_id": "3189221745",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}
