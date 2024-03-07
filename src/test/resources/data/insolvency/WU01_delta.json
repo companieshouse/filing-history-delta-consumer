@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20200909091420",
+      "form_type": "WU01",
+      "description": "NOTICE OF COURT ORDER IN A WINDING UP:LIQ. CASE NO.1:IP NO.OR000017",
+      "barcode": "Y9CP33F6",
+      "document_id": "000Y9CP33F67853",
+      "company_number": "04162066",
+      "entity_id": "3276602841",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

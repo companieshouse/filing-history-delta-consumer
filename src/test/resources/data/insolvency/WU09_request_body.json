@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzE5OTY2NTE5MXNhbHQ",
+    "barcode" : "A70PJ1YR",
+    "category" : "insolvency",
+    "date" : "2018-03-09T10:45:15Z",
+    "description" : "liquidation-compulsory-release-of-liquidator-or-official-receiver-by-secretary-of-state",
+    "links" : {
+      "self" : "/company/07969001/filing-history/MzE5OTY2NTE5MXNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "compulsory",
+    "type" : "WU09"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of release of liquidator or official receiver by secretary of state in a winding up by the court:liq. Case no.1",
+    "company_number" : "07969001",
+    "document_id" : "000A70PJ1YR6939",
+    "entity_id" : "3199665191",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

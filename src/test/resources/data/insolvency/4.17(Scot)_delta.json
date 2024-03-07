@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20020706115958",
+      "form_type": "4.17(Scot)",
+      "description": "NOTICE OF FINAL MEETING OF CRED",
+      "barcode": "",
+      "document_id": "000S0J5XC9Y1819",
+      "company_number": "SC029238",
+      "entity_id": "106496902",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

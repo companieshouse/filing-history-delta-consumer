@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzI0NTY5NDE5MHNhbHQ",
+    "barcode" : "A8ER08B7",
+    "category" : "insolvency",
+    "date" : "2019-10-01T11:35:31Z",
+    "description" : "liquidation-compulsory-loss-of-qualification-as-insolvency-practitioner",
+    "links" : {
+      "self" : "/company/04045710/filing-history/MzI0NTY5NDE5MHNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "compulsory",
+    "type" : "WU12"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of loss of qualification as insolvency practitioner in a winding up by the court:liq. Case no.1",
+    "company_number" : "04045710",
+    "document_id" : "000A8ER08B77512",
+    "entity_id" : "3245694190",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

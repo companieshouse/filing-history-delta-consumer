@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzE3NjI3MjgyMHNhbHQ",
+    "barcode" : "A6645TVT",
+    "category" : "insolvency",
+    "date" : "2017-05-22T08:51:48Z",
+    "description" : "liquidation-in-administration-appointment-of-a-replacement-or-additional-administrator",
+    "links" : {
+      "self" : "/company/01063384/filing-history/MzE3NjI3MjgyMHNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "AM11"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of appointment of replacement or additional administrator:liq. Case no.1:ip no.00017030,00005544,00019272",
+    "company_number" : "01063384",
+    "document_id" : "000A6645TVT6648",
+    "entity_id" : "3176272820",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

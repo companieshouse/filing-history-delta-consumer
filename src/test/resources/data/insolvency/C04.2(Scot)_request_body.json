@@ -1,0 +1,27 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTA0MTYxNzk4c2FsdA",
+    "category" : "insolvency",
+    "date" : "1995-10-26T11:59:53Z",
+    "description" : "liquidation-compulsory-notice-winding-up-scotland",
+    "links" : {
+      "self" : "/company/SC135507/filing-history/MTA0MTYxNzk4c2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : [
+      "compulsory",
+      "court-order"
+    ],
+    "type" : "CO4.2(Scot)"
+  },
+  "internal_data" : {
+    "company_number" : "SC135507",
+    "document_id" : "102SC1355070133",
+    "entity_id" : "104161798",
+    "original_description" : "Crt ord notice of winding up",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

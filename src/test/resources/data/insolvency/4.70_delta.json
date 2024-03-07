@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "19950719115954",
+      "form_type": "4.70",
+      "description": "DECLARATION OF SOLVENCY",
+      "barcode": "",
+      "document_id": "",
+      "company_number": "02043947",
+      "entity_id": "104094316",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

@@ -1,0 +1,23 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTA0MDk0MzE2c2FsdA",
+    "category" : "insolvency",
+    "date" : "1995-07-19T11:59:54Z",
+    "description" : "liquidation-voluntary-declaration-of-solvency",
+    "links" : {
+      "self" : "/company/02043947/filing-history/MTA0MDk0MzE2c2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "voluntary",
+    "type" : "4.70"
+  },
+  "internal_data" : {
+    "original_description" : "Declaration of solvency",
+    "company_number" : "02043947",
+    "entity_id" : "104094316",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

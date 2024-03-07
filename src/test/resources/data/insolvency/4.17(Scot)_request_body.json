@@ -1,0 +1,24 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTA2NDk2OTAyc2FsdA",
+    "category" : "insolvency",
+    "date" : "2002-07-06T11:59:58Z",
+    "description" : "liquidation-compulsory-return-of-final-meeting-scotland",
+    "links" : {
+      "self" : "/company/SC029238/filing-history/MTA2NDk2OTAyc2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "compulsory",
+    "type" : "4.17(Scot)"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of final meeting of cred",
+    "company_number" : "SC029238",
+    "document_id" : "000S0J5XC9Y1819",
+    "entity_id" : "106496902",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

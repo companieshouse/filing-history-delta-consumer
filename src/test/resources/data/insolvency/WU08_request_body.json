@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzE5MTAwMjkyNHNhbHQ",
+    "barcode" : "A6J5IZJ7",
+    "category" : "insolvency",
+    "date" : "2017-11-24T10:39:28Z",
+    "description" : "liquidation-compulsory-removal-of-liquidator-by-creditors",
+    "links" : {
+      "self" : "/company/06280201/filing-history/MzE5MTAwMjkyNHNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "compulsory",
+    "type" : "WU08"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of removal of liquidator by creditors in a winding up by the court:liq. Case no.1",
+    "company_number" : "06280201",
+    "document_id" : "000A6J5IZJ76835",
+    "entity_id" : "3191002924",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

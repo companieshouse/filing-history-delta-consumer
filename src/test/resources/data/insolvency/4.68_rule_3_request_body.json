@@ -1,0 +1,23 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTA0MDA0Mzcyc2FsdA",
+    "category" : "insolvency",
+    "date" : "1994-11-07T11:59:59Z",
+    "description" : "liquidation-voluntary-statement-of-receipts-and-payments",
+    "links" : {
+      "self" : "/company/01295891/filing-history/MTA0MDA0Mzcyc2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "voluntary",
+    "type" : "4.68"
+  },
+  "internal_data": {
+    "original_description" : "Liquidator's statement of receipts and payments",
+    "company_number" : "01295891",
+    "entity_id" : "104004372",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

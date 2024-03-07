@@ -1,0 +1,28 @@
+{
+  "external_data" : {
+    "transaction_id" : "MjA0MDA0NzY2N3NhbHQ",
+    "barcode" : "P6PKACQG",
+    "category" : "insolvency",
+    "date" : "2009-08-26T13:01:05Z",
+    "description" : "liquidation-voluntary-statement-of-affairs-with-form-attached",
+    "description_values" : {
+      "form_attached" : "4.19"
+    },
+    "links" : {
+      "self" : "/company/02893396/filing-history/MjA0MDA0NzY2N3NhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "voluntary",
+    "type" : "4.20"
+  },
+  "internal_data" : {
+    "original_description" : "Statement of affairs/4.19",
+    "company_number" : "02893396",
+    "document_id" : "000P6PKACQG3833",
+    "entity_id" : "2040047667",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

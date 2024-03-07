@@ -1,0 +1,24 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTA0MTA4Mzg0c2FsdA",
+    "category" : "insolvency",
+    "date" : "2005-09-07T11:59:59Z",
+    "description" : "liquidation-voluntary-defer-dissolution",
+    "links" : {
+      "self" : "/company/SC143332/filing-history/MTA0MTA4Mzg0c2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "voluntary",
+    "type" : "COLIQ"
+  },
+  "internal_data" : {
+    "original_description" : "Crt order case rescinde",
+    "company_number" : "SC143332",
+    "document_id" : "000SHKZ78HO2611",
+    "entity_id" : "104108384",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

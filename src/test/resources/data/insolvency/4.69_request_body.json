@@ -1,0 +1,28 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzAxNzM3NzA3N3NhbHQ",
+    "barcode" : "AKOW6KPT",
+    "category" : "insolvency",
+    "date" : "2010-06-11T10:45:02Z",
+    "description" : "liquidation-voluntary-appeal",
+    "links" : {
+      "self" : "/company/05555131/filing-history/MzAxNzM3NzA3N3NhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : [
+      "voluntary",
+      "court-order"
+    ],
+    "type" : "4.69"
+  },
+  "internal_data" : {
+    "original_description" : "Order of court on appeal against secretary of state's decision under section 203(4) or 205(4)",
+    "company_number" : "05555131",
+    "document_id" : "000AKOW6KPT4202",
+    "entity_id" : "3017377077",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTA0Mzg4MTcyc2FsdA",
+    "category" : "insolvency",
+    "date" : "2004-03-15T11:59:58Z",
+    "description" : "liquidation-voluntary-creditors-return-of-final-meeting",
+    "links" : {
+      "self" : "/company/01504096/filing-history/MTA0Mzg4MTcyc2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "voluntary",
+    "type" : "4.72"
+  },
+  "internal_data" : {
+    "original_description" : "Return of final meeting received",
+    "company_number" : "01504096",
+    "document_id" : "000AMC16TCK2429",
+    "entity_id" : "104388172",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

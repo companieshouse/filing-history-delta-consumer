@@ -1,0 +1,29 @@
+{
+  "external_data" : {
+    "transaction_id" : "MjA0MDA0MDg1MHNhbHQ",
+    "barcode" : "P6MZCCQU",
+    "action_date" : "2009-08-12T00:00:00Z",
+    "category" : "insolvency",
+    "date" : "2009-08-26T11:49:42Z",
+    "description" : "liquidation-voluntary-statement-of-receipts-and-payments-with-brought-down-date",
+    "description_values" : {
+      "brought_down_date" : "2009-08-12T00:00:00Z"
+    },
+    "links" : {
+      "self" : "/company/03830203/filing-history/MjA0MDA0MDg1MHNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "voluntary",
+    "type" : "4.68"
+  },
+  "internal_data" : {
+    "original_description" : "Liquidator's statement of receipts and payments:brought down date 12/08/2009",
+    "company_number" : "03830203",
+    "document_id" : "000P6MZCCQU3833",
+    "entity_id" : "2040040850",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

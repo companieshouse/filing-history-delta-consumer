@@ -28,27 +28,25 @@ public class ReplaceProperty extends AbstractTransformer {
     @Override
     protected void doTransform(JsonNode source, TransformTarget target, List<String> arguments,
             Map<String, String> context) {
-
         if (arguments.size() == 1) {
-            target.objectNode().put(target.fieldKey(), getReplacementValue(arguments, context));
+            target.objectNode().put(target.fieldKey(), getReplacementValue(target.fieldValue(), context));
         } else {
             ArrayNode leafNode = target.objectNode().putArray(target.fieldKey());
             arguments.forEach(leafNode::add);
         }
     }
 
-    private String getReplacementValue(List<String> arguments, Map<String, String> context) {
-        String replacementValue = arguments.getFirst();
-        Matcher matcher = SUBSTITUTION_PATTERN.matcher(replacementValue);
+    private String getReplacementValue(String fieldValue, Map<String, String> context) {
+        Matcher matcher = SUBSTITUTION_PATTERN.matcher(fieldValue);
         if (matcher.matches()) {
             if ("lc".equals(matcher.group(FUNCTION))) {
                 String placeHolder = matcher.group(PLACE_HOLDER);
-                replacementValue = replacementValue.replace(matcher.group(SUBSTITUTION),
+                fieldValue = fieldValue.replace(matcher.group(SUBSTITUTION),
                         lowerCase.transformLowerCase(context.get(placeHolder)));
             } else {
                 throw new IllegalArgumentException("Unexpected function type of %s".formatted(matcher.group(FUNCTION)));
             }
         }
-        return replacementValue;
+        return fieldValue;
     }
 }

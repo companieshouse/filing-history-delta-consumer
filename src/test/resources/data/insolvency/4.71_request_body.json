@@ -1,0 +1,24 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTA0MDcwMDE2c2FsdA",
+    "category" : "insolvency",
+    "date" : "1996-06-13T11:59:58Z",
+    "description" : "liquidation-voluntary-members-return-of-final-meeting",
+    "links" : {
+      "self" : "/company/00109234/filing-history/MTA0MDcwMDE2c2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "voluntary",
+    "type" : "4.71"
+  },
+  "internal_data" : {
+    "original_description" : "Return of final meeting received (members)",
+    "company_number" : "00109234",
+    "document_id" : "101001092340342",
+    "entity_id" : "104070016",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}
