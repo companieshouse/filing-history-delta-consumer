@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzE4ODM3ODExM3NhbHQ",
+    "barcode" : "A6GY3GUO",
+    "category" : "mortgage",
+    "date" : "2017-10-13T00:00:00Z",
+    "description" : "mortgage-acquire-without-deed",
+    "links" : {
+      "self" : "/company/10257473/filing-history/MzE4ODM3ODExM3NhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "acquire",
+    "type" : "MR09"
+  },
+  "internal_data": {
+    "original_description" : "Acquisition of a charge without deed / charge code 102574730001",
+    "company_number" : "10257473",
+    "document_id" : "000A6GY3GUO6801",
+    "entity_id" : "3188378113",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

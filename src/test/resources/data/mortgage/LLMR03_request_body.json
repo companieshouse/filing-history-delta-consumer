@@ -1,0 +1,30 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzA3NzcxODE2MHNhbHQ",
+    "barcode" : "A27IXX6X",
+    "action_date" : null,
+    "category" : "mortgage",
+    "date" : "2013-05-02T00:00:00Z",
+    "description" : "mortgage-debenture-with-deed-with-charge-number-limited-liability-partnership",
+    "description_values" : {
+      "charge_number" : "OC3665700002",
+      "charge_creation_date" : null
+    },
+    "links" : {
+      "self" : "/company/OC366570/filing-history/MzA3NzcxODE2MHNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "debenture",
+    "type" : "LLMR03"
+  },
+  "internal_data": {
+    "original_description" : "Registration of a series of debentures / charge code OC3665700002",
+    "company_number" : "OC366570",
+    "document_id" : "000A27IXX6X5184",
+    "entity_id" : "3077718160",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

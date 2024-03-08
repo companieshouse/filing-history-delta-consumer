@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "4",
+      "receive_date": "20130515000000",
+      "form_type": "MR06",
+      "description": "STATEMENT OF COMPANY ACTING AS A TRUSTEE / CHARGE CODE 042428490084",
+      "barcode": "A28G50AO",
+      "document_id": "000A28G50AO5195",
+      "company_number": "04242849",
+      "entity_id": "3078268114",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

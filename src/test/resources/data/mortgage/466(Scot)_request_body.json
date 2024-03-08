@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTA0MDA3OTMxc2FsdA",
+    "barcode" : "SN5DY2IF",
+    "category" : "mortgage",
+    "date" : "2001-07-20T11:59:46Z",
+    "description" : "mortgage-alter-floating-charge",
+    "links" : {
+      "self" : "/company/SC035880/filing-history/MTA0MDA3OTMxc2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "alter",
+    "type" : "466(Scot)"
+  },
+  "internal_data": {
+    "original_description" : "Alteration to mortgage/charge",
+    "company_number" : "SC035880",
+    "document_id" : "000SN5DY2IF1580",
+    "entity_id" : "104007931",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

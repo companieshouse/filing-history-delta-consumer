@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "4",
+      "receive_date": "20170321000000",
+      "form_type": "MR08",
+      "description": "REGISTRATION OF A CHARGE WITHOUT DEED/CO EXTEND / CHARGE CODE  054408510002",
+      "barcode": "A62P1SW3",
+      "document_id": "000A62P1SW36594",
+      "company_number": "05440851",
+      "entity_id": "3172040432",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

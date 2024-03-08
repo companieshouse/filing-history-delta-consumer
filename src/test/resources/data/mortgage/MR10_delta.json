@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "4",
+      "receive_date": "20200728000000",
+      "form_type": "MR10",
+      "description": "REGISTRATION OF A SERIES OF DEBENTURES WITHOUT DEED/CO EXTEND / CHARGE CODE  043662520026",
+      "barcode": "A9A9OCKB",
+      "document_id": "000A9A9OCKB7839",
+      "company_number": "04366252",
+      "entity_id": "3275965070",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}
