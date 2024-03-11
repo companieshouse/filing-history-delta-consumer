@@ -32,7 +32,7 @@ class FileEncryptionUtilsTest {
         // then
         assertEquals(deltaContent, decryptedContent);
 
-        // encryptedFile.deleteOnExit();
+        encryptedFile.deleteOnExit();
     }
 }
 
