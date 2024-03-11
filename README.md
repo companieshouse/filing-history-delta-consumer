@@ -46,19 +46,20 @@ immediately to the <br>`filing-history-delta-filing-history-delta-consumer-inval
 
 ## Environment variables
 
-| Variable                      | Description                                                                         | Example (from docker-chs-development) |
-|-------------------------------|-------------------------------------------------------------------------------------|---------------------------------------|
-| TRANSACTION_ID_SALT           | The salt used to encode entity ID's into their MongoDB counterpart                  | abc123                                |
-| CHS_API_KEY                   | The client ID of an API key with internal app privileges                            | abc123def456ghi789                    |
-| API_LOCAL_URL                 | The host through which requests to the filing-history-data-api are sent             | http://api.chs.local:4001             |
-| BOOTSTRAP_SERVER_URL          | The URL to the kafka broker                                                         | kafka:9092                            |
-| CONCURRENT_LISTENER_INSTANCES | The number of listeners run in parallel for the consumer                            | 1                                     |
-| FILING_HISTORY_DELTA_TOPIC    | The topic ID for filing history delta kafka topic                                   | filing-history-delta                  |
-| GROUP_ID                      | The group ID for the service's Kafka topics                                         | filing-history-delta-consumer         |
-| MAX_ATTEMPTS                  | The number of times a message will be retried before being moved to the error topic | 5                                     |
-| BACKOFF_DELAY                 | The incremental time delay between message retries                                  | 100                                   |
-| LOGLEVEL                      | The level of log messages output to the logs                                        | debug                                 |
-| HUMAN_LOG                     | A boolean value to enable more readable log messages                                | 1                                     |
+| Variable                      | Description                                                                                     | Example (from docker-chs-development) |
+|-------------------------------|-------------------------------------------------------------------------------------------------|---------------------------------------|
+| TRANSACTION_ID_SALT           | The salt used to encode entity ID's into their MongoDB counterpart                              | abc123                                |
+| FILING_HISTORY_API_KEY        | The client ID of an API key, with internal app privileges, to call filing-history-data-api with | abc123def456ghi789                    |
+| API_LOCAL_URL                 | The host through which requests to the filing-history-data-api are sent                         | http://api.chs.local:4001             |
+| BOOTSTRAP_SERVER_URL          | The URL to the kafka broker                                                                     | kafka:9092                            |
+| CONCURRENT_LISTENER_INSTANCES | The number of listeners run in parallel for the consumer                                        | 1                                     |
+| FILING_HISTORY_DELTA_TOPIC    | The topic ID for filing history delta kafka topic                                               | filing-history-delta                  |
+| GROUP_ID                      | The group ID for the service's Kafka topics                                                     | filing-history-delta-consumer         |
+| MAX_ATTEMPTS                  | The number of times a message will be retried before being moved to the error topic             | 5                                     |
+| BACKOFF_DELAY                 | The incremental time delay between message retries                                              | 100                                   |
+| LOGLEVEL                      | The level of log messages output to the logs                                                    | debug                                 |
+| HUMAN_LOG                     | A boolean value to enable more readable log messages                                            | 1                                     |
+| PORT                          | The port at which the service is hosted in ECS                                                  | 8080                                  |
 
 ## Building the docker image
 
@@ -83,6 +84,7 @@ the [transformation rules](https://github.com/companieshouse/filing-history-delt
 as possible.
 
 ### IMPORTANT
+
 Before committing any documents to GitHub, please ensure any fields containing sensitive data are
 anonymised.
 \
@@ -91,9 +93,12 @@ anonymised.
 
 1. Create a json file called `<category>/X_delta.json` where `X` is the name of the form/rule under test.
     1. To make json snippets easier to organise, we now separate them based on `<category>`.
-       1. This would be the category you find when you locate the form type in the `src/main/resources/transform_rules.yml` file. 
-       2. And can be further cross-checked by looking at [CategoryEnum](https://github.com/companieshouse/private-api-sdk-java/blob/2cb6199837bea4342ce3d4717ad2537dd32f235d/generated_sources/src/main/java/uk/gov/companieshouse/api/filinghistory/ExternalData.java#L45).
-    2. If a directory matching the `<category>` does not exist, it should be created under the `src/test/resources/data` directory. 
+        1. This would be the category you find when you locate the form type in
+           the `src/main/resources/transform_rules.yml` file.
+        2. And can be further cross-checked by looking
+           at [CategoryEnum](https://github.com/companieshouse/private-api-sdk-java/blob/2cb6199837bea4342ce3d4717ad2537dd32f235d/generated_sources/src/main/java/uk/gov/companieshouse/api/filinghistory/ExternalData.java#L45).
+    2. If a directory matching the `<category>` does not exist, it should be created under the `src/test/resources/data`
+       directory.
     3. The file should contain a valid filing history delta with respect to
        the [API specification](https://github.com/companieshouse/private.api.ch.gov.uk-specifications/blob/c2e3f3558e13efba075c23227709448273d5fdfb/src/main/resources/delta/filing-history-delta-spec.yml).
     4. Note the `delta_at` field is at the top level whereas the old Perl backend had it within the `filing_history`
