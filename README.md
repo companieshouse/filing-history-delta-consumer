@@ -121,7 +121,7 @@ anonymised.
         5. Delete `external_data.links.document_metadata`
         6. Wrap all other top level fields in `internal_data`
         7. Add `internal_data.delta_at`:
-        8. Add `internal_data.updated_at` (value should always be "context_id")
+        8. Add `internal_data.updated_by` (value should always be "context_id")
         9. Add `internal_data.transaction_kind` ("top-level" for the most part,
            see `TransactionKindService`)
         10. Add `internal_data.parent_entity_id` (usually an empty string)
