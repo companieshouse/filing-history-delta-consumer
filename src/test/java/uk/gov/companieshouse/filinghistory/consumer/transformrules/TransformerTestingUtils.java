@@ -27,7 +27,7 @@ public class TransformerTestingUtils {
     private static final TitleCase TITLE_CASE = new TitleCase(MAPPER);
     private static final ReplaceProperty REPLACE_PROPERTY = new ReplaceProperty(MAPPER, LOWER_CASE);
     private static final ProcessCapital PROCESS_CAPITAL = new ProcessCapital(MAPPER,
-            new CapitalCaptor(MAPPER, new FormatNumber()));
+            new CapitalCaptor(MAPPER, new FormatNumber(), new FormatDate(MAPPER)));
     private static final AddressCase ADDRESS_CASE = new AddressCase(MAPPER, TITLE_CASE);
 
     private static final TransformerFactory TRANSFORMER_FACTORY = new TransformerFactory(ADDRESS_CASE, BSON_DATE,

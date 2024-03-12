@@ -67,6 +67,7 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
     @CsvSource({
             "officers/TM01",
 
+            "capital/SH03",
             "capital/SH07",
 
             "accounts/AA_rule_17",

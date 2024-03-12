@@ -17,10 +17,12 @@ public class CapitalCaptor {
     private static final Pattern TREASURY_PATTERN = Pattern.compile("treasury", Pattern.CASE_INSENSITIVE);
     private final ObjectMapper objectMapper;
     private final FormatNumber formatNumber;
+    private final FormatDate formatDate;
 
-    public CapitalCaptor(ObjectMapper objectMapper, FormatNumber formatNumber) {
+    public CapitalCaptor(ObjectMapper objectMapper, FormatNumber formatNumber, FormatDate formatDate) {
         this.objectMapper = objectMapper;
         this.formatNumber = formatNumber;
+        this.formatDate = formatDate;
     }
 
     /**
@@ -66,7 +68,7 @@ public class CapitalCaptor {
                 switch (key) {
                     case "capitalDate" -> {
                         if (TREASURY_PATTERN.matcher(matcher.group()).find()) {
-                            capture.put("date", matcher.group(value));
+                            capture.put("date", formatDate.format(matcher.group(value)));
                         }
                     }
                     case "capitalCurrency" -> capture.put("currency", StringUtils.upperCase(matcher.group(value)));

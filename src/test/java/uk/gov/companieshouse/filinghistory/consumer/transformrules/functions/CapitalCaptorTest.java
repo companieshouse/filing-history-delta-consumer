@@ -23,16 +23,16 @@ class CapitalCaptorTest {
             "(?i:\\bSTATEMENT OF CAPITAL[; ](?<capitalCurrency>\\w+) (?<capitalFigure>\\d+\\.\\d+|\\.\\d+|\\d+))");
     private static final Pattern ALT_EXTRACT = Pattern.compile(
             "(?i:(?<capitalDate>\\d+\\D\\d+\\D\\d+) (?:(?<capitalDesc>STATEMENT OF CAPITAL)|(?<capitalAltDesc>TREASURY CAPITAL)) (?<capitalCurrency>\\w+) (?<capitalFigure>\\d+\\.\\d+|\\.\\d+|\\d+))");
-    public static final String DATA_DESCRIPTION_FIELD_PATH = "data.description";
-    public static final String FIGURE = "1,000";
+    private static final String FIGURE = "1,000";
+    private static final String FORMATTED_DATE = "2014-05-13T00:00:00Z";
     private static final String ALT_DESCRIPTION = "capital-cancellation-treasury-shares-with-date-treasury-capital-figure";
     private static final ObjectMapper MAPPER = TransformerTestingUtils.getMapper();
-    public static final String SOURCE_DESCRIPTION = """
+    private static final String SOURCE_DESCRIPTION = """
             Second filed SH02 - 03/02/16\s
             Statement of Capital gbp 1000 03/02/16\s
             Statement of Capital eur 2000 03/02/16\s
             Statement of Capital usd 3000""";
-    public static final String ALT_SOURCE_DESCRIPTION = """
+    private static final String ALT_SOURCE_DESCRIPTION = """
             13/05/14 Statement of Capital USD 1000\s
             13/05/14 Treasury Capital GBP 50000\s
             13/05/14 Statement of Capital HKD 3333\s
@@ -41,10 +41,12 @@ class CapitalCaptorTest {
     private CapitalCaptor capitalCaptor;
     @Mock
     private FormatNumber formatNumber;
+    @Mock
+    private FormatDate formatDate;
 
     @BeforeEach
     void setUp() {
-        capitalCaptor = new CapitalCaptor(TransformerTestingUtils.getMapper(), formatNumber);
+        capitalCaptor = new CapitalCaptor(TransformerTestingUtils.getMapper(), formatNumber, formatDate);
     }
 
     @Test
@@ -67,6 +69,7 @@ class CapitalCaptorTest {
     void shouldCaptureCapitalAndAltCapitalFieldsAndReturnCapturesAndAltCapturesArrayNodes() {
         // given
         when(formatNumber.apply(any())).thenReturn(FIGURE);
+        when(formatDate.format(any())).thenReturn(FORMATTED_DATE);
         CapitalCaptures expected = buildExpectedAlt();
 
         // when
@@ -106,7 +109,7 @@ class CapitalCaptorTest {
                 .put("currency", "GBP")
                 // has a date because of 'treasury' within the description
                 // has nothing to do with if it's an alt_capital or not
-                .put("date", "13/05/14")
+                .put("date", "2014-05-13T00:00:00Z")
                 .put("description", "capital-cancellation-treasury-shares-with-date-treasury-capital-figure")
                 .put("figure", FIGURE);
 
