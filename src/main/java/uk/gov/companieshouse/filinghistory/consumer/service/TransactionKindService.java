@@ -26,13 +26,14 @@ public class TransactionKindService {
 
     public TransactionKindResult encodeIdByTransactionKind(TransactionKindCriteria transactionKindCriteria) {
         final String encodedId = encodeTransactionId(transactionKindCriteria.entityId());
-        DataMapHolder.get().transactionId(encodedId);
         LOGGER.debug("Transaction Kind: [%s]".formatted(transactionKindCriteria.formType()), DataMapHolder.getLogMap());
         return new TransactionKindResult(encodedId, TransactionKindEnum.TOP_LEVEL);
     }
 
-    private String encodeTransactionId(String id) {
-        return StringUtils.isBlank(id) ? id
+    public String encodeTransactionId(String id) {
+        String encodedId = StringUtils.isBlank(id) ? id
                 : Base64.encodeBase64URLSafeString((trim(id) + transactionIdSalt).getBytes(StandardCharsets.UTF_8));
+        DataMapHolder.get().transactionId(encodedId);
+        return encodedId;
     }
 }

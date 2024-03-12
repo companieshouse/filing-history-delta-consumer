@@ -10,6 +10,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
 import uk.gov.companieshouse.delta.ChsDelta;
+import uk.gov.companieshouse.filinghistory.consumer.exception.NonRetryableException;
 import uk.gov.companieshouse.logging.Logger;
 import uk.gov.companieshouse.logging.LoggerFactory;
 
@@ -19,7 +20,9 @@ class LoggingKafkaListenerAspect {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(NAMESPACE);
     private static final String LOG_MESSAGE_RECEIVED = "Processing delta";
+    private static final String LOG_MESSAGE_DELETE_RECEIVED = "Processing DELETE delta";
     private static final String LOG_MESSAGE_PROCESSED = "Processed delta";
+    private static final String LOG_MESSAGE_DELETE_PROCESSED = "Processed DELETE delta";
     private static final String EXCEPTION_MESSAGE = "%s exception thrown";
 
     @Around("@annotation(org.springframework.kafka.annotation.KafkaListener)")
@@ -27,7 +30,8 @@ class LoggingKafkaListenerAspect {
 
         try {
             Message<?> message = (Message<?>) joinPoint.getArgs()[0];
-            DataMapHolder.initialise(extractContextId(message.getPayload())
+            ChsDelta chsDelta = extractChsDelta(message.getPayload());
+            DataMapHolder.initialise(Optional.ofNullable(chsDelta.getContextId())
                     .orElse(UUID.randomUUID().toString()));
 
             DataMapHolder.get()
@@ -35,11 +39,13 @@ class LoggingKafkaListenerAspect {
                     .partition((Integer) message.getHeaders().get("kafka_receivedPartitionId"))
                     .offset((Long) message.getHeaders().get("kafka_offset"));
 
-            LOGGER.info(LOG_MESSAGE_RECEIVED, DataMapHolder.getLogMap());
+            LOGGER.info(chsDelta.getIsDelete() ? LOG_MESSAGE_DELETE_RECEIVED : LOG_MESSAGE_RECEIVED,
+                    DataMapHolder.getLogMap());
 
             Object result = joinPoint.proceed();
 
-            LOGGER.info(LOG_MESSAGE_PROCESSED, DataMapHolder.getLogMap());
+            LOGGER.info(chsDelta.getIsDelete() ? LOG_MESSAGE_DELETE_PROCESSED : LOG_MESSAGE_PROCESSED,
+                    DataMapHolder.getLogMap());
 
             return result;
         } catch (Exception ex) {
@@ -50,10 +56,10 @@ class LoggingKafkaListenerAspect {
         }
     }
 
-    private Optional<String> extractContextId(Object payload) {
+    private ChsDelta extractChsDelta(Object payload) {
         if (payload instanceof ChsDelta chsDelta) {
-            return Optional.of(chsDelta.getContextId());
+            return chsDelta;
         }
-        return Optional.empty();
+        throw new NonRetryableException("Invalid payload type. payload: %s".formatted(payload.toString()));
     }
 }

@@ -1,11 +1,14 @@
 package uk.gov.companieshouse.filinghistory.consumer.kafka;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.delete;
+import static com.github.tomakehurst.wiremock.client.WireMock.deleteRequestedFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.put;
 import static com.github.tomakehurst.wiremock.client.WireMock.requestMadeFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.verify;
+import static org.apache.commons.lang3.StringUtils.trim;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
 import static uk.gov.companieshouse.filinghistory.consumer.kafka.KafkaUtils.ERROR_TOPIC;
@@ -23,6 +26,7 @@ import org.apache.avro.io.DatumWriter;
 import org.apache.avro.io.Encoder;
 import org.apache.avro.io.EncoderFactory;
 import org.apache.avro.reflect.ReflectDatumWriter;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -35,6 +39,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import uk.gov.companieshouse.api.delta.FilingHistoryDeleteDelta;
 import uk.gov.companieshouse.api.filinghistory.InternalFilingHistoryApi;
 import uk.gov.companieshouse.delta.ChsDelta;
 
@@ -42,6 +47,7 @@ import uk.gov.companieshouse.delta.ChsDelta;
 @WireMockTest(httpPort = 8888)
 class ConsumerPositiveIT extends AbstractKafkaIT {
 
+    private static final String SALT = "salt";
     @Autowired
     private KafkaConsumer<String, byte[]> testConsumer;
     @Autowired
@@ -99,5 +105,42 @@ class ConsumerPositiveIT extends AbstractKafkaIT {
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, INVALID_TOPIC)).isZero();
 
         verify(requestMadeFor(new PutRequestMatcher(expectedRequestUri, expectedRequestBody)));
+    }
+
+    @Test
+    void shouldConsumeFilingHistoryDeleteDeltaAndProcessSuccessfully() throws Exception {
+        // given
+        final String delta = IOUtils.resourceToString("/data/delete-delta.json", StandardCharsets.UTF_8);
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        Encoder encoder = EncoderFactory.get().directBinaryEncoder(outputStream, null);
+        DatumWriter<ChsDelta> writer = new ReflectDatumWriter<>(ChsDelta.class);
+        writer.write(new ChsDelta(delta, 0, "context_id", true), encoder);
+
+        FilingHistoryDeleteDelta deleteDelta = objectMapper.readValue(delta, FilingHistoryDeleteDelta.class);
+        String encodedId = Base64.encodeBase64URLSafeString(
+                (trim(deleteDelta.getEntityId()) + SALT).getBytes(StandardCharsets.UTF_8));
+
+        final String expectedRequestUri = "/filing-history-data-api/filing-history/%s/internal".formatted(
+                encodedId);
+
+        stubFor(delete(urlEqualTo(expectedRequestUri))
+                .willReturn(aResponse()
+                        .withStatus(200)));
+        // when
+        testProducer.send(new ProducerRecord<>(MAIN_TOPIC, 0, System.currentTimeMillis(),
+                "key", outputStream.toByteArray()));
+        if (!testConsumerAspect.getLatch().await(5L, TimeUnit.SECONDS)) {
+            fail("Timed out waiting for latch");
+        }
+
+        // then
+        ConsumerRecords<?, ?> consumerRecords = KafkaTestUtils.getRecords(testConsumer, Duration.ofMillis(10000L), 1);
+        assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, MAIN_TOPIC)).isOne();
+        assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, RETRY_TOPIC)).isZero();
+        assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, ERROR_TOPIC)).isZero();
+        assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, INVALID_TOPIC)).isZero();
+
+        verify(deleteRequestedFor(urlEqualTo(expectedRequestUri)));
     }
 }
