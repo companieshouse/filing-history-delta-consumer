@@ -1,0 +1,28 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzA3ODI2ODExNHNhbHQ",
+    "barcode" : "A28G50AO",
+    "category" : "mortgage",
+    "date" : "2013-05-15T00:00:00Z",
+    "description" : "mortgage-trustee-acting-as",
+    "description_values" : {
+      "charge_number" : "042428490084"
+    },
+    "links" : {
+      "self" : "/company/04242849/filing-history/MzA3ODI2ODExNHNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "trustee",
+    "type" : "MR06"
+  },
+  "internal_data": {
+    "original_description" : "Statement of company acting as a trustee / charge code 042428490084",
+    "company_number" : "04242849",
+    "document_id" : "000A28G50AO5195",
+    "entity_id" : "3078268114",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

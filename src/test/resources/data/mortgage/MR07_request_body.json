@@ -1,0 +1,28 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzE0MDUyNDk0OXNhbHQ",
+    "barcode" : "A4Z014U8",
+    "category" : "mortgage",
+    "date" : "2016-01-20T00:00:00Z",
+    "description" : "mortgage-alter-charge-with-charge-number",
+    "description_values" : {
+      "charge_number" : "040488040013"
+    },
+    "links" : {
+      "self" : "/company/04048804/filing-history/MzE0MDUyNDk0OXNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "alter",
+    "type" : "MR07"
+  },
+  "internal_data": {
+    "original_description" : "Particulars of an instrument of alteration to a charge / charge code 040488040013",
+    "company_number" : "04048804",
+    "document_id" : "000A4Z014U86171",
+    "entity_id" : "3140524949",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

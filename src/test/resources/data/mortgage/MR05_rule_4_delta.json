@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "4",
+      "receive_date": "20130411000000",
+      "form_type": "MR05",
+      "description": "STATEMENT OF RELEASE / CEASE FROM CHARGE / PART RELEASE / CHARGE NO 3",
+      "barcode": "X2635Q07",
+      "document_id": "000X2635Q075155",
+      "company_number": "02919936",
+      "entity_id": "3076087299",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

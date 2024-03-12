@@ -1,0 +1,27 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzA3NTc2ODI5MnNhbHQ",
+    "barcode" : "X25Q7TKH",
+    "category" : "mortgage",
+    "date" : "2013-04-06T00:00:00Z",
+    "description" : "mortgage-satisfy-charge-full",
+    "description_values" : {
+      "charge_number" : "1"
+    },
+    "links" : {
+      "self" : "/company/05259454/filing-history/MzA3NTc2ODI5MnNhbHQ"
+    },
+    "subcategory" : "satisfy",
+    "type" : "MR04"
+  },
+  "internal_data": {
+    "original_description" : "Statement of satisfaction of a charge / full / charge no 1",
+    "company_number" : "05259454",
+    "document_id" : "000X25Q7TKH5150",
+    "entity_id" : "3075768292",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

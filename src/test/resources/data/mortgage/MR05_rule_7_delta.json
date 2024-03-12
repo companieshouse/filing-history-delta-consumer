@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "4",
+      "receive_date": "20170724000000",
+      "form_type": "MR05",
+      "description": "STATEMENT OF RELEASE / PART BOTH",
+      "barcode": "X6BDGB49",
+      "document_id": "000X6BDGB496716",
+      "company_number": "02988070",
+      "entity_id": "3181220997",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

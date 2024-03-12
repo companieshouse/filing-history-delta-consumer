@@ -1,0 +1,28 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzA4NzIxOTgwNXNhbHQ",
+    "barcode" : "J2HPETBC",
+    "category" : "mortgage",
+    "date" : "2013-09-26T00:00:00Z",
+    "description" : "mortgage-create-with-deed-with-charge-number",
+    "description_values" : {
+      "charge_number" : "NI0212290041"
+    },
+    "links" : {
+      "self" : "/company/NI021229/filing-history/MzA4NzIxOTgwNXNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "create",
+    "type" : "MR01"
+  },
+  "internal_data": {
+    "original_description" : "Registration of a charge/co charles/extend / charge code NI0212290041",
+    "company_number" : "NI021229",
+    "document_id" : "000J2HPETBC5345",
+    "entity_id" : "3087219805",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

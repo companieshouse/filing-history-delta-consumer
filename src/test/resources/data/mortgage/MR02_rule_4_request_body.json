@@ -1,0 +1,28 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzE3MDMxOTQzMHNhbHQ",
+    "barcode" : "A60ZGW74",
+    "category" : "mortgage",
+    "date" : "2017-02-25T00:00:00Z",
+    "description" : "mortgage-acquire-with-deed-with-charge-number",
+    "description_values" : {
+      "charge_number" : "012033960816"
+    },
+    "links" : {
+      "self" : "/company/01203396/filing-history/MzE3MDMxOTQzMHNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "acquire",
+    "type" : "MR02"
+  },
+  "internal_data": {
+    "original_description" : "Acquisition of a charge/co extend / charge code 012033960816",
+    "company_number" : "01203396",
+    "document_id" : "000A60ZGW746572",
+    "entity_id" : "3170319430",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

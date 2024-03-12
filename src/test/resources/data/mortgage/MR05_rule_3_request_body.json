@@ -1,0 +1,27 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzA3NTk0MjU0MHNhbHQ",
+    "barcode" : "X25XXM97",
+    "category" : "mortgage",
+    "date" : "2013-04-09T00:00:00Z",
+    "description" : "mortgage-charge-whole-cease-and-release-with-charge-number",
+    "description_values" : {
+      "charge_number" : "1"
+    },
+    "links" : {
+      "self" : "/company/02839580/filing-history/MzA3NTk0MjU0MHNhbHQ"
+    },
+    "subcategory" : "release-cease",
+    "type" : "MR05"
+  },
+  "internal_data": {
+    "original_description" : "Statement of release / cease from charge / whole both / charge no 1",
+    "company_number" : "02839580",
+    "document_id" : "000X25XXM975153",
+    "entity_id" : "3075942540",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

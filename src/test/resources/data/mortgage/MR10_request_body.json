@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzI3NTk2NTA3MHNhbHQ",
+    "barcode" : "A9A9OCKB",
+    "category" : "mortgage",
+    "date" : "2020-07-28T00:00:00Z",
+    "description" : "mortgage-debenture-without-deed",
+    "links" : {
+      "self" : "/company/04366252/filing-history/MzI3NTk2NTA3MHNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "debenture",
+    "type" : "MR10"
+  },
+  "internal_data": {
+    "original_description" : "Registration of a series of debentures without deed/co extend / charge code 043662520026",
+    "company_number" : "04366252",
+    "document_id" : "000A9A9OCKB7839",
+    "entity_id" : "3275965070",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

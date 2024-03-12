@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "4",
+      "receive_date": "20170225000000",
+      "form_type": "MR02",
+      "description": "ACQUISITION OF A CHARGE/CO EXTEND / CHARGE CODE  012033960816",
+      "barcode": "A60ZGW74",
+      "document_id": "000A60ZGW746572",
+      "company_number": "01203396",
+      "entity_id": "3170319430",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

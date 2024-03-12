@@ -65,21 +65,34 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
 
     @ParameterizedTest
     @CsvSource({
-            "officers/TM01", "capital/SH07", "capital/SH03", "accounts/AA_rule_17", "insolvency/3.10", "insolvency/4.13",
-            "insolvency/4.20_rule_2", "insolvency/4.31", "insolvency/4.33", "insolvency/4.35", "insolvency/4.38",
-            "insolvency/4.40", "insolvency/4.43", "insolvency/WU15(Scot)", "insolvency/WU16(Scot)",
-            "insolvency/WU17(Scot)", "insolvency/WU18(Scot)", "insolvency/4.44", "insolvency/4.46",
-            "insolvency/4.48", "insolvency/4.51", "incorporation/OE01", "insolvency/4.68_rule_3",
-            "insolvency/4.20_rule_1", "insolvency/4.68_rule_1", "insolvency/4.69", "insolvency/4.70",
-            "insolvency/4.71", "insolvency/4.72", "insolvency/4.17(Scot)", "insolvency/4.9(Scot)",
-            "insolvency/C04.2(Scot)", "insolvency/WU01", "insolvency/WU01(Scot)", "insolvency/C0LIQ",
-            "insolvency/COCOMP_rule_2", "insolvency/WU07", "insolvency/WU08", "insolvency/WU09", "insolvency/WU11",
-            "insolvency/WU12", "insolvency/WU14", "insolvency/AM11", "insolvency/2.24B_rule_1",
-            "insolvency/2.24B_rule_2", "insolvency/2.26B", "insolvency/2.27B", "insolvency/2.28B", "insolvency/2.30B",
-            "insolvency/AM20(Scot)", "insolvency/2.31B", "insolvency/2.32B", "insolvency/2.33B", "insolvency/2.34B",
-            "insolvency/2.35B_rule_1", "insolvency/2.35B_rule_2", "insolvency/2.36B", "insolvency/2.38B",
-            "insolvency/2.39B", "insolvency/AM16", "insolvency/AM17", "insolvency/AM18", "insolvency/2.40B",
-            "insolvency/2.31B(Scot)"
+            "officers/TM01",
+
+            "capital/SH03",
+            "capital/SH07",
+
+            "accounts/AA_rule_17",
+
+            "insolvency/3.10", "insolvency/4.13", "insolvency/4.20_rule_2", "insolvency/4.31", "insolvency/4.33",
+            "insolvency/4.35", "insolvency/4.38", "insolvency/4.40", "insolvency/4.43", "insolvency/WU15(Scot)",
+            "insolvency/WU16(Scot)", "insolvency/WU17(Scot)", "insolvency/WU18(Scot)", "insolvency/4.44",
+            "insolvency/4.46", "insolvency/4.48", "insolvency/4.51", "incorporation/OE01", "insolvency/4.68_rule_3",
+            "insolvency/4.20_rule_1", "insolvency/4.68_rule_1", "insolvency/4.69", "insolvency/4.70", "insolvency/4.71",
+            "insolvency/4.72", "insolvency/4.17(Scot)", "insolvency/4.9(Scot)", "insolvency/C04.2(Scot)",
+            "insolvency/WU01", "insolvency/WU01(Scot)", "insolvency/C0LIQ", "insolvency/COCOMP_rule_2",
+            "insolvency/WU07", "insolvency/WU08", "insolvency/WU09", "insolvency/WU11", "insolvency/WU12",
+            "insolvency/WU14", "insolvency/AM11", "insolvency/2.24B_rule_1", "insolvency/2.24B_rule_2",
+            "insolvency/2.26B", "insolvency/2.27B", "insolvency/2.28B", "insolvency/2.30B", "insolvency/AM20(Scot)",
+            "insolvency/2.31B", "insolvency/2.32B", "insolvency/2.33B", "insolvency/2.34B", "insolvency/2.35B_rule_1",
+            "insolvency/2.35B_rule_2", "insolvency/2.36B", "insolvency/2.38B", "insolvency/2.39B", "insolvency/AM16",
+            "insolvency/AM17", "insolvency/AM18", "insolvency/2.40B", "insolvency/2.31B(Scot)",
+
+            "mortgage/MR01_rule_4", "mortgage/MR01_rule_5", "mortgage/MR02_rule_4", "mortgage/MR03_rule_4",
+            "mortgage/MR04_rule_1", "mortgage/MR04_rule_2", "mortgage/MR04_rule_3", "mortgage/MR05_rule_1",
+            "mortgage/MR05_rule_2", "mortgage/MR05_rule_3", "mortgage/MR05_rule_4", "mortgage/MR05_rule_5",
+            "mortgage/MR05_rule_6", "mortgage/MR05_rule_7", "mortgage/MR06", "mortgage/MR07", "mortgage/MR08",
+            "mortgage/MR09", "mortgage/MR10",
+//            "mortgage/LLMR03", // Failing due to missing description value or invalid rule on line 4295
+            "mortgage/466(Scot)"
     })
     void shouldConsumeFilingHistoryDeltaTopicAndProcessDelta(final String prefix) throws Exception {
         // given

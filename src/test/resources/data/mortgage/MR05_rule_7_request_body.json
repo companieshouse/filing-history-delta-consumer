@@ -1,0 +1,24 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzE4MTIyMDk5N3NhbHQ",
+    "barcode" : "X6BDGB49",
+    "category" : "mortgage",
+    "date" : "2017-07-24T00:00:00Z",
+    "description" : "mortgage-release-cease-charge",
+    "links" : {
+      "self" : "/company/02988070/filing-history/MzE4MTIyMDk5N3NhbHQ"
+    },
+    "subcategory" : "release-cease",
+    "type" : "MR05"
+  },
+  "internal_data": {
+    "original_description" : "Statement of release / part both",
+    "company_number" : "02988070",
+    "document_id" : "000X6BDGB496716",
+    "entity_id" : "3181220997",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}
