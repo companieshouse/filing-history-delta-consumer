@@ -1,0 +1,35 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzA0MDA3OTk1N3NhbHQ",
+    "barcode" : "AWWRFVLO",
+    "action_date" : "2011-06-17T00:00:00Z",
+    "category" : "capital",
+    "date" : "2011-07-07T00:00:00Z",
+    "description" : "capital-return-purchase-own-shares-treasury-capital-date",
+    "description_values" : {
+      "date" : "2011-06-17T00:00:00Z",
+      "capital" : [
+        {
+          "currency" : "USD",
+          "date" : "2011-06-17T00:00:00Z",
+          "figure" : "5,039,450"
+        }
+      ]
+    },
+    "links" : {
+      "self" : "/company/07130199/filing-history/MzA0MDA3OTk1N3NhbHQ"
+    },
+    "paper_filed" : true,
+    "type" : "SH03"
+  },
+  "internal_data": {
+    "original_description" : "Return of Purchase of Own Shares 17/06/11 Treasury Capital usd 5039450",
+    "company_number" : "07130199",
+    "document_id" : "000AWWRFVLO4514",
+    "entity_id" : "3040079957",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}
