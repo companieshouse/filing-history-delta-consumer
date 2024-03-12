@@ -24,8 +24,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
-import uk.gov.companieshouse.filinghistory.consumer.service.DeleteDeltaService;
-import uk.gov.companieshouse.filinghistory.consumer.service.UpsertDeltaService;
+import uk.gov.companieshouse.filinghistory.consumer.service.DeltaServiceRouter;
 
 @SpringBootTest
 class ConsumerInvalidPayloadExceptionIT extends AbstractKafkaIT {
@@ -37,9 +36,7 @@ class ConsumerInvalidPayloadExceptionIT extends AbstractKafkaIT {
     private KafkaProducer<String, byte[]> testProducer;
 
     @MockBean
-    private UpsertDeltaService upsertDeltaService;
-    @MockBean
-    private DeleteDeltaService deleteDeltaService;
+    private DeltaServiceRouter deltaServiceRouter;
 
     @DynamicPropertySource
     static void props(DynamicPropertyRegistry registry) {

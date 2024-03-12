@@ -32,8 +32,7 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import uk.gov.companieshouse.delta.ChsDelta;
 import uk.gov.companieshouse.filinghistory.consumer.exception.RetryableException;
-import uk.gov.companieshouse.filinghistory.consumer.service.DeleteDeltaService;
-import uk.gov.companieshouse.filinghistory.consumer.service.UpsertDeltaService;
+import uk.gov.companieshouse.filinghistory.consumer.service.DeltaServiceRouter;
 
 @SpringBootTest
 class ConsumerRetryableExceptionIT extends AbstractKafkaIT {
@@ -48,9 +47,7 @@ class ConsumerRetryableExceptionIT extends AbstractKafkaIT {
     private TestConsumerAspect testConsumerAspect;
 
     @MockBean
-    private UpsertDeltaService upsertDeltaService;
-    @MockBean
-    private DeleteDeltaService deleteDeltaService;
+    private DeltaServiceRouter deltaServiceRouter;
 
     @DynamicPropertySource
     static void props(DynamicPropertyRegistry registry) {
@@ -70,7 +67,7 @@ class ConsumerRetryableExceptionIT extends AbstractKafkaIT {
         DatumWriter<ChsDelta> writer = new ReflectDatumWriter<>(ChsDelta.class);
         writer.write(new ChsDelta("", 0, "context_id", false), encoder);
 
-        doThrow(new RetryableException("Retryable exception", new Throwable())).when(upsertDeltaService).process(any());
+        doThrow(new RetryableException("Retryable exception", new Throwable())).when(deltaServiceRouter).route(any());
 
         // when
         testProducer.send(new ProducerRecord<>(MAIN_TOPIC, 0, System.currentTimeMillis(),
@@ -85,6 +82,6 @@ class ConsumerRetryableExceptionIT extends AbstractKafkaIT {
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, RETRY_TOPIC)).isEqualTo(4);
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, ERROR_TOPIC)).isOne();
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, INVALID_TOPIC)).isZero();
-        verify(upsertDeltaService, times(5)).process(any());
+        verify(deltaServiceRouter, times(5)).route(any());
     }
 }
