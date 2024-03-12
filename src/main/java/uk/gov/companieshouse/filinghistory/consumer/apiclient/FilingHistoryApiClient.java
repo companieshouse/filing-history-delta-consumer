@@ -12,6 +12,7 @@ import uk.gov.companieshouse.filinghistory.consumer.logging.DataMapHolder;
 public class FilingHistoryApiClient {
 
     private static final String PUT_REQUEST_URI = "/filing-history-data-api/company/%s/filing-history/%s/internal";
+    private static final String DELETE_REQUEST_URI = "/filing-history-data-api/filing-history/%s";
 
     private final Supplier<InternalApiClient> internalApiClientFactory;
     private final ResponseHandler responseHandler;
@@ -39,4 +40,22 @@ public class FilingHistoryApiClient {
             responseHandler.handle(ex);
         }
     }
+
+    public void deleteFilingHistory(String transactionId) {
+        InternalApiClient client = internalApiClientFactory.get();
+        client.getHttpClient().setRequestId(DataMapHolder.getRequestId());
+
+        final String formattedUri = DELETE_REQUEST_URI.formatted(transactionId);
+
+        try {
+            client.privateDeltaResourceHandler()
+                    .deleteFilingHistory(formattedUri)
+                    .execute();
+        } catch (ApiErrorResponseException ex) {
+            responseHandler.handle(ex);
+        } catch (URIValidationException ex) {
+            responseHandler.handle(ex);
+        }
+    }
+
 }
