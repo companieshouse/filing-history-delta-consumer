@@ -65,7 +65,7 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
 
     @ParameterizedTest
     @CsvSource({
-            "officers/TM01", "capital/SH07", "accounts/AA_rule_17", "insolvency/3.10", "insolvency/4.13",
+            "officers/TM01", "capital/SH07", "capital/SH03", "accounts/AA_rule_17", "insolvency/3.10", "insolvency/4.13",
             "insolvency/4.20_rule_2", "insolvency/4.31", "insolvency/4.33", "insolvency/4.35", "insolvency/4.38",
             "insolvency/4.40", "insolvency/4.43", "insolvency/WU15(Scot)", "insolvency/WU16(Scot)",
             "insolvency/WU17(Scot)", "insolvency/WU18(Scot)", "insolvency/4.44", "insolvency/4.46",
