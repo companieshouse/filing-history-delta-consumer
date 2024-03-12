@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20170726175307",
+      "form_type": "AM12",
+      "description": "NOTICE OF ORDER LIMITING DISCLOSURE OF STATEMENT OF AFFAIRS OR PROPOSALS IN ADMINISTRATION/O/C DISCLOSE:LIQ. CASE NO.1",
+      "barcode": "A6B0TFGQ",
+      "document_id": "000A6B0TFGQ6711",
+      "company_number": "07368089",
+      "entity_id": "3181515304",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

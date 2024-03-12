@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MjAyNTY1NTIzMnNhbHQ",
+    "barcode" : "SOF3B76M",
+    "category" : "insolvency",
+    "date" : "2009-02-12T11:01:55Z",
+    "description" : "liquidation-in-administration-order-to-deal-with-secured-property-scotland",
+    "links" : {
+      "self" : "/company/SC280643/filing-history/MjAyNTY1NTIzMnNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "2.19B(Scot)"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of order to deal with secured property",
+    "company_number" : "SC280643",
+    "document_id" : "000SOF3B76M3466",
+    "entity_id" : "2025655232",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

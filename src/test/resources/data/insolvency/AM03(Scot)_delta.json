@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20190805150046",
+      "form_type": "AM03(Scot)",
+      "description": "NOTICE OF ADMINISTRATOR'S PROPOSALS:LIQ. CASE NO.1",
+      "barcode": "S8B1DGSA",
+      "document_id": "000S8B1DGSA7456",
+      "company_number": "SC086148",
+      "entity_id": "3241023984",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

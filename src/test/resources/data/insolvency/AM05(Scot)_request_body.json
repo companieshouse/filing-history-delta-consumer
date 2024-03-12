@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzMyNTg2MTAwMXNhbHQ",
+    "barcode" : "YAV3J5US",
+    "category" : "insolvency",
+    "date" : "2022-01-06T11:59:46Z",
+    "description" : "liquidation-in-administration-extension-of-time-approval-scotland",
+    "links" : {
+      "self" : "/company/SC522897/filing-history/MzMyNTg2MTAwMXNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "AM05(Scot)"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of extension of time to seek approval of administrator's proposals:liq. Case no.1",
+    "company_number" : "SC522897",
+    "document_id" : "000YAV3J5US8337",
+    "entity_id" : "3325861001",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

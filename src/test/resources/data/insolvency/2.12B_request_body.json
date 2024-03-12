@@ -1,0 +1,25 @@
+{
+  "external_data": {
+    "transaction_id": "MTA1NDY1MjU3c2FsdA",
+    "barcode": "A2QWFTY4",
+    "category": "insolvency",
+    "date": "2004-04-07T11:59:36Z",
+    "description": "liquidation-in-administration-appointment-of-administrator",
+    "links": {
+      "self": "/company/02619441/filing-history/MTA1NDY1MjU3c2FsdA"
+    },
+    "paper_filed": true,
+    "subcategory": "administration",
+    "type": "2.12B"
+  },
+  "internal_data" : {
+    "original_description": "Appointment of administrator",
+    "company_number": "02619441",
+    "document_id": "000A2QWFTY42446",
+    "entity_id": "105465257",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

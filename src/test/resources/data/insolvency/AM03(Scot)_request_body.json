@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzI0MTAyMzk4NHNhbHQ",
+    "barcode" : "S8B1DGSA",
+    "category" : "insolvency",
+    "date" : "2019-08-05T15:00:46Z",
+    "description" : "liquidation-in-administration-notice-administrators-proposals-scotland",
+    "links" : {
+      "self" : "/company/SC086148/filing-history/MzI0MTAyMzk4NHNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "AM03(Scot)"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of administrator's proposals:liq. Case no.1",
+    "company_number" : "SC086148",
+    "document_id" : "000S8B1DGSA7456",
+    "entity_id" : "3241023984",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

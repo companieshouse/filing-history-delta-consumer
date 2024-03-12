@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "9",
+      "receive_date": "20050707115956",
+      "form_type": "2.15B(Scot)",
+      "description": "NOTICE OF STATEMENT OF AFFAIRS  STATEMENT OF AFFAIRS",
+      "barcode": "",
+      "document_id": "000SF1Y36R62567",
+      "company_number": "SC200817",
+      "entity_id": "107371319",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

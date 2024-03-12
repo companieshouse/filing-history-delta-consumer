@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzA1Mzc1MDg3NnNhbHQ",
+    "barcode" : "S141D2DE",
+    "category" : "insolvency",
+    "date" : "2012-03-07T17:16:28Z",
+    "description" : "liquidation-in-administration-revised-proposals-scotland",
+    "links" : {
+      "self" : "/company/SC012079/filing-history/MzA1Mzc1MDg3NnNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "2.17B(Scot)"
+  },
+  "internal_data" : {
+    "original_description" : "Statement of administrator's revised proposals",
+    "company_number" : "SC012079",
+    "document_id" : "000S141D2DE4758",
+    "entity_id" : "3053750876",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

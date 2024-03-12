@@ -1,0 +1,24 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTA3MzcxMzE5c2FsdA",
+    "category" : "insolvency",
+    "date" : "2005-07-07T11:59:56Z",
+    "description" : "liquidation-in-administration-notice-of-statement-of-affairs-scotland",
+    "links" : {
+      "self" : "/company/SC200817/filing-history/MTA3MzcxMzE5c2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "2.15B(Scot)"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of statement of affairs statement of affairs",
+    "company_number" : "SC200817",
+    "document_id" : "000SF1Y36R62567",
+    "entity_id" : "107371319",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

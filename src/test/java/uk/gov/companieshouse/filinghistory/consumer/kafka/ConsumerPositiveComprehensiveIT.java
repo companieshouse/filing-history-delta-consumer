@@ -84,14 +84,23 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
             "insolvency/2.26B", "insolvency/2.27B", "insolvency/2.28B", "insolvency/2.30B", "insolvency/AM20(Scot)",
             "insolvency/2.31B", "insolvency/2.32B", "insolvency/2.33B", "insolvency/2.34B", "insolvency/2.35B_rule_1",
             "insolvency/2.35B_rule_2", "insolvency/2.36B", "insolvency/2.38B", "insolvency/2.39B", "insolvency/AM16",
-            "insolvency/AM17", "insolvency/AM18", "insolvency/2.40B", "insolvency/2.31B(Scot)",
+            "insolvency/AM17", "insolvency/AM18", "insolvency/2.40B", "insolvency/2.31B(Scot)", "insolvency/2.12B",
+            "insolvency/AM11(Scot)", "insolvency/AM12", "insolvency/2.16B_rule_1", "insolvency/AM02(Scot)_rule_1",
+            "insolvency/2.16B_rule_2", "insolvency/2.17B", "insolvency/AM04(Scot)", "insolvency/AM05(Scot)",
+            "insolvency/2.22B", "insolvency/2.23B", "insolvency/AM08(Scot)", "insolvency/AM07(Scot)",
+            "insolvency/AM01(Scot)", "insolvency/2.15B_rule_1", "insolvency/2.15B_rule_2", "insolvency/2.16B(Scot)",
+            "insolvency/AM03(Scot)", "insolvency/2.17B(Scot)", "insolvency/AM09(Scot)", "insolvency/2.16BZ(Scot)",
+            "insolvency/2.20B(Scot)_rule_2", "insolvency/2.19B(Scot)", "insolvency/2.21B(Scot)",
+            "insolvency/2.22B(Scot)", "insolvency/2.23B(Scot)", "insolvency/AM21(Scot)", "insolvency/2.24B(Scot)",
+            "insolvency/AM25(Scot)", "insolvency/2.25B(Scot)", "insolvency/AM22(Scot)",
+
 
             "mortgage/MR01_rule_4", "mortgage/MR01_rule_5", "mortgage/MR02_rule_4", "mortgage/MR03_rule_4",
             "mortgage/MR04_rule_1", "mortgage/MR04_rule_2", "mortgage/MR04_rule_3", "mortgage/MR05_rule_1",
             "mortgage/MR05_rule_2", "mortgage/MR05_rule_3", "mortgage/MR05_rule_4", "mortgage/MR05_rule_5",
             "mortgage/MR05_rule_6", "mortgage/MR05_rule_7", "mortgage/MR06", "mortgage/MR07", "mortgage/MR08",
             "mortgage/MR09", "mortgage/MR10",
-//            "mortgage/LLMR03", // Failing due to missing description value or invalid rule on line 4295
+////            "mortgage/LLMR03", // Failing due to missing description value or invalid rule on line 4295
             "mortgage/466(Scot)"
     })
     void shouldConsumeFilingHistoryDeltaTopicAndProcessDelta(final String prefix) throws Exception {

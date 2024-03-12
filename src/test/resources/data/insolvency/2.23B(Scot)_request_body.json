@@ -1,0 +1,24 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTY0NjM5NTk2c2FsdA",
+    "category" : "insolvency",
+    "date" : "2006-09-01T12:00:04Z",
+    "description" : "liquidation-in-administration-end-of-administration-scotland",
+    "links" : {
+      "self" : "/company/SC201946/filing-history/MTY0NjM5NTk2c2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "2.23B(Scot)"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of end of administration",
+    "company_number" : "SC201946",
+    "document_id" : "000SROI0IGN2856",
+    "entity_id" : "164639596",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

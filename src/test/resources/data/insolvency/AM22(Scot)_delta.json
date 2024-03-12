@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20190809111450",
+      "form_type": "AM22(Scot)",
+      "description": "NOTICE OF MOVE FROM ADMINISTRATION TO CREDITORS VOLUNTARY LIQUIDATION:LIQ. CASE NO.2:IP NO.00009708,00009503",
+      "barcode": "S8BDV5G9",
+      "document_id": "000S8BDV5G97461",
+      "company_number": "SC134494",
+      "entity_id": "3241386981",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

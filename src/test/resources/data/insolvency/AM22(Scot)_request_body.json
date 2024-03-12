@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzI0MTM4Njk4MXNhbHQ",
+    "barcode" : "S8BDV5G9",
+    "category" : "insolvency",
+    "date" : "2019-08-09T11:14:50Z",
+    "description" : "liquidation-in-administration-move-to-creditors-voluntary-liquidation-scotland-2",
+    "links" : {
+      "self" : "/company/SC134494/filing-history/MzI0MTM4Njk4MXNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "AM22(Scot)"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of move from administration to creditors voluntary liquidation:liq. Case no.2:ip no.00009708,00009503",
+    "company_number" : "SC134494",
+    "document_id" : "000S8BDV5G97461",
+    "entity_id" : "3241386981",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

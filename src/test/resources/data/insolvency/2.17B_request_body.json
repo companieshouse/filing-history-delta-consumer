@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTA0MTU4MjE4c2FsdA",
+    "barcode" : "A8LHZRQ0",
+    "category" : "insolvency",
+    "date" : "2004-01-14T11:59:59Z",
+    "description" : "liquidation-in-administration-proposals",
+    "links" : {
+      "self" : "/company/02879882/filing-history/MTA0MTU4MjE4c2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "2.17B"
+  },
+  "internal_data" : {
+    "original_description" : "Statement of proposals",
+    "company_number" : "02879882",
+    "document_id" : "000A8LHZRQ02384",
+    "entity_id" : "104158218",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

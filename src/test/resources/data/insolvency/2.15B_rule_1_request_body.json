@@ -1,0 +1,28 @@
+{
+  "external_data" : {
+    "transaction_id" : "MjA0MTEwNTE5OXNhbHQ",
+    "barcode" : "SG42ID3C",
+    "category" : "insolvency",
+    "date" : "2009-09-10T17:43:08Z",
+    "description" : "liquidation-in-administration-notice-of-statement-of-affairs-scotland-with-form-attached",
+    "description_values" : {
+      "form_attached" : "2.14B(Scot)/2.13B(Scot)"
+    },
+    "links" : {
+      "self" : "/company/SC168728/filing-history/MjA0MTEwNTE5OXNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "2.15B(Scot)"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of statement of AFFAIRS/2.14B(Scot)/2.13B(Scot)",
+    "company_number" : "SC168728",
+    "document_id" : "000SG42ID3C4008",
+    "entity_id" : "2041105199",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

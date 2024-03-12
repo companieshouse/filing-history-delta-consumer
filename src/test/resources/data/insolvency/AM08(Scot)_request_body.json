@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzI4MjgxNTY0N3NhbHQ",
+    "barcode" : "Y9H82GCH",
+    "category" : "insolvency",
+    "date" : "2020-11-09T08:01:03Z",
+    "description" : "liquidation-in-administration-revision-administrators-proposals-scotland",
+    "links" : {
+      "self" : "/company/SC211791/filing-history/MzI4MjgxNTY0N3NhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "AM08(Scot)"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of revision of administrator's proposals:liq. Case no.1",
+    "company_number" : "SC211791",
+    "document_id" : "000Y9H82GCH7914",
+    "entity_id" : "3282815647",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzI0MDIxNDAwMHNhbHQ",
+    "barcode" : "S8AHBVBS",
+    "category" : "insolvency",
+    "date" : "2019-07-25T12:44:39Z",
+    "description" : "liquidation-in-administration-appointment-of-administrator-scotland",
+    "links" : {
+      "self" : "/company/SC511523/filing-history/MzI0MDIxNDAwMHNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "AM01(Scot)"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of administrator's appointment:liq. Case no.1:ip no.00019450,00022750",
+    "company_number" : "SC511523",
+    "document_id" : "000S8AHBVBS7444",
+    "entity_id" : "3240214000",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

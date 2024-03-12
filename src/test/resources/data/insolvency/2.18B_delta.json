@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20040213115925",
+      "form_type": "2.18B",
+      "description": "EXTENSION OF TIME PERIOD",
+      "barcode": "",
+      "document_id": "000AWUHDSJ52408",
+      "company_number": "03628575",
+      "entity_id": "105140883",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}
