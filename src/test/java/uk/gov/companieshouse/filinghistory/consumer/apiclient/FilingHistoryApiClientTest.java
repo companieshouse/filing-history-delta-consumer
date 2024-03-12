@@ -28,7 +28,7 @@ import uk.gov.companieshouse.filinghistory.consumer.logging.DataMapHolder;
 class FilingHistoryApiClientTest {
 
     private static final String PRE_FORMAT_URI = "/filing-history-data-api/company/%s/filing-history/%s/internal";
-    private static final String PRE_FORMAT_DELETE_URI = "/filing-history-data-api/filing-history/%s";
+    private static final String PRE_FORMAT_DELETE_URI = "/filing-history-data-api/filing-history/%s/internal";
     private static final String COMPANY_NUMBER = "12345678";
     private static final String TRANSACTION_ID = "MzA0Mzk3MjY3NXNhbHQ";
     private static final String REQUEST_ID = "request_id";
