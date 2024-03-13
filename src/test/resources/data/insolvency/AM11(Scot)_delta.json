@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20190909094158",
+      "form_type": "AM11(Scot)",
+      "description": "NOTICE OF APPOINTMENT OF REPLACEMENT OR ADDITIONAL ADMINISTRATOR:LIQ. CASE NO.1:IP NO.00009261,00014190,00008375,00009637,00009434",
+      "barcode": "A8DBXXM9",
+      "document_id": "000A8DBXXM97492",
+      "company_number": "SC190870",
+      "entity_id": "3243763613",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

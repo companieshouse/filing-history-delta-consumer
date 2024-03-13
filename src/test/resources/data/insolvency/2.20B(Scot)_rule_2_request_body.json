@@ -1,0 +1,24 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTMyNTM5ODZzYWx0",
+    "category" : "insolvency",
+    "date" : "2005-12-23T11:59:59Z",
+    "description" : "liquidation-in-administration-progress-report-scotland",
+    "links" : {
+      "self" : "/company/SC200817/filing-history/MTMyNTM5ODZzYWx0"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "2.20B(Scot)"
+  },
+  "internal_data" : {
+    "original_description" : "Administrators progress report",
+    "company_number" : "SC200817",
+    "document_id" : "000SLQ7EBGF2688",
+    "entity_id" : "13253986",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

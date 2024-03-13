@@ -1,0 +1,24 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTA0MzE0ODU0c2FsdA",
+    "category" : "insolvency",
+    "date" : "2004-01-06T11:59:49Z",
+    "description" : "liquidation-in-administration-statement-of-affairs",
+    "links" : {
+      "self" : "/company/02904467/filing-history/MTA0MzE0ODU0c2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "2.16B"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of statement of affairs statement of affairs",
+    "company_number" : "02904467",
+    "document_id" : "000A1X3CRIW2378",
+    "entity_id" : "104314854",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

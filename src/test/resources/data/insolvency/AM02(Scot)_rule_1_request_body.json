@@ -1,0 +1,28 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzI0Mjc2MTQ5OHNhbHQ",
+    "barcode" : "S8CHUW3L",
+    "category" : "insolvency",
+    "date" : "2019-08-28T07:36:15Z",
+    "description" : "liquidation-in-administration-statement-of-affairs-with-form-attached-scotland",
+    "description_values" : {
+      "form_attached" : "AM02SOASCOT"
+    },
+    "links" : {
+      "self" : "/company/SC511523/filing-history/MzI0Mjc2MTQ5OHNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "AM02(Scot)"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of statement of affairs in administration/AM02SOASCOT:liq. Case no.1",
+    "company_number" : "SC511523",
+    "document_id" : "000S8CHUW3L7479",
+    "entity_id" : "3242761498",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

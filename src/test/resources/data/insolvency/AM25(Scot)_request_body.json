@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzI3NzAxNzE4OXNhbHQ",
+    "barcode" : "S9CVJ94I",
+    "category" : "insolvency",
+    "date" : "2020-09-07T09:25:40Z",
+    "description" : "liquidation-in-administration-court-order-ending-administration-scotland-2",
+    "links" : {
+      "self" : "/company/SC321995/filing-history/MzI3NzAxNzE4OXNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "AM25(Scot)"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of court order ending administration:liq. Case no.1",
+    "company_number" : "SC321995",
+    "document_id" : "000S9CVJ94I7852",
+    "entity_id" : "3277017189",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

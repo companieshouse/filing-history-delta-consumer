@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20040407115936",
+      "form_type": "2.12B",
+      "description": "APPOINTMENT OF ADMINISTRATOR",
+      "barcode": "A2QWFTY4",
+      "document_id": "000A2QWFTY42446",
+      "company_number": "02619441",
+      "entity_id": "105465257",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

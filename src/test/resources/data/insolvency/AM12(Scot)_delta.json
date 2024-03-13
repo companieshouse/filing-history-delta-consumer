@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20200526075831",
+      "form_type": "AM12(Scot)",
+      "description": "NOTICE OF ORDER LIMITING DISCLOSURE OF STATEMENT OF AFFAIRS OR PROPOSALS IN ADMINISTRATION/O/C DISCLOSE:LIQ. CASE NO.1",
+      "barcode": "S95NKTM0",
+      "document_id": "000S95NKTM07748",
+      "company_number": "SC374175",
+      "entity_id": "3265668100",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

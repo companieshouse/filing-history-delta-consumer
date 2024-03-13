@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzI0MjY1MjYxMXNhbHQ",
+    "barcode" : "S8CHV0DU",
+    "category" : "insolvency",
+    "date" :"2019-08-27T15:35:10Z",
+    "description" : "liquidation-in-administration-end-of-administration-scotland-2",
+    "links" : {
+      "self" : "/company/SC342252/filing-history/MzI0MjY1MjYxMXNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "AM21(Scot)"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of end of administration:liq. Case no.1",
+    "company_number" : "SC342252",
+    "document_id" : "000S8CHV0DU7477",
+    "entity_id" : "3242652611",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20110729090632",
+      "form_type": "2.16BZ(Scot)",
+      "description": "NOTICE OF DEEMED APPROVAL OF PROPOSALS",
+      "barcode": "SSSGMW4E",
+      "document_id": "000SSSGMW4E4538",
+      "company_number": "SC290986",
+      "entity_id": "3041275018",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

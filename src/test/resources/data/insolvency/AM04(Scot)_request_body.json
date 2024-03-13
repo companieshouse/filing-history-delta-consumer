@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzMyOTQ5MTkzOHNhbHQ",
+    "barcode" : "YAXJVF55",
+    "category" : "insolvency",
+    "date" : "2022-02-10T09:46:29Z",
+    "description" : "liquidation-in-administration-extension-of-time-deliver-scotland",
+    "links" : {
+      "self" : "/company/SC505596/filing-history/MzMyOTQ5MTkzOHNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "AM04(Scot)"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of extension of time to deliver administrator's proposals:liq. Case no.1",
+    "company_number" : "SC505596",
+    "document_id" : "000YAXJVF558372",
+    "entity_id" : "3329491938",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

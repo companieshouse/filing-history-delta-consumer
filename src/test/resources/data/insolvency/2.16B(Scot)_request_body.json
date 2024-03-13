@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTA2MjQwNTVzYWx0",
+    "barcode" : "SSPR4SVR",
+    "category" : "insolvency",
+    "date" : "2004-02-26T11:59:30Z",
+    "description" : "liquidation-in-administration-proposals-scotland",
+    "links" : {
+      "self" : "/company/SC004585/filing-history/MTA2MjQwNTVzYWx0"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "2.16B(Scot)"
+  },
+  "internal_data" : {
+    "original_description" : "Statement of proposals",
+    "company_number" : "SC004585",
+    "document_id" : "000SSPR4SVR2232",
+    "entity_id" : "10624055",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

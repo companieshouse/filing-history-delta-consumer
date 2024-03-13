@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzI2NTY2ODEwMHNhbHQ",
+    "barcode" : "S95NKTM0",
+    "category" : "insolvency",
+    "date" : "2020-05-26T07:58:31Z",
+    "description" : "liquidation-in-administration-order-limiting-disclosure-of-statement-of-affairs-or-proposals-scotland",
+    "links" : {
+      "self" : "/company/SC374175/filing-history/MzI2NTY2ODEwMHNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "AM12(Scot)"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of order limiting disclosure of statement of affairs or proposals in administration/o/c disclose:liq. Case no.1",
+    "company_number" : "SC374175",
+    "document_id" : "000S95NKTM07748",
+    "entity_id" : "3265668100",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

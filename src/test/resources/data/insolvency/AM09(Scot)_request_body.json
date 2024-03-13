@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzI2NjA4NzA1OXNhbHQ",
+    "barcode" : "S962KETM",
+    "category" : "insolvency",
+    "date" : "2020-05-29T10:04:49Z",
+    "description" : "liquidation-in-administration-creditor-decision-revised-proposals-scotland",
+    "links" : {
+      "self" : "/company/SC468952/filing-history/MzI2NjA4NzA1OXNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "AM09(Scot)"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of result of creditors decision on revised administrator's proposals:liq. Case no.1",
+    "company_number" : "SC468952",
+    "document_id" : "000S962KETM7750",
+    "entity_id" : "3266087059",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

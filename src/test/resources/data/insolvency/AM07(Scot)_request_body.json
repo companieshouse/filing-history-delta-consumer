@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzI0MDQ1NjUxNnNhbHQ",
+    "barcode" : "S8AJVJUP",
+    "category" : "insolvency",
+    "date" : "2019-07-29T14:02:48Z",
+    "description" : "liquidation-in-administration-result-creditors-decision-scotland",
+    "links" : {
+      "self" : "/company/SC463535/filing-history/MzI0MDQ1NjUxNnNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "AM07(Scot)"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of creditor's decision on administrator's proposals:liq. Case no.1",
+    "company_number" : "SC463535",
+    "document_id" : "000S8AJVJUP7448",
+    "entity_id" : "3240456516",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

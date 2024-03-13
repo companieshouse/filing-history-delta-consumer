@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTA2MTY4NzBzYWx0",
+    "barcode" : "AHYD7VSW",
+    "category" : "insolvency",
+    "date" : "2004-06-10T11:59:51Z",
+    "description" : "liquidation-in-administration-revised-proposals",
+    "links" : {
+      "self" : "/company/00343703/filing-history/MTA2MTY4NzBzYWx0"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "2.22B"
+  },
+  "internal_data" : {
+    "original_description" : "Statement of revised proposals",
+    "company_number" : "00343703",
+    "document_id" : "000AHYD7VSW2488",
+    "entity_id" : "10616870",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

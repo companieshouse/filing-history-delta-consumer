@@ -1,0 +1,25 @@
+{
+  "external_data": {
+    "transaction_id": "MzI0Mzc2MzYxM3NhbHQ",
+    "barcode": "A8DBXXM9",
+    "category": "insolvency",
+    "date": "2019-09-09T09:41:58Z",
+    "description": "liquidation-in-administration-appointment-of-a-replacement-or-additional-administrator-scotland",
+    "links": {
+      "self": "/company/SC190870/filing-history/MzI0Mzc2MzYxM3NhbHQ"
+    },
+    "paper_filed": true,
+    "subcategory": "administration",
+    "type": "AM11(Scot)"
+  },
+  "internal_data" : {
+    "original_description": "Notice of appointment of replacement or additional administrator:liq. Case no.1:ip no.00009261,00014190,00008375,00009637,00009434",
+    "company_number": "SC190870",
+    "document_id": "000A8DBXXM97492",
+    "entity_id": "3243763613",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

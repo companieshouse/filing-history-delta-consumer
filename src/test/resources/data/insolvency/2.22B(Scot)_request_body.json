@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTE4MDM4MzExc2FsdA",
+    "barcode" : "SF8MP6XT",
+    "category" : "insolvency",
+    "date" : "2005-07-13T11:59:52Z",
+    "description" : "liquidation-in-administration-extension-of-period-scotland",
+    "links" : {
+      "self" : "/company/SC172318/filing-history/MTE4MDM4MzExc2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "2.22B(Scot)"
+  },
+  "internal_data" : {
+    "original_description" : "Extension of administration",
+    "company_number" : "SC172318",
+    "document_id" : "000SF8MP6XT2573",
+    "entity_id" : "118038311",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

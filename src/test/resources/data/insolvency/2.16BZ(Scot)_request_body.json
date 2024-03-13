@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzA0MTI3NTAxOHNhbHQ",
+    "barcode" : "SSSGMW4E",
+    "category" : "insolvency",
+    "date" : "2011-07-29T09:06:32Z",
+    "description" : "liquidation-in-administration-deemed-proposal-scotland",
+    "links" : {
+      "self" : "/company/SC290986/filing-history/MzA0MTI3NTAxOHNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "2.16BZ(Scot)"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of deemed approval of proposals",
+    "company_number" : "SC290986",
+    "document_id" : "000SSSGMW4E4538",
+    "entity_id" : "3041275018",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

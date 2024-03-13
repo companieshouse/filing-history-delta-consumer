@@ -1,0 +1,24 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTA0NDQ3NTU1c2FsdA",
+    "category" : "insolvency",
+    "date" : "2004-01-21T11:59:48Z",
+    "description" : "liquidation-in-administration-result-creditors-meeting",
+    "links" : {
+      "self" : "/company/03679711/filing-history/MTA0NDQ3NTU1c2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "2.23B"
+  },
+  "internal_data" : {
+    "original_description" : "Result of meeting of creditors",
+    "company_number" : "03679711",
+    "document_id" : "000AD9UORW12389",
+    "entity_id" : "104447555",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

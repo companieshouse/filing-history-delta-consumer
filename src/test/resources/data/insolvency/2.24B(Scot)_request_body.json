@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MjAxNjc1ODQ5OXNhbHQ",
+    "barcode" : "SSKSH40H",
+    "category" : "insolvency",
+    "date" : "2008-10-29T15:54:37Z",
+    "description" : "liquidation-in-administration-court-order-ending-administration-scotland",
+    "links" : {
+      "self" : "/company/SC276937/filing-history/MjAxNjc1ODQ5OXNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "2.24B(Scot)"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of court order ending administration",
+    "company_number" : "SC276937",
+    "document_id" : "000SSKSH40H3395",
+    "entity_id" : "2016758499",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

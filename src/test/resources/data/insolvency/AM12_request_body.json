@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzE4MTUxNTMwNHNhbHQ",
+    "barcode" : "A6B0TFGQ",
+    "category" : "insolvency",
+    "date" : "2017-07-26T17:53:07Z",
+    "description" : "liquidation-in-administration-order-limiting-disclosure-of-statement-of-affairs-or-proposals",
+    "links" : {
+      "self" : "/company/07368089/filing-history/MzE4MTUxNTMwNHNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "AM12"
+  },
+  "internal_data" : {
+    "original_description" : "Notice of order limiting disclosure of statement of affairs or proposals in administration/o/c disclose:liq. Case no.1",
+    "company_number" : "07368089",
+    "document_id" : "000A6B0TFGQ6711",
+    "entity_id" : "3181515304",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}
