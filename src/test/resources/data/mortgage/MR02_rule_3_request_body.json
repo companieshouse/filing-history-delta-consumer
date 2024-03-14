@@ -1,0 +1,33 @@
+{
+  "external_data": {
+    "transaction_id": "MzEwNzY3ODAyNXNhbHQ",
+    "barcode": "A3FTQQVF",
+    "action_date": "2014-08-21T00:00:00Z",
+    "category": "mortgage",
+    "date": "2014-09-06T00:00:00Z",
+    "description": "mortgage-acquire-with-deed-with-charge-number-charge-acquisition-date",
+    "description_values": {
+      "charge_number": "123456780657",
+      "property_acquired_date": "2014-08-21T00:00:00Z"
+    },
+    "links": {
+      "self": "/company/12345678/filing-history/MzEwNzY3ODAyNXNhbHQ"
+    },
+    "paper_filed": true,
+    "subcategory": "acquire",
+    "type": "MR02"
+  },
+  "internal_data": {
+    "original_description": "Acquisition of a charge / charge code 123456780657",
+    "original_values": {
+      "property_acquired_date": "2014-08-21T00:00:00Z"
+    },
+    "company_number": "12345678",
+    "document_id": "000A3FTQQVF5668",
+    "entity_id": "3107678025",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

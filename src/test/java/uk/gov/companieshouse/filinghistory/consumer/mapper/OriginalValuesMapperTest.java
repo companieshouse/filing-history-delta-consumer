@@ -2,21 +2,15 @@ package uk.gov.companieshouse.filinghistory.consumer.mapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import uk.gov.companieshouse.api.filinghistory.InternalDataOriginalValues;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.TransformerTestingUtils;
-import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.FormatDate;
 
 @ExtendWith(MockitoExtension.class)
 class OriginalValuesMapperTest {
@@ -25,8 +19,6 @@ class OriginalValuesMapperTest {
 
     @InjectMocks
     private OriginalValuesMapper originalValuesMapper;
-    @Mock
-    private FormatDate formatDate;
 
     @Test
     void shouldMapOriginalValuesFromJsonNode() {
@@ -64,7 +56,7 @@ class OriginalValuesMapperTest {
                 .caseEndDate("06/05/2013")
                 .cessationDate("05/06/2013")
                 .changeDate("04/04/2013")
-                .chargeCreationDate("2014-05-05T00:00:00Z")
+                .chargeCreationDate("05/05/2014")
                 .madeUpDate("09/09/2018")
                 .mortgageSatisfactionDate("20/10/2005")
                 .newRoAddress("5 Test Road")
@@ -72,19 +64,15 @@ class OriginalValuesMapperTest {
                 .notificationDate("11/11/2020")
                 .officerName("John Doe")
                 .periodType("weeks")
-                .propertyAcquiredDate("2021-12-12T00:00:00Z")
+                .propertyAcquiredDate("12/12/2021")
                 .pscName("Significant Person")
                 .resignationDate("03/02/2013");
-
-        when(formatDate.format("05/05/2014")).thenReturn("2014-05-05T00:00:00Z");
-        when(formatDate.format("12/12/2021")).thenReturn("2021-12-12T00:00:00Z");
 
         // when
         final InternalDataOriginalValues actual = originalValuesMapper.map(jsonNode);
 
         // then
         assertEquals(expected, actual);
-        verify(formatDate, times(2)).format(any());
     }
 
     @Test
