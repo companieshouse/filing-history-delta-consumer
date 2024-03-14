@@ -16,8 +16,8 @@ import uk.gov.companieshouse.logging.LoggerFactory;
 public class ResponseHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(NAMESPACE);
-    private static final String API_ERROR_RESPONSE_MESSAGE = "HTTP response code %d when upserting filing history";
-    private static final String URI_VALIDATION_EXCEPTION_MESSAGE = "Failed to upsert filing history due to invalid URI";
+    private static final String API_ERROR_RESPONSE_MESSAGE = "HTTP response code %d when calling filing history API";
+    private static final String URI_VALIDATION_EXCEPTION_MESSAGE = "Failed call to filing history API due to invalid URI";
 
     public void handle(ApiErrorResponseException ex) {
         final int statusCode = ex.getStatusCode();

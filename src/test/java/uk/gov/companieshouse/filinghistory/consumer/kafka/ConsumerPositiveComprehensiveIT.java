@@ -95,7 +95,7 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
             "insolvency/AM25(Scot)", "insolvency/2.25B(Scot)", "insolvency/AM22(Scot)",
 
 
-            "mortgage/MR01_rule_4", "mortgage/MR01_rule_5", "mortgage/MR02_rule_4", "mortgage/MR03_rule_4",
+            "mortgage/MR01_rule_4", "mortgage/MR01_rule_5", "mortgage/MR02_rule_3", "mortgage/MR02_rule_4", "mortgage/MR03_rule_4",
             "mortgage/MR04_rule_1", "mortgage/MR04_rule_2", "mortgage/MR04_rule_3", "mortgage/MR05_rule_1",
             "mortgage/MR05_rule_2", "mortgage/MR05_rule_3", "mortgage/MR05_rule_4", "mortgage/MR05_rule_5",
             "mortgage/MR05_rule_6", "mortgage/MR05_rule_7", "mortgage/MR06", "mortgage/MR07", "mortgage/MR08",

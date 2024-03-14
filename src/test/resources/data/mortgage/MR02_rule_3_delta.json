@@ -1,0 +1,21 @@
+{
+  "filing_history": [
+    {
+      "category": "4",
+      "receive_date": "20140906000000",
+      "form_type": "MR02",
+      "description": "ACQUISITION OF A CHARGE / CHARGE CODE  123456780657",
+      "barcode": "A3FTQQVF",
+      "document_id": "000A3FTQQVF5668",
+      "company_number": "12345678",
+      "entity_id": "3107678025",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "description_values": {
+        "property_acquired_date": "21/08/2014"
+      },
+      "pre_scanned_batch": "1"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}
