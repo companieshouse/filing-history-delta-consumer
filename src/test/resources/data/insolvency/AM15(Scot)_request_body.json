@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzI0NDQ4MTQxMXNhbHQ",
+    "barcode": "S8DYE01T",
+    "category" : "insolvency",
+    "date" : "2019-09-18T06:10:36Z",
+    "description" : "liquidation-in-administration-resignation-of-administrator-scotland-2",
+    "links" : {
+      "self" : "/company/SC130656/filing-history/MzI0NDQ4MTQxMXNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "AM15(Scot)"
+  },
+  "internal_data": {
+    "original_description": "Notice of resignation of administrator:liq. Case no.1:ip no.00009261",
+    "company_number": "SC130656",
+    "document_id": "000S8DYE01T7504",
+    "entity_id": "3244481411",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzA1MzQ2NTE2NHNhbHQ",
+    "barcode" : "S13MC7EJ",
+    "category" : "insolvency",
+    "date" : "2012-03-02T09:42:54Z",
+    "description" : "liquidation-in-administration-vacation-of-office-scotland",
+    "links" : {
+      "self" : "/company/SC032975/filing-history/MzA1MzQ2NTE2NHNhbHQ"
+    },
+    "paper_filed" : true,
+    "type" : "2.30B(Scot)"
+  },
+  "internal_data": {  "original_description" : "Notice of vacation of office by administrator",
+    "company_number" : "SC032975",
+    "document_id" : "000S13MC7EJ4754",
+    "entity_id" : "3053465164",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

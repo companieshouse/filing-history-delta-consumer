@@ -1,0 +1,24 @@
+{
+  "external_data" : {
+    "transaction_id" : "MTkwODc1NTkzc2FsdA",
+    "category" : "insolvency",
+    "date" : "2008-01-15T12:00:14Z",
+    "description" : "liquidation-in-administration-resignation-of-administrator-scotland",
+    "links" : {
+      "self" : "/company/SC234738/filing-history/MTkwODc1NTkzc2FsdA"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "2.29B(Scot)"
+  },
+  "internal_data": {
+    "original_description" : "Resignation by administrator",
+    "company_number" : "SC234738",
+    "document_id" : "000S4F3HW903196",
+    "entity_id" : "190875593",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

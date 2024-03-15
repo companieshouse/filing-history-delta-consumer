@@ -1,0 +1,25 @@
+{
+  "external_data": {
+    "transaction_id": "NTY2NTU2NjZzYWx0",
+    "barcode": "S3IQXZ32",
+    "category": "insolvency",
+    "date": "2004-10-07T11:59:54Z",
+    "description": "liquidation-administration-variation-of-administration-order-scotland",
+    "links": {
+      "self": "/company/SC020152/filing-history/NTY2NTU2NjZzYWx0"
+    },
+    "paper_filed": true,
+    "subcategory": "administration",
+    "type": "2.12(Scot)"
+  },
+  "internal_data": {
+    "original_description": "Notice of variation of administrative order",
+    "company_number": "SC020152",
+    "document_id": "000S3IQXZ322382",
+    "entity_id": "56655666",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

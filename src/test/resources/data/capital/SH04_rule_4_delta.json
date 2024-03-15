@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "9",
+      "receive_date": "20110707000000",
+      "form_type": "SH04",
+      "description": "27/05/11 Treasury Capital USD 10483569.23445",
+      "barcode": "AWUJFVLE",
+      "document_id": "000AWUJFVLE4514",
+      "company_number": "03564138",
+      "entity_id": "3040079522",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

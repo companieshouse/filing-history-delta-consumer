@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20190726163045",
+      "form_type": "RM01(Scot)",
+      "description": "NOTICE OF APPOINTMENT BY COURT OF ADMINISTRATIVE RECEIVER, RECEIVER OR MANAGER:LIQ. CASE NO.2:IP NO.00009708,00014412",
+      "barcode": "S8AJTYBM",
+      "document_id": "000S8AJTYBM7447",
+      "company_number": "SC164168",
+      "entity_id": "3240353944",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

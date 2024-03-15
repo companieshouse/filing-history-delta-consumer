@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzE3ODIyNTg2NnNhbHQ",
+    "barcode": "A683RSQX",
+    "category" : "insolvency",
+    "date" : "2017-06-16T11:45:34Z",
+    "description" : "liquidation-in-administration-court-order-under-section-176A",
+    "links" : {
+      "self" : "/company/07738701/filing-history/MzE3ODIyNTg2NnNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "NOCP"
+  },
+  "internal_data": {
+    "original_description": "Notice of an order under section 176A(5):liq. Case no.1",
+    "company_number": "07738701",
+    "document_id": "000A683RSQX6675",
+    "entity_id": "3178225866",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

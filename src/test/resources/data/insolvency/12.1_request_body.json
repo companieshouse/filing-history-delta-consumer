@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzAyOTcyNTg1M3NhbHQ",
+    "barcode" : "AYKCBPZ3",
+    "category" : "insolvency",
+    "date" : "2011-01-04T15:32:30Z",
+    "description" : "liquidation-in-administration-court-order-under-section-176A",
+    "links" : {
+      "self" : "/company/00104206/filing-history/MzAyOTcyNTg1M3NhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "12.1"
+  },
+  "internal_data": {
+    "original_description" : "Notice to registrar of companies in respect of order under section 176A",
+    "company_number" : "00104206",
+    "document_id" : "000AYKCBPZ34351",
+    "entity_id" : "3029725853",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

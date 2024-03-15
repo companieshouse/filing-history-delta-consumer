@@ -105,8 +105,8 @@ anonymised.
        array.
     5. Deltas can be found within the `fh_deltas` table in Kermit by querying by form
        type, [see confluence page](https://companieshouse.atlassian.net/wiki/spaces/TEAM4/pages/4403200517/SQL+Queries+to+find+Filing+History+deltas).
-       Alternatively, they can be found in the `queue`collection in MongoDB or by running the `f_get_one_transaction`
-       package in CHIPS.
+       Alternatively, they can be found in the `queue`collection in MongoDB or by running the `pkg_chs_get_data.f_get_one_transaction_api`
+       package function in CHIPS.
 2. Create a json file called `<category>/X_request_body.json` where `X` is the same as above.
     1. `<category>` would be the same as what was used for the `X_delta.json` file.
     2. The file should contain a valid filing history PUT request body with respect to

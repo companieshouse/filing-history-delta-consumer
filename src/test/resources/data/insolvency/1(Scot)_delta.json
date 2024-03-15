@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "9",
+      "receive_date": "19920107115946",
+      "form_type": "1(Scot)",
+      "description": "APP OF RECEIVER            *****",
+      "barcode": "",
+      "document_id": "",
+      "company_number": "SC130212",
+      "entity_id": "104102409",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

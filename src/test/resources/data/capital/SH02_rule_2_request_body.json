@@ -1,0 +1,31 @@
+{
+  "external_data": {
+    "transaction_id": "MzA0MDA1NjUzNXNhbHQ",
+    "action_date": "2011-06-28T00:00:00Z",
+    "barcode": "L6242VGA",
+    "category": "capital",
+    "date": "2011-07-07T09:05:10Z",
+    "description": "capital-alter-shares-consolidation",
+    "description_values": {
+      "date": "2011-06-28T00:00:00Z"
+    },
+    "links": {
+      "self": "/company/07089365/filing-history/MzA0MDA1NjUzNXNhbHQ"
+    },
+    "paper_filed": true,
+    "type": "SH02"
+  },
+  "internal_data": {
+    "original_description": "Consolidation 28/06/11",
+    "original_values": {
+      "action": "CONSOLIDATION"
+    },
+    "company_number": "07089365",
+    "document_id": "000L6242VGA4514",
+    "entity_id": "3040056535",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

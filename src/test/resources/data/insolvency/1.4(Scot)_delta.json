@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20020320115953",
+      "form_type": "1.4(Scot)",
+      "description": "COMPLETION OF VOL ARR",
+      "barcode": "",
+      "document_id": "000SW5OY99X1747",
+      "company_number": "SC107346",
+      "entity_id": "100449555",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}
