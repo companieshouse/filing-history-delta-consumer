@@ -1,0 +1,32 @@
+{
+  "external_data": {
+    "transaction_id": "MzEwNzQ5MTkzNXNhbHQ",
+    "barcode": "L3G6G68Z",
+    "action_date" : "2014-01-31T00:00:00Z",
+    "category" : "accounts",
+    "date" : "2014-09-16T10:33:17Z",
+    "description" : "accounts-amended-with-accounts-type-dormant",
+    "description_values" : {
+      "made_up_date" : "2014-01-31T00:00:00Z"
+    },
+    "links" : {
+      "self" : "/company/07124173/filing-history/MzEwNzQ5MTkzNXNhbHQ"
+    },
+    "paper_filed" : true,
+    "type" : "AAMD"
+  },
+  "internal_data": {
+    "company_number" : "07124173",
+    "document_id" : "000L3G6G68Z5673",
+    "entity_id" : "3107491935",
+    "original_description" : "Amended accounts of dormant company made up to 31/01/14",
+    "original_values" : {
+      "made_up_date" : "31/01/14",
+      "acc_type" : "DORMANT"
+    },
+    "parent_entity_id": "",
+    "transaction_kind": "top-level",
+    "updated_by": "context_id",
+    "delta_at": "20211029142043360560"
+  }
+}

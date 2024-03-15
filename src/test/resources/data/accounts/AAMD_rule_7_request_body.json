@@ -1,0 +1,32 @@
+{
+  "external_data": {
+    "transaction_id": "MzA1MzU0ODE4NHNhbHQ",
+    "barcode" : "S13WB9XF",
+    "action_date" : "2011-03-31T00:00:00Z",
+    "category" : "accounts",
+    "date" : "2012-03-05T10:28:56Z",
+    "description" : "accounts-amended-with-accounts-type-group",
+    "description_values" : {
+      "made_up_date" : "2011-03-31T00:00:00Z"
+    },
+    "links" : {
+      "self" : "/company/SC129114/filing-history/MzA1MzU0ODE4NHNhbHQ"
+    },
+    "paper_filed" : true,
+    "type" : "AAMD"
+  },
+  "internal_data": {
+    "company_number" : "SC129114",
+    "document_id" : "000S13WB9XF4755",
+    "entity_id" : "3053548184",
+    "original_description" : "Amended group of companies' accounts made up to 31/03/11",
+    "original_values" : {
+      "made_up_date" : "31/03/11",
+      "acc_type" : "GROUP"
+    },
+    "parent_entity_id": "",
+    "transaction_kind": "top-level",
+    "updated_by": "context_id",
+    "delta_at": "20211029142043360560"
+  }
+}

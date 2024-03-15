@@ -1,0 +1,22 @@
+{
+  "filing_history": [
+    {
+      "category": "0",
+      "receive_date": "20160331160554",
+      "form_type": "AA",
+      "description": "MICRO COMPANY ACCOUNTS MADE UP TO 30/06/15",
+      "barcode": "X53Y3DIO",
+      "document_id": "000X53Y3DIO6235",
+      "company_number": "03590001",
+      "entity_id": "3145341634",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "description_values": {
+        "made_up_date": "30/06/15",
+        "acc_type": "MICRO ENTITY"
+      },
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

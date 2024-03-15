@@ -1,0 +1,26 @@
+{
+  "external_data": {
+    "transaction_id": "MDA0ODY5Mjk0MXNhbHQ",
+    "action_date" : "1994-03-31T00:00:00Z",
+    "category" : "accounts",
+    "date" : "1994-10-31T11:58:56Z",
+    "description" : "accounts-with-accounts-type-full-group",
+    "description_values" : {
+      "made_up_date" : "1994-03-31T00:00:00Z"
+    },
+    "links" : {
+      "self" : "/company/02092166/filing-history/MDA0ODY5Mjk0MXNhbHQ"
+    },
+    "paper_filed" : true,
+    "type" : "AA"
+  },
+  "internal_data": {
+    "company_number" : "02092166",
+    "entity_id" : "0048692941",
+    "original_description" : "Full group accounts made up to 31/03/94",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level",
+    "parent_entity_id": ""
+  }
+}

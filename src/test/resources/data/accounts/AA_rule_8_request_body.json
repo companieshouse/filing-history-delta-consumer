@@ -1,0 +1,32 @@
+{
+  "external_data": {
+    "transaction_id": "MzAxNDU4MDM2NXNhbHQ",
+    "barcode" : "LP88DJJ5",
+    "action_date" : "2009-12-31T00:00:00Z",
+    "category" : "accounts",
+    "date" : "2010-04-29T11:40:06Z",
+    "description" : "accounts-with-accounts-type-group",
+    "description_values" : {
+      "made_up_date" : "2009-12-31T00:00:00Z"
+    },
+    "links" : {
+      "self" : "/company/06424011/filing-history/MzAxNDU4MDM2NXNhbHQ"
+    },
+    "paper_filed" : true,
+    "type" : "AA"
+  },
+  "internal_data": {
+    "company_number" : "06424011",
+    "document_id" : "000LP88DJJ54173",
+    "entity_id" : "3014580365",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level",
+    "parent_entity_id": "",
+    "original_description" : "Group of companies' accounts made up to 31/12/09",
+    "original_values" : {
+      "acc_type" : "GROUP",
+      "made_up_date" : "31/12/09"
+    }
+  }
+}

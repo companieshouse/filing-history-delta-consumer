@@ -1,0 +1,22 @@
+{
+  "filing_history": [
+    {
+      "category": "0",
+      "receive_date": "20100429114006",
+      "form_type": "AA",
+      "description": "GROUP OF COMPANIES' ACCOUNTS MADE UP TO 31/12/09",
+      "barcode": "LP88DJJ5",
+      "document_id": "000LP88DJJ54173",
+      "company_number": "06424011",
+      "entity_id": "3014580365",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "description_values": {
+        "made_up_date": "31/12/09",
+        "acc_type": "GROUP"
+      },
+      "pre_scanned_batch": "1"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

@@ -1,0 +1,26 @@
+{
+  "external_data": {
+    "transaction_id": "MDA2NzA2NDkyMXNhbHQ",
+    "action_date" : "1987-09-30T00:00:00Z",
+    "category" : "accounts",
+    "date" : "1988-11-11T11:58:57Z",
+    "description" : "accounts-with-made-up-date",
+    "description_values" : {
+      "made_up_date" : "1987-09-30T00:00:00Z"
+    },
+    "links" : {
+      "self" : "/company/02072277/filing-history/MDA2NzA2NDkyMXNhbHQ"
+    },
+    "paper_filed" : true,
+    "type" : "AA"
+  },
+  "internal_data": {
+    "company_number" : "02072277",
+    "entity_id" : "0067064921",
+    "original_description" : "Accounts of dormant company made up to 30/09/87",
+    "delta_at": "20211029142043360560",
+    "parent_entity_id": "",
+    "transaction_kind": "top-level",
+    "updated_by": "context_id"
+  }
+}

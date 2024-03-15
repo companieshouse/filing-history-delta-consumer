@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "0",
+      "receive_date": "19930702115843",
+      "form_type": "AAMD",
+      "description": "AMENDED FULL GROUP ACCOUNTS MADE UP TO 30/09/90",
+      "barcode": "",
+      "document_id": "",
+      "company_number": "02126910",
+      "entity_id": "0093037814",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "1"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

@@ -1,0 +1,24 @@
+{
+  "external_data": {
+    "transaction_id": "MzEzNDA3Njk5OHNhbHQ",
+    "barcode": "A4I3DQKI",
+    "category" : "accounts",
+    "date" : "2015-11-12T15:25:40Z",
+    "description" : "accounts",
+    "links" : {
+      "self" : "/company/00292713/filing-history/MzEzNDA3Njk5OHNhbHQ"
+    },
+    "paper_filed" : true,
+    "type" : "AA"
+  },
+  "internal_data": {
+    "company_number" : "00292713",
+    "document_id" : "000A4I3DQKI6081",
+    "entity_id" : "3134076998",
+    "original_description" : "Errored 121115 batch 201510290011",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "transaction_kind": "top-level",
+    "updated_by": "context_id"
+  }
+}

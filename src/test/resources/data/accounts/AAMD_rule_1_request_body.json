@@ -1,0 +1,26 @@
+{
+  "external_data": {
+    "transaction_id": "MDA5MzAzNzgxNHNhbHQ",
+    "action_date" : "1990-09-30T00:00:00Z",
+    "category" : "accounts",
+    "date" : "1993-07-02T11:58:43Z",
+    "description" : "accounts-amended-with-accounts-type-full-group",
+    "description_values" : {
+      "made_up_date" : "1990-09-30T00:00:00Z"
+    },
+    "links" : {
+      "self" : "/company/02126910/filing-history/MDA5MzAzNzgxNHNhbHQ"
+    },
+    "paper_filed" : true,
+    "type" : "AAMD"
+  },
+  "internal_data": {
+    "company_number" : "02126910",
+    "entity_id" : "0093037814",
+    "original_description" : "Amended full group accounts made up to 30/09/90",
+    "parent_entity_id": "",
+    "transaction_kind": "top-level",
+    "updated_by": "context_id",
+    "delta_at": "20211029142043360560"
+  }
+}

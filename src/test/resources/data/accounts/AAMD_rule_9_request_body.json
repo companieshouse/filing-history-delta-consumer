@@ -1,0 +1,26 @@
+{
+  "external_data": {
+    "transaction_id": "MDA3Mjk5ODAzNXNhbHQ",
+    "action_date" : "1994-03-31T00:00:00Z",
+    "category" : "accounts",
+    "date" : "1994-10-10T11:59:28Z",
+    "description" : "accounts-amended-with-accounts-type-full",
+    "description_values" : {
+      "made_up_date" : "1994-03-31T00:00:00Z"
+    },
+    "links" : {
+      "self" : "/company/02122529/filing-history/MDA3Mjk5ODAzNXNhbHQ"
+    },
+    "paper_filed" : true,
+    "type" : "AAMD"
+  },
+  "internal_data": {
+    "company_number" : "02122529",
+    "entity_id" : "0072998035",
+    "original_description" : "Amended full accounts made up to 31/03/94",
+    "parent_entity_id": "",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level",
+    "delta_at": "20211029142043360560"
+  }
+}

@@ -71,6 +71,20 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
             "capital/SH07",
 
             "accounts/AA_rule_17",
+            "accounts/AA_rule_9",
+            "accounts/AA_rule_10",
+            "accounts/AA_rule_8",
+            "accounts/AA_rule_6",
+            "accounts/AA_rule_12",
+            "accounts/AA_rule_14",
+            "accounts/AA_rule_20",
+            "accounts/AA_rule_23",
+            "accounts/AA_rule_25",
+            "accounts/AA_rule_26",
+            "accounts/AAMD_rule_12",
+            "accounts/AAMD_rule_9",
+            "accounts/AAMD_rule_1",
+            "accounts/AAMD_rule_7",
 
             "insolvency/3.10", "insolvency/4.13", "insolvency/4.20_rule_2", "insolvency/4.31", "insolvency/4.33",
             "insolvency/4.35", "insolvency/4.38", "insolvency/4.40", "insolvency/4.43", "insolvency/WU15(Scot)",
@@ -100,7 +114,7 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
             "mortgage/MR05_rule_2", "mortgage/MR05_rule_3", "mortgage/MR05_rule_4", "mortgage/MR05_rule_5",
             "mortgage/MR05_rule_6", "mortgage/MR05_rule_7", "mortgage/MR06", "mortgage/MR07", "mortgage/MR08",
             "mortgage/MR09", "mortgage/MR10",
-////            "mortgage/LLMR03", // Failing due to missing description value or invalid rule on line 4295
+//            "mortgage/LLMR03", // Failing due to missing description value or invalid rule on line 4295
             "mortgage/466(Scot)"
     })
     void shouldConsumeFilingHistoryDeltaTopicAndProcessDelta(final String prefix) throws Exception {

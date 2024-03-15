@@ -1,0 +1,22 @@
+{
+  "filing_history": [
+    {
+      "category": "0",
+      "receive_date": "20140917164429",
+      "form_type": "AA",
+      "description": "31/12/13 TOTAL EXEMPTION SMALL",
+      "barcode": "X3GN9J5V",
+      "document_id": "000X3GN9J5V5673",
+      "company_number": "07873628",
+      "entity_id": "3107677902",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "description_values": {
+        "made_up_date": "31/12/13",
+        "acc_type": "TOTAL EXEMPTION SMALL"
+      },
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}
