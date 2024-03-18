@@ -43,9 +43,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.web.client.RestClient;
 
-public class IntegrationTestGenerator implements Runnable {
+public class IntegrationDataGenerator implements Runnable {
 
-    private static final Logger logger = LoggerFactory.getLogger(IntegrationTestGenerator.class);
+    private static final Logger logger = LoggerFactory.getLogger(IntegrationDataGenerator.class);
     private static final String KERMIT_CONNECTION = "jdbc:oracle:thin:KERMITUNIX2/kermitunix2@//chd-chipsdb:1521/chipsdev";
     private static final String MONGO_CONNECTION = "mongodb://localhost:27017/?retryWrites=false&loadBalanced=false&serverSelectionTimeoutMS=5000&connectTimeoutMS=10000";
     private static final String QUEUE_API_URL = "http://localhost:18201/queue/delta/filing-history";
@@ -86,9 +86,9 @@ public class IntegrationTestGenerator implements Runnable {
         }
     }
 
-    public static void main(String[] args) {
-        new IntegrationTestGenerator().run();
-    }
+//    public static void main(String[] args) {
+//        new IntegrationDataGenerator().run();
+//    }
 
     @Override
     public void run() {
