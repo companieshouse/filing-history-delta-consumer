@@ -46,7 +46,8 @@ import org.springframework.web.client.RestClient;
 public class IntegrationDataGenerator implements Runnable {
 
     private static final Logger logger = LoggerFactory.getLogger(IntegrationDataGenerator.class);
-    private static final String KERMIT_CONNECTION = "jdbc:oracle:thin:KERMITUNIX2/kermitunix2@//chd-chipsdb:1521/chipsdev";
+    private static final String KERMIT_CONNECTION = "jdbc:oracle:thin:KERMITUNIX2/%s@//chd-chipsdb:1521/chipsdev"
+            .formatted(System.getenv("KERMIT_PASSWORD"));
     private static final String MONGO_CONNECTION = "mongodb://localhost:27017/?retryWrites=false&loadBalanced=false&serverSelectionTimeoutMS=5000&connectTimeoutMS=10000";
     private static final String QUEUE_API_URL = "http://localhost:18201/queue/delta/filing-history";
     private static final String COMPANY_FILING_HISTORY = "company_filing_history";
@@ -244,7 +245,6 @@ public class IntegrationDataGenerator implements Runnable {
     private void saveFiles(String javaDelta, String putRequest, String entityId, String formType, String category) {
         formType = formType.replaceAll("/", "");
         File targetFolder = new File("target/generated-test-sources/%s/%s/%s".formatted(category, formType, entityId));
-        new File(targetFolder, "%s_request_body.json".formatted(formType));
         targetFolder.mkdirs(); // nosonar
         try (
                 FileWriter deltaWriter = new FileWriter(
