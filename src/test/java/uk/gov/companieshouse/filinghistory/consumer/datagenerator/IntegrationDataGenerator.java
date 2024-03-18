@@ -1,4 +1,4 @@
-package uk.gov.companieshouse.filinghistory.consumer.utils;
+package uk.gov.companieshouse.filinghistory.consumer.datagenerator;
 
 import static com.mongodb.client.model.Filters.eq;
 import static org.apache.commons.lang3.StringUtils.trim;
@@ -86,9 +86,9 @@ public class IntegrationDataGenerator implements Runnable {
         }
     }
 
-//    public static void main(String[] args) {
-//        new IntegrationDataGenerator().run();
-//    }
+    public static void main(String[] args) {
+        new IntegrationDataGenerator().run();
+    }
 
     @Override
     public void run() {
