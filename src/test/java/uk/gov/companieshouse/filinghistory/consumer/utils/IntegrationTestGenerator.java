@@ -37,21 +37,15 @@ import org.bson.json.JsonMode;
 import org.bson.json.JsonWriterSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.web.client.RestClient;
 
-@SpringBootApplication
-public class IntegrationTestGenerator implements CommandLineRunner {
+public class IntegrationTestGenerator implements Runnable {
 
     private static final Logger logger = LoggerFactory.getLogger(IntegrationTestGenerator.class);
-
     private static final String KERMIT_CONNECTION = "jdbc:oracle:thin:KERMITUNIX2/kermitunix2@//chd-chipsdb:1521/chipsdev";
     private static final String MONGO_CONNECTION = "mongodb://localhost:27017/?retryWrites=false&loadBalanced=false&serverSelectionTimeoutMS=5000&connectTimeoutMS=10000";
     private static final String QUEUE_API_URL = "http://localhost:18201/queue/delta/filing-history";
@@ -59,14 +53,23 @@ public class IntegrationTestGenerator implements CommandLineRunner {
     private static final String FIND_ALL_DELTAS = """
             SELECT
                 transaction_id,
-                api_delta,
-                queue_delta
+                 (
+                     SELECT
+                         pkg_chs_get_data.f_get_one_transaction(transaction_id, '29-OCT-21 14.20.43.360560000') AS result
+                     FROM
+                         dual
+                 ) AS queue_delta,
+                 (
+                     SELECT
+                         pkg_chs_get_data.f_get_one_transaction_api(transaction_id, '29-OCT-21 14.20.43.360560000') AS result
+                     FROM
+                         dual
+                 ) AS api_delta
             FROM
                 capdevjco2.fh_deltas
             """;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     record Deltas(String transactionId, String javaDelta, String perlDelta) {
 
@@ -84,48 +87,53 @@ public class IntegrationTestGenerator implements CommandLineRunner {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(IntegrationTestGenerator.class, args);
+        new IntegrationTestGenerator().run();
     }
 
     @Override
-    public void run(String[] args) throws SQLException {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(chipsSource());
-        MongoClient mongoClient = mongoClient();
-        MongoTemplate mongoTemplate = new MongoTemplate(mongoClient, COMPANY_FILING_HISTORY);
-        MongoCollection<Document> filingHistoryCollection = mongoTemplate.getCollection(COMPANY_FILING_HISTORY);
-        RestClient queueApiClient = RestClient.builder()
-                .baseUrl(QUEUE_API_URL)
-                .defaultHeader(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON_VALUE)
-                .build();
+    public void run() {
+        try {
+            JdbcTemplate jdbcTemplate = new JdbcTemplate(chipsSource());
+            MongoClient mongoClient = mongoClient();
+            MongoTemplate mongoTemplate = new MongoTemplate(mongoClient, COMPANY_FILING_HISTORY);
+            MongoCollection<Document> filingHistoryCollection = mongoTemplate.getCollection(COMPANY_FILING_HISTORY);
+            RestClient queueApiClient = RestClient.builder()
+                    .baseUrl(QUEUE_API_URL)
+                    .defaultHeader(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON_VALUE)
+                    .build();
 
-        jdbcTemplate.query(FIND_ALL_DELTAS, new DeltaRowMapper())
-                .stream()
-                .parallel()
-                .forEach(deltas -> {
-                    try {
-                        if (deltas.javaDelta() != null && deltas.perlDelta() != null) {
-                            postDeltaToQueueApi(deltas, queueApiClient);
+            jdbcTemplate.query(FIND_ALL_DELTAS, new DeltaRowMapper())
+                    .stream()
+                    .parallel()
+                    .forEach(deltas -> {
+                        try {
+                            if (deltas.javaDelta() != null && deltas.perlDelta() != null) {
+                                postDeltaToQueueApi(deltas, queueApiClient);
 
-                            DocumentContext documentContext = JsonPath.parse(deltas.javaDelta());
-                            String entityId = documentContext.read("$.filing_history[0].entity_id");
-                            String formType = documentContext.read("$.filing_history[0].form_type");
-                            Document filingHistoryDocument = findFilingHistoryById(filingHistoryCollection, entityId);
-                            String putRequest = transformToPutRequest(filingHistoryDocument, documentContext);
+                                DocumentContext documentContext = JsonPath.parse(deltas.javaDelta());
+                                String entityId = documentContext.read("$.filing_history[0].entity_id");
+                                String formType = documentContext.read("$.filing_history[0].form_type");
+                                Document filingHistoryDocument = findFilingHistoryById(filingHistoryCollection,
+                                        entityId);
+                                String putRequest = transformToPutRequest(filingHistoryDocument, documentContext);
 
-                            saveFiles(deltas.javaDelta(), putRequest, entityId, formType,
-                                    getCategory(filingHistoryDocument));
-                        } else {
-                            logger.warn("Failed to process delta {}", deltas);
+                                saveFiles(deltas.javaDelta(), putRequest, entityId, formType,
+                                        getCategory(filingHistoryDocument));
+                            } else {
+                                logger.warn("No delta JSON found for transaction {}", deltas.transactionId());
+                            }
+                        } catch (RuntimeException e) {
+                            logger.error("Processing failed for delta: {}", deltas);
                         }
-                    } catch (RuntimeException e) {
-                        logger.error("Processing failed for delta: {}", deltas);
-                    }
-                });
-        logger.info("Done");
-        System.exit(0);
+                    });
+            logger.info("Done");
+        } catch (SQLException e) {
+            logger.error("Failed accessing the CHIPS database", e);
+            throw new RuntimeException(e);
+        }
     }
 
-    private static void postDeltaToQueueApi(Deltas deltas, RestClient queueApiClient) {
+    private void postDeltaToQueueApi(Deltas deltas, RestClient queueApiClient) {
         queueApiClient.post()
                 .header("x-request-id", UUID.randomUUID().toString())
                 .body(deltas.perlDelta())
@@ -201,8 +209,9 @@ public class IntegrationTestGenerator implements CommandLineRunner {
     }
 
     List<?> formatDatesInArray(ArrayList<?> arrayNode) {
-        Document content = (Document) arrayNode.getFirst();
-        formatDates(content);
+        if (arrayNode.getFirst() instanceof Document document) {
+            formatDates(document);
+        }
         return arrayNode;
     }
 
@@ -231,11 +240,12 @@ public class IntegrationTestGenerator implements CommandLineRunner {
                 : Base64.encodeBase64URLSafeString((trim(entityId) + "salt").getBytes(StandardCharsets.UTF_8));
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private void saveFiles(String javaDelta, String putRequest, String entityId, String formType, String category) {
-        File targetFolder = new File(
-                "target/generated-test-sources/%s/%s/%s".formatted(category, formType, entityId));
+        formType = formType.replaceAll("/", "");
+        File targetFolder = new File("target/generated-test-sources/%s/%s/%s".formatted(category, formType, entityId));
+        new File(targetFolder, "%s_request_body.json".formatted(formType));
         targetFolder.mkdirs(); // nosonar
-
         try (
                 FileWriter deltaWriter = new FileWriter(
                         new File(targetFolder, "%s_delta.json".formatted(formType)));
@@ -254,15 +264,14 @@ public class IntegrationTestGenerator implements CommandLineRunner {
         }
     }
 
-    private static Document findFilingHistoryById(MongoCollection<Document> filingHistoryCollection, String entityId) {
-        Document doc;
+    private Document findFilingHistoryById(MongoCollection<Document> filingHistoryCollection, String entityId) {
         for (int count = 0; count < 500; count++) {
             try {
                 Thread.sleep(10); // nosonar
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            doc = filingHistoryCollection.find(eq("_entity_id", entityId)).first();
+            Document doc = filingHistoryCollection.find(eq("_entity_id", entityId)).first();
             if (doc != null) {
                 return doc;
             }
