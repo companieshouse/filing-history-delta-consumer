@@ -16,6 +16,7 @@ import static uk.gov.companieshouse.filinghistory.consumer.kafka.KafkaUtils.RETR
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
@@ -30,6 +31,7 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -108,17 +110,34 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
 ////            "mortgage/LLMR03", // Failing due to missing description value or invalid rule on line 4295
             "mortgage/466(Scot)"
     })
-    void shouldConsumeFilingHistoryDeltaTopicAndProcessDelta(final String prefix) throws Exception {
-        // given
+    void shouldConsumeFilingHistoryDeltaTopicAndProcessDeltaFromCSV(final String prefix) throws Exception {
         final String delta = IOUtils.resourceToString("/data/%s_delta.json".formatted(prefix), StandardCharsets.UTF_8);
+        final String expectedRequestBody = IOUtils.resourceToString("/data/%s_request_body.json".formatted(prefix),
+                StandardCharsets.UTF_8);
+        doShouldConsumeFilingHistoryDeltaTopicAndProcessDelta(delta, expectedRequestBody);
+    }
 
+    @ParameterizedTest
+    @CsvFileSource(files = {"target/generated-test-sources/data/integration-test-data.csv"})
+    void shouldConsumeFilingHistoryDeltaTopicAndProcessDeltaFromCSVFile(final String prefix) throws Exception {
+        FileInputStream deltaInputStream = new FileInputStream(
+                "target/generated-test-sources/data/%s_delta.json".formatted(prefix));
+        String delta = IOUtils.toString(deltaInputStream, StandardCharsets.UTF_8);
+
+        FileInputStream requestBodyInputStream = new FileInputStream(
+                "target/generated-test-sources/data/%s_request_body.json".formatted(prefix));
+        final String expectedRequestBody = IOUtils.toString(requestBodyInputStream, StandardCharsets.UTF_8);
+        doShouldConsumeFilingHistoryDeltaTopicAndProcessDelta(delta, expectedRequestBody);
+    }
+
+    private void doShouldConsumeFilingHistoryDeltaTopicAndProcessDelta(final String delta,
+            final String expectedRequestBody) throws Exception {
+        // given
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         Encoder encoder = EncoderFactory.get().directBinaryEncoder(outputStream, null);
         DatumWriter<ChsDelta> writer = new ReflectDatumWriter<>(ChsDelta.class);
         writer.write(new ChsDelta(delta, 0, "context_id", false), encoder);
 
-        final String expectedRequestBody = IOUtils.resourceToString("/data/%s_request_body.json".formatted(prefix),
-                StandardCharsets.UTF_8);
         InternalFilingHistoryApi request = objectMapper.readValue(expectedRequestBody, InternalFilingHistoryApi.class);
 
         final String expectedRequestUri = "/filing-history-data-api/company/%s/filing-history/%s/internal".formatted(

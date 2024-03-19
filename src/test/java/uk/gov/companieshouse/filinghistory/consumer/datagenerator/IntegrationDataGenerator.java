@@ -14,13 +14,13 @@ import com.mongodb.ServerApiVersion;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
+import jakarta.annotation.Nonnull;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -41,6 +41,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.util.FileSystemUtils;
 import org.springframework.web.client.RestClient;
 
 public class IntegrationDataGenerator implements Runnable {
@@ -51,6 +52,10 @@ public class IntegrationDataGenerator implements Runnable {
     private static final String MONGO_CONNECTION = "mongodb://localhost:27017/?retryWrites=false&loadBalanced=false&serverSelectionTimeoutMS=5000&connectTimeoutMS=10000";
     private static final String QUEUE_API_URL = "http://localhost:18201/queue/delta/filing-history";
     private static final String COMPANY_FILING_HISTORY = "company_filing_history";
+    private static final String PROJECT_ROOT = System.getenv()
+            .getOrDefault("PROJECT_ROOT", "../filing-history-delta-consumer");
+    private static final String TEST_DATA_CSV = "integration-test-data.csv";
+
     private static final String FIND_ALL_DELTAS = """
             SELECT
                 transaction_id,
@@ -103,6 +108,8 @@ public class IntegrationDataGenerator implements Runnable {
                     .defaultHeader(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON_VALUE)
                     .build();
 
+            FileSystemUtils.deleteRecursively(getDataFolder());
+
             jdbcTemplate.query(FIND_ALL_DELTAS, new DeltaRowMapper())
                     .stream()
                     .parallel()
@@ -150,7 +157,7 @@ public class IntegrationDataGenerator implements Runnable {
         String encodedTransactionId = encodeTransactionId((String) filingHistoryDocument.get("_entity_id"));
 
         Map<String, Object> externalData = new LinkedHashMap<>((Map<String, Object>) filingHistoryDocument.get("data"));
-        externalData.put("transaction_id", filingHistoryDocument.get("_id"));
+        externalData.put("transaction_id", encodedTransactionId);
         externalData.put("barcode", filingHistoryDocument.get("_barcode"));
         externalData.remove("pages");
 
@@ -199,7 +206,7 @@ public class IntegrationDataGenerator implements Runnable {
         map.forEach((key, value) -> {
             if (value != null) {
                 switch (value) {
-                    case Date date -> map.replace(key, date.toInstant().truncatedTo(ChronoUnit.DAYS).toString());
+                    case Date date -> map.replace(key, date.toInstant().toString());
                     case Map m -> formatDates(m);
                     case ArrayList array -> map.replace(key, formatDatesInArray(array));
                     default -> {
@@ -244,9 +251,15 @@ public class IntegrationDataGenerator implements Runnable {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private void saveFiles(String javaDelta, String putRequest, String entityId, String formType, String category) {
         formType = formType.replaceAll("/", "");
-        File targetFolder = new File("target/generated-test-sources/%s/%s/%s".formatted(category, formType, entityId));
+
+        File dataFolder = getDataFolder();
+
+        String targetFolderName = "%s/%s/%s".formatted(category, formType, entityId);
+        File targetFolder = new File(dataFolder, targetFolderName);
         targetFolder.mkdirs(); // nosonar
+
         try (
+                FileWriter csvWriter = new FileWriter(new File(dataFolder, TEST_DATA_CSV), true);
                 FileWriter deltaWriter = new FileWriter(
                         new File(targetFolder, "%s_delta.json".formatted(formType)));
                 FileWriter putRequestWriter = new FileWriter(
@@ -259,9 +272,18 @@ public class IntegrationDataGenerator implements Runnable {
 
             deltaWriter.write(prettyJson);
             putRequestWriter.write(putRequest);
+            csvWriter.append(targetFolderName)
+                    .append("/")
+                    .append(formType)
+                    .append("\n");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Nonnull
+    private static File getDataFolder() {
+        return new File("%s/target/generated-test-sources/data".formatted(PROJECT_ROOT));
     }
 
     private Document findFilingHistoryById(MongoCollection<Document> filingHistoryCollection, String entityId) {
