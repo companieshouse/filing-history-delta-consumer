@@ -1,0 +1,25 @@
+{
+  "external_data": {
+    "transaction_id": "MTA0NTYwODY4c2FsdA",
+    "barcode": "SN28JPQN",
+    "category": "insolvency",
+    "date": "2003-11-05T11:59:35Z",
+    "description": "liquidation-administration-notice-of-administration-order-scotland",
+    "links": {
+      "self": "/company/SC005702/filing-history/MTA0NTYwODY4c2FsdA"
+    },
+    "paper_filed": true,
+    "subcategory": "administration",
+    "type": "2.2(Scot)"
+  },
+  "internal_data": {
+    "original_description": "Notice of admin order",
+    "company_number": "SC005702",
+    "document_id": "000SN28JPQN2156",
+    "entity_id": "104560868",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

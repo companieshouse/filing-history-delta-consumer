@@ -1,0 +1,24 @@
+{
+  "external_data": {
+    "transaction_id": "MzA4OTgyMzY3OXNhbHQ",
+    "barcode": "A10D524J",
+    "category": "capital",
+    "date": "2012-01-18T10:26:21Z",
+    "description": "capital-cancellation-treasury-shares",
+    "links": {
+      "self": "/company/SE000030/filing-history/MzA4OTgyMzY3OXNhbHQ"
+    },
+    "paper_filed": true,
+    "type": "SH05"
+  },
+  "internal_data": {
+    "original_description": "Notice of cancellation of treasury shares",
+    "company_number": "SE000030",
+    "document_id": "000A10D524J4716",
+    "entity_id": "3089823679",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

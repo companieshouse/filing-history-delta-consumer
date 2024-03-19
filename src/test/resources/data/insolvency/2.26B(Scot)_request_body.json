@@ -1,0 +1,24 @@
+{
+  "external_data": {
+    "transaction_id": "MTkxNDQ3Nzg5c2FsdA",
+    "category": "insolvency",
+    "date": "2008-01-31T12:00:15Z",
+    "description": "liquidation-in-administration-move-to-dissolution-scotland",
+    "links": {
+      "self": "/company/SC234738/filing-history/MTkxNDQ3Nzg5c2FsdA"
+    },
+    "paper_filed": true,
+    "subcategory": "administration",
+    "type": "2.26B(Scot)"
+  },
+  "internal_data": {
+    "original_description": "Administration to dissolution",
+    "company_number": "SC234738",
+    "document_id": "000S3SENWRB3207",
+    "entity_id": "191447789",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

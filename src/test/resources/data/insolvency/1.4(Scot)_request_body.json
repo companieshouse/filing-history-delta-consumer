@@ -1,0 +1,24 @@
+{
+  "external_data": {
+    "transaction_id": "MTAwNDQ5NTU1c2FsdA",
+    "category": "insolvency",
+    "date": "2002-03-20T11:59:53Z",
+    "description": "liquidation-voluntary-arrangement-notice-completion-scotland",
+    "links": {
+      "self": "/company/SC107346/filing-history/MTAwNDQ5NTU1c2FsdA"
+    },
+    "paper_filed": true,
+    "subcategory": "voluntary-arrangement",
+    "type": "1.4(Scot)"
+  },
+  "internal_data": {
+    "original_description": "Completion of vol arr",
+    "company_number": "SC107346",
+    "document_id": "000SW5OY99X1747",
+    "entity_id": "100449555",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

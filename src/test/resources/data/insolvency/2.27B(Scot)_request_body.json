@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzA0Njk0MDM5M3NhbHQ",
+    "barcode" : "SQ42NZ4E",
+    "category" : "insolvency",
+    "date" : "2011-11-10T10:00:41Z",
+    "description" : "liquidation-in-administration-date-of-dissolution-scotland",
+    "links" : {
+      "self" : "/company/SC186224/filing-history/MzA0Njk0MDM5M3NhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "administration",
+    "type" : "2.27B(Scot)"
+  },
+  "internal_data": {
+    "original_description" : "Notice to registrar of companies in respect of date of dissolution",
+    "company_number" : "SC186224",
+    "document_id" : "000SQ42NZ4E4639",
+    "entity_id" : "3046940393",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

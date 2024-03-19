@@ -69,6 +69,7 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
 
             "capital/SH03",
             "capital/SH07",
+              "capital/SH01", "capital/SH02_rule_2", "capital/SH04_rule_4", "capital/SH05",
 
             "accounts/AA_rule_17",
 
@@ -93,7 +94,11 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
             "insolvency/2.20B(Scot)_rule_2", "insolvency/2.19B(Scot)", "insolvency/2.21B(Scot)",
             "insolvency/2.22B(Scot)", "insolvency/2.23B(Scot)", "insolvency/AM21(Scot)", "insolvency/2.24B(Scot)",
             "insolvency/AM25(Scot)", "insolvency/2.25B(Scot)", "insolvency/AM22(Scot)",
-
+            "insolvency/2.26B(Scot)",
+            "insolvency/1(Scot)", "insolvency/1.3(Scot)_rule_1","insolvency/1.3(Scot)_rule_2",
+            "insolvency/1.4(Scot)", "insolvency/2.2(Scot)", "insolvency/2.12(Scot)", "insolvency/2.26B(Scot)",
+            "insolvency/2.27B(Scot)", "insolvency/2.29B(Scot)", "insolvency/2.30B(Scot)", "insolvency/12.1",
+            "insolvency/AM15(Scot)", "insolvency/AM23(Scot)", "insolvency/NCOP", "insolvency/RM01(Scot)",
 
             "mortgage/MR01_rule_4", "mortgage/MR01_rule_5", "mortgage/MR02_rule_3", "mortgage/MR02_rule_4", "mortgage/MR03_rule_4",
             "mortgage/MR04_rule_1", "mortgage/MR04_rule_2", "mortgage/MR04_rule_3", "mortgage/MR05_rule_1",

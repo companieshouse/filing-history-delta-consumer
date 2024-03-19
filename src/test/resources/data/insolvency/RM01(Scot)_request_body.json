@@ -1,0 +1,25 @@
+{
+  "external_data": {
+    "transaction_id": "MzI0MDM1Mzk0NHNhbHQ",
+    "barcode": "S8AJTYBM",
+    "category": "insolvency",
+    "date": "2019-07-26T16:30:45Z",
+    "description": "liquidation-receiver-appointment-of-receiver-scotland-2",
+    "links": {
+      "self": "/company/SC164168/filing-history/MzI0MDM1Mzk0NHNhbHQ"
+    },
+    "paper_filed": true,
+    "subcategory": "receiver",
+    "type": "RM01(Scot)"
+  },
+  "internal_data": {
+    "original_description": "Notice of appointment by court of administrative receiver, receiver or manager:liq. Case no.2:ip no.00009708,00014412",
+    "company_number": "SC164168",
+    "document_id": "000S8AJTYBM7447",
+    "entity_id": "3240353944",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

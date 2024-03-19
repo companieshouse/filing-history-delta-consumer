@@ -1,0 +1,23 @@
+{
+  "external_data": {
+    "transaction_id": "MTA0MTAyNDA5c2FsdA",
+    "category": "insolvency",
+    "date": "1992-01-07T11:59:46Z",
+    "description": "liquidation-receiver-appointment-of-receiver-scotland",
+    "links": {
+      "self": "/company/SC130212/filing-history/MTA0MTAyNDA5c2FsdA"
+    },
+    "paper_filed": true,
+    "subcategory": "receiver",
+    "type": "1(Scot)"
+  },
+  "internal_data": {
+    "original_description": "App of receiver *****",
+    "company_number": "SC130212",
+    "entity_id": "104102409",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

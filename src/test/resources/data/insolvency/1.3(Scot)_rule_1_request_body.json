@@ -1,0 +1,29 @@
+{
+  "external_data": {
+    "transaction_id": "MjAwMjk3NTY1NHNhbHQ",
+    "barcode": "S0OQHYM7",
+    "action_date": "2009-03-16T00:00:00Z",
+    "category": "insolvency",
+    "date": "2008-04-09T14:44:38Z",
+    "description": "liquidation-voluntary-supervisors-abstracts-of-receipts-payments-scotland-with-brought-down-date",
+    "description_values": {
+      "brought_down_date": "2009-03-16T00:00:00Z"
+    },
+    "links": {
+      "self": "/company/SC005702/filing-history/MjAwMjk3NTY1NHNhbHQ"
+    },
+    "paper_filed": true,
+    "subcategory": "voluntary-arrangement",
+    "type": "1.3(Scot)"
+  },
+  "internal_data": {
+    "original_description": "Notice of voluntary arrangement supervisor's abstract of receipts and payments:brought down date 16/03/2009",
+    "company_number": "SC005702",
+    "document_id": "000S0OQHYM73255",
+    "entity_id": "2002975654",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

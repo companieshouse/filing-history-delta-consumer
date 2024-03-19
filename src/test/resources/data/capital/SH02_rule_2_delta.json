@@ -1,0 +1,21 @@
+{
+  "filing_history": [
+    {
+      "category": "8",
+      "receive_date": "20110707090510",
+      "form_type": "SH02",
+      "description": "Consolidation 28/06/11 ",
+      "barcode": "L6242VGA",
+      "document_id": "000L6242VGA4514",
+      "company_number": "07089365",
+      "entity_id": "3040056535",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "description_values": {
+        "action": "CONSOLIDATION"
+      },
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

@@ -1,0 +1,35 @@
+{
+  "external_data": {
+    "transaction_id": "MzA0MDA3OTUyMnNhbHQ",
+    "action_date": "2011-05-27T00:00:00Z",
+    "barcode": "AWUJFVLE",
+    "category": "capital",
+    "date": "2011-07-07T00:00:00Z",
+    "description": "capital-sale-or-transfer-treasury-shares-with-date-currency-capital-figure",
+    "description_values": {
+      "date": "2011-05-27T00:00:00Z",
+      "capital": [
+        {
+          "currency": "USD",
+          "figure": "10,483,569.23445",
+          "date": "2011-05-27T00:00:00Z"
+        }
+      ]
+    },
+    "links": {
+      "self": "/company/03564138/filing-history/MzA0MDA3OTUyMnNhbHQ"
+    },
+    "paper_filed": true,
+    "type": "SH04"
+  },
+  "internal_data": {
+    "original_description": "27/05/11 Treasury Capital usd 10483569.23445",
+    "company_number": "03564138",
+    "document_id": "000AWUJFVLE4514",
+    "entity_id": "3040079522",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

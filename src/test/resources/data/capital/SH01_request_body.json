@@ -1,0 +1,34 @@
+{
+  "external_data": {
+    "transaction_id": "MzA0MDA1Mjc4NXNhbHQ",
+    "barcode": "AYAHXVG7",
+    "action_date": "2011-02-24T00:00:00Z",
+    "category": "capital",
+    "date": "2011-07-07T07:12:33Z",
+    "description": "capital-allotment-shares",
+    "description_values": {
+      "capital": [
+        {
+          "currency": "GBP",
+          "figure": "200"
+        }
+      ],
+      "date": "2011-02-24T00:00:00Z"
+    },
+    "links": {
+      "self": "/company/07541391/filing-history/MzA0MDA1Mjc4NXNhbHQ"
+    },
+    "paper_filed": true,
+    "type": "SH01"
+  },
+  "internal_data": {
+    "original_description": "24/02/11 Statement of Capital gbp 200",
+    "company_number": "07541391",
+    "document_id": "000AYAHXVG74513",
+    "entity_id": "3040052785",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "9",
+      "receive_date": "20120118102621",
+      "form_type": "SH05",
+      "description": "NOTICE OF CANCELLATION OF TREASURY SHARES",
+      "barcode": "A10D524J",
+      "document_id": "000A10D524J4716",
+      "company_number": "SE000030",
+      "entity_id": "3089823679",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

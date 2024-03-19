@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "9",
+      "receive_date": "20080131120015",
+      "form_type": "2.26B(Scot)",
+      "description": "ADMINISTRATION TO DISSOLUTION",
+      "barcode": "",
+      "document_id": "000S3SENWRB3207",
+      "company_number": "SC234738",
+      "entity_id": "191447789",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}
