@@ -1,10 +1,9 @@
-package uk.gov.companieshouse.filinghistory.consumer.datagenerator;
+package uk.gov.companieshouse.filinghistory.consumer.kafka;
 
 import static com.mongodb.client.model.Filters.eq;
 import static org.apache.commons.lang3.StringUtils.trim;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 import com.mongodb.ConnectionString;
@@ -14,10 +13,6 @@ import com.mongodb.ServerApiVersion;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
-import jakarta.annotation.Nonnull;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,7 +21,10 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.stream.Stream;
 import javax.sql.DataSource;
 import oracle.jdbc.pool.OracleDataSource;
 import org.apache.commons.codec.binary.Base64;
@@ -35,16 +33,18 @@ import org.apache.http.HttpStatus;
 import org.bson.Document;
 import org.bson.json.JsonMode;
 import org.bson.json.JsonWriterSettings;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.util.FileSystemUtils;
 import org.springframework.web.client.RestClient;
 
-public class IntegrationDataGenerator implements Runnable {
+public class IntegrationDataGenerator implements ArgumentsProvider {
 
     private static final Logger logger = LoggerFactory.getLogger(IntegrationDataGenerator.class);
     private static final String KERMIT_CONNECTION = "jdbc:oracle:thin:KERMITUNIX2/%s@//chd-chipsdb:1521/chipsdev"
@@ -52,9 +52,6 @@ public class IntegrationDataGenerator implements Runnable {
     private static final String MONGO_CONNECTION = "mongodb://localhost:27017/?retryWrites=false&loadBalanced=false&serverSelectionTimeoutMS=5000&connectTimeoutMS=10000";
     private static final String QUEUE_API_URL = "http://localhost:18201/queue/delta/filing-history";
     private static final String COMPANY_FILING_HISTORY = "company_filing_history";
-    private static final String PROJECT_ROOT = System.getenv()
-            .getOrDefault("PROJECT_ROOT", "../filing-history-delta-consumer");
-    private static final String TEST_DATA_CSV = "integration-test-data.csv";
 
     private static final String FIND_ALL_DELTAS = """
             SELECT
@@ -75,8 +72,6 @@ public class IntegrationDataGenerator implements Runnable {
                 capdevjco2.fh_deltas
             """;
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
     record Deltas(String transactionId, String javaDelta, String perlDelta) {
 
     }
@@ -92,12 +87,9 @@ public class IntegrationDataGenerator implements Runnable {
         }
     }
 
-    public static void main(String[] args) {
-        new IntegrationDataGenerator().run();
-    }
-
     @Override
-    public void run() {
+    public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
+
         try {
             JdbcTemplate jdbcTemplate = new JdbcTemplate(chipsSource());
             MongoClient mongoClient = mongoClient();
@@ -108,8 +100,7 @@ public class IntegrationDataGenerator implements Runnable {
                     .defaultHeader(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON_VALUE)
                     .build();
 
-            FileSystemUtils.deleteRecursively(getDataFolder());
-
+            Queue<Arguments> queue = new ConcurrentLinkedQueue<>();
             jdbcTemplate.query(FIND_ALL_DELTAS, new DeltaRowMapper())
                     .stream()
                     .parallel()
@@ -125,8 +116,9 @@ public class IntegrationDataGenerator implements Runnable {
                                         entityId);
                                 String putRequest = transformToPutRequest(filingHistoryDocument, documentContext);
 
-                                saveFiles(deltas.javaDelta(), putRequest, entityId, formType,
-                                        getCategory(filingHistoryDocument));
+                                queue.add(Arguments.of(getCategory(filingHistoryDocument), formType, entityId,
+                                        deltas.javaDelta(), putRequest));
+
                             } else {
                                 logger.warn("No delta JSON found for transaction {}", deltas.transactionId());
                             }
@@ -135,6 +127,7 @@ public class IntegrationDataGenerator implements Runnable {
                         }
                     });
             logger.info("Done");
+            return queue.stream();
         } catch (SQLException e) {
             logger.error("Failed accessing the CHIPS database", e);
             throw new RuntimeException(e);
@@ -246,44 +239,6 @@ public class IntegrationDataGenerator implements Runnable {
     private String encodeTransactionId(String entityId) {
         return StringUtils.isBlank(entityId) ? entityId
                 : Base64.encodeBase64URLSafeString((trim(entityId) + "salt").getBytes(StandardCharsets.UTF_8));
-    }
-
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    private void saveFiles(String javaDelta, String putRequest, String entityId, String formType, String category) {
-        formType = formType.replaceAll("/", "");
-
-        File dataFolder = getDataFolder();
-
-        String targetFolderName = "%s/%s/%s".formatted(category, formType, entityId);
-        File targetFolder = new File(dataFolder, targetFolderName);
-        targetFolder.mkdirs(); // nosonar
-
-        try (
-                FileWriter csvWriter = new FileWriter(new File(dataFolder, TEST_DATA_CSV), true);
-                FileWriter deltaWriter = new FileWriter(
-                        new File(targetFolder, "%s_delta.json".formatted(formType)));
-                FileWriter putRequestWriter = new FileWriter(
-                        new File(targetFolder, "%s_request_body.json".formatted(formType)))
-        ) {
-            Object jsonObject = objectMapper.readValue(javaDelta, Object.class);
-            String prettyJson = objectMapper
-                    .writerWithDefaultPrettyPrinter()
-                    .writeValueAsString(jsonObject);
-
-            deltaWriter.write(prettyJson);
-            putRequestWriter.write(putRequest);
-            csvWriter.append(targetFolderName)
-                    .append("/")
-                    .append(formType)
-                    .append("\n");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Nonnull
-    private static File getDataFolder() {
-        return new File("%s/target/generated-test-sources/data".formatted(PROJECT_ROOT));
     }
 
     private Document findFilingHistoryById(MongoCollection<Document> filingHistoryCollection, String entityId) {
