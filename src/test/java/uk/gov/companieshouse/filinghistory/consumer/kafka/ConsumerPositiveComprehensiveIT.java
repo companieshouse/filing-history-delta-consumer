@@ -30,6 +30,7 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -108,13 +109,13 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
             "insolvency/2.20B(Scot)_rule_2", "insolvency/2.19B(Scot)", "insolvency/2.21B(Scot)",
             "insolvency/2.22B(Scot)", "insolvency/2.23B(Scot)", "insolvency/AM21(Scot)", "insolvency/2.24B(Scot)",
             "insolvency/AM25(Scot)", "insolvency/2.25B(Scot)", "insolvency/AM22(Scot)",
-            "insolvency/2.26B(Scot)",
+"insolvency/2.26B(Scot)",
             "insolvency/1(Scot)", "insolvency/1.3(Scot)_rule_1","insolvency/1.3(Scot)_rule_2",
             "insolvency/1.4(Scot)", "insolvency/2.2(Scot)", "insolvency/2.12(Scot)", "insolvency/2.26B(Scot)",
             "insolvency/2.27B(Scot)", "insolvency/2.29B(Scot)", "insolvency/2.30B(Scot)", "insolvency/12.1",
             "insolvency/AM15(Scot)", "insolvency/AM23(Scot)", "insolvency/NCOP", "insolvency/RM01(Scot)",
-
-            "mortgage/MR01_rule_4", "mortgage/MR01_rule_5", "mortgage/MR02_rule_3", "mortgage/MR02_rule_4", "mortgage/MR03_rule_4",
+            "mortgage/MR01_rule_4", "mortgage/MR01_rule_5", "mortgage/MR02_rule_3", "mortgage/MR02_rule_4",
+            "mortgage/MR03_rule_4",
             "mortgage/MR04_rule_1", "mortgage/MR04_rule_2", "mortgage/MR04_rule_3", "mortgage/MR05_rule_1",
             "mortgage/MR05_rule_2", "mortgage/MR05_rule_3", "mortgage/MR05_rule_4", "mortgage/MR05_rule_5",
             "mortgage/MR05_rule_6", "mortgage/MR05_rule_7", "mortgage/MR06", "mortgage/MR07", "mortgage/MR08",
@@ -122,17 +123,28 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
 //            "mortgage/LLMR03", // Failing due to missing description value or invalid rule on line 4295
             "mortgage/466(Scot)"
     })
-    void shouldConsumeFilingHistoryDeltaTopicAndProcessDelta(final String prefix) throws Exception {
-        // given
+    void shouldConsumeFilingHistoryDeltaTopicAndProcessDeltaFromCSV(final String prefix) throws Exception {
         final String delta = IOUtils.resourceToString("/data/%s_delta.json".formatted(prefix), StandardCharsets.UTF_8);
+        final String expectedRequestBody = IOUtils.resourceToString("/data/%s_request_body.json".formatted(prefix),
+                StandardCharsets.UTF_8);
+        doShouldConsumeFilingHistoryDeltaTopicAndProcessDelta(delta, expectedRequestBody);
+    }
 
+    @ParameterizedTest(name = "[{index}] {0}/{1}/{2}")
+    @ArgumentsSource(IntegrationDataGenerator.class)
+    void shouldConsumeFilingHistoryDeltaTopicAndProcessDeltaFromStream(String category, String formType,
+            String entityId, String delta, String expectedRequestBody) throws Exception {
+        doShouldConsumeFilingHistoryDeltaTopicAndProcessDelta(delta, expectedRequestBody);
+    }
+
+    private void doShouldConsumeFilingHistoryDeltaTopicAndProcessDelta(final String delta,
+            final String expectedRequestBody) throws Exception {
+        // given
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         Encoder encoder = EncoderFactory.get().directBinaryEncoder(outputStream, null);
         DatumWriter<ChsDelta> writer = new ReflectDatumWriter<>(ChsDelta.class);
         writer.write(new ChsDelta(delta, 0, "context_id", false), encoder);
 
-        final String expectedRequestBody = IOUtils.resourceToString("/data/%s_request_body.json".formatted(prefix),
-                StandardCharsets.UTF_8);
         InternalFilingHistoryApi request = objectMapper.readValue(expectedRequestBody, InternalFilingHistoryApi.class);
 
         final String expectedRequestUri = "/filing-history-data-api/company/%s/filing-history/%s/internal".formatted(
