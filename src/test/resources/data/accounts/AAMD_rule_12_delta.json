@@ -1,0 +1,22 @@
+{
+  "filing_history": [
+    {
+      "category": "0",
+      "receive_date": "20140916103317",
+      "form_type": "AAMD",
+      "description": "AMENDED ACCOUNTS OF DORMANT COMPANY MADE UP TO 31/01/14",
+      "barcode": "L3G6G68Z",
+      "document_id": "000L3G6G68Z5673",
+      "company_number": "07124173",
+      "entity_id": "3107491935",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "description_values": {
+        "made_up_date": "31/01/14",
+        "acc_type": "DORMANT"
+      },
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

@@ -1,0 +1,32 @@
+{
+  "external_data": {
+    "transaction_id": "MzA5NTA2NDUyNHNhbHQ",
+    "barcode": "A326PGN4",
+    "action_date" : "2013-08-31T00:00:00Z",
+    "category" : "accounts",
+    "date" : "2014-02-24T13:40:11Z",
+    "description" : "accounts-with-accounts-type-partial-exemption",
+    "description_values" : {
+      "made_up_date" : "2013-08-31T00:00:00Z"
+    },
+    "links" : {
+      "self" : "/company/04887825/filing-history/MzA5NTA2NDUyNHNhbHQ"
+    },
+    "paper_filed" : true,
+    "type" : "AA"
+  },
+  "internal_data": {
+    "company_number" : "04887825",
+    "document_id" : "000A326PGN45472",
+    "entity_id" : "3095064524",
+    "original_description" : "31/08/13 partial exemption",
+    "original_values" : {
+      "made_up_date" : "31/08/13",
+      "acc_type" : "PARTIAL EXEMPTION"
+    },
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "parent_entity_id": "",
+    "transaction_kind": "top-level"
+  }
+}

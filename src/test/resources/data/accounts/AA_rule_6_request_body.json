@@ -1,0 +1,26 @@
+{
+  "external_data": {
+    "transaction_id": "MDA0NjM0MzIxMnNhbHQ",
+    "action_date" : "1989-03-31T00:00:00Z",
+    "category" : "accounts",
+    "date" : "1989-08-30T11:58:07Z",
+    "description" : "accounts-with-accounts-type-medium-group",
+    "description_values" : {
+      "made_up_date" : "1989-03-31T00:00:00Z"
+    },
+    "links" : {
+      "self" : "/company/SC069500/filing-history/MDA0NjM0MzIxMnNhbHQ"
+    },
+    "paper_filed" : true,
+    "type" : "AA"
+  },
+  "internal_data": {
+    "company_number" : "SC069500",
+    "entity_id" : "0046343212",
+    "original_description" : "Group accounts for medium co. Made up to 31/03/89",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level",
+    "parent_entity_id": ""
+  }
+}

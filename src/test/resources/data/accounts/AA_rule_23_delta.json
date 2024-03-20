@@ -1,0 +1,22 @@
+{
+  "filing_history": [
+    {
+      "category": "0",
+      "receive_date": "20140916140520",
+      "form_type": "AA",
+      "description": "AUDIT EXEMPTION SUBSIDIARY ACCOUNTS MADE UP TO 31/12/13",
+      "barcode": "A3G6GVI2",
+      "document_id": "000A3G6GVI25675",
+      "company_number": "02466594",
+      "entity_id": "3107585267",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "description_values": {
+        "made_up_date": "31/12/13",
+        "acc_type": "AUDIT EXEMPTION SUBSIDIARY"
+      },
+      "pre_scanned_batch": "1"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

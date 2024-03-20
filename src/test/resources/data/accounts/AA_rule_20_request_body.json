@@ -1,0 +1,31 @@
+{
+  "external_data": {
+    "transaction_id": "MzEwNzY3NzkwMnNhbHQ",
+    "barcode": "X3GN9J5V",
+    "action_date" : "2013-12-31T00:00:00Z",
+    "category" : "accounts",
+    "date" : "2014-09-17T16:44:29Z",
+    "description" : "accounts-with-accounts-type-total-exemption-small",
+    "description_values" : {
+      "made_up_date" : "2013-12-31T00:00:00Z"
+    },
+    "links" : {
+      "self" : "/company/07873628/filing-history/MzEwNzY3NzkwMnNhbHQ"
+    },
+    "type" : "AA"
+  },
+  "internal_data": {
+    "company_number" : "07873628",
+    "document_id" : "000X3GN9J5V5673",
+    "entity_id" : "3107677902",
+    "original_description" : "31/12/13 total exemption small",
+    "original_values" : {
+      "made_up_date" : "31/12/13",
+      "acc_type" : "TOTAL EXEMPTION SMALL"
+    },
+    "transaction_kind": "top-level",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id"
+  }
+}

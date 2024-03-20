@@ -1,0 +1,31 @@
+{
+  "external_data": {
+    "transaction_id": "MzE0NTM0MTYzNHNhbHQ",
+    "barcode": "X53Y3DIO",
+    "action_date" : "2015-06-30T00:00:00Z",
+    "category" : "accounts",
+    "date" : "2016-03-31T16:05:54Z",
+    "description" : "accounts-with-accounts-type-micro-entity",
+    "description_values" : {
+      "made_up_date" : "2015-06-30T00:00:00Z"
+    },
+    "links" : {
+      "self" : "/company/03590001/filing-history/MzE0NTM0MTYzNHNhbHQ"
+    },
+    "type" : "AA"
+  },
+  "internal_data": {
+    "company_number" : "03590001",
+    "document_id" : "000X53Y3DIO6235",
+    "entity_id" : "3145341634",
+    "original_description" : "Micro company accounts made up to 30/06/15",
+    "original_values" : {
+      "acc_type" : "MICRO ENTITY",
+      "made_up_date" : "30/06/15"
+    },
+    "delta_at": "20211029142043360560",
+    "parent_entity_id": "",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}

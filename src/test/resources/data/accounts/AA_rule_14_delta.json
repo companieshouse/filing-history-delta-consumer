@@ -1,0 +1,22 @@
+{
+  "filing_history": [
+    {
+      "category": "0",
+      "receive_date": "20140224134011",
+      "form_type": "AA",
+      "description": "31/08/13 PARTIAL EXEMPTION",
+      "barcode": "A326PGN4",
+      "document_id": "000A326PGN45472",
+      "company_number": "04887825",
+      "entity_id": "3095064524",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "description_values": {
+        "made_up_date": "31/08/13",
+        "acc_type": "PARTIAL EXEMPTION"
+      },
+      "pre_scanned_batch": "1"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

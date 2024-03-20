@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "0",
+      "receive_date": "19941213115920",
+      "form_type": "AA",
+      "description": "FULL ACCOUNTS MADE UP TO 30/06/94",
+      "barcode": "",
+      "document_id": "",
+      "company_number": "02103960",
+      "entity_id": "0094570158",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "1"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

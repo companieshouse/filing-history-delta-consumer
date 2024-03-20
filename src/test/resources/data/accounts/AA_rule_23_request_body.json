@@ -1,0 +1,32 @@
+{
+  "external_data": {
+    "transaction_id": "MzEwNzU4NTI2N3NhbHQ",
+    "barcode": "A3G6GVI2",
+    "action_date" : "2013-12-31T00:00:00Z",
+    "category" : "accounts",
+    "date" : "2014-09-16T14:05:20Z",
+    "description" : "accounts-with-accounts-type-audit-exemption-subsiduary",
+    "description_values" : {
+      "made_up_date" : "2013-12-31T00:00:00Z"
+    },
+    "links" : {
+      "self" : "/company/02466594/filing-history/MzEwNzU4NTI2N3NhbHQ"
+    },
+    "paper_filed" : true,
+    "type" : "AA"
+  },
+  "internal_data": {
+    "company_number" : "02466594",
+    "document_id" : "000A3G6GVI25675",
+    "entity_id" : "3107585267",
+    "original_description" : "Audit exemption subsidiary accounts made up to 31/12/13",
+    "original_values" : {
+      "made_up_date" : "31/12/13",
+      "acc_type" : "AUDIT EXEMPTION SUBSIDIARY"
+    },
+    "delta_at": "20211029142043360560",
+    "transaction_kind": "top-level",
+    "updated_by": "context_id",
+    "parent_entity_id": ""
+  }
+}
