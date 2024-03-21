@@ -1,0 +1,27 @@
+{
+  "external_data": {
+    "category": "officers",
+    "date": "2016-07-02T11:17:16Z",
+    "description": "directors-register-information-on-withdrawal-from-the-public-register",
+    "description_values": {
+      "date": "2016-07-02T11:17:16Z"
+    },
+    "links": {
+      "self": "/company/09413240/filing-history/MzE1MjE2MTExNnNhbHQ"
+    },
+    "subcategory": "register",
+    "type": "EW01RSS",
+    "transaction_id": "MzE1MjE2MTExNnNhbHQ",
+    "barcode": "X5ADYT43"
+  },
+  "internal_data": {
+    "company_number": "09413240",
+    "document_id": "000X5ADYT436325",
+    "entity_id": "3152161116",
+    "original_description": "Register snapshot for EW01",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560"
+  }
+}
