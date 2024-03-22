@@ -66,6 +66,7 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
 
     @ParameterizedTest
     @CsvSource({
+            "officers/EW01RSS",
             "officers/TM01",
 
             "capital/SH03",
