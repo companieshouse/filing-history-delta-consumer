@@ -19,8 +19,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import uk.gov.companieshouse.api.filinghistory.ExternalData;
-import uk.gov.companieshouse.api.filinghistory.FilingHistoryItemDataDescriptionValues;
-import uk.gov.companieshouse.api.filinghistory.FilingHistoryItemDataLinks;
+import uk.gov.companieshouse.api.filinghistory.DescriptionValues;
+import uk.gov.companieshouse.api.filinghistory.Links;
 import uk.gov.companieshouse.api.filinghistory.InternalData;
 import uk.gov.companieshouse.api.filinghistory.InternalDataOriginalValues;
 import uk.gov.companieshouse.api.filinghistory.InternalFilingHistoryApi;
@@ -62,9 +62,9 @@ class InternalFilingHistoryApiMapperTest {
     @Mock
     private Object subcategory;
     @Mock
-    private FilingHistoryItemDataDescriptionValues filingHistoryItemDataDescriptionValues;
+    private DescriptionValues DescriptionValues;
     @Mock
-    private FilingHistoryItemDataLinks filingHistoryItemDataLinks;
+    private Links Links;
     @Mock
     private InternalDataOriginalValues internalDataOriginalValues;
 
@@ -73,10 +73,10 @@ class InternalFilingHistoryApiMapperTest {
     void shouldMapTransformedJsonNodeToInternalFilingHistoryApiObject() {
         // given
         when(subcategoryMapper.map(any())).thenReturn(subcategory);
-        when(descriptionValuesMapper.map(any())).thenReturn(filingHistoryItemDataDescriptionValues);
+        when(descriptionValuesMapper.map(any())).thenReturn(DescriptionValues);
         when(originalValuesMapper.map(any())).thenReturn(internalDataOriginalValues);
         when(paperFiledMapper.isPaperFiled(any(), any())).thenReturn(false);
-        when(linksMapper.map(any(), any())).thenReturn(filingHistoryItemDataLinks);
+        when(linksMapper.map(any(), any())).thenReturn(Links);
 
         final JsonNode topLevelNode = buildJsonNode(BARCODE, DOCUMENT_ID, COMPANY_NUMBER);
         final JsonNode dataNode = topLevelNode.get("data");
@@ -107,10 +107,10 @@ class InternalFilingHistoryApiMapperTest {
     void shouldHandleNullInputFieldsBySettingNonRequiredFieldsToNullOnInternalFilingHistoryApiObject() {
         // given
         when(subcategoryMapper.map(any())).thenReturn(subcategory);
-        when(descriptionValuesMapper.map(any())).thenReturn(filingHistoryItemDataDescriptionValues);
+        when(descriptionValuesMapper.map(any())).thenReturn(DescriptionValues);
         when(originalValuesMapper.map(any())).thenReturn(internalDataOriginalValues);
         when(paperFiledMapper.isPaperFiled(any(), any())).thenReturn(false);
-        when(linksMapper.map(any(), any())).thenReturn(filingHistoryItemDataLinks);
+        when(linksMapper.map(any(), any())).thenReturn(Links);
 
         final JsonNode topLevelNode = buildJsonNodeWithNoNonRequiredFields();
         final JsonNode dataNode = topLevelNode.get("data");
@@ -126,9 +126,9 @@ class InternalFilingHistoryApiMapperTest {
                         .category(null)
                         .subcategory(subcategory)
                         .description(null)
-                        .descriptionValues(filingHistoryItemDataDescriptionValues)
+                        .descriptionValues(DescriptionValues)
                         .actionDate(null)
-                        .links(filingHistoryItemDataLinks)
+                        .links(Links)
                         .paperFiled(null))
                 .internalData(new InternalData()
                         .transactionKind(TOP_LEVEL)
@@ -164,10 +164,10 @@ class InternalFilingHistoryApiMapperTest {
     void shouldMapTransformedJsonNodeToInternalFilingHistoryApiObjectWhenBarcodeDoesNotStartWithXAndSetPaperFiledToTrue() {
         // given
         when(subcategoryMapper.map(any())).thenReturn(subcategory);
-        when(descriptionValuesMapper.map(any())).thenReturn(filingHistoryItemDataDescriptionValues);
+        when(descriptionValuesMapper.map(any())).thenReturn(DescriptionValues);
         when(originalValuesMapper.map(any())).thenReturn(internalDataOriginalValues);
         when(paperFiledMapper.isPaperFiled(any(), any())).thenReturn(true);
-        when(linksMapper.map(any(), any())).thenReturn(filingHistoryItemDataLinks);
+        when(linksMapper.map(any(), any())).thenReturn(Links);
 
         final JsonNode topLevelNode = buildJsonNode("TAITVXAX", "000TAITVXAX4682", COMPANY_NUMBER);
         final JsonNode dataNode = topLevelNode.get("data");
@@ -204,10 +204,10 @@ class InternalFilingHistoryApiMapperTest {
             final String documentId, final Boolean isPaperFiled) {
         // given
         when(subcategoryMapper.map(any())).thenReturn(subcategory);
-        when(descriptionValuesMapper.map(any())).thenReturn(filingHistoryItemDataDescriptionValues);
+        when(descriptionValuesMapper.map(any())).thenReturn(DescriptionValues);
         when(originalValuesMapper.map(any())).thenReturn(internalDataOriginalValues);
         when(paperFiledMapper.isPaperFiled(any(), any())).thenReturn(isPaperFiled);
-        when(linksMapper.map(any(), any())).thenReturn(filingHistoryItemDataLinks);
+        when(linksMapper.map(any(), any())).thenReturn(Links);
 
         final JsonNode topLevelNode = buildJsonNode("", documentId, COMPANY_NUMBER);
         final JsonNode dataNode = topLevelNode.get("data");
@@ -246,7 +246,7 @@ class InternalFilingHistoryApiMapperTest {
             final String transactionId) {
         // given
         when(subcategoryMapper.map(any())).thenReturn(subcategory);
-        when(descriptionValuesMapper.map(any())).thenReturn(filingHistoryItemDataDescriptionValues);
+        when(descriptionValuesMapper.map(any())).thenReturn(DescriptionValues);
         when(paperFiledMapper.isPaperFiled(any(), any())).thenReturn(false);
         when(linksMapper.map(any(), any())).thenThrow(IllegalArgumentException.class);
 
@@ -278,7 +278,7 @@ class InternalFilingHistoryApiMapperTest {
     void shouldMapTransformedJsonNodeToInternalFilingHistoryApiObjectWithNullFieldsWhenJsonNodeObjectsAreNull() {
         // given
         when(paperFiledMapper.isPaperFiled(any(), any())).thenReturn(true);
-        when(linksMapper.map(any(), any())).thenReturn(filingHistoryItemDataLinks);
+        when(linksMapper.map(any(), any())).thenReturn(Links);
 
         final InternalFilingHistoryApi expectedRequestBody = new InternalFilingHistoryApi()
                 .externalData(new ExternalData()
@@ -291,7 +291,7 @@ class InternalFilingHistoryApiMapperTest {
                         .description(null)
                         .descriptionValues(null)
                         .actionDate(null)
-                        .links(filingHistoryItemDataLinks)
+                        .links(Links)
                         .paperFiled(true))
                 .internalData(new InternalData()
                         .transactionKind(TOP_LEVEL)
@@ -373,9 +373,9 @@ class InternalFilingHistoryApiMapperTest {
                         .category(ExternalData.CategoryEnum.OFFICERS)
                         .subcategory(subcategory)
                         .description(DESCRIPTION)
-                        .descriptionValues(filingHistoryItemDataDescriptionValues)
+                        .descriptionValues(DescriptionValues)
                         .actionDate(DATE)
-                        .links(filingHistoryItemDataLinks)
+                        .links(Links)
                         .paperFiled(isPaperFiled))
                 .internalData(new InternalData()
                         .transactionKind(TOP_LEVEL)
