@@ -27,10 +27,22 @@ public class TransactionKindService {
     public TransactionKindResult encodeIdByTransactionKind(TransactionKindCriteria transactionKindCriteria) {
         final String encodedId = encodeTransactionId(transactionKindCriteria.entityId());
         LOGGER.debug("Transaction Kind: [%s]".formatted(transactionKindCriteria.formType()), DataMapHolder.getLogMap());
+
+        /*
+            TODO: This is where we need to implement encode_document_id_by_formtype in Transform.pm - we can also use
+             this to determine what pre-transform logic to do.
+         */
+        // TEMP
+        if (StringUtils.isNotBlank(transactionKindCriteria.parentEntityId())) {
+            return new TransactionKindResult(encodedId, TransactionKindEnum.ANNOTATION);
+        }
+
         return new TransactionKindResult(encodedId, TransactionKindEnum.TOP_LEVEL);
     }
 
     public String encodeTransactionId(String id) {
+        // TODO: Implement logic to encode depending on type?
+
         String encodedId = StringUtils.isBlank(id) ? id
                 : Base64.encodeBase64URLSafeString((trim(id) + transactionIdSalt).getBytes(StandardCharsets.UTF_8));
         DataMapHolder.get().transactionId(encodedId);

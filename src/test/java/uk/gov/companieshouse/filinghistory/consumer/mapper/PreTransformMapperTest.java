@@ -28,10 +28,12 @@ class PreTransformMapperTest {
     private PreTransformMapper preTransformMapper;
     @Mock
     private FormatDate formatDate;
+    @Mock
+    private ChildNodeMapperFactory childNodeMapperFactory;
 
     @BeforeEach
     void setUp() {
-        preTransformMapper = new PreTransformMapper(MAPPER, formatDate);
+        preTransformMapper = new PreTransformMapper(MAPPER, formatDate, childNodeMapperFactory);
     }
 
     @Test
