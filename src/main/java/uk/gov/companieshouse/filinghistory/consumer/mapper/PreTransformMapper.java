@@ -2,10 +2,12 @@ package uk.gov.companieshouse.filinghistory.consumer.mapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import uk.gov.companieshouse.api.delta.DescriptionValues;
 import uk.gov.companieshouse.api.delta.FilingHistory;
+import uk.gov.companieshouse.api.filinghistory.InternalData;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.FormatDate;
 
 @Component
@@ -13,10 +15,20 @@ public class PreTransformMapper {
 
     private final ObjectMapper objectMapper;
     private final FormatDate formatDate;
+    private final ChildNodeMapperFactory childNodeMapperFactory;
 
-    public PreTransformMapper(ObjectMapper objectMapper, FormatDate formatDate) {
+    public PreTransformMapper(ObjectMapper objectMapper, FormatDate formatDate, ChildNodeMapperFactory childNodeMapperFactory) {
         this.objectMapper = objectMapper;
         this.formatDate = formatDate;
+        this.childNodeMapperFactory = childNodeMapperFactory;
+    }
+
+    public Map<String, ObjectNode> mapChildDeltaToObjectNode(ObjectNode topLevelNode,
+                                                             InternalData.TransactionKindEnum transactionKind,
+                                                             FilingHistory filingHistory) {
+
+        return childNodeMapperFactory.getChildMapper(transactionKind)
+                .mapChildObjectNode(filingHistory);
     }
 
     public ObjectNode mapDeltaToObjectNode(final FilingHistory filingHistory) {

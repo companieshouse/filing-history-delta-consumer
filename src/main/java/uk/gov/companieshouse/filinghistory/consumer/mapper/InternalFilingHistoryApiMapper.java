@@ -6,6 +6,7 @@ import static uk.gov.companieshouse.filinghistory.consumer.mapper.MapperUtils.ge
 import com.fasterxml.jackson.databind.JsonNode;
 import java.util.Optional;
 import java.util.function.Function;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import uk.gov.companieshouse.api.filinghistory.ExternalData;
 import uk.gov.companieshouse.api.filinghistory.ExternalData.CategoryEnum;
@@ -21,15 +22,17 @@ public class InternalFilingHistoryApiMapper {
     private final LinksMapper linksMapper;
     private final OriginalValuesMapper originalValuesMapper;
     private final PaperFiledMapper paperFiledMapper;
+    private final ChildRequestMapperFactory childRequestMapperFactory;
 
     public InternalFilingHistoryApiMapper(SubcategoryMapper subcategoryMapper,
-            DescriptionValuesMapper descriptionValuesMapper, LinksMapper linksMapper,
-            OriginalValuesMapper originalValuesMapper, PaperFiledMapper paperFiledMapper) {
+                                          DescriptionValuesMapper descriptionValuesMapper, LinksMapper linksMapper,
+                                          OriginalValuesMapper originalValuesMapper, PaperFiledMapper paperFiledMapper, ChildRequestMapperFactory childRequestMapperFactory) {
         this.subcategoryMapper = subcategoryMapper;
         this.descriptionValuesMapper = descriptionValuesMapper;
         this.linksMapper = linksMapper;
         this.originalValuesMapper = originalValuesMapper;
         this.paperFiledMapper = paperFiledMapper;
+        this.childRequestMapperFactory = childRequestMapperFactory;
     }
 
     public InternalFilingHistoryApi mapJsonNodeToInternalFilingHistoryApi(
@@ -62,11 +65,6 @@ public class InternalFilingHistoryApiMapper {
         requestObject.getExternalData()
                 .type(getFieldValueFromJsonNode(dataNode, "type"))
                 .date(getFieldValueFromJsonNode(dataNode, "date"))
-                // TODO: For the example in annotation_delta.json, the category field is set to "9" which doesn't match any category enum values
-                /*
-                * The issue here is that the transform rules match on type rather than data.type. In the pre-transform,
-                * the type is set to the data.type field. Needs further investigation.
-                */
                 .category(getEnumFromCategory(dataNode, CategoryEnum::fromValue))
                 .subcategory(subcategoryMapper.map(dataNode))
                 .description(getFieldValueFromJsonNode(dataNode, "description"))
@@ -77,6 +75,17 @@ public class InternalFilingHistoryApiMapper {
                         descriptionValuesMapper.map(getNestedJsonNodeFromJsonNode(dataNode, "description_values")))
                 .paperFiled(paperFiledMapper.isPaperFiled(barcode, documentId) ? true : null)
                 .links(linksMapper.map(companyNumber, encodedId));
+
+        /*
+            TODO: Map to child array and object
+         */
+        if (StringUtils.isNotBlank(requestObject.getInternalData().getParentEntityId())) {
+            requestObject = childRequestMapperFactory
+                    .getChildRequestMapper(dataNode
+                            .get("type")
+                            .textValue())
+                    .map(dataNode);
+        }
 
         return requestObject;
     }
