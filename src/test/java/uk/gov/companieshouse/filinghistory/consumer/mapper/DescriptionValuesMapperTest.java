@@ -18,7 +18,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import uk.gov.companieshouse.api.filinghistory.AltCapitalDescriptionValue;
 import uk.gov.companieshouse.api.filinghistory.CapitalDescriptionValue;
-import uk.gov.companieshouse.api.filinghistory.FilingHistoryItemDataDescriptionValues;
+import uk.gov.companieshouse.api.filinghistory.DescriptionValues;
 import uk.gov.companieshouse.filinghistory.consumer.serdes.ArrayNodeDeserialiser;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.TransformerTestingUtils;
 
@@ -49,7 +49,7 @@ class DescriptionValuesMapperTest {
     }
 
     @Test
-    void shouldMapFilingHistoryItemDataDescriptionValuesObject() {
+    void shouldMapDescriptionValuesObject() {
         // given
         final ObjectNode jsonNode = MAPPER.createObjectNode()
                 .putObject("description_values")
@@ -94,7 +94,7 @@ class DescriptionValuesMapperTest {
         jsonNode.putIfAbsent("alt_capital", altCapitalArray);
         jsonNode.putIfAbsent("capital", capitalArray);
 
-        final FilingHistoryItemDataDescriptionValues expected = new FilingHistoryItemDataDescriptionValues()
+        final DescriptionValues expected = new DescriptionValues()
                 .altCapital(List.of(altCapitalDescriptionValue))
                 .appointmentDate("01/01/2010")
                 .branchNumber("50")
@@ -139,7 +139,7 @@ class DescriptionValuesMapperTest {
         when(capitalArrayNodeDeserialiser.deserialise(any())).thenReturn(List.of(capitalDescriptionValue));
 
         // when
-        final FilingHistoryItemDataDescriptionValues actual = descriptionValuesMapper.map(jsonNode);
+        final DescriptionValues actual = descriptionValuesMapper.map(jsonNode);
 
         // then
         assertEquals(expected, actual);
@@ -148,14 +148,14 @@ class DescriptionValuesMapperTest {
     }
 
     @Test
-    void shouldMapFilingHistoryItemDataDescriptionValuesObjectWhenFieldsAreEmpty() {
+    void shouldMapDescriptionValuesObjectWhenFieldsAreEmpty() {
         // given
         final JsonNode jsonNode = MAPPER.createObjectNode();
 
-        final FilingHistoryItemDataDescriptionValues expected = new FilingHistoryItemDataDescriptionValues();
+        final DescriptionValues expected = new DescriptionValues();
 
         // when
-        final FilingHistoryItemDataDescriptionValues actual = descriptionValuesMapper.map(jsonNode);
+        final DescriptionValues actual = descriptionValuesMapper.map(jsonNode);
 
         // then
         assertEquals(expected, actual);
@@ -167,7 +167,7 @@ class DescriptionValuesMapperTest {
         // given
 
         // when
-        final FilingHistoryItemDataDescriptionValues actual = descriptionValuesMapper.map(null);
+        final DescriptionValues actual = descriptionValuesMapper.map(null);
 
         // then
         assertNull(actual);

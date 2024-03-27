@@ -62,6 +62,11 @@ public class InternalFilingHistoryApiMapper {
         requestObject.getExternalData()
                 .type(getFieldValueFromJsonNode(dataNode, "type"))
                 .date(getFieldValueFromJsonNode(dataNode, "date"))
+                // TODO: For the example in annotation_delta.json, the category field is set to "9" which doesn't match any category enum values
+                /*
+                * The issue here is that the transform rules match on type rather than data.type. In the pre-transform,
+                * the type is set to the data.type field. Needs further investigation.
+                */
                 .category(getEnumFromCategory(dataNode, CategoryEnum::fromValue))
                 .subcategory(subcategoryMapper.map(dataNode))
                 .description(getFieldValueFromJsonNode(dataNode, "description"))
