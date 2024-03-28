@@ -4,8 +4,6 @@ import static uk.gov.companieshouse.filinghistory.consumer.mapper.MapperUtils.ge
 import static uk.gov.companieshouse.filinghistory.consumer.mapper.MapperUtils.getNestedJsonNodeFromJsonNode;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import java.util.Optional;
-import java.util.function.Function;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import uk.gov.companieshouse.api.filinghistory.ExternalData;
@@ -18,16 +16,18 @@ import uk.gov.companieshouse.filinghistory.consumer.service.TransactionKindResul
 public class InternalFilingHistoryApiMapper {
 
     private final SubcategoryMapper subcategoryMapper;
+    private final CategoryMapper categoryMapper;
     private final DescriptionValuesMapper descriptionValuesMapper;
     private final LinksMapper linksMapper;
     private final OriginalValuesMapper originalValuesMapper;
     private final PaperFiledMapper paperFiledMapper;
     private final ChildRequestMapperFactory childRequestMapperFactory;
 
-    public InternalFilingHistoryApiMapper(SubcategoryMapper subcategoryMapper,
+    public InternalFilingHistoryApiMapper(SubcategoryMapper subcategoryMapper, CategoryMapper categoryMapper,
                                           DescriptionValuesMapper descriptionValuesMapper, LinksMapper linksMapper,
                                           OriginalValuesMapper originalValuesMapper, PaperFiledMapper paperFiledMapper, ChildRequestMapperFactory childRequestMapperFactory) {
         this.subcategoryMapper = subcategoryMapper;
+        this.categoryMapper = categoryMapper;
         this.descriptionValuesMapper = descriptionValuesMapper;
         this.linksMapper = linksMapper;
         this.originalValuesMapper = originalValuesMapper;
@@ -65,7 +65,7 @@ public class InternalFilingHistoryApiMapper {
         requestObject.getExternalData()
                 .type(getFieldValueFromJsonNode(dataNode, "type"))
                 .date(getFieldValueFromJsonNode(dataNode, "date"))
-                .category(getEnumFromCategory(dataNode, CategoryEnum::fromValue))
+                .category(categoryMapper.map(dataNode, CategoryEnum::fromValue))
                 .subcategory(subcategoryMapper.map(dataNode))
                 .description(getFieldValueFromJsonNode(dataNode, "description"))
                 .actionDate(getFieldValueFromJsonNode(dataNode, "action_date"))
@@ -88,13 +88,5 @@ public class InternalFilingHistoryApiMapper {
         }
 
         return requestObject;
-    }
-
-    private static <T extends Enum<?>> T getEnumFromCategory(final JsonNode node, Function<String, T> fromValue) {
-        return Optional.ofNullable(node)
-                .map(n -> n.get("category"))
-                .map(JsonNode::textValue)
-                .map(fromValue)
-                .orElse(null);
     }
 }

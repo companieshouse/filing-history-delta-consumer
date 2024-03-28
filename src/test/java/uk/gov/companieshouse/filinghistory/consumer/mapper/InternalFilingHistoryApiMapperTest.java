@@ -20,6 +20,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import uk.gov.companieshouse.api.filinghistory.ExternalData;
 import uk.gov.companieshouse.api.filinghistory.DescriptionValues;
+import uk.gov.companieshouse.api.filinghistory.ExternalData.CategoryEnum;
 import uk.gov.companieshouse.api.filinghistory.Links;
 import uk.gov.companieshouse.api.filinghistory.InternalData;
 import uk.gov.companieshouse.api.filinghistory.InternalDataOriginalValues;
@@ -51,6 +52,8 @@ class InternalFilingHistoryApiMapperTest {
     @Mock
     private SubcategoryMapper subcategoryMapper;
     @Mock
+    private CategoryMapper categoryMapper;
+    @Mock
     private DescriptionValuesMapper descriptionValuesMapper;
     @Mock
     private LinksMapper linksMapper;
@@ -73,6 +76,7 @@ class InternalFilingHistoryApiMapperTest {
     void shouldMapTransformedJsonNodeToInternalFilingHistoryApiObject() {
         // given
         when(subcategoryMapper.map(any())).thenReturn(subcategory);
+        when(categoryMapper.map(any(), any())).thenReturn(CategoryEnum.OFFICERS);
         when(descriptionValuesMapper.map(any())).thenReturn(DescriptionValues);
         when(originalValuesMapper.map(any())).thenReturn(internalDataOriginalValues);
         when(paperFiledMapper.isPaperFiled(any(), any())).thenReturn(false);
@@ -107,6 +111,7 @@ class InternalFilingHistoryApiMapperTest {
     void shouldHandleNullInputFieldsBySettingNonRequiredFieldsToNullOnInternalFilingHistoryApiObject() {
         // given
         when(subcategoryMapper.map(any())).thenReturn(subcategory);
+        when(categoryMapper.map(any(), any())).thenReturn(null);
         when(descriptionValuesMapper.map(any())).thenReturn(DescriptionValues);
         when(originalValuesMapper.map(any())).thenReturn(internalDataOriginalValues);
         when(paperFiledMapper.isPaperFiled(any(), any())).thenReturn(false);
@@ -164,6 +169,7 @@ class InternalFilingHistoryApiMapperTest {
     void shouldMapTransformedJsonNodeToInternalFilingHistoryApiObjectWhenBarcodeDoesNotStartWithXAndSetPaperFiledToTrue() {
         // given
         when(subcategoryMapper.map(any())).thenReturn(subcategory);
+        when(categoryMapper.map(any(), any())).thenReturn(CategoryEnum.OFFICERS);
         when(descriptionValuesMapper.map(any())).thenReturn(DescriptionValues);
         when(originalValuesMapper.map(any())).thenReturn(internalDataOriginalValues);
         when(paperFiledMapper.isPaperFiled(any(), any())).thenReturn(true);
@@ -204,6 +210,7 @@ class InternalFilingHistoryApiMapperTest {
             final String documentId, final Boolean isPaperFiled) {
         // given
         when(subcategoryMapper.map(any())).thenReturn(subcategory);
+        when(categoryMapper.map(any(), any())).thenReturn(CategoryEnum.OFFICERS);
         when(descriptionValuesMapper.map(any())).thenReturn(DescriptionValues);
         when(originalValuesMapper.map(any())).thenReturn(internalDataOriginalValues);
         when(paperFiledMapper.isPaperFiled(any(), any())).thenReturn(isPaperFiled);
@@ -246,6 +253,7 @@ class InternalFilingHistoryApiMapperTest {
             final String transactionId) {
         // given
         when(subcategoryMapper.map(any())).thenReturn(subcategory);
+        when(categoryMapper.map(any(), any())).thenReturn(CategoryEnum.OFFICERS);
         when(descriptionValuesMapper.map(any())).thenReturn(DescriptionValues);
         when(paperFiledMapper.isPaperFiled(any(), any())).thenReturn(false);
         when(linksMapper.map(any(), any())).thenThrow(IllegalArgumentException.class);
@@ -370,7 +378,7 @@ class InternalFilingHistoryApiMapperTest {
                         .barcode(barcode)
                         .type(TYPE)
                         .date(DATE)
-                        .category(ExternalData.CategoryEnum.OFFICERS)
+                        .category(CategoryEnum.OFFICERS)
                         .subcategory(subcategory)
                         .description(DESCRIPTION)
                         .descriptionValues(DescriptionValues)
