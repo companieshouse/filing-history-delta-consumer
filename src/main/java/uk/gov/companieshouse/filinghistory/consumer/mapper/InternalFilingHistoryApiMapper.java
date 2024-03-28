@@ -65,7 +65,7 @@ public class InternalFilingHistoryApiMapper {
         requestObject.getExternalData()
                 .type(getFieldValueFromJsonNode(dataNode, "type"))
                 .date(getFieldValueFromJsonNode(dataNode, "date"))
-                .category(categoryMapper.map(dataNode, CategoryEnum::fromValue))
+                .category(categoryMapper.map(dataNode))
                 .subcategory(subcategoryMapper.map(dataNode))
                 .description(getFieldValueFromJsonNode(dataNode, "description"))
                 .actionDate(getFieldValueFromJsonNode(dataNode, "action_date"))
