@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import uk.gov.companieshouse.api.filinghistory.FilingHistoryItemDataLinks;
+import uk.gov.companieshouse.api.filinghistory.Links;
 
 class LinksMapperTest {
 
@@ -19,11 +19,11 @@ class LinksMapperTest {
     @Test
     void shouldMapSelfLinkToFilingHistoryItemDataLinksObject() {
         // given
-        final FilingHistoryItemDataLinks expected = new FilingHistoryItemDataLinks()
+        final Links expected = new Links()
                 .self("/company/%s/filing-history/%s".formatted(COMPANY_NUMBER, TRANSACTION_ID));
 
         // when
-        final FilingHistoryItemDataLinks actual = linksMapper.map(COMPANY_NUMBER, TRANSACTION_ID);
+        final Links actual = linksMapper.map(COMPANY_NUMBER, TRANSACTION_ID);
 
         // then
         assertEquals(expected, actual);

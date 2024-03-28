@@ -10,7 +10,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Component;
 import uk.gov.companieshouse.api.filinghistory.AltCapitalDescriptionValue;
 import uk.gov.companieshouse.api.filinghistory.CapitalDescriptionValue;
-import uk.gov.companieshouse.api.filinghistory.FilingHistoryItemDataDescriptionValues;
+import uk.gov.companieshouse.api.filinghistory.DescriptionValues;
 import uk.gov.companieshouse.filinghistory.consumer.serdes.ArrayNodeDeserialiser;
 
 @Component
@@ -20,12 +20,12 @@ public class DescriptionValuesMapper {
     private final ArrayNodeDeserialiser<CapitalDescriptionValue> capitalArrayNodeDeserialiser;
 
     public DescriptionValuesMapper(ArrayNodeDeserialiser<AltCapitalDescriptionValue> altCapitalArrayNodeDeserialiser,
-            ArrayNodeDeserialiser<CapitalDescriptionValue> capitalArrayNodeDeserialiser) {
+                                   ArrayNodeDeserialiser<CapitalDescriptionValue> capitalArrayNodeDeserialiser) {
         this.altCapitalArrayNodeDeserialiser = altCapitalArrayNodeDeserialiser;
         this.capitalArrayNodeDeserialiser = capitalArrayNodeDeserialiser;
     }
 
-    public FilingHistoryItemDataDescriptionValues map(final JsonNode jsonNode) {
+    public DescriptionValues map(final JsonNode jsonNode) {
         if (jsonNode == null) {
             return null;
         }
@@ -40,7 +40,7 @@ public class DescriptionValuesMapper {
                 .map(capitalArray -> capitalArrayNodeDeserialiser.deserialise((ArrayNode) capitalArray))
                 .orElse(null);
 
-        return new FilingHistoryItemDataDescriptionValues()
+        return new DescriptionValues()
                 .altCapital(altCapital)
                 .appointmentDate(getFieldValueFromJsonNode(jsonNode, "appointment_date"))
                 .branchNumber(getFieldValueFromJsonNode(jsonNode, "branch_number"))
