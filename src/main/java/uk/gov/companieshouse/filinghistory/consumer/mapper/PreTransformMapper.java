@@ -23,10 +23,8 @@ public class PreTransformMapper {
         this.childNodeMapperFactory = childNodeMapperFactory;
     }
 
-    public Map<String, ObjectNode> mapChildDeltaToObjectNode(ObjectNode topLevelNode,
-                                                             InternalData.TransactionKindEnum transactionKind,
+    public Map<String, ObjectNode> mapChildDeltaToObjectNode(InternalData.TransactionKindEnum transactionKind,
                                                              FilingHistory filingHistory) {
-
         return childNodeMapperFactory.getChildMapper(transactionKind)
                 .mapChildObjectNode(filingHistory);
     }
