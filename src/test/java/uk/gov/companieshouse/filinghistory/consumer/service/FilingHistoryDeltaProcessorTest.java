@@ -58,7 +58,7 @@ class FilingHistoryDeltaProcessorTest {
     @Mock
     private ObjectNode preTransformNode;
     @Mock
-    private JsonNode postTransformNode;
+    private ObjectNode postTransformNode; // TODO: Changed this to ObjectNode to get tests to pass due to casting (may need to revert to JsonNode)
     @Mock
     private InternalFilingHistoryApi expected;
 

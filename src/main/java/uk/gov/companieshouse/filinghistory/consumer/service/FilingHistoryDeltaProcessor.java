@@ -1,10 +1,7 @@
 package uk.gov.companieshouse.filinghistory.consumer.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Map;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import uk.gov.companieshouse.api.delta.FilingHistory;
 import uk.gov.companieshouse.api.delta.FilingHistoryDelta;
@@ -23,7 +20,10 @@ public class FilingHistoryDeltaProcessor {
     private final TransformerService transformerService;
     private final InternalFilingHistoryApiMapper internalFilingHistoryApiMapper;
 
-    public FilingHistoryDeltaProcessor(TransactionKindService kindService, PreTransformMapper preTransformMapper, TransformerService transformerService, InternalFilingHistoryApiMapper internalFilingHistoryApiMapper) {
+    public FilingHistoryDeltaProcessor(TransactionKindService kindService,
+                                       PreTransformMapper preTransformMapper,
+                                       TransformerService transformerService,
+                                       InternalFilingHistoryApiMapper internalFilingHistoryApiMapper) {
         this.kindService = kindService;
         this.preTransformMapper = preTransformMapper;
         this.transformerService = transformerService;
@@ -33,41 +33,25 @@ public class FilingHistoryDeltaProcessor {
     public InternalFilingHistoryApi processDelta(FilingHistoryDelta delta, final String updatedBy) {
         final FilingHistory filingHistory = delta.getFilingHistory().getFirst();
 
-        TransactionKindResult kindResult = kindService.encodeIdByTransactionKind(buildTransactionCriteria(filingHistory));
+        TransactionKindResult kindResult = kindService
+                .encodeIdByTransactionKind(buildTransactionCriteria(filingHistory));
         ObjectNode topLevelObjectNode = preTransformMapper.mapDeltaToObjectNode(filingHistory);
 
+        // Transform top level
+        ObjectNode transformedJsonNode = (ObjectNode) transformerService.transform(topLevelObjectNode);
 
         // If FH is child
         if (!InternalData.TransactionKindEnum.TOP_LEVEL.equals(kindResult.kind())) {
 
+            Map<String, ObjectNode> objectMap = preTransformMapper
+                    .mapChildDeltaToObjectNode(kindResult.kind(), filingHistory);
 
-            Map<String, ObjectNode> objectMap = preTransformMapper.mapChildDeltaToObjectNode(topLevelObjectNode,
-                    kindResult.kind(), filingHistory);
+            ObjectNode dataNode = (ObjectNode) transformedJsonNode.get("data");
 
-            ObjectNode dataNode = (ObjectNode) topLevelObjectNode.get("data");
-            topLevelObjectNode.remove("data");
-
-            final String arrayName = objectMap.keySet().stream().findFirst().get();
-
-            ObjectNode childObjectNode = (ObjectNode) transformerService.transform(objectMap.get(arrayName));
-
-            dataNode.putArray(arrayName).addObject().setAll(childObjectNode);
-
-            topLevelObjectNode.putIfAbsent("data", dataNode);
-
-            /*
-                TODO: Category currently not being mapped correctly
-             */
-
-
-
-//            topLevelObjectNode.remove("data");
-//            topLevelObjectNode.putIfAbsent("data", childObjectNode);
+            // TODO: Category currently not being mapped correctly
+            objectMap.forEach((key, value) -> dataNode.putArray(key)
+                    .add(transformerService.transform(value)));
         }
-
-        // Transform top level
-        final JsonNode transformedJsonNode = transformerService.transform(
-                topLevelObjectNode);
 
         InternalFilingHistoryApiMapperArguments arguments = new InternalFilingHistoryApiMapperArguments(
                 transformedJsonNode,

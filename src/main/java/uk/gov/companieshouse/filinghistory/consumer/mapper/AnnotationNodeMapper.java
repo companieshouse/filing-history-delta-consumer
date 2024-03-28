@@ -19,13 +19,9 @@ public class AnnotationNodeMapper implements ChildNodeMapper {
     @Override
     public Map<String, ObjectNode> mapChildObjectNode(FilingHistory delta) {
 
-        ObjectNode objectNode = objectMapper.createObjectNode();
-
-        objectNode
-                .putObject("annotation")
+        ObjectNode objectNode = objectMapper.createObjectNode()
                 .put("type", delta.getFormType())
                 .put("date", delta.getReceiveDate())
-                .put("category", delta.getCategory())
                 .put("annotation", mapAnnotationField(delta));
 
         return Map.of("annotations", objectNode);

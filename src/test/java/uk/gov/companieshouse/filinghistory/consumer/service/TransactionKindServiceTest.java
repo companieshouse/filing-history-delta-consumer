@@ -11,11 +11,12 @@ import uk.gov.companieshouse.api.filinghistory.InternalData.TransactionKindEnum;
 class TransactionKindServiceTest {
 
     private static final String SALT = "salt";
+
     private TransactionKindService kindService;
 
     @BeforeEach
     void setUp() {
-        kindService = new TransactionKindService(SALT);
+        kindService = new TransactionKindService(new FormTypeService(), SALT);
     }
 
     @Test
