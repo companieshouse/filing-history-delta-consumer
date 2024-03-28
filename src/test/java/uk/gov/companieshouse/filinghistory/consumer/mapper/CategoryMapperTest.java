@@ -40,7 +40,7 @@ class CategoryMapperTest {
         final CategoryEnum expected = CategoryEnum.fromValue(category);
 
         // when
-        final CategoryEnum actual = categoryMapper.map(node, CategoryEnum::fromValue);
+        final CategoryEnum actual = categoryMapper.map(node);
 
         // then
         assertEquals(expected, actual);
@@ -83,7 +83,7 @@ class CategoryMapperTest {
         final CategoryEnum expected = CategoryEnum.fromValue(nodeValue);
 
         // when
-        final CategoryEnum actual = categoryMapper.map(node, CategoryEnum::fromValue);
+        final CategoryEnum actual = categoryMapper.map(node);
 
         // then
         assertEquals(expected, actual);
