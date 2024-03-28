@@ -17,8 +17,6 @@ import uk.gov.companieshouse.api.filinghistory.InternalData.TransactionKindEnum;
 @ExtendWith(MockitoExtension.class)
 class TransactionKindServiceTest {
 
-    private static final String SALT = "salt";
-
     @InjectMocks
     private TransactionKindService kindService;
 
