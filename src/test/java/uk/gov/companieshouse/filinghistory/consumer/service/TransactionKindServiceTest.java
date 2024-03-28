@@ -2,6 +2,9 @@ package uk.gov.companieshouse.filinghistory.consumer.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,7 +19,7 @@ class TransactionKindServiceTest {
 
     @BeforeEach
     void setUp() {
-        kindService = new TransactionKindService(new FormTypeService(), SALT);
+        kindService = new TransactionKindService(new FormTypeService(Collections.emptyList()), SALT);
     }
 
     @Test

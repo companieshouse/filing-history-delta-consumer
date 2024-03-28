@@ -6,14 +6,18 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
-public class FormTypeServiceTest {
+@SpringBootTest
+class FormTypeServiceTest {
 
     private static final String ANNOTATION_FORM_TYPE = "ANNOTATION";
     private static final String ASSOCIATED_FILING_FORM_TYPE = "ASSOCIATED-FILING";
     private static final String TOP_LEVEL_FORM_TYPE = "TOP-LEVEL";
 
-    private final FormTypeService formTypeService = new FormTypeService();
+    @Autowired
+    private FormTypeService formTypeService;
 
     @Test
     void shouldReturnAnnotationTypeWhenPassedAnnotation() {
