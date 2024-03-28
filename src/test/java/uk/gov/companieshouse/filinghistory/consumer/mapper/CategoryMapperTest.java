@@ -45,6 +45,7 @@ class CategoryMapperTest {
     @CsvSource({
             "accounts",
             "address",
+            "annotation",
             "annual-return",
             "auditors",
             "capital",
@@ -68,7 +69,8 @@ class CategoryMapperTest {
             "persons-with-significant-control",
             "reregistration",
             "resolution",
-            "restoration"
+            "restoration",
+            "return"
     })
     void shouldGetCorrectCategoryEnumFromNodeValue(final String nodeValue) {
         // given
