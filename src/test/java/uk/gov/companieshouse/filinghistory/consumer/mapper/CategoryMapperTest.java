@@ -6,22 +6,17 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import uk.gov.companieshouse.api.filinghistory.ExternalData.CategoryEnum;
 
-@SpringBootTest
 class CategoryMapperTest {
 
-    @Autowired
-    private CategoryMapper categoryMapper;
-    @Autowired
-    private ObjectMapper objectMapper;
+    private final CategoryMapper categoryMapper = new CategoryMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @ParameterizedTest
     @CsvSource({
             "0 , accounts",
-            "1 , return", // TODO: FIXME - "return" not matching a category
+            "1 , return",
             "2 , officer",
             "3 , address",
             "4 , mortgage",
