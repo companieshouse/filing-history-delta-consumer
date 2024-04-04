@@ -13,8 +13,10 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
+import uk.gov.companieshouse.filinghistory.consumer.exception.NonRetryableException;
 import uk.gov.companieshouse.filinghistory.consumer.logging.DataMapHolder;
 import uk.gov.companieshouse.logging.Logger;
 import uk.gov.companieshouse.logging.LoggerFactory;
@@ -30,6 +32,7 @@ public class FormatDate extends AbstractTransformer {
             .appendPattern("d/MM/")
             .appendValueReduced(ChronoField.YEAR, 2, 2, 1970)
             .toFormatter();
+    private static final Pattern ISO_DATE_PATTERN = Pattern.compile("^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$");
 
     public FormatDate(ObjectMapper objectMapper) {
         super(objectMapper);
@@ -38,12 +41,22 @@ public class FormatDate extends AbstractTransformer {
     @Override
     protected void doTransform(JsonNode source, TransformTarget target, List<String> arguments,
             Map<String, String> context) {
-        target.objectNode().put(target.fieldKey(), format(target.fieldValue()));
+        target.objectNode().put(target.fieldKey(), formatIfRequired(target.fieldValue()));
     }
 
     public String format(String nodeText) {
+        return doFormat(nodeText);
+    }
 
-        // TODO Check if nodeText is already in the correct format
+    private String formatIfRequired(String nodeText) {
+        if (nodeText == null || ISO_DATE_PATTERN.matcher(nodeText).matches()) {
+            return nodeText;
+        }
+        return doFormat(nodeText);
+    }
+
+    private String doFormat(String nodeText) {
+
         try {
             if (StringUtils.isEmpty(nodeText)) {
                 return nodeText;
@@ -62,8 +75,7 @@ public class FormatDate extends AbstractTransformer {
             return DateTimeFormatter.ISO_INSTANT.format(nodeTextAsDate.toInstant());
         } catch (Exception e) {
             logger.error(e.getMessage(), e, DataMapHolder.getLogMap());
-            throw new RuntimeException(e);
+            throw new NonRetryableException("Failed to parse date string %s".formatted(nodeText), e);
         }
     }
-
 }

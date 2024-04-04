@@ -1,0 +1,27 @@
+{
+  "external_data": {
+    "transaction_id": "MzE1Mzg4OTA3MHNhbHQ",
+    "category": "capital",
+    "date": "2016-07-28T08:52:54Z",
+    "description": "members-register-information-on-withdrawal-from-the-public-register",
+    "description_values": {
+      "date": "2016-07-28T08:52:54Z"
+    },
+    "links": {
+      "self": "/company/10265867/filing-history/MzE1Mzg4OTA3MHNhbHQ"
+    },
+    "subcategory": "register",
+    "type": "EW05RSS",
+    "barcode": "X5C72WD5"
+  },
+  "internal_data": {
+    "company_number": "10265867",
+    "document_id": "000X5C72WD56351",
+    "entity_id": "3153889070",
+    "original_description": "Register snapshot for EW05",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560"
+  }
+}

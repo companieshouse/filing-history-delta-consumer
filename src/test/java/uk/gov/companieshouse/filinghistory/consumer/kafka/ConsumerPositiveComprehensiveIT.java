@@ -29,6 +29,7 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -66,28 +67,15 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
 
     @ParameterizedTest
     @CsvSource({
-            "officers/EW01RSS",
-            "officers/TM01",
+            "officers/EW01RSS", "officers/TM01",
 
-            "capital/SH03",
-            "capital/SH07",
-              "capital/SH01", "capital/SH02_rule_2", "capital/SH04_rule_4", "capital/SH05",
+            "capital/SH03", "capital/SH07", "capital/SH01", "capital/SH02_rule_2", "capital/SH04_rule_4",
+            "capital/SH05", "capital/EW05RSS",
 
-            "accounts/AA_rule_17",
-            "accounts/AA_rule_9",
-            "accounts/AA_rule_10",
-            "accounts/AA_rule_8",
-            "accounts/AA_rule_6",
-            "accounts/AA_rule_12",
-            "accounts/AA_rule_14",
-            "accounts/AA_rule_20",
-            "accounts/AA_rule_23",
-            "accounts/AA_rule_25",
-            "accounts/AA_rule_26",
-            "accounts/AAMD_rule_12",
-            "accounts/AAMD_rule_9",
-            "accounts/AAMD_rule_1",
-            "accounts/AAMD_rule_7",
+            "accounts/AA_rule_17", "accounts/AA_rule_9", "accounts/AA_rule_10", "accounts/AA_rule_8",
+            "accounts/AA_rule_6", "accounts/AA_rule_12", "accounts/AA_rule_14", "accounts/AA_rule_20",
+            "accounts/AA_rule_23", "accounts/AA_rule_25", "accounts/AA_rule_26", "accounts/AAMD_rule_12",
+            "accounts/AAMD_rule_9", "accounts/AAMD_rule_1", "accounts/AAMD_rule_7",
 
             "insolvency/3.10", "insolvency/4.13", "insolvency/4.20_rule_2", "insolvency/4.31", "insolvency/4.33",
             "insolvency/4.35", "insolvency/4.38", "insolvency/4.40", "insolvency/4.43", "insolvency/WU15(Scot)",
@@ -110,8 +98,8 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
             "insolvency/2.20B(Scot)_rule_2", "insolvency/2.19B(Scot)", "insolvency/2.21B(Scot)",
             "insolvency/2.22B(Scot)", "insolvency/2.23B(Scot)", "insolvency/AM21(Scot)", "insolvency/2.24B(Scot)",
             "insolvency/AM25(Scot)", "insolvency/2.25B(Scot)", "insolvency/AM22(Scot)",
-"insolvency/2.26B(Scot)",
-            "insolvency/1(Scot)", "insolvency/1.3(Scot)_rule_1","insolvency/1.3(Scot)_rule_2",
+            "insolvency/2.26B(Scot)",
+            "insolvency/1(Scot)", "insolvency/1.3(Scot)_rule_1", "insolvency/1.3(Scot)_rule_2",
             "insolvency/1.4(Scot)", "insolvency/2.2(Scot)", "insolvency/2.12(Scot)", "insolvency/2.26B(Scot)",
             "insolvency/2.27B(Scot)", "insolvency/2.29B(Scot)", "insolvency/2.30B(Scot)", "insolvency/12.1",
             "insolvency/AM15(Scot)", "insolvency/AM23(Scot)", "insolvency/NCOP", "insolvency/RM01(Scot)",
@@ -133,6 +121,8 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
 
     @ParameterizedTest(name = "[{index}] {0}/{1}/{2}")
     @ArgumentsSource(IntegrationDataGenerator.class)
+    @EnabledIfEnvironmentVariable(disabledReason = "Disabled for normal builds", named = "RUN_BULK_TEST",
+            matches = "^(1|true|TRUE)$")
     void shouldConsumeFilingHistoryDeltaTopicAndProcessDeltaFromStream(String category, String formType,
             String entityId, String delta, String expectedRequestBody) throws Exception {
         doShouldConsumeFilingHistoryDeltaTopicAndProcessDelta(delta, expectedRequestBody);
