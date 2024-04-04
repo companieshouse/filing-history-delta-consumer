@@ -2,18 +2,15 @@ package uk.gov.companieshouse.filinghistory.consumer.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
 class FormTypeServiceTest {
 
-    @Autowired
-    private FormTypeService formTypeService;
+    private final FormTypeService formTypeService = new FormTypeService(List.of("1(Scot)", "MR09"));
 
     @ParameterizedTest
     @MethodSource("isAssociatedFilingBlacklistedScenarios")
