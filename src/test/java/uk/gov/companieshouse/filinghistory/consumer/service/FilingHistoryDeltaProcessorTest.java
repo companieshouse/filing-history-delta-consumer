@@ -3,7 +3,7 @@ package uk.gov.companieshouse.filinghistory.consumer.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -102,8 +102,8 @@ class FilingHistoryDeltaProcessorTest {
         verify(kindService).encodeIdByTransactionKind(criteria);
         verify(preTransformMapper).mapDeltaToObjectNode(delta.getFilingHistory().getFirst());
         verify(transformerService).transform(preTransformNode);
-        verifyNoInteractions(preTransformMapper);
-        verifyNoInteractions(transformerService);
+        verifyNoMoreInteractions(preTransformMapper);
+        verifyNoMoreInteractions(transformerService);
         verify(internalFilingHistoryApiMapper).mapInternalFilingHistoryApi(expectedArguments);
     }
 
