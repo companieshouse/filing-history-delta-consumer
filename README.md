@@ -99,15 +99,21 @@ services and modules will be started as dependencies of these two):
 To run the tests from the command line use:
 
 ```shell
-HUMAN_LOG=1 KERMIT_PASSWORD=<kermit_password> PERL_SALT=<perl_salt> \
+HUMAN_LOG=1 KERMIT_PASSWORD=<kermit_password> PERL_SALT=<perl_salt> RUN_BULK_TEST=1 \
 mvn test -Dtest="ConsumerPositiveComprehensiveIT#shouldConsumeFilingHistoryDeltaTopicAndProcessDeltaFromStream"
 ```
 
-_Note:_ `kermit_password` can be found in [Confluence](
+_Note:_
+
+* `kermit_password` can be found in [Confluence](
 https://companieshouse.atlassian.net/wiki/spaces/TH/pages/4029120676/Harmonia+Testing+Process) and
 `perl_salt` can be found in
 the [chs-backend](https://github.com/companieshouse/chs-backend/blob/93494b863fcbb97e99195e54770b30b8ebcd4668/lib/ChsBackend/Roles/Transform.pm#L416)
 repository
+* To run the tests in IntelliJ
+  add `HUMAN_LOG=1 KERMIT_PASSWORD=<kermit_password> PERL_SALT=<perl_salt> RUN_BULK_TEST=1` settings
+  to the Environment Variables section of the run
+  configuration dialog.
 
 ### IMPORTANT
 
