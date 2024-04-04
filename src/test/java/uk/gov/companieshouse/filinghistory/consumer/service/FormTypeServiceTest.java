@@ -35,7 +35,25 @@ class FormTypeServiceTest {
                         "67891",
                         "any string not on blacklist",
                         "",
-                        null), false)
+                        null), false),
+                Arguments.of(new TransactionKindCriteria(
+                        "12345",
+                        "67891",
+                        "",
+                        "any string not on blacklist",
+                        null), false),
+                Arguments.of(new TransactionKindCriteria(
+                        "12345",
+                        "67891",
+                        "1(Scot)",
+                        "",
+                        null), true),
+                Arguments.of(new TransactionKindCriteria(
+                        "12345",
+                        "67891",
+                        "",
+                        "1(Scot)",
+                        null), true)
         );
     }
 }
