@@ -103,7 +103,7 @@ class TransactionKindServiceTest {
     @Test
     void shouldSuccessfullyEncodeIdByParentEntityIdWhenFormTypeServiceReturnsAssociatedFilingAndParentEntityIdIsNotBlank() {
         // given
-        when(formTypeService.isAssociatedFiling(any())).thenReturn(true);
+        when(formTypeService.isAssociatedFilingBlacklisted(any())).thenReturn(true);
 
         TransactionKindCriteria criteria = new TransactionKindCriteria(
                 ENTITY_ID,
@@ -120,7 +120,7 @@ class TransactionKindServiceTest {
 
         // then
         assertEquals(expected, actual);
-        verify(formTypeService).isAssociatedFiling(criteria);
+        verify(formTypeService).isAssociatedFilingBlacklisted(criteria);
     }
 
     @ParameterizedTest

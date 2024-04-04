@@ -16,24 +16,24 @@ class FormTypeServiceTest {
     private FormTypeService formTypeService;
 
     @ParameterizedTest
-    @MethodSource("isAssociatedFilingScenarios")
+    @MethodSource("isAssociatedFilingBlacklistedScenarios")
     void shouldReturnAssociatedFilingTypeWhenPassedRandomStringAndHasParentEntityId(
             TransactionKindCriteria kindCriteria, final boolean expected) {
         // given
 
         // when
-        final boolean actual = formTypeService.isAssociatedFiling(kindCriteria);
+        final boolean actual = formTypeService.isAssociatedFilingBlacklisted(kindCriteria);
 
         // then
         assertEquals(expected, actual);
     }
 
-    private static Stream<Arguments> isAssociatedFilingScenarios() {
+    private static Stream<Arguments> isAssociatedFilingBlacklistedScenarios() {
         return Stream.of(
                 Arguments.of(new TransactionKindCriteria(
                         "12345",
                         "67891",
-                        "annotation",
+                        "any string not on blacklist",
                         "",
                         null), false)
         );

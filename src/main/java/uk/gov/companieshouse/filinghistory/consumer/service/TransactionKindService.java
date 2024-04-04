@@ -29,7 +29,6 @@ public class TransactionKindService {
     }
 
     public TransactionKindResult encodeIdByTransactionKind(TransactionKindCriteria kindCriteria) {
-
         final String encodedId;
         final TransactionKindEnum kindEnum;
         if (ANNOTATION.equals(kindCriteria.formType())) {
@@ -38,8 +37,9 @@ public class TransactionKindService {
             } else {
                 encodedId = encodeTransactionId(kindCriteria.entityId());
             }
-            kindEnum = TransactionKindEnum.ANNOTATION; // TEST FOR TOP LEVEL ANNOTATION ALSO WITH API CODE
-        } else if (formTypeService.isAssociatedFiling(kindCriteria)) {
+            kindEnum = TransactionKindEnum.ANNOTATION;
+        } else if (!formTypeService.isAssociatedFilingBlacklisted(kindCriteria)
+                && StringUtils.isNotBlank(kindCriteria.parentEntityId())) {
             encodedId = encodeTransactionId(kindCriteria.parentEntityId());
             kindEnum = TransactionKindEnum.ASSOCIATED_FILING;
         } else {
