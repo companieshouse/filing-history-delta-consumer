@@ -1,91 +1,63 @@
 package uk.gov.companieshouse.filinghistory.consumer.mapper;
 
+import static uk.gov.companieshouse.filinghistory.consumer.Application.NAMESPACE;
 import static uk.gov.companieshouse.filinghistory.consumer.mapper.MapperUtils.getFieldValueFromJsonNode;
 import static uk.gov.companieshouse.filinghistory.consumer.mapper.MapperUtils.getNestedJsonNodeFromJsonNode;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import org.apache.commons.lang3.StringUtils;
+import java.util.Optional;
 import org.springframework.stereotype.Component;
 import uk.gov.companieshouse.api.filinghistory.ExternalData;
 import uk.gov.companieshouse.api.filinghistory.InternalData;
 import uk.gov.companieshouse.api.filinghistory.InternalFilingHistoryApi;
+import uk.gov.companieshouse.filinghistory.consumer.exception.NonRetryableException;
 import uk.gov.companieshouse.filinghistory.consumer.service.TransactionKindResult;
+import uk.gov.companieshouse.logging.Logger;
+import uk.gov.companieshouse.logging.LoggerFactory;
 
 @Component
 public class InternalFilingHistoryApiMapper {
 
-    private final SubcategoryMapper subcategoryMapper;
-    private final CategoryMapper categoryMapper;
-    private final DescriptionValuesMapper descriptionValuesMapper;
-    private final LinksMapper linksMapper;
-    private final OriginalValuesMapper originalValuesMapper;
-    private final PaperFiledMapper paperFiledMapper;
-    private final ChildRequestMapperFactory childRequestMapperFactory;
+    private static final Logger LOGGER = LoggerFactory.getLogger(NAMESPACE);
 
-    public InternalFilingHistoryApiMapper(SubcategoryMapper subcategoryMapper, CategoryMapper categoryMapper,
-                                          DescriptionValuesMapper descriptionValuesMapper, LinksMapper linksMapper,
-                                          OriginalValuesMapper originalValuesMapper, PaperFiledMapper paperFiledMapper, ChildRequestMapperFactory childRequestMapperFactory) {
-        this.subcategoryMapper = subcategoryMapper;
-        this.categoryMapper = categoryMapper;
-        this.descriptionValuesMapper = descriptionValuesMapper;
-        this.linksMapper = linksMapper;
+    private final OriginalValuesMapper originalValuesMapper;
+    private final ExternalDataMapper externalDataMapper;
+
+    public InternalFilingHistoryApiMapper(OriginalValuesMapper originalValuesMapper,
+            ExternalDataMapper externalDataMapper) {
         this.originalValuesMapper = originalValuesMapper;
-        this.paperFiledMapper = paperFiledMapper;
-        this.childRequestMapperFactory = childRequestMapperFactory;
+        this.externalDataMapper = externalDataMapper;
     }
 
-    public InternalFilingHistoryApi mapJsonNodeToInternalFilingHistoryApi(
-            InternalFilingHistoryApiMapperArguments arguments) {
-        final TransactionKindResult kindResult = arguments.kindResult();
-        final String encodedId = kindResult.encodedId();
-        final String companyNumber = arguments.companyNumber();
-        final JsonNode topLevelNode = arguments.topLevelNode();
+    public InternalFilingHistoryApi mapInternalFilingHistoryApi(InternalFilingHistoryApiMapperArguments args) {
+        JsonNode topLevelNode = args.topLevelNode();
+
+        TransactionKindResult kindResult = Optional.ofNullable(args.kindResult())
+                .orElseGet(() -> {
+                    LOGGER.error("Null transaction kind result provided");
+                    throw new NonRetryableException("Null transaction kind result provided");
+                });
 
         String barcode = getFieldValueFromJsonNode(topLevelNode, "_barcode");
         String documentId = getFieldValueFromJsonNode(topLevelNode, "_document_id");
 
-        InternalFilingHistoryApi requestObject = new InternalFilingHistoryApi()
-                .externalData(new ExternalData())
-                .internalData(new InternalData());
-
-        requestObject.getInternalData()
+        InternalData internalData = new InternalData()
                 .originalDescription(getFieldValueFromJsonNode(topLevelNode, "original_description"))
                 .parentEntityId(getFieldValueFromJsonNode(topLevelNode, "parent_entity_id"))
                 .entityId(getFieldValueFromJsonNode(topLevelNode, "_entity_id"))
                 .originalValues(
                         originalValuesMapper.map(getNestedJsonNodeFromJsonNode(topLevelNode, "original_values")))
-                .companyNumber(companyNumber)
+                .companyNumber(args.companyNumber())
                 .documentId(documentId)
-                .deltaAt(arguments.deltaAt())
-                .updatedBy(arguments.updatedBy())
+                .deltaAt(args.deltaAt())
+                .updatedBy(args.updatedBy())
                 .transactionKind(kindResult.kind());
 
-        final JsonNode dataNode = getNestedJsonNodeFromJsonNode(topLevelNode, "data");
-        requestObject.getExternalData()
-                .type(getFieldValueFromJsonNode(dataNode, "type"))
-                .date(getFieldValueFromJsonNode(dataNode, "date"))
-                .category(categoryMapper.map(dataNode))
-                .subcategory(subcategoryMapper.map(dataNode))
-                .description(getFieldValueFromJsonNode(dataNode, "description"))
-                .actionDate(getFieldValueFromJsonNode(dataNode, "action_date"))
-                .transactionId(encodedId)
-                .barcode(barcode)
-                .descriptionValues(
-                        descriptionValuesMapper.map(getNestedJsonNodeFromJsonNode(dataNode, "description_values")))
-                .paperFiled(paperFiledMapper.isPaperFiled(barcode, documentId) ? true : null)
-                .links(linksMapper.map(companyNumber, encodedId));
+        ExternalData externalData = externalDataMapper.mapExternalData(topLevelNode, barcode, documentId,
+                kindResult.encodedId(), args.companyNumber());
 
-        /*
-            TODO: Map to child array and object
-         */
-        if (StringUtils.isNotBlank(requestObject.getInternalData().getParentEntityId())) {
-            requestObject = childRequestMapperFactory
-                    .getChildRequestMapper(dataNode
-                            .get("type")
-                            .textValue())
-                    .map(dataNode);
-        }
-
-        return requestObject;
+        return new InternalFilingHistoryApi()
+                .internalData(internalData)
+                .externalData(externalData);
     }
 }

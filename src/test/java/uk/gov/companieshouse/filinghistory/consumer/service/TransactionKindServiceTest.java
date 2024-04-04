@@ -33,7 +33,7 @@ class TransactionKindServiceTest {
         // given
         TransactionKindCriteria criteria = new TransactionKindCriteria("entityId", "", "TM01", "", "");
 
-        when(formTypeService.getFormType(any())).thenReturn("TOP-LEVEL");
+        when(formTypeService.isAssociatedFiling(any())).thenReturn(false);
 
         TransactionKindResult expected = new TransactionKindResult("ZW50aXR5SWRzYWx0", TransactionKindEnum.TOP_LEVEL);
 

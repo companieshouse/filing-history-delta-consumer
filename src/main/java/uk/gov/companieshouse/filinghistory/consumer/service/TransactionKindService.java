@@ -4,7 +4,6 @@ import static org.apache.commons.lang3.StringUtils.trim;
 import static uk.gov.companieshouse.filinghistory.consumer.Application.NAMESPACE;
 
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,38 +17,38 @@ import uk.gov.companieshouse.logging.LoggerFactory;
 public class TransactionKindService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(NAMESPACE);
-    private static final String ANNOTATION_FORM_TYPE = "ANNOTATION";
-    private static final String ASSOCIATED_FILING_FORM_TYPE = "ASSOCIATED-FILING";
+    private static final String ANNOTATION = "ANNOTATION";
 
     private final FormTypeService formTypeService;
     private final String transactionIdSalt;
 
-    public TransactionKindService(FormTypeService formTypeService, @Value("${transaction-id-salt}") String transactionIdSalt) {
+    public TransactionKindService(FormTypeService formTypeService,
+            @Value("${transaction-id-salt}") String transactionIdSalt) {
         this.formTypeService = formTypeService;
         this.transactionIdSalt = transactionIdSalt;
     }
 
-    public TransactionKindResult encodeIdByTransactionKind(TransactionKindCriteria transactionKindCriteria) {
-        LOGGER.debug("Transaction Kind: [%s]".formatted(transactionKindCriteria.formType()), DataMapHolder.getLogMap());
-
-        final String formType = formTypeService.getFormType(transactionKindCriteria);
+    public TransactionKindResult encodeIdByTransactionKind(TransactionKindCriteria kindCriteria) {
 
         final String encodedId;
         final TransactionKindEnum kindEnum;
-        switch (formType) {
-            case ANNOTATION_FORM_TYPE -> {
-                encodedId = encodeTransactionId(transactionKindCriteria.parentEntityId());
-                kindEnum = TransactionKindEnum.ANNOTATION; // encode by parent entity id
+        if (ANNOTATION.equals(kindCriteria.formType())) {
+            if (StringUtils.isNotBlank(kindCriteria.parentEntityId())) {
+                encodedId = encodeTransactionId(kindCriteria.parentEntityId());
+                kindEnum = TransactionKindEnum.ANNOTATION; // TEST FOR TOP LEVEL ANNOTATION ALSO WITH API CODE
+            } else {
+                encodedId = encodeTransactionId(kindCriteria.entityId());
+                kindEnum = TransactionKindEnum.ANNOTATION;
             }
-            case ASSOCIATED_FILING_FORM_TYPE -> {
-                encodedId = encodeTransactionId(transactionKindCriteria.parentEntityId());
-                kindEnum = TransactionKindEnum.ASSOCIATED_FILING; // encode by parent entity id
-            }
-            default -> {
-                encodedId = encodeTransactionId(transactionKindCriteria.entityId());
-                kindEnum = TransactionKindEnum.TOP_LEVEL; // encode by entity id
-            }
+        } else if (formTypeService.isAssociatedFiling(kindCriteria)) {
+            encodedId = encodeTransactionId(kindCriteria.parentEntityId());
+            kindEnum = TransactionKindEnum.ASSOCIATED_FILING;
+        } else {
+            encodedId = encodeTransactionId(kindCriteria.entityId());
+            kindEnum = TransactionKindEnum.TOP_LEVEL;
         }
+
+        LOGGER.debug("Transaction Kind: [%s]".formatted(kindEnum.getValue()), DataMapHolder.getLogMap());
         return new TransactionKindResult(encodedId, kindEnum);
     }
 

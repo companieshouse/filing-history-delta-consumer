@@ -1,7 +1,7 @@
 package uk.gov.companieshouse.filinghistory.consumer.mapper;
 
 import org.springframework.stereotype.Component;
-import uk.gov.companieshouse.api.filinghistory.InternalData;
+import uk.gov.companieshouse.api.filinghistory.InternalData.TransactionKindEnum;
 
 @Component
 public class ChildNodeMapperFactory {
@@ -12,7 +12,7 @@ public class ChildNodeMapperFactory {
         this.annotationMapper = annotationMapper;
     }
 
-    public ChildNodeMapper getChildMapper(InternalData.TransactionKindEnum kind) {
+    public ChildNodeMapper getChildMapper(TransactionKindEnum kind) {
         return switch (kind) {
             case ANNOTATION -> annotationMapper;
             default -> throw new IllegalStateException("Unexpected value: " + kind.getValue());

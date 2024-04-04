@@ -6,6 +6,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import uk.gov.companieshouse.api.filinghistory.AltCapitalDescriptionValue;
+import uk.gov.companieshouse.api.filinghistory.Annotation;
 import uk.gov.companieshouse.api.filinghistory.CapitalDescriptionValue;
 
 @Configuration
@@ -32,5 +33,10 @@ public class SerdesConfig {
     public ArrayNodeDeserialiser<AltCapitalDescriptionValue> altCapitalArrayNodeDeserialiser(
             ObjectMapper objectMapper) {
         return new ArrayNodeDeserialiser<>(objectMapper, AltCapitalDescriptionValue.class);
+    }
+
+    @Bean
+    public ArrayNodeDeserialiser<Annotation> annotationArrayNodeDeserialiser(ObjectMapper objectMapper) {
+        return new ArrayNodeDeserialiser<>(objectMapper, Annotation.class);
     }
 }
