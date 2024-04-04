@@ -77,6 +77,8 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
             "accounts/AA_rule_23", "accounts/AA_rule_25", "accounts/AA_rule_26", "accounts/AAMD_rule_12",
             "accounts/AAMD_rule_9", "accounts/AAMD_rule_1", "accounts/AAMD_rule_7",
 
+            "address/287",
+
             "insolvency/3.10", "insolvency/4.13", "insolvency/4.20_rule_2", "insolvency/4.31", "insolvency/4.33",
             "insolvency/4.35", "insolvency/4.38", "insolvency/4.40", "insolvency/4.43", "insolvency/WU15(Scot)",
             "insolvency/WU16(Scot)", "insolvency/WU17(Scot)", "insolvency/WU18(Scot)", "insolvency/4.44",

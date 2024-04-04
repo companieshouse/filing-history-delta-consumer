@@ -74,7 +74,8 @@ public class PreTransformMapper {
                 .putObject("data")
                 .put("type", filingHistory.getFormType())
                 .put("date", formatDate.format(filingHistory.getReceiveDate()))
-                .put("description", filingHistory.getDescription())
+                .put("description", filingHistory.getDescription().replace("<", "\\")
+                        .replace("\n", "\\"))
                 .put("category", filingHistory.getCategory());
     }
 
