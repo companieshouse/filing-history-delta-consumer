@@ -95,6 +95,29 @@ class FormatDateTest {
     }
 
     @Test
+    void shouldNotTransformSourceNodeValueIfNull() {
+        // given
+
+        ObjectNode source = MAPPER.createObjectNode();
+        source.putObject("original_values")
+                .put("change_date", (String) null);
+        ObjectNode actual = source.deepCopy();
+
+        ObjectNode expected = MAPPER.createObjectNode();
+        expected.putObject("original_values")
+                .put("change_date", (String) null);
+        expected
+                .putObject("data")
+                .put("action_date", (String) null);
+        // when
+        formatDate.transform(source, actual, "data.action_date", List.of("original_values.change_date"),
+                Map.of());
+
+        // then
+        assertEquals(expected, actual);
+    }
+
+    @Test
     void shouldThrowNonRetryableExceptionWhenSourceNodeValueCannotBeParsed() {
         // given
         ObjectNode source = MAPPER.createObjectNode();

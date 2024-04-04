@@ -48,8 +48,8 @@ public class FormatDate extends AbstractTransformer {
         return doFormat(nodeText);
     }
 
-    public String formatIfRequired(String nodeText) {
-        if (ISO_DATE_PATTERN.matcher(nodeText).matches()) {
+    private String formatIfRequired(String nodeText) {
+        if (nodeText == null || ISO_DATE_PATTERN.matcher(nodeText).matches()) {
             return nodeText;
         }
         return doFormat(nodeText);
