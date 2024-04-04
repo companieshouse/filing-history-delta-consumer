@@ -41,7 +41,7 @@ class TransactionKindServiceTest {
     }
 
     @Test
-    void shouldSuccessfullyEncodeIdByEntityIdWhenFormTypeServiceReturnsTopLevel() {
+    void shouldEncodeEntityId() {
         // given
         TransactionKindCriteria criteria = new TransactionKindCriteria(
                 ENTITY_ID,
@@ -61,7 +61,7 @@ class TransactionKindServiceTest {
     }
 
     @Test
-    void shouldSuccessfullyEncodeIdByParentEntityIdWhenFormTypeServiceReturnsAnnotationAndParentEntityIdIsNotBlank() {
+    void shouldEncodeParentEntityIdWhenChildAnnotation() {
         // given
         TransactionKindCriteria criteria = new TransactionKindCriteria(
                 ENTITY_ID,
@@ -81,7 +81,7 @@ class TransactionKindServiceTest {
     }
 
     @Test
-    void shouldSuccessfullyEncodeIdByEntityIdWhenFormTypeServiceReturnsAnnotationAndParentEntityIdIsBlank() {
+    void shouldEncodeEntityIdWhenTopLevelAnnotation() {
         // given
         TransactionKindCriteria criteria = new TransactionKindCriteria(
                 ENTITY_ID,
@@ -101,19 +101,65 @@ class TransactionKindServiceTest {
     }
 
     @Test
-    void shouldSuccessfullyEncodeIdByParentEntityIdWhenFormTypeServiceReturnsAssociatedFilingAndParentEntityIdIsNotBlank() {
+    void shouldEncodeParentEntityIdWhenAssociatedFiling() {
+        // given
+        when(formTypeService.isAssociatedFilingBlacklisted(any())).thenReturn(false);
+
+        TransactionKindCriteria criteria = new TransactionKindCriteria(
+                ENTITY_ID,
+                PARENT_ENTITY_ID,
+                "any",
+                "any",
+                "");
+        TransactionKindResult expected = new TransactionKindResult(
+                ENCODED_PARENT_ENTITY_ID,
+                TransactionKindEnum.ASSOCIATED_FILING);
+
+        // when
+        TransactionKindResult actual = kindService.encodeIdByTransactionKind(criteria);
+
+        // then
+        assertEquals(expected, actual);
+        verify(formTypeService).isAssociatedFilingBlacklisted(criteria);
+    }
+
+    @Test
+    void shouldEncodeEntityIdWhenAssociatedFilingBlacklisted() {
         // given
         when(formTypeService.isAssociatedFilingBlacklisted(any())).thenReturn(true);
 
         TransactionKindCriteria criteria = new TransactionKindCriteria(
                 ENTITY_ID,
-                PARENT_ENTITY_ID,
-                "ASSOCIATED-FILING",
-                "ANY",
+                "",
+                "any",
+                "any",
                 "");
         TransactionKindResult expected = new TransactionKindResult(
-                ENCODED_PARENT_ENTITY_ID,
-                TransactionKindEnum.ASSOCIATED_FILING);
+                ENCODED_ENTITY_ID,
+                TransactionKindEnum.TOP_LEVEL);
+
+        // when
+        TransactionKindResult actual = kindService.encodeIdByTransactionKind(criteria);
+
+        // then
+        assertEquals(expected, actual);
+        verify(formTypeService).isAssociatedFilingBlacklisted(criteria);
+    }
+
+    @Test
+    void shouldEncodeEntityIdWhenAssociatedFilingNotBlacklistedButMissingParentEntityId() {
+        // given
+        when(formTypeService.isAssociatedFilingBlacklisted(any())).thenReturn(false);
+
+        TransactionKindCriteria criteria = new TransactionKindCriteria(
+                ENTITY_ID,
+                "",
+                "any",
+                "any",
+                "");
+        TransactionKindResult expected = new TransactionKindResult(
+                ENCODED_ENTITY_ID,
+                TransactionKindEnum.TOP_LEVEL);
 
         // when
         TransactionKindResult actual = kindService.encodeIdByTransactionKind(criteria);
