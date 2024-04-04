@@ -29,16 +29,10 @@ public class AnnotationNodeMapper implements ChildNodeMapper {
     }
 
     private String mapAnnotationField(FilingHistory delta) {
-        // TODO: Consider making this into a dependency so more easily testable
-
         String annotationFieldValue = "";
-
         if (StringUtils.isNotBlank(delta.getDescription())) {
             annotationFieldValue = delta.getDescription();
         }
-        // TODO: IF delta.note exists THEN annotationFieldValue = delta.note
-        // TODO: Should the note field be on top-level delta or in child properties object in child array?
-
         return annotationFieldValue;
     }
 }
