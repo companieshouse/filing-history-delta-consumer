@@ -17,6 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import uk.gov.companieshouse.api.delta.DescriptionValues;
 import uk.gov.companieshouse.api.delta.FilingHistory;
 import uk.gov.companieshouse.api.delta.FilingHistoryDelta;
+import uk.gov.companieshouse.api.filinghistory.InternalData.TransactionKindEnum;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.TransformerTestingUtils;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.FormatDate;
 
@@ -30,10 +31,31 @@ class PreTransformMapperTest {
     private FormatDate formatDate;
     @Mock
     private ChildNodeMapperFactory childNodeMapperFactory;
+    @Mock
+    private AnnotationNodeMapper annotationNodeMapper;
+    @Mock
+    private ChildPair childPair;
 
     @BeforeEach
     void setUp() {
         preTransformMapper = new PreTransformMapper(MAPPER, formatDate, childNodeMapperFactory);
+    }
+
+    @Test
+    void shouldDelegateToChildNodeMapperFromFactory() {
+        // given
+        final FilingHistory delta = new FilingHistory();
+
+        when(childNodeMapperFactory.getChildMapper(any())).thenReturn(annotationNodeMapper);
+        when(annotationNodeMapper.mapChildObjectNode(any())).thenReturn(childPair);
+
+        // when
+        final ChildPair actual = preTransformMapper.mapChildDeltaToObjectNode(TransactionKindEnum.ANNOTATION, delta);
+
+        // then
+        assertEquals(childPair, actual);
+        verify(childNodeMapperFactory).getChildMapper(TransactionKindEnum.ANNOTATION);
+        verify(annotationNodeMapper).mapChildObjectNode(delta);
     }
 
     @Test
@@ -272,6 +294,6 @@ class PreTransformMapperTest {
                 .put("description", "Appointment Terminated, Director JOHN DOE")
                 .put("category", "2");
 
-        return  expectedTopLevelNode;
+        return expectedTopLevelNode;
     }
 }
