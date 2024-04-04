@@ -35,11 +35,10 @@ public class TransactionKindService {
         if (ANNOTATION.equals(kindCriteria.formType())) {
             if (StringUtils.isNotBlank(kindCriteria.parentEntityId())) {
                 encodedId = encodeTransactionId(kindCriteria.parentEntityId());
-                kindEnum = TransactionKindEnum.ANNOTATION; // TEST FOR TOP LEVEL ANNOTATION ALSO WITH API CODE
             } else {
                 encodedId = encodeTransactionId(kindCriteria.entityId());
-                kindEnum = TransactionKindEnum.ANNOTATION;
             }
+            kindEnum = TransactionKindEnum.ANNOTATION; // TEST FOR TOP LEVEL ANNOTATION ALSO WITH API CODE
         } else if (formTypeService.isAssociatedFiling(kindCriteria)) {
             encodedId = encodeTransactionId(kindCriteria.parentEntityId());
             kindEnum = TransactionKindEnum.ASSOCIATED_FILING;
