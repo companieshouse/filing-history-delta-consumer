@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "9",
+      "receive_date": "20120106094357",
+      "form_type": "MODEL ARTICLES",
+      "description": "MODEL ARTICLES ADOPTED: PRIVATE LIMITED BY SHARES",
+      "barcode": "X0ZX4YBF",
+      "document_id": "",
+      "company_number": "12345678",
+      "entity_id": "3050233579",
+      "parent_entity_id":"3050205004",
+      "parent_form_type":"INCORPORATION",
+      "pre_scanned_batch":"0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}
