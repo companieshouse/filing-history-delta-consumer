@@ -61,7 +61,7 @@ class FilingHistoryDeltaProcessorTest {
     @Mock
     private ObjectNode preTransformNode;
     @Mock
-    private ObjectNode postTransformNode; // TODO: Changed this to ObjectNode to get tests to pass due to casting (may need to revert to JsonNode)
+    private ObjectNode postTransformNode;
     @Mock
     private ObjectNode preTransformChildNode;
     @Mock
