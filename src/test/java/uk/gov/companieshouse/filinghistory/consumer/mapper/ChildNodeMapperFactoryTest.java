@@ -19,6 +19,8 @@ class ChildNodeMapperFactoryTest {
 
     @Mock
     private AnnotationNodeMapper annotationNodeMapper;
+    @Mock
+    private AssociatedFilingNodeMapper associatedFilingNodeMapper;
 
     @Test
     void shouldReturnAnnotationNodeMapperWhenPassedAnnotationTransactionKindEnum() {
@@ -32,7 +34,18 @@ class ChildNodeMapperFactoryTest {
     }
 
     @Test
-    void shouldThrowIllegalStateExceptionWhenPassedNonAnnotationTransactionKindEnum() {
+    void shouldReturnAssociatedFilingNodeMapperWhenPassedAssociatedFilingTransactionKindEnum() {
+        // given
+
+        // when
+        ChildNodeMapper expected = childNodeMapperFactory.getChildMapper(TransactionKindEnum.ASSOCIATED_FILING);
+
+        // then
+        assertInstanceOf(AssociatedFilingNodeMapper.class, expected);
+    }
+
+    @Test
+    void shouldThrowIllegalStateExceptionWhenPassedInvalidTransactionKindEnum() {
         // given
 
         // when
