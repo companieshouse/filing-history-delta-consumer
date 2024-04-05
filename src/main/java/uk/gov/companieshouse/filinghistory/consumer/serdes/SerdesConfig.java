@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import uk.gov.companieshouse.api.filinghistory.AltCapitalDescriptionValue;
 import uk.gov.companieshouse.api.filinghistory.Annotation;
+import uk.gov.companieshouse.api.filinghistory.AssociatedFiling;
 import uk.gov.companieshouse.api.filinghistory.CapitalDescriptionValue;
 
 @Configuration
@@ -38,5 +39,10 @@ public class SerdesConfig {
     @Bean
     public ArrayNodeDeserialiser<Annotation> annotationArrayNodeDeserialiser(ObjectMapper objectMapper) {
         return new ArrayNodeDeserialiser<>(objectMapper, Annotation.class);
+    }
+
+    @Bean
+    public ArrayNodeDeserialiser<AssociatedFiling> associatedFilingArrayNodeDeserialiser(ObjectMapper objectMapper) {
+        return new ArrayNodeDeserialiser<>(objectMapper, AssociatedFiling.class);
     }
 }

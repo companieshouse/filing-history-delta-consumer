@@ -3,26 +3,26 @@
     "transaction_id" : "MzA1MDIwNTAwNHNhbHQ",
     "barcode" : "X0ZX4YBF",
     "category" : "incorporation",
-    "date" : "2012-01-06T09:43:56Z",
-    "description" : "incorporation-company",
+    "date" : "2012-01-06T09:43:57Z",
+    "description" : "model-articles-adopted",
     "links" : {
       "self" : "/company/12345678/filing-history/MzA1MDIwNTAwNHNhbHQ"
     },
-    "type" : "NEWINC",
+    "type" : "MODEL ARTICLES",
     "associated_filings" : [
       {
         "category" : "incorporation",
         "date" : "2012-01-06T09:43:57Z",
         "description" : "model-articles-adopted",
-        "type" : "MODEL ARTICLES"
+        "type" : "MODEL ARTICLES",
+        "original_description": "Model articles adopted: private LIMITED by shares"
       }
     ]
   },
   "internal_data": {
     "company_number" : "12345678",
-    "document_id" : "000N0790005.5D4695",
-    "entity_id" : "3050205004",
-    "original_description" : "Certificate of incorporation general company details & statements of; officers, capital & shareholdings, guarantee, compliance memorandum of association",
+    "entity_id" : "3050233579",
+    "original_description" : "Model articles adopted: private LIMITED by shares",
     "delta_at": "20211029142043360560",
     "updated_by": "context_id",
     "transaction_kind": "associated-filing",

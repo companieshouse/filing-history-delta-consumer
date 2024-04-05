@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import uk.gov.companieshouse.api.filinghistory.AltCapitalDescriptionValue;
 import uk.gov.companieshouse.api.filinghistory.Annotation;
+import uk.gov.companieshouse.api.filinghistory.AssociatedFiling;
 import uk.gov.companieshouse.api.filinghistory.CapitalDescriptionValue;
 import uk.gov.companieshouse.api.filinghistory.DescriptionValues;
 import uk.gov.companieshouse.filinghistory.consumer.exception.NonRetryableException;
@@ -173,6 +174,52 @@ class SerdesConfigTest {
         // then
         NonRetryableException actual = assertThrows(NonRetryableException.class, executable);
         assertEquals("Unable to deserialise array node: [%s]".formatted(annotations.toPrettyString()),
+                actual.getMessage());
+    }
+
+    @Test
+    void shouldDeserialiseAssociatedFilingsArrayNode() {
+        // given
+        ArrayNode associatedFilings = objectMapper.createArrayNode();
+        associatedFilings.addObject()
+                .put("category", "incorporation")
+                .put("date", "2011-11-26T11:27:55Z")
+                .put("description", "associated filing")
+                .put("type", "MODEL ARTICLES")
+                .putObject("description_values")
+                .put("description", "reason for the af");
+
+        List<AssociatedFiling> expected = List.of(
+                new AssociatedFiling()
+                        .category("incorporation")
+                        .date("2011-11-26T11:27:55Z")
+                        .description("associated filing")
+                        .type("MODEL ARTICLES")
+                        .descriptionValues(new DescriptionValues()
+                                .description("reason for the af")));
+
+        // when
+        List<AssociatedFiling> actual = serdesConfig.associatedFilingArrayNodeDeserialiser(objectMapper)
+                .deserialise(associatedFilings);
+
+        // then
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldThrowNonRetryableExceptionWhenIOExceptionDuringDeserialiseAssociatedFilings() {
+        // given
+        ArrayNode associatedFilings = objectMapper.createArrayNode();
+        associatedFilings.addObject()
+                .put("unknown_field", "unknown");
+
+        // when
+        Executable executable = () -> serdesConfig.associatedFilingArrayNodeDeserialiser(objectMapper)
+                .deserialise(associatedFilings);
+
+        // then
+        NonRetryableException actual = assertThrows(NonRetryableException.class, executable);
+        assertEquals("Unable to deserialise array node: [%s]".formatted(associatedFilings.toPrettyString()),
                 actual.getMessage());
     }
 }
