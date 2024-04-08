@@ -27,7 +27,8 @@ public class TransformerService {
             Result result = rule.match(delta);
             if (result.matched()) {
                 When when = rule.when();
-                LOGGER.info("Matched transform rule: [eq: %s, like: %s]".formatted(when.formType(), when.like()));
+                LOGGER.info("Transaction %s, matched transform rule: [eq: %s, like: %s]"
+                        .formatted(delta.get("_entity_id").textValue(), when.formType(), when.like()));
                 return rule.apply(delta, result.contextData());
             }
         }
