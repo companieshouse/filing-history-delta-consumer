@@ -21,6 +21,8 @@ class ChildNodeMapperFactoryTest {
     private AnnotationNodeMapper annotationNodeMapper;
     @Mock
     private AssociatedFilingNodeMapper associatedFilingNodeMapper;
+    @Mock
+    private EmbeddedChildNodeMapper embeddedChildNodeMapper;
 
     @Test
     void shouldReturnAnnotationNodeMapperWhenPassedAnnotationTransactionKindEnum() {
@@ -45,11 +47,22 @@ class ChildNodeMapperFactoryTest {
     }
 
     @Test
+    void shouldReturnEmbeddedChildNodeMapperWhenPassedTopLevelTransactionKindEnum() {
+        // given
+
+        // when
+        ChildNodeMapper expected = childNodeMapperFactory.getChildMapper(TransactionKindEnum.TOP_LEVEL);
+
+        // then
+        assertInstanceOf(EmbeddedChildNodeMapper.class, expected);
+    }
+
+    @Test
     void shouldThrowIllegalStateExceptionWhenPassedInvalidTransactionKindEnum() {
         // given
 
         // when
-        Executable executable = () -> childNodeMapperFactory.getChildMapper(TransactionKindEnum.TOP_LEVEL);
+        Executable executable = () -> childNodeMapperFactory.getChildMapper(TransactionKindEnum.RESOLUTION);
 
         // then
         assertThrows(IllegalStateException.class, executable);

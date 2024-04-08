@@ -3,7 +3,9 @@ package uk.gov.companieshouse.filinghistory.consumer.service;
 import static uk.gov.companieshouse.api.filinghistory.InternalData.TransactionKindEnum.TOP_LEVEL;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.util.List;
 import org.springframework.stereotype.Component;
+import uk.gov.companieshouse.api.delta.ChildProperties;
 import uk.gov.companieshouse.api.delta.FilingHistory;
 import uk.gov.companieshouse.api.delta.FilingHistoryDelta;
 import uk.gov.companieshouse.api.filinghistory.InternalFilingHistoryApi;
@@ -22,9 +24,9 @@ public class FilingHistoryDeltaProcessor {
     private final InternalFilingHistoryApiMapper internalFilingHistoryApiMapper;
 
     public FilingHistoryDeltaProcessor(TransactionKindService kindService,
-            PreTransformMapper preTransformMapper,
-            TransformerService transformerService,
-            InternalFilingHistoryApiMapper internalFilingHistoryApiMapper) {
+                                       PreTransformMapper preTransformMapper,
+                                       TransformerService transformerService,
+                                       InternalFilingHistoryApiMapper internalFilingHistoryApiMapper) {
         this.kindService = kindService;
         this.preTransformMapper = preTransformMapper;
         this.transformerService = transformerService;
@@ -47,7 +49,7 @@ public class FilingHistoryDeltaProcessor {
         ObjectNode topLevelObjectNode = preTransformMapper.mapDeltaToObjectNode(filingHistory);
         ObjectNode transformedJsonNode = (ObjectNode) transformerService.transform(topLevelObjectNode, entityId);
 
-        if (!TOP_LEVEL.equals(kindResult.kind())) {
+        if (!TOP_LEVEL.equals(kindResult.kind()) || topLevelTransactionHasChildArray(filingHistory.getChild())) {
             ChildPair childPair = preTransformMapper.mapChildDeltaToObjectNode(kindResult.kind(), filingHistory);
             ObjectNode dataNode = (ObjectNode) transformedJsonNode.get("data");
             dataNode.putArray(childPair.type()).add(transformerService.transform(childPair.node(), entityId));
@@ -61,5 +63,9 @@ public class FilingHistoryDeltaProcessor {
                 updatedBy);
 
         return internalFilingHistoryApiMapper.mapInternalFilingHistoryApi(arguments);
+    }
+
+    private static boolean topLevelTransactionHasChildArray(List<ChildProperties> childArray) {
+        return childArray != null && !childArray.isEmpty();
     }
 }

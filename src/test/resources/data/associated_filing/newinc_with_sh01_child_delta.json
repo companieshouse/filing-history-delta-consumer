@@ -1,0 +1,29 @@
+{
+  "filing_history": [
+    {
+      "category": "6",
+      "receive_date": "20120720113722",
+      "form_type": "NEWINC",
+      "description": "CERTIFICATE OF INCORPORATION GENERAL COMPANY DETAILS & STATEMENTS OF; OFFICERS, CAPITAL & SHAREHOLDINGS, GUARANTEE, COMPLIANCE MEMORANDUM OF ASSOCIATION ARTICLES OF ASSOCIATION",
+      "barcode": "X1DJ6T7N",
+      "document_id": "000N0815147.0D4891",
+      "company_number": "12345678",
+      "entity_id": "3061118399",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0",
+      "child": [
+        {
+          "entity_id": "3061118399",
+          "receive_date": "20120720113722",
+          "category": "6",
+          "form_type": "SH01",
+          "barcode": "X1DJ6T7N",
+          "description": "20/07/12 Statement of Capital;GBP 100",
+          "document_id": "3049982725"
+        }
+      ]
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}
