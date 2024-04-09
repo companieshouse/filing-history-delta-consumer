@@ -11,6 +11,7 @@ import uk.gov.companieshouse.api.filinghistory.ExternalData;
 import uk.gov.companieshouse.api.filinghistory.InternalData;
 import uk.gov.companieshouse.api.filinghistory.InternalFilingHistoryApi;
 import uk.gov.companieshouse.filinghistory.consumer.exception.NonRetryableException;
+import uk.gov.companieshouse.filinghistory.consumer.logging.DataMapHolder;
 import uk.gov.companieshouse.filinghistory.consumer.service.TransactionKindResult;
 import uk.gov.companieshouse.logging.Logger;
 import uk.gov.companieshouse.logging.LoggerFactory;
@@ -34,7 +35,7 @@ public class InternalFilingHistoryApiMapper {
 
         TransactionKindResult kindResult = Optional.ofNullable(args.kindResult())
                 .orElseGet(() -> {
-                    LOGGER.error("Null transaction kind result provided");
+                    LOGGER.error("Null transaction kind result provided", DataMapHolder.getLogMap());
                     throw new NonRetryableException("Null transaction kind result provided");
                 });
 

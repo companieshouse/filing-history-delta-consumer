@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import uk.gov.companieshouse.filinghistory.consumer.exception.NonRetryableException;
+import uk.gov.companieshouse.filinghistory.consumer.logging.DataMapHolder;
 import uk.gov.companieshouse.logging.Logger;
 import uk.gov.companieshouse.logging.LoggerFactory;
 
@@ -22,7 +23,7 @@ public class FormTypeConfig {
     public List<String> formTypeBlacklist(@Value("${associated-filings.blacklist}") final String file) {
         InputStream stream = getClass().getResourceAsStream("/%s".formatted(file));
         if (stream == null) {
-            LOGGER.error("Blacklist file not found: [%s]".formatted(file));
+            LOGGER.error("Blacklist file not found: [%s]".formatted(file), DataMapHolder.getLogMap());
             throw new NonRetryableException("Blacklist file not found: [%s]".formatted(file));
         }
         Scanner scanner = new Scanner(stream);
