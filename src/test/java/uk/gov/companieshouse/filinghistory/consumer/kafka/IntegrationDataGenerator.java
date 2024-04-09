@@ -133,7 +133,8 @@ public class IntegrationDataGenerator implements ArgumentsProvider {
                                 logger.warn("No delta JSON found for transaction {}", deltas.transactionId());
                             }
                         } catch (RuntimeException e) {
-                            logger.error("Processing failed for delta: Java {}, Perl {}", javaDelta, perlDelta);
+                            logger.error("Processing failed for delta: transaction_id {}, Java {}, Perl {}",
+                                    deltas.transactionId, javaDelta, perlDelta);
                         }
                     });
             logger.info("Done");

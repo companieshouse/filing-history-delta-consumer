@@ -5,6 +5,7 @@ import static uk.gov.companieshouse.filinghistory.consumer.Application.NAMESPACE
 import com.fasterxml.jackson.databind.JsonNode;
 import java.util.List;
 import java.util.Map;
+import uk.gov.companieshouse.filinghistory.consumer.logging.DataMapHolder;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.rules.Result;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.rules.Rule;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.rules.When;
@@ -27,7 +28,9 @@ public class TransformerService {
             Result result = rule.match(delta);
             if (result.matched()) {
                 When when = rule.when();
-                LOGGER.info("Matched transform rule: [eq: %s, like: %s]".formatted(when.formType(), when.like()));
+                LOGGER.info("Transaction %s, matched transform rule: [eq: %s, like: %s]"
+                                .formatted(delta.get("_entity_id").textValue(), when.formType(), when.like()),
+                        DataMapHolder.getLogMap());
                 return rule.apply(delta, result.contextData());
             }
         }

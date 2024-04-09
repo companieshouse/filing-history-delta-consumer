@@ -4292,8 +4292,6 @@
       data.description_values.charge_number: '[% chargeNumber %]'
       data.subcategory: debenture
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% chargeCreationDate | bson_date %]'
-      data.description_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
 - when:
     eq:
       data.type: LLMR03
@@ -4522,8 +4520,6 @@
       data.description_values.charge_number: '[% chargeNumber %]'
       data.subcategory: create
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% chargeCreationDate | bson_date %]'
-      data.description_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
 - when:
     eq:
       data.type: LLMR08
