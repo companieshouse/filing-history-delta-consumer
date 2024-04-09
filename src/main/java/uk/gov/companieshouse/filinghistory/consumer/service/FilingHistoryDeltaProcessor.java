@@ -33,6 +33,7 @@ public class FilingHistoryDeltaProcessor {
 
     public InternalFilingHistoryApi processDelta(FilingHistoryDelta delta, final String updatedBy) {
         FilingHistory filingHistory = delta.getFilingHistory().getFirst();
+        final String entityId = filingHistory.getEntityId();
 
         TransactionKindCriteria criteria = new TransactionKindCriteria(filingHistory.getEntityId(),
                 filingHistory.getParentEntityId(), filingHistory.getFormType(), filingHistory.getParentFormType(),
@@ -40,12 +41,12 @@ public class FilingHistoryDeltaProcessor {
         TransactionKindResult kindResult = kindService.encodeIdByTransactionKind(criteria);
 
         ObjectNode topLevelObjectNode = preTransformMapper.mapDeltaToObjectNode(filingHistory);
-        ObjectNode transformedJsonNode = (ObjectNode) transformerService.transform(topLevelObjectNode);
+        ObjectNode transformedJsonNode = (ObjectNode) transformerService.transform(topLevelObjectNode, entityId);
 
         if (!TOP_LEVEL.equals(kindResult.kind())) {
             ChildPair childPair = preTransformMapper.mapChildDeltaToObjectNode(kindResult.kind(), filingHistory);
             ObjectNode dataNode = (ObjectNode) transformedJsonNode.get("data");
-            dataNode.putArray(childPair.type()).add(transformerService.transform(childPair.node()));
+            dataNode.putArray(childPair.type()).add(transformerService.transform(childPair.node(), entityId));
         }
 
         InternalFilingHistoryApiMapperArguments arguments = new InternalFilingHistoryApiMapperArguments(
