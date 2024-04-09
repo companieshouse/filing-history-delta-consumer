@@ -10,6 +10,8 @@ import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.For
 @Component
 public class AssociatedFilingNodeMapper implements ChildNodeMapper {
 
+    private static final String CHILD_ARRAY_KEY = "associated_filings";
+
     private final ObjectMapper objectMapper;
     private final FormatDate formatDate;
 
@@ -26,6 +28,6 @@ public class AssociatedFilingNodeMapper implements ChildNodeMapper {
                 .put("description",
                         StringUtils.isNotBlank(delta.getDescription()) ? delta.getDescription() : "");
 
-        return new ChildPair("associated_filings", objectNode);
+        return new ChildPair(CHILD_ARRAY_KEY, objectNode);
     }
 }

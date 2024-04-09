@@ -21,8 +21,8 @@ public class ChildNodeMapperFactory {
         return switch (kind) {
             case ANNOTATION -> annotationNodeMapper;
             case ASSOCIATED_FILING -> associatedFilingNodeMapper;
-            case TOP_LEVEL -> embeddedChildNodeMapper; // TODO: Check if TOP_LEVEL makes sense here?
-            default -> throw new IllegalStateException("Unexpected value: " + kind.getValue());
+            case TOP_LEVEL -> embeddedChildNodeMapper;
+            default -> throw new IllegalStateException("Unexpected transaction kind: " + kind.getValue());
         };
     }
 }

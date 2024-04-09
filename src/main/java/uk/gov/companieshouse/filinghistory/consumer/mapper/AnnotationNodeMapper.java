@@ -10,6 +10,8 @@ import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.For
 @Component
 public class AnnotationNodeMapper implements ChildNodeMapper {
 
+    private static final String CHILD_ARRAY_KEY = "annotations";
+
     private final ObjectMapper objectMapper;
     private final FormatDate formatDate;
 
@@ -25,7 +27,7 @@ public class AnnotationNodeMapper implements ChildNodeMapper {
                 .put("date", formatDate.format(delta.getReceiveDate()))
                 .put("annotation", mapAnnotationField(delta));
 
-        return new ChildPair("annotations", objectNode);
+        return new ChildPair(CHILD_ARRAY_KEY, objectNode);
     }
 
     private String mapAnnotationField(FilingHistory delta) {

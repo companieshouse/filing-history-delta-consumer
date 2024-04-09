@@ -68,7 +68,11 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
     @ParameterizedTest
     @CsvSource({
             "annotations/annotation",
-            "associated_filing/associated_filing",
+
+            "annual_return/annual_return",
+
+            "associated_filing/associated_filing", "associated_filing/newinc_with_sh01_child",
+
             "officers/EW01RSS", "officers/TM01",
 
             "capital/SH03", "capital/SH07", "capital/SH01", "capital/SH02_rule_2", "capital/SH04_rule_4",

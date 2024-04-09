@@ -38,7 +38,7 @@ public class FilingHistoryDeltaProcessor {
         final String entityId = filingHistory.getEntityId();
 
         TransactionKindCriteria criteria = new TransactionKindCriteria(
-                filingHistory.getEntityId(),
+                entityId,
                 filingHistory.getParentEntityId(),
                 filingHistory.getFormType(),
                 filingHistory.getParentFormType(),
@@ -49,10 +49,10 @@ public class FilingHistoryDeltaProcessor {
         ObjectNode topLevelObjectNode = preTransformMapper.mapDeltaToObjectNode(filingHistory);
         ObjectNode transformedJsonNode = (ObjectNode) transformerService.transform(topLevelObjectNode, entityId);
 
-        if (!TOP_LEVEL.equals(kindResult.kind()) || topLevelTransactionHasChildArray(filingHistory.getChild())) {
+        if (!TOP_LEVEL.equals(kindResult.kind()) || hasChildArray(filingHistory.getChild())) {
             ChildPair childPair = preTransformMapper.mapChildDeltaToObjectNode(kindResult.kind(), filingHistory);
             ObjectNode dataNode = (ObjectNode) transformedJsonNode.get("data");
-            dataNode.putArray(childPair.type()).add(transformerService.transform(childPair.node(), entityId));
+            dataNode.putArray(childPair.childArrayKey()).add(transformerService.transform(childPair.node(), entityId));
         }
 
         InternalFilingHistoryApiMapperArguments arguments = new InternalFilingHistoryApiMapperArguments(
@@ -65,7 +65,7 @@ public class FilingHistoryDeltaProcessor {
         return internalFilingHistoryApiMapper.mapInternalFilingHistoryApi(arguments);
     }
 
-    private static boolean topLevelTransactionHasChildArray(List<ChildProperties> childArray) {
+    private static boolean hasChildArray(List<ChildProperties> childArray) {
         return childArray != null && !childArray.isEmpty();
     }
 }

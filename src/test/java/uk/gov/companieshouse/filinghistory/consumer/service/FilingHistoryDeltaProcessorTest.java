@@ -126,7 +126,7 @@ class FilingHistoryDeltaProcessorTest {
         when(transformerService.transform(any(), any())).thenReturn(postTransformNode);
         when(preTransformMapper.mapChildDeltaToObjectNode(any(), any())).thenReturn(childPair);
         when(childPair.node()).thenReturn(preTransformChildNode);
-        when(childPair.type()).thenReturn("annotations");
+        when(childPair.childArrayKey()).thenReturn("annotations");
         when(postTransformNode.get(any())).thenReturn(dataNode);
         when(dataNode.putArray(any())).thenReturn(annotationsArrayNode);
         when(transformerService.transform(preTransformChildNode, ENTITY_ID)).thenReturn(postTransformChildNode);
