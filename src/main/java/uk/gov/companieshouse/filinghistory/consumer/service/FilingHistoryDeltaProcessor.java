@@ -35,9 +35,13 @@ public class FilingHistoryDeltaProcessor {
         FilingHistory filingHistory = delta.getFilingHistory().getFirst();
         final String entityId = filingHistory.getEntityId();
 
-        TransactionKindCriteria criteria = new TransactionKindCriteria(filingHistory.getEntityId(),
-                filingHistory.getParentEntityId(), filingHistory.getFormType(), filingHistory.getParentFormType(),
+        TransactionKindCriteria criteria = new TransactionKindCriteria(
+                filingHistory.getEntityId(),
+                filingHistory.getParentEntityId(),
+                filingHistory.getFormType(),
+                filingHistory.getParentFormType(),
                 filingHistory.getBarcode());
+
         TransactionKindResult kindResult = kindService.encodeIdByTransactionKind(criteria);
 
         ObjectNode topLevelObjectNode = preTransformMapper.mapDeltaToObjectNode(filingHistory);
