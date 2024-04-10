@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MDEzNzM1OTAxMXNhbHQ",
+    "category" : "annual-return",
+    "date" : "1998-12-31T11:59:41Z",
+    "description" : "legacy",
+    "description_values" : {
+      "description" : "Return made up to 28/12/98; no change of members"
+    },
+    "links" : {
+      "self" : "/company/12345678/filing-history/MDEzNzM1OTAxMXNhbHQ"
+    },
+    "paper_filed" : true,
+    "type" : "363s"
+  },
+  "internal_data": {
+    "company_number" : "12345678",
+    "document_id" : "000AVURBCJW1039",
+    "entity_id" : "0137359011",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level",
+    "parent_entity_id": ""
+  }
+}

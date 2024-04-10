@@ -1,0 +1,42 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzA2MTExODM5OXNhbHQ",
+    "barcode" : "X1DJ6T7N",
+    "associated_filings" : [
+      {
+        "action_date" : "2012-07-20T00:00:00Z",
+        "category" : "capital",
+        "date" : "2012-07-20T11:37:22Z",
+        "description" : "statement-of-capital",
+        "description_values" : {
+          "capital" : [
+            {
+              "currency" : "GBP",
+              "figure" : "100"
+            }
+          ],
+          "date" : "2012-07-20T00:00:00Z"
+        },
+        "original_description" : "20/07/12 Statement of Capital;GBP 100",
+        "type" : "SH01"
+      }
+    ],
+    "category" : "incorporation",
+    "date" : "2012-07-20T11:37:22Z",
+    "description" : "incorporation-company",
+    "links" : {
+      "self" : "/company/12345678/filing-history/MzA2MTExODM5OXNhbHQ"
+    },
+    "type" : "NEWINC"
+  },
+  "internal_data": {
+    "company_number" : "12345678",
+    "entity_id" : "3061118399",
+    "document_id": "000N0815147.0D4891",
+    "original_description" : "Certificate of incorporation general company details & statements of; officers, capital & shareholdings, guarantee, compliance memorandum of association articles of association",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level",
+    "parent_entity_id": ""
+  }
+}

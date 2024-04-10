@@ -8,18 +8,21 @@ public class ChildNodeMapperFactory {
 
     private final AnnotationNodeMapper annotationNodeMapper;
     private final AssociatedFilingNodeMapper associatedFilingNodeMapper;
+    private final EmbeddedChildNodeMapper embeddedChildNodeMapper;
 
     public ChildNodeMapperFactory(AnnotationNodeMapper annotationNodeMapper,
-                                  AssociatedFilingNodeMapper associatedFilingNodeMapper) {
+                                  AssociatedFilingNodeMapper associatedFilingNodeMapper, EmbeddedChildNodeMapper embeddedChildNodeMapper) {
         this.annotationNodeMapper = annotationNodeMapper;
         this.associatedFilingNodeMapper = associatedFilingNodeMapper;
+        this.embeddedChildNodeMapper = embeddedChildNodeMapper;
     }
 
     public ChildNodeMapper getChildMapper(TransactionKindEnum kind) {
         return switch (kind) {
             case ANNOTATION -> annotationNodeMapper;
             case ASSOCIATED_FILING -> associatedFilingNodeMapper;
-            default -> throw new IllegalStateException("Unexpected value: " + kind.getValue());
+            case TOP_LEVEL -> embeddedChildNodeMapper;
+            default -> throw new IllegalStateException("Unexpected transaction kind: " + kind.getValue());
         };
     }
 }
