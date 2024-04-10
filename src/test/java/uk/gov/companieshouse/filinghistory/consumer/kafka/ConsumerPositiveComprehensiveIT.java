@@ -67,11 +67,9 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
 
     @ParameterizedTest
     @CsvSource({
-            "annotations/annotation",
+            "annotation/annotation",
 
-            "annual_return/annual_return",
-
-            "associated_filing/associated_filing", "associated_filing/newinc_with_sh01_child",
+            "annual_return/363s",
 
             "officers/EW01RSS", "officers/TM01",
 
@@ -84,6 +82,8 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
             "accounts/AAMD_rule_9", "accounts/AAMD_rule_1", "accounts/AAMD_rule_7",
 
             "address/287",
+
+            "incorporation/child_transaction/model_articles", "incorporation/child_transaction/newinc",
 
             "insolvency/3.10", "insolvency/4.13", "insolvency/4.20_rule_2", "insolvency/4.31", "insolvency/4.33",
             "insolvency/4.35", "insolvency/4.38", "insolvency/4.40", "insolvency/4.43", "insolvency/WU15(Scot)",
