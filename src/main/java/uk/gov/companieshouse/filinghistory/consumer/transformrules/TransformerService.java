@@ -23,13 +23,13 @@ public class TransformerService {
         this.compiledRules = compiledRules;
     }
 
-    public JsonNode transform(JsonNode delta) {
+    public JsonNode transform(JsonNode delta, final String entityId) {
         for (Rule rule : compiledRules) {
             Result result = rule.match(delta);
             if (result.matched()) {
                 When when = rule.when();
                 LOGGER.info("Transaction %s, matched transform rule: [eq: %s, like: %s]"
-                                .formatted(delta.get("_entity_id").textValue(), when.formType(), when.like()),
+                                .formatted(entityId, when.formType(), when.like()),
                         DataMapHolder.getLogMap());
                 return rule.apply(delta, result.contextData());
             }

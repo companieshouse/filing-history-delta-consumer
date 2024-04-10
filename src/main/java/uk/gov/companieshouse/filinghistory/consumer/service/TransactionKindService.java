@@ -17,17 +17,38 @@ import uk.gov.companieshouse.logging.LoggerFactory;
 public class TransactionKindService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(NAMESPACE);
+    private static final String ANNOTATION = "ANNOTATION";
 
+    private final FormTypeService formTypeService;
     private final String transactionIdSalt;
 
-    public TransactionKindService(@Value("${transaction-id-salt}") String transactionIdSalt) {
+    public TransactionKindService(FormTypeService formTypeService,
+            @Value("${transaction-id-salt}") String transactionIdSalt) {
+        this.formTypeService = formTypeService;
         this.transactionIdSalt = transactionIdSalt;
     }
 
-    public TransactionKindResult encodeIdByTransactionKind(TransactionKindCriteria transactionKindCriteria) {
-        final String encodedId = encodeTransactionId(transactionKindCriteria.entityId());
-        LOGGER.debug("Transaction Kind: [%s]".formatted(transactionKindCriteria.formType()), DataMapHolder.getLogMap());
-        return new TransactionKindResult(encodedId, TransactionKindEnum.TOP_LEVEL);
+    public TransactionKindResult encodeIdByTransactionKind(TransactionKindCriteria kindCriteria) {
+        final String encodedId;
+        final TransactionKindEnum kindEnum;
+        if (ANNOTATION.equals(kindCriteria.formType())) {
+            if (StringUtils.isNotBlank(kindCriteria.parentEntityId())) {
+                encodedId = encodeTransactionId(kindCriteria.parentEntityId());
+            } else {
+                encodedId = encodeTransactionId(kindCriteria.entityId());
+            }
+            kindEnum = TransactionKindEnum.ANNOTATION;
+        } else if (!formTypeService.isAssociatedFilingBlacklisted(kindCriteria)
+                && StringUtils.isNotBlank(kindCriteria.parentEntityId())) {
+            encodedId = encodeTransactionId(kindCriteria.parentEntityId());
+            kindEnum = TransactionKindEnum.ASSOCIATED_FILING;
+        } else {
+            encodedId = encodeTransactionId(kindCriteria.entityId());
+            kindEnum = TransactionKindEnum.TOP_LEVEL;
+        }
+
+        LOGGER.debug("Transaction Kind: [%s]".formatted(kindEnum.getValue()), DataMapHolder.getLogMap());
+        return new TransactionKindResult(encodedId, kindEnum);
     }
 
     public String encodeTransactionId(String id) {

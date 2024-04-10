@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import uk.gov.companieshouse.api.delta.DescriptionValues;
 import uk.gov.companieshouse.api.delta.FilingHistory;
+import uk.gov.companieshouse.api.filinghistory.InternalData;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.FormatDate;
 
 @Component
@@ -13,10 +14,19 @@ public class PreTransformMapper {
 
     private final ObjectMapper objectMapper;
     private final FormatDate formatDate;
+    private final ChildNodeMapperFactory childNodeMapperFactory;
 
-    public PreTransformMapper(ObjectMapper objectMapper, FormatDate formatDate) {
+    public PreTransformMapper(ObjectMapper objectMapper, FormatDate formatDate,
+            ChildNodeMapperFactory childNodeMapperFactory) {
         this.objectMapper = objectMapper;
         this.formatDate = formatDate;
+        this.childNodeMapperFactory = childNodeMapperFactory;
+    }
+
+    public ChildPair mapChildDeltaToObjectNode(InternalData.TransactionKindEnum transactionKind,
+            FilingHistory filingHistory) {
+        return childNodeMapperFactory.getChildMapper(transactionKind)
+                .mapChildObjectNode(filingHistory);
     }
 
     public ObjectNode mapDeltaToObjectNode(final FilingHistory filingHistory) {
@@ -57,7 +67,8 @@ public class PreTransformMapper {
         putIfNotBlank(originalValuesNode, "change_date", descriptionValues.getChangeDate());
         putIfNotBlank(originalValuesNode, "charge_creation_date", descriptionValues.getChargeCreationDate());
         putIfNotBlank(originalValuesNode, "made_up_date", descriptionValues.getMadeUpDate());
-        putIfNotBlank(originalValuesNode, "mortgage_satisfaction_date", descriptionValues.getMortgageSatisfactionDate());
+        putIfNotBlank(originalValuesNode, "mortgage_satisfaction_date",
+                descriptionValues.getMortgageSatisfactionDate());
         putIfNotBlank(originalValuesNode, "new_ro_address", descriptionValues.getNewRoAddress());
         putIfNotBlank(originalValuesNode, "new_date", descriptionValues.getNewDate());
         putIfNotBlank(originalValuesNode, "notification_date", descriptionValues.getNotificationDate());
@@ -74,7 +85,8 @@ public class PreTransformMapper {
                 .putObject("data")
                 .put("type", filingHistory.getFormType())
                 .put("date", formatDate.format(filingHistory.getReceiveDate()))
-                .put("description", filingHistory.getDescription().replace("<", "\\")
+                .put("description", filingHistory.getDescription()
+                        .replace("<", "\\")
                         .replace("\n", "\\"))
                 .put("category", filingHistory.getCategory());
     }

@@ -14,6 +14,7 @@ import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.Tra
 class TransformerServiceTest {
 
     private static final ObjectMapper MAPPER = TransformerTestingUtils.getMapper();
+    private static final String ENTITY_ID = "entityId";
     private static final String TM01_REQUEST_BODY = """
             {
                 "_id" : "mongo_id",
@@ -119,7 +120,7 @@ class TransformerServiceTest {
                 .put("officer_name", "Joe Blogs");
 
         // when
-        JsonNode actual = service.transform(delta);
+        JsonNode actual = service.transform(delta, ENTITY_ID);
 
         // then
         assertEquals(expected, actual);
@@ -149,7 +150,7 @@ class TransformerServiceTest {
                 .put("made_up_date", "1998-04-05T00:00:00Z");
 
         // when
-        JsonNode actual = service.transform(delta);
+        JsonNode actual = service.transform(delta, ENTITY_ID);
 
         // then
         assertEquals(expected, actual);
@@ -183,7 +184,7 @@ class TransformerServiceTest {
                 .add(capital);
 
         // when
-        JsonNode actual = service.transform(delta);
+        JsonNode actual = service.transform(delta, ENTITY_ID);
 
         // then
         assertEquals(expected, actual);
@@ -211,7 +212,7 @@ class TransformerServiceTest {
                 .put("new_date", "2012-07-01T00:00:00Z");
 
         // when
-        JsonNode actual = service.transform(delta);
+        JsonNode actual = service.transform(delta, ENTITY_ID);
 
         // then
         assertEquals(expected, actual);
@@ -237,7 +238,7 @@ class TransformerServiceTest {
                 .put("description", "Some unrecognised string");
 
         // when
-        JsonNode actual = service.transform(delta);
+        JsonNode actual = service.transform(delta, ENTITY_ID);
 
         // then
         assertEquals(expected, actual);

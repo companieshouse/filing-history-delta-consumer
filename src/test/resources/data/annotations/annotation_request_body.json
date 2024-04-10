@@ -1,0 +1,37 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzA0Mzk3MjY3NXNhbHQ",
+    "category" : "miscellaneous",
+    "description" : "legacy",
+    "description_values" : {
+      "description" : "A second filed TM01 was registered on the 05 November 2012"
+    },
+    "type" : "ANNOTATION",
+    "date" : "2011-11-26T11:27:55Z",
+    "annotations" : [
+      {
+        "annotation" : "A second filed TM01 was registered on the 05 November 2012",
+        "category" : "A second filed TM01 was registered on the 05 November 2012",
+        "date" : "2011-11-26T11:27:55Z",
+        "description" : "A second filed TM01 was registered on the 05 November 2012",
+        "description_values" : {
+          "description" : "A second filed TM01 was registered on the 05 November 2012"
+        },
+        "type" : "ANNOTATION"
+      }
+    ],
+    "links" : {
+      "self" : "/company/12345678/filing-history/MzA0Mzk3MjY3NXNhbHQ"
+    },
+    "paper_filed" : true
+  },
+  "internal_data": {
+    "original_description": "A second filed TM01 was registered on the 05 November 2012",
+    "company_number" : "12345678",
+    "entity_id" : "3047900699",
+    "parent_entity_id": "3043972675",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "annotation"
+  }
+}

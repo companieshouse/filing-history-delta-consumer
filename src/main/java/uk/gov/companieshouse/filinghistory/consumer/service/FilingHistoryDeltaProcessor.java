@@ -1,10 +1,13 @@
 package uk.gov.companieshouse.filinghistory.consumer.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import static uk.gov.companieshouse.api.filinghistory.InternalData.TransactionKindEnum.TOP_LEVEL;
+
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.stereotype.Component;
 import uk.gov.companieshouse.api.delta.FilingHistory;
 import uk.gov.companieshouse.api.delta.FilingHistoryDelta;
 import uk.gov.companieshouse.api.filinghistory.InternalFilingHistoryApi;
+import uk.gov.companieshouse.filinghistory.consumer.mapper.ChildPair;
 import uk.gov.companieshouse.filinghistory.consumer.mapper.InternalFilingHistoryApiMapper;
 import uk.gov.companieshouse.filinghistory.consumer.mapper.InternalFilingHistoryApiMapperArguments;
 import uk.gov.companieshouse.filinghistory.consumer.mapper.PreTransformMapper;
@@ -18,7 +21,10 @@ public class FilingHistoryDeltaProcessor {
     private final TransformerService transformerService;
     private final InternalFilingHistoryApiMapper internalFilingHistoryApiMapper;
 
-    public FilingHistoryDeltaProcessor(TransactionKindService kindService, PreTransformMapper preTransformMapper, TransformerService transformerService, InternalFilingHistoryApiMapper internalFilingHistoryApiMapper) {
+    public FilingHistoryDeltaProcessor(TransactionKindService kindService,
+            PreTransformMapper preTransformMapper,
+            TransformerService transformerService,
+            InternalFilingHistoryApiMapper internalFilingHistoryApiMapper) {
         this.kindService = kindService;
         this.preTransformMapper = preTransformMapper;
         this.transformerService = transformerService;
@@ -26,22 +32,30 @@ public class FilingHistoryDeltaProcessor {
     }
 
     public InternalFilingHistoryApi processDelta(FilingHistoryDelta delta, final String updatedBy) {
-        final FilingHistory filingHistory = delta.getFilingHistory().getFirst();
-        final JsonNode transformedJsonNode = transformerService.transform(
-                preTransformMapper.mapDeltaToObjectNode(filingHistory));
+        FilingHistory filingHistory = delta.getFilingHistory().getFirst();
+        final String entityId = filingHistory.getEntityId();
+
+        TransactionKindCriteria criteria = new TransactionKindCriteria(filingHistory.getEntityId(),
+                filingHistory.getParentEntityId(), filingHistory.getFormType(), filingHistory.getParentFormType(),
+                filingHistory.getBarcode());
+        TransactionKindResult kindResult = kindService.encodeIdByTransactionKind(criteria);
+
+        ObjectNode topLevelObjectNode = preTransformMapper.mapDeltaToObjectNode(filingHistory);
+        ObjectNode transformedJsonNode = (ObjectNode) transformerService.transform(topLevelObjectNode, entityId);
+
+        if (!TOP_LEVEL.equals(kindResult.kind())) {
+            ChildPair childPair = preTransformMapper.mapChildDeltaToObjectNode(kindResult.kind(), filingHistory);
+            ObjectNode dataNode = (ObjectNode) transformedJsonNode.get("data");
+            dataNode.putArray(childPair.type()).add(transformerService.transform(childPair.node(), entityId));
+        }
+
         InternalFilingHistoryApiMapperArguments arguments = new InternalFilingHistoryApiMapperArguments(
                 transformedJsonNode,
-                kindService.encodeIdByTransactionKind(buildTransactionCriteria(filingHistory)),
+                kindResult,
                 delta.getFilingHistory().getFirst().getCompanyNumber(),
                 delta.getDeltaAt(),
                 updatedBy);
 
-        return internalFilingHistoryApiMapper.mapJsonNodeToInternalFilingHistoryApi(arguments);
-    }
-
-    private static TransactionKindCriteria buildTransactionCriteria(final FilingHistory filingHistory) {
-        return new TransactionKindCriteria(
-                filingHistory.getEntityId(), filingHistory.getParentEntityId(), filingHistory.getFormType(),
-                filingHistory.getParentFormType(), filingHistory.getBarcode());
+        return internalFilingHistoryApiMapper.mapInternalFilingHistoryApi(arguments);
     }
 }

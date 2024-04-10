@@ -9,7 +9,9 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import uk.gov.companieshouse.api.filinghistory.AltCapitalDescriptionValue;
+import uk.gov.companieshouse.api.filinghistory.Annotation;
 import uk.gov.companieshouse.api.filinghistory.CapitalDescriptionValue;
+import uk.gov.companieshouse.api.filinghistory.DescriptionValues;
 import uk.gov.companieshouse.filinghistory.consumer.exception.NonRetryableException;
 
 class SerdesConfigTest {
@@ -123,6 +125,54 @@ class SerdesConfigTest {
         // then
         NonRetryableException actual = assertThrows(NonRetryableException.class, executable);
         assertEquals("Unable to deserialise array node: [%s]".formatted(capital.toPrettyString()),
+                actual.getMessage());
+    }
+
+    @Test
+    void shouldDeserialiseAnnotationsArrayNode() {
+        // given
+        ArrayNode annotations = objectMapper.createArrayNode();
+        annotations.addObject()
+                .put("annotation", "reason for the annotation")
+                .put("category", "annotation")
+                .put("date", "2011-11-26T11:27:55Z")
+                .put("description", "annotation")
+                .put("type", "ANNOTATION")
+                .putObject("description_values")
+                .put("description", "reason for the annotation");
+
+        List<Annotation> expected = List.of(
+                new Annotation()
+                        .annotation("reason for the annotation")
+                        .category("annotation")
+                        .date("2011-11-26T11:27:55Z")
+                        .description("annotation")
+                        .type("ANNOTATION")
+                        .descriptionValues(new DescriptionValues()
+                                .description("reason for the annotation")));
+
+        // when
+        List<Annotation> actual = serdesConfig.annotationArrayNodeDeserialiser(objectMapper)
+                .deserialise(annotations);
+
+        // then
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldThrowNonRetryableExceptionWhenIOExceptionDuringDeserialiseAnnotations() {
+        // given
+        ArrayNode annotations = objectMapper.createArrayNode();
+        annotations.addObject()
+                .put("unknown_field", "unknown");
+
+        // when
+        Executable executable = () -> serdesConfig.annotationArrayNodeDeserialiser(objectMapper)
+                .deserialise(annotations);
+
+        // then
+        NonRetryableException actual = assertThrows(NonRetryableException.class, executable);
+        assertEquals("Unable to deserialise array node: [%s]".formatted(annotations.toPrettyString()),
                 actual.getMessage());
     }
 }
