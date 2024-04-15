@@ -27,7 +27,7 @@ class AnnotationTransformerTest {
             "category",
             "description"
     })
-    void shouldTransformCategoryFieldToHaveValueOfAnnotation(final String field) {
+    void shouldTransformFieldToHaveValueOfAnnotation(final String field) {
         // given
         ObjectNode source = MAPPER.createObjectNode();
         ObjectNode actual = source.deepCopy();
