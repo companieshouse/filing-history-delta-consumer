@@ -16,6 +16,7 @@ class TransformerFactoryTest {
 
     private TransformerFactory factory;
     private final AddressCase addressCase = TransformerTestingUtils.getAddressCase();
+    private  final AnnotationTransformer annotationTransformer = TransformerTestingUtils.getAnnotationTransformer();
     private final FormatDate formatDate = TransformerTestingUtils.getBsonDate();
     private final SentenceCase sentenceCase = TransformerTestingUtils.getSentenceCase();
     private final TitleCase titleCase = TransformerTestingUtils.getTitleCase();
@@ -24,8 +25,8 @@ class TransformerFactoryTest {
 
     @BeforeEach
     void setUp() {
-        factory = new TransformerFactory(addressCase, formatDate, sentenceCase, titleCase, replaceProperty,
-                processCapital);
+        factory = new TransformerFactory(addressCase, annotationTransformer, formatDate, sentenceCase, titleCase,
+                replaceProperty, processCapital);
     }
 
     @Test
@@ -71,6 +72,17 @@ class TransformerFactoryTest {
 
         // then
         assertInstanceOf(expectedClass, actual);
+    }
+
+    @Test
+    void shouldReturnAnnotationTransformer() {
+        // given
+
+        // when
+        Transformer actual = factory.mapTransformer("annotation");
+
+        // then
+        assertInstanceOf(AnnotationTransformer.class, actual);
     }
 
     private static Stream<Arguments> transformTestArgs() {

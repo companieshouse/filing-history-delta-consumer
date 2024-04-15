@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.AddressCase;
+import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.AnnotationTransformer;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.CapitalCaptor;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.FormatDate;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.FormatNumber;
@@ -29,9 +30,10 @@ public class TransformerTestingUtils {
     private static final ProcessCapital PROCESS_CAPITAL = new ProcessCapital(MAPPER,
             new CapitalCaptor(MAPPER, new FormatNumber(), new FormatDate(MAPPER)));
     private static final AddressCase ADDRESS_CASE = new AddressCase(MAPPER, TITLE_CASE);
+    private static final AnnotationTransformer ANNOTATION_TRANSFORMER = new AnnotationTransformer();
 
-    private static final TransformerFactory TRANSFORMER_FACTORY = new TransformerFactory(ADDRESS_CASE, BSON_DATE,
-            SENTENCE_CASE, TITLE_CASE, REPLACE_PROPERTY, PROCESS_CAPITAL);
+    private static final TransformerFactory TRANSFORMER_FACTORY = new TransformerFactory(ADDRESS_CASE,
+            ANNOTATION_TRANSFORMER, BSON_DATE, SENTENCE_CASE, TITLE_CASE, REPLACE_PROPERTY, PROCESS_CAPITAL);
 
     private TransformerTestingUtils() {
     }
@@ -70,5 +72,9 @@ public class TransformerTestingUtils {
 
     public static AddressCase getAddressCase() {
         return ADDRESS_CASE;
+    }
+
+    public static AnnotationTransformer getAnnotationTransformer() {
+        return ANNOTATION_TRANSFORMER;
     }
 }
