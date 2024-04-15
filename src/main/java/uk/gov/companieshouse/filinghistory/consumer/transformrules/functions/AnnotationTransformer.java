@@ -12,6 +12,9 @@ public class AnnotationTransformer implements Transformer {
     @Override
     public void transform(JsonNode source, ObjectNode outputNode, String field, List<String> arguments,
                           Map<String, String> contextValue) {
+        String[] fields = field.split("\\.");
+        String finalField = fields[fields.length - 1];
 
+        outputNode.put(finalField, arguments.getFirst());
     }
 }
