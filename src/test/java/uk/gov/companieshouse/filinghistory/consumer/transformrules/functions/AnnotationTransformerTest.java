@@ -7,7 +7,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.TransformerTestingUtils;
 
 class AnnotationTransformerTest {
@@ -21,32 +22,21 @@ class AnnotationTransformerTest {
         annotationTransformer = new AnnotationTransformer();
     }
 
-    @Test
-    void shouldTransformCategoryFieldToHaveValueOfAnnotation() {
+    @ParameterizedTest
+    @CsvSource({
+            "category",
+            "description"
+    })
+    void shouldTransformCategoryFieldToHaveValueOfAnnotation(final String field) {
         // given
         ObjectNode source = MAPPER.createObjectNode();
         ObjectNode actual = source.deepCopy();
 
         ObjectNode expected = MAPPER.createObjectNode();
-        expected.put("category", "annotation");
+        expected.put(field, "annotation");
 
         // when
-        annotationTransformer.transform(source, actual, "category", List.of("annotation"), Collections.emptyMap());
-
-        // then
-        assertEquals(expected, actual);
-    }
-    @Test
-    void shouldTransformDescriptionFieldToHaveValueOfAnnotation() {
-        // given
-        ObjectNode source = MAPPER.createObjectNode();
-        ObjectNode actual = source.deepCopy();
-
-        ObjectNode expected = MAPPER.createObjectNode();
-        expected.put("description", "annotation");
-
-        // when
-        annotationTransformer.transform(source, actual, "description", List.of("annotation"), Collections.emptyMap());
+        annotationTransformer.transform(source, actual, field, List.of("annotation"), Collections.emptyMap());
 
         // then
         assertEquals(expected, actual);

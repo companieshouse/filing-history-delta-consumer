@@ -74,20 +74,10 @@ class TransformerFactoryTest {
         assertInstanceOf(expectedClass, actual);
     }
 
-    @Test
-    void shouldReturnAnnotationTransformer() {
-        // given
-
-        // when
-        Transformer actual = factory.mapTransformer("annotation");
-
-        // then
-        assertInstanceOf(AnnotationTransformer.class, actual);
-    }
-
     private static Stream<Arguments> transformTestArgs() {
         return Stream.of(
                 Arguments.of("address_case", AddressCase.class),
+                Arguments.of("annotation", AnnotationTransformer.class),
                 Arguments.of("bson_date", FormatDate.class),
                 Arguments.of("sentence_case", SentenceCase.class),
                 Arguments.of("title_case", TitleCase.class));
