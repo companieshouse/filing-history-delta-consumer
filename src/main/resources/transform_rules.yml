@@ -875,7 +875,7 @@
   then:
     set:
       data.category: insolvency
-      data.description: liquidation-in-administration-result-creditors-meeting
+      data.description: liquidation-in-administration-revision-administrators-proposals
       data.subcategory: administration
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -18863,36 +18863,24 @@
 - when:
     eq:
       data.type: PRE87
-    like:
-      data.description: '^(?i:PRE87 DOCUMENT PACKAGE)$'
   then:
     set:
       data.category: historical
       data.description: selection-of-documents-registered-before-January-1987
-      data.subcategory: other
-      original_description: '[% data.description | sentence_case %]'
 - when:
     eq:
       data.type: PRE87M
-    like:
-      data.description: '^(?i:PRE87 MORTGAGE DOCUMENT PACKAGE)$'
   then:
     set:
       data.category: historical
       data.description: selection-of-mortgage-documents-registered-before-January-1987
-      data.subcategory: other
-      original_description: '[% data.description | sentence_case %]'
 - when:
     eq:
       data.type: PRE87A
-    like:
-      data.description: '^(?i:PRE87 ANNUAL DOCUMENT PACKAGE)$'
   then:
     set:
       data.category: historical
       data.description: selection-of-annual-filings-registered-before-January-1987
-      data.subcategory: other
-      original_description: '[% data.description | sentence_case %]'
 - when:
     eq:
      data.type: FE01
