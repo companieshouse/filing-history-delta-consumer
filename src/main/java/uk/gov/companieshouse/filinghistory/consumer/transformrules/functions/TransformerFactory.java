@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 public class TransformerFactory {
 
     private final AddressCase addressCase;
+    private final AnnotationTransformer annotationTransformer;
     private final FormatDate formatDate;
     private final SentenceCase sentenceCase;
     private final TitleCase titleCase;
@@ -13,10 +14,11 @@ public class TransformerFactory {
 
     private final ProcessCapital processCapital;
 
-    public TransformerFactory(AddressCase addressCase, FormatDate formatDate,
-            SentenceCase sentenceCase, TitleCase titleCase, ReplaceProperty replaceProperty,
-            ProcessCapital processCapital) {
+    public TransformerFactory(AddressCase addressCase, AnnotationTransformer annotationTransformer, FormatDate formatDate,
+                              SentenceCase sentenceCase, TitleCase titleCase, ReplaceProperty replaceProperty,
+                              ProcessCapital processCapital) {
         this.addressCase = addressCase;
+        this.annotationTransformer = annotationTransformer;
         this.formatDate = formatDate;
         this.sentenceCase = sentenceCase;
         this.titleCase = titleCase;
@@ -27,6 +29,7 @@ public class TransformerFactory {
     public Transformer mapTransformer(String function) {
         return switch (function) {
             case "address_case" -> addressCase;
+            case "annotation" -> annotationTransformer;
             case "bson_date" -> formatDate;
             case "sentence_case" -> sentenceCase;
             case "title_case" -> titleCase;

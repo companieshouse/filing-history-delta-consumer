@@ -11,9 +11,9 @@
     "annotations" : [
       {
         "annotation" : "A second filed TM01 was registered on the 05 November 2012",
-        "category" : "A second filed TM01 was registered on the 05 November 2012",
+        "category" : "annotation",
         "date" : "2011-11-26T11:27:55Z",
-        "description" : "A second filed TM01 was registered on the 05 November 2012",
+        "description" : "annotation",
         "description_values" : {
           "description" : "A second filed TM01 was registered on the 05 November 2012"
         },

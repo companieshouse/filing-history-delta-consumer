@@ -8824,8 +8824,8 @@
       type: ANNOTATION
   then:
     set:
-      category: annotation
-      description: annotation
+      category: '[% annotation | annotation %]'
+      description: '[% annotation | annotation %]'
       description_values.description: '[% annotation | sentence_case %]'
 - when:
     eq:
