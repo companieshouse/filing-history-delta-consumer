@@ -10,11 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import uk.gov.companieshouse.api.filinghistory.InternalData.TransactionKindEnum;
-import uk.gov.companieshouse.filinghistory.consumer.mapper.pretransform.AnnotationNodeMapper;
-import uk.gov.companieshouse.filinghistory.consumer.mapper.pretransform.AssociatedFilingNodeMapper;
-import uk.gov.companieshouse.filinghistory.consumer.mapper.pretransform.ChildNodeMapper;
-import uk.gov.companieshouse.filinghistory.consumer.mapper.pretransform.ChildNodeMapperFactory;
-import uk.gov.companieshouse.filinghistory.consumer.mapper.pretransform.EmbeddedChildNodeMapper;
 
 @ExtendWith(MockitoExtension.class)
 class ChildNodeMapperFactoryTest {

@@ -18,10 +18,6 @@ import uk.gov.companieshouse.api.delta.DescriptionValues;
 import uk.gov.companieshouse.api.delta.FilingHistory;
 import uk.gov.companieshouse.api.delta.FilingHistoryDelta;
 import uk.gov.companieshouse.api.filinghistory.InternalData.TransactionKindEnum;
-import uk.gov.companieshouse.filinghistory.consumer.mapper.pretransform.AnnotationNodeMapper;
-import uk.gov.companieshouse.filinghistory.consumer.mapper.pretransform.ChildNodeMapperFactory;
-import uk.gov.companieshouse.filinghistory.consumer.mapper.pretransform.ChildPair;
-import uk.gov.companieshouse.filinghistory.consumer.mapper.pretransform.PreTransformMapper;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.TransformerTestingUtils;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.FormatDate;
 

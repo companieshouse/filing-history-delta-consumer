@@ -16,8 +16,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import uk.gov.companieshouse.api.delta.ChildProperties;
 import uk.gov.companieshouse.api.delta.FilingHistory;
-import uk.gov.companieshouse.filinghistory.consumer.mapper.pretransform.ChildPair;
-import uk.gov.companieshouse.filinghistory.consumer.mapper.pretransform.EmbeddedChildNodeMapper;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.FormatDate;
 
 @ExtendWith(MockitoExtension.class)
