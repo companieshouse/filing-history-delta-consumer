@@ -19,10 +19,10 @@ import uk.gov.companieshouse.api.delta.FilingHistory;
 import uk.gov.companieshouse.api.delta.FilingHistoryDelta;
 import uk.gov.companieshouse.api.filinghistory.InternalData.TransactionKindEnum;
 import uk.gov.companieshouse.api.filinghistory.InternalFilingHistoryApi;
-import uk.gov.companieshouse.filinghistory.consumer.mapper.ChildPair;
-import uk.gov.companieshouse.filinghistory.consumer.mapper.InternalFilingHistoryApiMapper;
-import uk.gov.companieshouse.filinghistory.consumer.mapper.InternalFilingHistoryApiMapperArguments;
-import uk.gov.companieshouse.filinghistory.consumer.mapper.PreTransformMapper;
+import uk.gov.companieshouse.filinghistory.consumer.mapper.pretransform.ChildPair;
+import uk.gov.companieshouse.filinghistory.consumer.mapper.posttransform.InternalFilingHistoryApiMapper;
+import uk.gov.companieshouse.filinghistory.consumer.mapper.posttransform.InternalFilingHistoryApiMapperArguments;
+import uk.gov.companieshouse.filinghistory.consumer.mapper.pretransform.PreTransformMapper;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.TransformerService;
 
 @ExtendWith(MockitoExtension.class)
