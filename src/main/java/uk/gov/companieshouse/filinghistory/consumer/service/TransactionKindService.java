@@ -46,7 +46,7 @@ public class TransactionKindService {
             encodedId = encodeTransactionId(kindCriteria.barcode());
             kindEnum = TransactionKindEnum.RESOLUTION;
 
-        } else if (!formTypeService.isAssociatedFilingBlacklisted(kindCriteria)
+        } else if (!formTypeService.isAssociatedFilingBlockListed(kindCriteria)
                 && StringUtils.isNotBlank(kindCriteria.parentEntityId())) {
             encodedId = encodeTransactionId(kindCriteria.parentEntityId());
             kindEnum = TransactionKindEnum.ASSOCIATED_FILING;

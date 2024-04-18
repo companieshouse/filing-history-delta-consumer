@@ -16,13 +16,13 @@ class FormTypeServiceTest {
     private final FormTypeService formTypeService = new FormTypeService(List.of("1(Scot)", "MR09"));
 
     @ParameterizedTest
-    @MethodSource("isAssociatedFilingBlacklistedScenarios")
+    @MethodSource("isAssociatedFilingBlockListedScenarios")
     void shouldReturnAssociatedFilingTypeWhenPassedRandomStringAndHasParentEntityId(
             TransactionKindCriteria kindCriteria, final boolean expected) {
         // given
 
         // when
-        final boolean actual = formTypeService.isAssociatedFilingBlacklisted(kindCriteria);
+        final boolean actual = formTypeService.isAssociatedFilingBlockListed(kindCriteria);
 
         // then
         assertEquals(expected, actual);
@@ -60,19 +60,19 @@ class FormTypeServiceTest {
         assertFalse(actual);
     }
 
-    private static Stream<Arguments> isAssociatedFilingBlacklistedScenarios() {
+    private static Stream<Arguments> isAssociatedFilingBlockListedScenarios() {
         return Stream.of(
                 Arguments.of(new TransactionKindCriteria(
                         "12345",
                         "67891",
-                        "any string not on blacklist",
+                        "any string not on block list",
                         "",
                         null), false),
                 Arguments.of(new TransactionKindCriteria(
                         "12345",
                         "67891",
                         "",
-                        "any string not on blacklist",
+                        "any string not on block list",
                         null), false),
                 Arguments.of(new TransactionKindCriteria(
                         "12345",

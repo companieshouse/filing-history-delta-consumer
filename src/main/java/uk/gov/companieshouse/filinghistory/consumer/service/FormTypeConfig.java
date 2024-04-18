@@ -20,17 +20,17 @@ public class FormTypeConfig {
     private static final Logger LOGGER = LoggerFactory.getLogger(NAMESPACE);
 
     @Bean
-    public List<String> formTypeBlacklist(@Value("${associated-filings.blacklist}") final String file) {
+    public List<String> formTypeBlockList(@Value("${associated-filings.block-list}") final String file) {
         InputStream stream = getClass().getResourceAsStream("/%s".formatted(file));
         if (stream == null) {
-            LOGGER.error("Blacklist file not found: [%s]".formatted(file), DataMapHolder.getLogMap());
-            throw new NonRetryableException("Blacklist file not found: [%s]".formatted(file));
+            LOGGER.error("BlockList file not found: [%s]".formatted(file), DataMapHolder.getLogMap());
+            throw new NonRetryableException("BlockList file not found: [%s]".formatted(file));
         }
         Scanner scanner = new Scanner(stream);
-        List<String> blacklist = new ArrayList<>();
+        List<String> blockList = new ArrayList<>();
         while (scanner.hasNextLine()) {
-            blacklist.add(scanner.nextLine().split(",")[0]);
+            blockList.add(scanner.nextLine().split(",")[0]);
         }
-        return blacklist;
+        return blockList;
     }
 }

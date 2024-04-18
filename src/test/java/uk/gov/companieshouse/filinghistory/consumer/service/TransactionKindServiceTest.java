@@ -148,7 +148,7 @@ class TransactionKindServiceTest {
 
         // then
         assertEquals(expected, actual);
-        verify(formTypeService).isAssociatedFilingBlacklisted(criteria);
+        verify(formTypeService).isAssociatedFilingBlockListed(criteria);
         verifyNoMoreInteractions(formTypeService);
     }
 
@@ -170,14 +170,14 @@ class TransactionKindServiceTest {
 
         // then
         assertEquals(expected, actual);
-        verify(formTypeService).isAssociatedFilingBlacklisted(criteria);
+        verify(formTypeService).isAssociatedFilingBlockListed(criteria);
         verifyNoMoreInteractions(formTypeService);
     }
 
     @Test
     void shouldEncodeParentEntityIdWhenAssociatedFiling() {
         // given
-        when(formTypeService.isAssociatedFilingBlacklisted(any())).thenReturn(false);
+        when(formTypeService.isAssociatedFilingBlockListed(any())).thenReturn(false);
 
         TransactionKindCriteria criteria = new TransactionKindCriteria(
                 ENTITY_ID,
@@ -194,13 +194,13 @@ class TransactionKindServiceTest {
 
         // then
         assertEquals(expected, actual);
-        verify(formTypeService).isAssociatedFilingBlacklisted(criteria);
+        verify(formTypeService).isAssociatedFilingBlockListed(criteria);
     }
 
     @Test
-    void shouldEncodeEntityIdWhenAssociatedFilingBlacklisted() {
+    void shouldEncodeEntityIdWhenAssociatedFilingBlockListed() {
         // given
-        when(formTypeService.isAssociatedFilingBlacklisted(any())).thenReturn(true);
+        when(formTypeService.isAssociatedFilingBlockListed(any())).thenReturn(true);
 
         TransactionKindCriteria criteria = new TransactionKindCriteria(
                 ENTITY_ID,
@@ -217,13 +217,13 @@ class TransactionKindServiceTest {
 
         // then
         assertEquals(expected, actual);
-        verify(formTypeService).isAssociatedFilingBlacklisted(criteria);
+        verify(formTypeService).isAssociatedFilingBlockListed(criteria);
     }
 
     @Test
-    void shouldEncodeEntityIdWhenAssociatedFilingNotBlacklistedButMissingParentEntityId() {
+    void shouldEncodeEntityIdWhenAssociatedFilingNotBlockListedButMissingParentEntityId() {
         // given
-        when(formTypeService.isAssociatedFilingBlacklisted(any())).thenReturn(false);
+        when(formTypeService.isAssociatedFilingBlockListed(any())).thenReturn(false);
 
         TransactionKindCriteria criteria = new TransactionKindCriteria(
                 ENTITY_ID,
@@ -240,7 +240,7 @@ class TransactionKindServiceTest {
 
         // then
         assertEquals(expected, actual);
-        verify(formTypeService).isAssociatedFilingBlacklisted(criteria);
+        verify(formTypeService).isAssociatedFilingBlockListed(criteria);
     }
 
     @ParameterizedTest
