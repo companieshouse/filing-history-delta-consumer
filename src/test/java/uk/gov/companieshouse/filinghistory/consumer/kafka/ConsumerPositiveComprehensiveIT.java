@@ -67,6 +67,8 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
 
     @ParameterizedTest
     @CsvSource({
+            "resolution/RES01",
+
             "annotation/annotation",
 
             "annual_return/363s",
