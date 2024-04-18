@@ -9,6 +9,7 @@ import uk.gov.companieshouse.api.filinghistory.AltCapitalDescriptionValue;
 import uk.gov.companieshouse.api.filinghistory.Annotation;
 import uk.gov.companieshouse.api.filinghistory.AssociatedFiling;
 import uk.gov.companieshouse.api.filinghistory.CapitalDescriptionValue;
+import uk.gov.companieshouse.api.filinghistory.Resolution;
 
 @Configuration
 public class SerdesConfig {
@@ -39,6 +40,11 @@ public class SerdesConfig {
     @Bean
     public ArrayNodeDeserialiser<Annotation> annotationArrayNodeDeserialiser(ObjectMapper objectMapper) {
         return new ArrayNodeDeserialiser<>(objectMapper, Annotation.class);
+    }
+
+    @Bean
+    public ArrayNodeDeserialiser<Resolution> resolutionArrayNodeDeserialiser(ObjectMapper objectMapper) {
+        return new ArrayNodeDeserialiser<>(objectMapper, Resolution.class);
     }
 
     @Bean

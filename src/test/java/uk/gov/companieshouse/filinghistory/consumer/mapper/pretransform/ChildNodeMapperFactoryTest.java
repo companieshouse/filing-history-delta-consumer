@@ -1,11 +1,9 @@
 package uk.gov.companieshouse.filinghistory.consumer.mapper.pretransform;
 
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.function.Executable;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -20,6 +18,8 @@ class ChildNodeMapperFactoryTest {
     @Mock
     private AnnotationNodeMapper annotationNodeMapper;
     @Mock
+    private ResolutionNodeMapper resolutionNodeMapper;
+    @Mock
     private AssociatedFilingNodeMapper associatedFilingNodeMapper;
     @Mock
     private EmbeddedChildNodeMapper embeddedChildNodeMapper;
@@ -33,6 +33,17 @@ class ChildNodeMapperFactoryTest {
 
         // then
         assertInstanceOf(AnnotationNodeMapper.class, expected);
+    }
+
+    @Test
+    void shouldReturnResolutionNodeMapperWhenPassedResolutionTransactionKindEnum() {
+        // given
+
+        // when
+        ChildNodeMapper expected = childNodeMapperFactory.getChildMapper(TransactionKindEnum.RESOLUTION);
+
+        // then
+        assertInstanceOf(ResolutionNodeMapper.class, expected);
     }
 
     @Test
@@ -55,16 +66,5 @@ class ChildNodeMapperFactoryTest {
 
         // then
         assertInstanceOf(EmbeddedChildNodeMapper.class, expected);
-    }
-
-    @Test
-    void shouldThrowIllegalStateExceptionWhenPassedInvalidTransactionKindEnum() {
-        // given
-
-        // when
-        Executable executable = () -> childNodeMapperFactory.getChildMapper(TransactionKindEnum.RESOLUTION);
-
-        // then
-        assertThrows(IllegalStateException.class, executable);
     }
 }

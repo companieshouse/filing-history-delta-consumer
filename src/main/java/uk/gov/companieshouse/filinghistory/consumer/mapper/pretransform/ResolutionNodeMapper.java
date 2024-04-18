@@ -36,7 +36,7 @@ public class ResolutionNodeMapper implements ChildNodeMapper {
                 .put("case_start_date", descriptionValues.getCaseStartDate())
                 .put("res_type", descriptionValues.getResType())
                 .put("description", descriptionValues.getDescription())
-                .put("data", descriptionValues.getDate())
+                .put("date", descriptionValues.getDate())
                 .put("resolution_date", descriptionValues.getResolutionDate());
 
         return new ChildPair(CHILD_ARRAY_KEY, objectNode);

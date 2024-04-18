@@ -22,9 +22,9 @@ public class ChildNodeMapperFactory {
     public ChildNodeMapper getChildMapper(TransactionKindEnum kind) {
         return switch (kind) {
             case ANNOTATION -> annotationNodeMapper;
+            case RESOLUTION -> resolutionNodeMapper;
             case ASSOCIATED_FILING -> associatedFilingNodeMapper;
             case TOP_LEVEL -> embeddedChildNodeMapper;
-            case RESOLUTION -> resolutionNodeMapper;
         };
     }
 }
