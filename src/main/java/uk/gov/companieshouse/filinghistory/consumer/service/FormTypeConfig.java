@@ -23,8 +23,8 @@ public class FormTypeConfig {
     public List<String> formTypeBlockList(@Value("${associated-filings.block-list}") final String file) {
         InputStream stream = getClass().getResourceAsStream("/%s".formatted(file));
         if (stream == null) {
-            LOGGER.error("BlockList file not found: [%s]".formatted(file), DataMapHolder.getLogMap());
-            throw new NonRetryableException("BlockList file not found: [%s]".formatted(file));
+            LOGGER.error("Block list file not found: [%s]".formatted(file), DataMapHolder.getLogMap());
+            throw new NonRetryableException("Block list file not found: [%s]".formatted(file));
         }
         Scanner scanner = new Scanner(stream);
         List<String> blockList = new ArrayList<>();
