@@ -18,6 +18,7 @@ public class TransactionKindService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(NAMESPACE);
     private static final String ANNOTATION = "ANNOTATION";
+    private static final String RES_15 = "RES15";
 
     private final FormTypeService formTypeService;
     private final String transactionIdSalt;
@@ -38,10 +39,18 @@ public class TransactionKindService {
                 encodedId = encodeTransactionId(kindCriteria.entityId());
             }
             kindEnum = TransactionKindEnum.ANNOTATION;
-        } else if (!formTypeService.isAssociatedFilingBlacklisted(kindCriteria)
+
+        } else if (StringUtils.isNotBlank(kindCriteria.barcode())
+                && !RES_15.equals(kindCriteria.formType())
+                && formTypeService.isResolutionType(kindCriteria.formType())) {
+            encodedId = encodeTransactionId(kindCriteria.barcode());
+            kindEnum = TransactionKindEnum.RESOLUTION;
+
+        } else if (!formTypeService.isAssociatedFilingBlockListed(kindCriteria)
                 && StringUtils.isNotBlank(kindCriteria.parentEntityId())) {
             encodedId = encodeTransactionId(kindCriteria.parentEntityId());
             kindEnum = TransactionKindEnum.ASSOCIATED_FILING;
+
         } else {
             encodedId = encodeTransactionId(kindCriteria.entityId());
             kindEnum = TransactionKindEnum.TOP_LEVEL;

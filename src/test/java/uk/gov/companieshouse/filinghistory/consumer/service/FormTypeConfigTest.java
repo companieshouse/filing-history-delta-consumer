@@ -13,11 +13,11 @@ class FormTypeConfigTest {
     private final FormTypeConfig formTypeConfig = new FormTypeConfig();
 
     @Test
-    void shouldBuildBlacklist() {
+    void shouldBuildBlockList() {
         // given
 
         // when
-        List<String> actual = formTypeConfig.formTypeBlacklist("associated_filings_blacklist.csv");
+        List<String> actual = formTypeConfig.formTypeBlockList("associated_filings_block_list.csv");
 
         // then
         assertEquals(347, actual.size());
@@ -28,7 +28,7 @@ class FormTypeConfigTest {
         // given
 
         // when
-        Executable executable = () -> formTypeConfig.formTypeBlacklist("missing_file.csv");
+        Executable executable = () -> formTypeConfig.formTypeBlockList("missing_file.csv");
 
         // then
         assertThrows(NonRetryableException.class, executable);

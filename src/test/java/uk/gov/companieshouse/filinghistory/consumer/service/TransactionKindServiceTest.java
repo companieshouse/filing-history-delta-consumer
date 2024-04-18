@@ -4,6 +4,7 @@ import static org.apache.commons.lang3.StringUtils.trim;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.nio.charset.StandardCharsets;
@@ -23,11 +24,14 @@ class TransactionKindServiceTest {
 
     private static final String ENTITY_ID = "entityId";
     private static final String PARENT_ENTITY_ID = "parentEntityId";
+    private static final String BARCODE = "barcode";
     private static final String SALT = "salt";
     private static final String ENCODED_ENTITY_ID =
             Base64.encodeBase64URLSafeString((trim(ENTITY_ID) + SALT).getBytes(StandardCharsets.UTF_8));
     private static final String ENCODED_PARENT_ENTITY_ID =
             Base64.encodeBase64URLSafeString((trim(PARENT_ENTITY_ID) + SALT).getBytes(StandardCharsets.UTF_8));
+    private static final String ENCODED_BARCODE =
+            Base64.encodeBase64URLSafeString((trim(BARCODE) + SALT).getBytes(StandardCharsets.UTF_8));
 
     @InjectMocks
     private TransactionKindService kindService;
@@ -87,7 +91,7 @@ class TransactionKindServiceTest {
                 ENTITY_ID,
                 "",
                 "ANNOTATION",
-                "ANY",
+                "",
                 "");
         TransactionKindResult expected = new TransactionKindResult(
                 ENCODED_ENTITY_ID,
@@ -101,16 +105,86 @@ class TransactionKindServiceTest {
     }
 
     @Test
+    void shouldEncodeBarcodeWhenResolution() {
+        // given
+        when(formTypeService.isResolutionType(any())).thenReturn(true);
+
+        TransactionKindCriteria criteria = new TransactionKindCriteria(
+                ENTITY_ID,
+                "",
+                "RES01",
+                "",
+                BARCODE);
+        TransactionKindResult expected = new TransactionKindResult(
+                ENCODED_BARCODE,
+                TransactionKindEnum.RESOLUTION);
+
+        // when
+        TransactionKindResult actual = kindService.encodeIdByTransactionKind(criteria);
+
+        // then
+        assertEquals(expected, actual);
+        verify(formTypeService).isResolutionType("RES01");
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {
+            "''", "null"
+    }, nullValues = {"null"})
+    void shouldEncodeEntityIdWhenResolutionButBarcodeBlank(String barcode) {
+        // given
+        TransactionKindCriteria criteria = new TransactionKindCriteria(
+                ENTITY_ID,
+                "",
+                "RES01",
+                "",
+                barcode);
+        TransactionKindResult expected = new TransactionKindResult(
+                ENCODED_ENTITY_ID,
+                TransactionKindEnum.TOP_LEVEL);
+
+        // when
+        TransactionKindResult actual = kindService.encodeIdByTransactionKind(criteria);
+
+        // then
+        assertEquals(expected, actual);
+        verify(formTypeService).isAssociatedFilingBlockListed(criteria);
+        verifyNoMoreInteractions(formTypeService);
+    }
+
+    @Test
+    void shouldEncodeEntityIdWhenRES15() {
+        // given
+        TransactionKindCriteria criteria = new TransactionKindCriteria(
+                ENTITY_ID,
+                "",
+                "RES15",
+                "",
+                BARCODE);
+        TransactionKindResult expected = new TransactionKindResult(
+                ENCODED_ENTITY_ID,
+                TransactionKindEnum.TOP_LEVEL);
+
+        // when
+        TransactionKindResult actual = kindService.encodeIdByTransactionKind(criteria);
+
+        // then
+        assertEquals(expected, actual);
+        verify(formTypeService).isAssociatedFilingBlockListed(criteria);
+        verifyNoMoreInteractions(formTypeService);
+    }
+
+    @Test
     void shouldEncodeParentEntityIdWhenAssociatedFiling() {
         // given
-        when(formTypeService.isAssociatedFilingBlacklisted(any())).thenReturn(false);
+        when(formTypeService.isAssociatedFilingBlockListed(any())).thenReturn(false);
 
         TransactionKindCriteria criteria = new TransactionKindCriteria(
                 ENTITY_ID,
                 PARENT_ENTITY_ID,
                 "any",
                 "any",
-                "");
+                BARCODE);
         TransactionKindResult expected = new TransactionKindResult(
                 ENCODED_PARENT_ENTITY_ID,
                 TransactionKindEnum.ASSOCIATED_FILING);
@@ -120,13 +194,13 @@ class TransactionKindServiceTest {
 
         // then
         assertEquals(expected, actual);
-        verify(formTypeService).isAssociatedFilingBlacklisted(criteria);
+        verify(formTypeService).isAssociatedFilingBlockListed(criteria);
     }
 
     @Test
-    void shouldEncodeEntityIdWhenAssociatedFilingBlacklisted() {
+    void shouldEncodeEntityIdWhenAssociatedFilingBlockListed() {
         // given
-        when(formTypeService.isAssociatedFilingBlacklisted(any())).thenReturn(true);
+        when(formTypeService.isAssociatedFilingBlockListed(any())).thenReturn(true);
 
         TransactionKindCriteria criteria = new TransactionKindCriteria(
                 ENTITY_ID,
@@ -143,13 +217,13 @@ class TransactionKindServiceTest {
 
         // then
         assertEquals(expected, actual);
-        verify(formTypeService).isAssociatedFilingBlacklisted(criteria);
+        verify(formTypeService).isAssociatedFilingBlockListed(criteria);
     }
 
     @Test
-    void shouldEncodeEntityIdWhenAssociatedFilingNotBlacklistedButMissingParentEntityId() {
+    void shouldEncodeEntityIdWhenAssociatedFilingNotBlockListedButMissingParentEntityId() {
         // given
-        when(formTypeService.isAssociatedFilingBlacklisted(any())).thenReturn(false);
+        when(formTypeService.isAssociatedFilingBlockListed(any())).thenReturn(false);
 
         TransactionKindCriteria criteria = new TransactionKindCriteria(
                 ENTITY_ID,
@@ -166,7 +240,7 @@ class TransactionKindServiceTest {
 
         // then
         assertEquals(expected, actual);
-        verify(formTypeService).isAssociatedFilingBlacklisted(criteria);
+        verify(formTypeService).isAssociatedFilingBlockListed(criteria);
     }
 
     @ParameterizedTest
