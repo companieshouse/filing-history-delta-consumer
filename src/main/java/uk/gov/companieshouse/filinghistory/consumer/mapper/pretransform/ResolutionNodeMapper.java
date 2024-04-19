@@ -9,36 +9,31 @@ import uk.gov.companieshouse.api.delta.FilingHistory;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.FormatDate;
 
 @Component
-public class ResolutionNodeMapper implements ChildNodeMapper {
+public class ResolutionNodeMapper extends AbstractNodeMapper implements ChildNodeMapper {
 
-    private static final String CHILD_ARRAY_KEY = "resolutions";
-
-    private final ObjectMapper objectMapper;
-    private final FormatDate formatDate;
-
-    public ResolutionNodeMapper(ObjectMapper objectMapper, FormatDate formatDate) {
-        this.objectMapper = objectMapper;
-        this.formatDate = formatDate;
+    protected ResolutionNodeMapper(ObjectMapper objectMapper, FormatDate formatDate) {
+        super(objectMapper, formatDate);
     }
 
     @Override
-    public ChildPair mapChildObjectNode(FilingHistory delta) {
-        ObjectNode objectNode = objectMapper.createObjectNode()
-                .put("type", delta.getFormType())
-                .put("date", formatDate.format(delta.getReceiveDate()))
+    public ObjectNode mapChildObjectNode(FilingHistory filingHistory, ObjectNode parentNode) {
+        ObjectNode childNode = objectMapper.createObjectNode()
+                .put("type", filingHistory.getFormType())
+                .put("date", formatDate.format(filingHistory.getReceiveDate()))
                 .put("description",
-                        StringUtils.isNotBlank(delta.getDescription()) ? delta.getDescription() : "");
+                        StringUtils.isNotBlank(filingHistory.getDescription()) ? filingHistory.getDescription() : "");
 
-        DescriptionValues descriptionValues = delta.getDescriptionValues();
+        DescriptionValues descriptionValues = filingHistory.getDescriptionValues();
+        ObjectNode valuesNode = childNode.putObject("description_values");
 
-        objectNode
-                .putObject("description_values")
-                .put("case_start_date", descriptionValues.getCaseStartDate())
-                .put("res_type", descriptionValues.getResType())
-                .put("description", descriptionValues.getDescription())
-                .put("date", descriptionValues.getDate())
-                .put("resolution_date", descriptionValues.getResolutionDate());
+        putIfNotBlank(valuesNode, "case_start_date", descriptionValues.getCaseStartDate());
+        putIfNotBlank(valuesNode, "res_type", descriptionValues.getResType());
+        putIfNotBlank(valuesNode, "description", descriptionValues.getDescription());
+        putIfNotBlank(valuesNode, "date", descriptionValues.getDate());
+        putIfNotBlank(valuesNode, "resolution_date", descriptionValues.getResolutionDate());
 
-        return new ChildPair(CHILD_ARRAY_KEY, objectNode);
+        ObjectNode dataNode = (ObjectNode) parentNode.get("data");
+        dataNode.putArray("resolutions").add(childNode);
+        return parentNode;
     }
 }
