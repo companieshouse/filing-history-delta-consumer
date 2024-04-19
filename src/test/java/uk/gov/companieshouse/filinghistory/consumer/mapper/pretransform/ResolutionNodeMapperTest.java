@@ -47,7 +47,6 @@ class ResolutionNodeMapperTest {
         // given
         when(delta.getFormType()).thenReturn("form type");
         when(delta.getDescription()).thenReturn(description);
-        when(formatDate.format(any())).thenReturn("date");
 
         DescriptionValues descriptionValues = new DescriptionValues()
                 .caseStartDate(CASE_START_DATE)
@@ -62,12 +61,16 @@ class ResolutionNodeMapperTest {
         parentNode.putObject("data");
 
         ObjectNode expected = objectMapper.createObjectNode();
-        ObjectNode childNode = expected.putObject("data")
+        ObjectNode dataNode = expected.putObject("data");
+        dataNode
+                .put("type", "RESOLUTIONS")
+                .put("description", "RESOLUTIONS");
+
+        ObjectNode childNode = dataNode
                 .putArray("resolutions")
                 .addObject();
         childNode
                 .put("type", "form type")
-                .put("date", "date")
                 .put(DESCRIPTION, description);
 
         childNode

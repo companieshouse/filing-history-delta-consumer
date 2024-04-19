@@ -11,6 +11,8 @@ import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.For
 @Component
 public class ResolutionNodeMapper extends AbstractNodeMapper implements ChildNodeMapper {
 
+    private static final String DESCRIPTION_FIELD = "description";
+
     protected ResolutionNodeMapper(ObjectMapper objectMapper, FormatDate formatDate) {
         super(objectMapper, formatDate);
     }
@@ -19,21 +21,26 @@ public class ResolutionNodeMapper extends AbstractNodeMapper implements ChildNod
     public ObjectNode mapChildObjectNode(FilingHistory filingHistory, ObjectNode parentNode) {
         ObjectNode childNode = objectMapper.createObjectNode()
                 .put("type", filingHistory.getFormType())
-                .put("date", formatDate.format(filingHistory.getReceiveDate()))
-                .put("description",
+                .put(DESCRIPTION_FIELD,
                         StringUtils.isNotBlank(filingHistory.getDescription()) ? filingHistory.getDescription() : "");
+
+        if ("RES15".equals(filingHistory.getFormType())) {
+            childNode.put("date", formatDate.format(filingHistory.getReceiveDate()));
+        }
 
         DescriptionValues descriptionValues = filingHistory.getDescriptionValues();
         ObjectNode valuesNode = childNode.putObject("description_values");
 
         putIfNotBlank(valuesNode, "case_start_date", descriptionValues.getCaseStartDate());
         putIfNotBlank(valuesNode, "res_type", descriptionValues.getResType());
-        putIfNotBlank(valuesNode, "description", descriptionValues.getDescription());
+        putIfNotBlank(valuesNode, DESCRIPTION_FIELD, descriptionValues.getDescription());
         putIfNotBlank(valuesNode, "date", descriptionValues.getDate());
         putIfNotBlank(valuesNode, "resolution_date", descriptionValues.getResolutionDate());
 
         ObjectNode dataNode = (ObjectNode) parentNode.get("data");
-        dataNode.putArray("resolutions").add(childNode);
+        dataNode.put("type", "RESOLUTIONS")
+                .put(DESCRIPTION_FIELD, "RESOLUTIONS")
+                .putArray("resolutions").add(childNode);
         return parentNode;
     }
 }
