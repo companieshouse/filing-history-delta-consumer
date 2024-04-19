@@ -4740,6 +4740,7 @@
       data.type: LLP466(Scot)
     like:
       data.description: '^(?i:PARTICULARS OF AN INSTRUMENT OF ALTERATION OF A FLOATING CHARGE / .* (?<chargeNumber>\S{8}\d{4}|\d+))$'
+      original_values.charge_creation_date: '^(?<chargeCreationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: mortgage
@@ -4749,6 +4750,7 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% chargeCreationDate | bson_date %]'
       data.description_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
+      original_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
 - when:
     eq:
       data.type: LLP466(Scot)
