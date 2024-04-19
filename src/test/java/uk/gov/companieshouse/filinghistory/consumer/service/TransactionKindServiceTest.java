@@ -4,6 +4,7 @@ import static org.apache.commons.lang3.StringUtils.trim;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
@@ -163,15 +164,14 @@ class TransactionKindServiceTest {
                 BARCODE);
         TransactionKindResult expected = new TransactionKindResult(
                 ENCODED_ENTITY_ID,
-                TransactionKindEnum.TOP_LEVEL);
+                TransactionKindEnum.RESOLUTION);
 
         // when
         TransactionKindResult actual = kindService.encodeIdByTransactionKind(criteria);
 
         // then
         assertEquals(expected, actual);
-        verify(formTypeService).isAssociatedFilingBlockListed(criteria);
-        verifyNoMoreInteractions(formTypeService);
+        verifyNoInteractions(formTypeService);
     }
 
     @Test

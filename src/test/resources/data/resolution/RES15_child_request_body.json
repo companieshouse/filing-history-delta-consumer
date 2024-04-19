@@ -1,0 +1,37 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzAxMjg2OTQ1NXNhbHQ",
+    "barcode": "APBOMINP",
+    "type": "RESOLUTIONS",
+    "date": "2010-04-06T11:00:32Z",
+    "category": "resolution",
+    "description" : "resolution",
+    "description_values" : {
+      "description" : "Resolutions"
+    },
+    "links" : {
+      "self" : "/company/05999623/filing-history/MzAxMjg2OTQ1NXNhbHQ"
+    },
+    "paper_filed" : true,
+    "resolutions" : [
+      {
+        "category" : "change-of-name",
+        "description" : "resolution-change-of-name",
+        "description_values" : {
+          "resolution_date" : "2010-03-22T00:00:00Z"
+        },
+        "subcategory" : "resolution",
+        "type" : "RES15"
+      }
+    ]
+  },
+  "internal_data": {
+    "original_description" : "Resolutions",
+    "company_number" : "05999623",
+    "entity_id" : "3012869077",
+    "parent_entity_id": "3012869455",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "resolution"
+  }
+}

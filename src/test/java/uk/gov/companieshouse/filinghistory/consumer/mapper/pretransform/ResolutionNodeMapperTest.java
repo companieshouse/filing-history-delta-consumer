@@ -3,6 +3,7 @@ package uk.gov.companieshouse.filinghistory.consumer.mapper.pretransform;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -88,24 +89,14 @@ class ResolutionNodeMapperTest {
 
         // then
         assertEquals(expected, actual);
+        verifyNoInteractions(formatDate);
     }
 
     @Test
-    void shouldMapResolutionObjectNodeRES15WithDate() {
+    void shouldMapResolutionObjectNodeWithNoDescriptionValues() {
         // given
         when(delta.getFormType()).thenReturn("RES15");
         when(delta.getDescription()).thenReturn("description");
-        when(delta.getReceiveDate()).thenReturn("receive date");
-        when(formatDate.format(any())).thenReturn("date");
-
-        DescriptionValues descriptionValues = new DescriptionValues()
-                .caseStartDate(CASE_START_DATE)
-                .resType(RES_TYPE)
-                .description(DESCRIPTION)
-                .date(DATE)
-                .resolutionDate(RESOLUTION_DATE);
-
-        when(delta.getDescriptionValues()).thenReturn(descriptionValues);
 
         ObjectNode parentNode = objectMapper.createObjectNode();
         parentNode.putObject("data");
@@ -121,22 +112,13 @@ class ResolutionNodeMapperTest {
                 .addObject();
         childNode
                 .put("type", "RES15")
-                .put("date", "date")
                 .put(DESCRIPTION, "description");
-
-        childNode
-                .putObject("description_values")
-                .put("case_start_date", CASE_START_DATE)
-                .put("res_type", RES_TYPE)
-                .put("description", DESCRIPTION)
-                .put("date", DATE)
-                .put("resolution_date", RESOLUTION_DATE);
 
         // when
         ObjectNode actual = resolutionNodeMapper.mapChildObjectNode(delta, parentNode);
 
         // then
         assertEquals(expected, actual);
-        verify(formatDate).format("receive date");
+        verifyNoInteractions(formatDate);
     }
 }

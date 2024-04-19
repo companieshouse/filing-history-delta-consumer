@@ -68,6 +68,8 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
     @ParameterizedTest
     @CsvSource({
             "resolution/RES01",
+            "resolution/RES15_top_level",
+            "resolution/RES15_child",
 
             "annotation/annotation",
 

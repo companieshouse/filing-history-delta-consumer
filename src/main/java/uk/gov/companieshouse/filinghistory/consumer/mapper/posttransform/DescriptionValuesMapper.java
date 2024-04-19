@@ -40,7 +40,7 @@ public class DescriptionValuesMapper {
                 .map(capitalArray -> capitalArrayNodeDeserialiser.deserialise((ArrayNode) capitalArray))
                 .orElse(null);
 
-        return new DescriptionValues()
+        DescriptionValues descriptionValues = new DescriptionValues()
                 .altCapital(altCapital)
                 .appointmentDate(getFieldValueFromJsonNode(jsonNode, "appointment_date"))
                 .branchNumber(getFieldValueFromJsonNode(jsonNode, "branch_number"))
@@ -80,5 +80,7 @@ public class DescriptionValuesMapper {
                 .representativeDetails(getFieldValueFromJsonNode(jsonNode, "representative_details"))
                 .terminationDate(getFieldValueFromJsonNode(jsonNode, "termination_date"))
                 .withdrawalDate(getFieldValueFromJsonNode(jsonNode, "withdrawal_date"));
+
+        return descriptionValues.equals(new DescriptionValues()) ? null : descriptionValues;
     }
 }
