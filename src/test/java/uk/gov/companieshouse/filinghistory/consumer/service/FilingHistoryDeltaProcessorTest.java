@@ -3,6 +3,7 @@ package uk.gov.companieshouse.filinghistory.consumer.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -143,10 +144,49 @@ class FilingHistoryDeltaProcessorTest {
         verify(transformerService).transform(preTransformNode, ENTITY_ID);
         verifyNoMoreInteractions(preTransformMapper);
         verify(transformedParentNode).get("data");
-        verify(dataNode).get("annotations");
+        verify(dataNode, times(3)).get(any());
+        verify(preTransformChildArray, times(2)).get(0);
         verify(dataNode).putArray("annotations");
         verify(transformerService).transform(preTransformChildNode, ENTITY_ID);
         verify(transformedChildArray).add(postTransformChildNode);
+        verify(internalFilingHistoryApiMapper).mapInternalFilingHistoryApi(expectedArguments);
+    }
+
+    @Test
+    void shouldProcessDeltaObjectWithEmptyChildArrayAndReturnMappedInternalFilingHistoryApiObject() {
+        // given
+        final TransactionKindCriteria criteria = new TransactionKindCriteria(ENTITY_ID, PARENT_ENTITY_ID,
+                TM01_FORM_TYPE, PARENT_FORM_TYPE, BARCODE);
+        InternalFilingHistoryApiMapperArguments expectedArguments = new InternalFilingHistoryApiMapperArguments(
+                transformedParentNode,
+                kindResult,
+                COMPANY_NUMBER,
+                DELTA_AT,
+                "contextId");
+        final FilingHistoryDelta delta = buildFilingHistoryDelta();
+
+        when(kindService.encodeIdByTransactionKind(any())).thenReturn(kindResult);
+        when(kindResult.kind()).thenReturn(ANNOTATION);
+        when(preTransformMapper.mapDeltaToObjectNode(any(), any())).thenReturn(preTransformNode);
+        when(transformerService.transform(any(), any())).thenReturn(transformedParentNode);
+        when(transformedParentNode.get(any())).thenReturn(dataNode);
+        when(dataNode.get("annotations")).thenReturn(preTransformChildArray);
+        when(internalFilingHistoryApiMapper.mapInternalFilingHistoryApi(any())).thenReturn(expected);
+
+        // when
+        final InternalFilingHistoryApi actual = mapper.processDelta(delta, "contextId");
+
+        // then
+        assertEquals(expected, actual);
+        verify(kindService).encodeIdByTransactionKind(criteria);
+        verify(preTransformMapper).mapDeltaToObjectNode(ANNOTATION, delta.getFilingHistory().getFirst());
+        verify(transformerService).transform(preTransformNode, ENTITY_ID);
+        verifyNoMoreInteractions(preTransformMapper);
+        verify(transformedParentNode).get("data");
+        verify(dataNode, times(3)).get(any());
+        verify(preTransformChildArray).get(0);
+        verifyNoMoreInteractions(transformerService);
+        verifyNoMoreInteractions(transformedChildArray);
         verify(internalFilingHistoryApiMapper).mapInternalFilingHistoryApi(expectedArguments);
     }
 
