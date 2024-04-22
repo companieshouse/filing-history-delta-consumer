@@ -36,7 +36,6 @@ public class ResolutionNodeMapper extends AbstractNodeMapper implements ChildNod
             putIfNotBlank(valuesNode, "resolution_date", descriptionValues.getResolutionDate());
         }
 
-        parentNode.remove("_document_id");
         ObjectNode dataNode = (ObjectNode) parentNode.get("data");
         dataNode.put("type", "RESOLUTIONS")
                 .put(DESCRIPTION_FIELD, "RESOLUTIONS")
