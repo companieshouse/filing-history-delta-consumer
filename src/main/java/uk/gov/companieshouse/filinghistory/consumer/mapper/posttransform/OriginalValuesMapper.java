@@ -13,7 +13,7 @@ public class OriginalValuesMapper {
         if (jsonNode == null) {
             return null;
         }
-        return new InternalDataOriginalValues()
+        InternalDataOriginalValues originalValues = new InternalDataOriginalValues()
                 .accType(getFieldValueFromJsonNode(jsonNode, "acc_type"))
                 .accountingPeriod(getFieldValueFromJsonNode(jsonNode, "accounting_period"))
                 .action(getFieldValueFromJsonNode(jsonNode, "action"))
@@ -34,5 +34,7 @@ public class OriginalValuesMapper {
                 .propertyAcquiredDate(getFieldValueFromJsonNode(jsonNode, "property_acquired_date"))
                 .pscName(getFieldValueFromJsonNode(jsonNode, "psc_name"))
                 .resignationDate(getFieldValueFromJsonNode(jsonNode, "resignation_date"));
+
+        return originalValues.equals(new InternalDataOriginalValues()) ? null : originalValues;
     }
 }

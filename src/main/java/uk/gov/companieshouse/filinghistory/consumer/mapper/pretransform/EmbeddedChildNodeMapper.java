@@ -9,29 +9,24 @@ import uk.gov.companieshouse.api.delta.FilingHistory;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.FormatDate;
 
 @Component
-public class EmbeddedChildNodeMapper implements ChildNodeMapper {
+public class EmbeddedChildNodeMapper extends AbstractNodeMapper implements ChildNodeMapper {
 
-    private static final String CHILD_ARRAY_KEY = "associated_filings";
-
-    private final ObjectMapper objectMapper;
-    private final FormatDate formatDate;
-
-    public EmbeddedChildNodeMapper(ObjectMapper objectMapper, FormatDate formatDate) {
-        this.objectMapper = objectMapper;
-        this.formatDate = formatDate;
+    protected EmbeddedChildNodeMapper(ObjectMapper objectMapper, FormatDate formatDate) {
+        super(objectMapper, formatDate);
     }
 
     @Override
-    public ChildPair mapChildObjectNode(FilingHistory delta) {
+    public ObjectNode mapChildObjectNode(FilingHistory filingHistory, ObjectNode parentNode) {
+        ChildProperties embeddedChild = filingHistory.getChild().getFirst();
 
-        ChildProperties embeddedChild = delta.getChild().getFirst();
-
-        ObjectNode objectNode = objectMapper.createObjectNode()
+        ObjectNode childNode = objectMapper.createObjectNode()
                 .put("type", embeddedChild.getFormType())
                 .put("date", formatDate.format(embeddedChild.getReceiveDate()))
                 .put("description",
                         StringUtils.isNotBlank(embeddedChild.getDescription()) ? embeddedChild.getDescription() : "");
 
-        return new ChildPair(CHILD_ARRAY_KEY, objectNode);
+        ObjectNode dataNode = (ObjectNode) parentNode.get("data");
+        dataNode.putArray("associated_filings").add(childNode);
+        return parentNode;
     }
 }

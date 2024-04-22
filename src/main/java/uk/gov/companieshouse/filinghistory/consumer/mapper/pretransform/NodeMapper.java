@@ -3,7 +3,7 @@ package uk.gov.companieshouse.filinghistory.consumer.mapper.pretransform;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import uk.gov.companieshouse.api.delta.FilingHistory;
 
-public interface ChildNodeMapper {
+public interface NodeMapper {
 
-    ObjectNode mapChildObjectNode(FilingHistory filingHistory, ObjectNode parentNode);
+    ObjectNode mapToObjectNode(final FilingHistory filingHistory);
 }

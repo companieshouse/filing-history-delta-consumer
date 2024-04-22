@@ -7,12 +7,14 @@ import uk.gov.companieshouse.api.filinghistory.InternalData.TransactionKindEnum;
 public class ChildNodeMapperFactory {
 
     private final AnnotationNodeMapper annotationNodeMapper;
+    private final ResolutionNodeMapper resolutionNodeMapper;
     private final AssociatedFilingNodeMapper associatedFilingNodeMapper;
     private final EmbeddedChildNodeMapper embeddedChildNodeMapper;
 
-    public ChildNodeMapperFactory(AnnotationNodeMapper annotationNodeMapper,
-                                  AssociatedFilingNodeMapper associatedFilingNodeMapper, EmbeddedChildNodeMapper embeddedChildNodeMapper) {
+    public ChildNodeMapperFactory(AnnotationNodeMapper annotationNodeMapper, ResolutionNodeMapper resolutionNodeMapper,
+            AssociatedFilingNodeMapper associatedFilingNodeMapper, EmbeddedChildNodeMapper embeddedChildNodeMapper) {
         this.annotationNodeMapper = annotationNodeMapper;
+        this.resolutionNodeMapper = resolutionNodeMapper;
         this.associatedFilingNodeMapper = associatedFilingNodeMapper;
         this.embeddedChildNodeMapper = embeddedChildNodeMapper;
     }
@@ -20,9 +22,9 @@ public class ChildNodeMapperFactory {
     public ChildNodeMapper getChildMapper(TransactionKindEnum kind) {
         return switch (kind) {
             case ANNOTATION -> annotationNodeMapper;
+            case RESOLUTION -> resolutionNodeMapper;
             case ASSOCIATED_FILING -> associatedFilingNodeMapper;
             case TOP_LEVEL -> embeddedChildNodeMapper;
-            default -> throw new IllegalStateException("Unexpected transaction kind: " + kind.getValue());
         };
     }
 }

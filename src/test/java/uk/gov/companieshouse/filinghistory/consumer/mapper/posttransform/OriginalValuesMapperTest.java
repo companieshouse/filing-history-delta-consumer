@@ -80,13 +80,11 @@ class OriginalValuesMapperTest {
         // given
         final JsonNode jsonNode = MAPPER.createObjectNode();
 
-        final InternalDataOriginalValues expected = new InternalDataOriginalValues();
-
         // when
         final InternalDataOriginalValues actual = originalValuesMapper.map(jsonNode);
 
         // then
-        assertEquals(expected, actual);
+        assertNull(actual);
     }
 
     @Test

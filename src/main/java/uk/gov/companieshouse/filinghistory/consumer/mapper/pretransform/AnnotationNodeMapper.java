@@ -8,33 +8,22 @@ import uk.gov.companieshouse.api.delta.FilingHistory;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.FormatDate;
 
 @Component
-public class AnnotationNodeMapper implements ChildNodeMapper {
+public class AnnotationNodeMapper extends AbstractNodeMapper implements ChildNodeMapper {
 
-    private static final String CHILD_ARRAY_KEY = "annotations";
-
-    private final ObjectMapper objectMapper;
-    private final FormatDate formatDate;
-
-    public AnnotationNodeMapper(ObjectMapper objectMapper, FormatDate formatDate) {
-        this.objectMapper = objectMapper;
-        this.formatDate = formatDate;
+    protected AnnotationNodeMapper(ObjectMapper objectMapper, FormatDate formatDate) {
+        super(objectMapper, formatDate);
     }
 
     @Override
-    public ChildPair mapChildObjectNode(FilingHistory delta) {
-        ObjectNode objectNode = objectMapper.createObjectNode()
-                .put("type", delta.getFormType())
-                .put("date", formatDate.format(delta.getReceiveDate()))
-                .put("annotation", mapAnnotationField(delta));
+    public ObjectNode mapChildObjectNode(FilingHistory filingHistory, ObjectNode parentNode) {
+        ObjectNode childNode = objectMapper.createObjectNode()
+                .put("type", filingHistory.getFormType())
+                .put("date", formatDate.format(filingHistory.getReceiveDate()))
+                .put("annotation",
+                        StringUtils.isNotBlank(filingHistory.getDescription()) ? filingHistory.getDescription() : "");
 
-        return new ChildPair(CHILD_ARRAY_KEY, objectNode);
-    }
-
-    private String mapAnnotationField(FilingHistory delta) {
-        String annotationFieldValue = "";
-        if (StringUtils.isNotBlank(delta.getDescription())) {
-            annotationFieldValue = delta.getDescription();
-        }
-        return annotationFieldValue;
+        ObjectNode dataNode = (ObjectNode) parentNode.get("data");
+        dataNode.putArray("annotations").add(childNode);
+        return parentNode;
     }
 }

@@ -1,0 +1,37 @@
+{
+  "external_data" : {
+    "transaction_id" : "TFNCR0dITk9zYWx0",
+    "barcode" : "LSBGGHNO",
+    "category" : "resolution",
+    "date" : "2010-02-24T11:10:28Z",
+    "description" : "resolution",
+    "description_values" : {
+      "description" : "Resolutions"
+    },
+    "links" : {
+      "self" : "/company/05424214/filing-history/TFNCR0dITk9zYWx0"
+    },
+    "paper_filed" : true,
+    "resolutions" : [
+      {
+        "category" : "incorporation",
+        "description" : "resolution-alteration-articles",
+        "description_values" : {
+          "res_type" : "ALTER ARTICLES"
+        },
+        "subcategory" : "resolution",
+        "type" : "RES01"
+      }
+    ],
+    "type" : "RESOLUTIONS"
+  },
+  "internal_data": {
+    "original_description" : "Resolutions",
+    "company_number" : "05424214",
+    "entity_id": "3010144460",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "resolution"
+  }
+}

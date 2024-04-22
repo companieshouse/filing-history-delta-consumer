@@ -6,28 +6,32 @@ import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import uk.gov.companieshouse.api.delta.FilingHistory;
+import uk.gov.companieshouse.filinghistory.consumer.transformrules.TransformerTestingUtils;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.FormatDate;
 
 @ExtendWith(MockitoExtension.class)
 class AssociatedFilingNodeMapperTest {
 
-    @InjectMocks
-    private AssociatedFilingNodeMapper associatedFilingNodeMapper;
+    private static final ObjectMapper objectMapper = TransformerTestingUtils.getMapper();
 
-    @Mock
-    private ObjectMapper objectMapper;
+    private AssociatedFilingNodeMapper associatedFilingNodeMapper;
     @Mock
     private FormatDate formatDate;
 
     @Mock
     private FilingHistory delta;
+
+    @BeforeEach
+    void setUp() {
+        associatedFilingNodeMapper = new AssociatedFilingNodeMapper(objectMapper, formatDate);
+    }
 
     @ParameterizedTest
     @CsvSource({
@@ -35,24 +39,25 @@ class AssociatedFilingNodeMapperTest {
             "description"})
     void shouldMapAssociatedFilingObjectNode(final String description) {
         // given
-        ObjectNode actualObjectNode = new ObjectMapper().createObjectNode();
-        when(objectMapper.createObjectNode()).thenReturn(actualObjectNode);
         when(delta.getFormType()).thenReturn("form type");
         when(formatDate.format(any())).thenReturn("date");
         when(delta.getDescription()).thenReturn(description);
 
-        ObjectNode expectedObjectNode = new ObjectMapper()
-                .createObjectNode()
+        ObjectNode parentNode = objectMapper.createObjectNode();
+        parentNode.putObject("data");
+
+        ObjectNode expected = objectMapper.createObjectNode();
+        expected.putObject("data")
+                .putArray("associated_filings")
+                .addObject()
                 .put("type", "form type")
                 .put("date", "date")
                 .put("description", description);
 
-        ChildPair expectedChildPair = new ChildPair("associated_filings", expectedObjectNode);
-
         // when
-        ChildPair actualChildPair = associatedFilingNodeMapper.mapChildObjectNode(delta);
+        ObjectNode actual = associatedFilingNodeMapper.mapChildObjectNode(delta, parentNode);
 
         // then
-        assertEquals(expectedChildPair, actualChildPair);
+        assertEquals(expected, actual);
     }
 }

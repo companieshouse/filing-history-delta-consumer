@@ -13,6 +13,8 @@ import uk.gov.companieshouse.api.filinghistory.Annotation;
 import uk.gov.companieshouse.api.filinghistory.AssociatedFiling;
 import uk.gov.companieshouse.api.filinghistory.CapitalDescriptionValue;
 import uk.gov.companieshouse.api.filinghistory.DescriptionValues;
+import uk.gov.companieshouse.api.filinghistory.Resolution;
+import uk.gov.companieshouse.api.filinghistory.Resolution.CategoryEnum;
 import uk.gov.companieshouse.filinghistory.consumer.exception.NonRetryableException;
 
 class SerdesConfigTest {
@@ -174,6 +176,52 @@ class SerdesConfigTest {
         // then
         NonRetryableException actual = assertThrows(NonRetryableException.class, executable);
         assertEquals("Unable to deserialise array node: [%s]".formatted(annotations.toPrettyString()),
+                actual.getMessage());
+    }
+
+    @Test
+    void shouldDeserialiseResolutionsArrayNode() {
+        // given
+        ArrayNode resolutions = objectMapper.createArrayNode();
+        resolutions.addObject()
+                .put("category", "resolution")
+                .put("date", "2011-11-26T11:27:55Z")
+                .put("description", "Resolution")
+                .put("type", "RES01")
+                .putObject("description_values")
+                .put("description", "reason for the res");
+
+        List<Resolution> expected = List.of(
+                new Resolution()
+                        .category(CategoryEnum.RESOLUTION)
+                        .date("2011-11-26T11:27:55Z")
+                        .description("Resolution")
+                        .type("RES01")
+                        .descriptionValues(new DescriptionValues()
+                                .description("reason for the res")));
+
+        // when
+        List<Resolution> actual = serdesConfig.resolutionArrayNodeDeserialiser(objectMapper)
+                .deserialise(resolutions);
+
+        // then
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldThrowNonRetryableExceptionWhenIOExceptionDuringDeserialiseResolutions() {
+        // given
+        ArrayNode resolutions = objectMapper.createArrayNode();
+        resolutions.addObject()
+                .put("unknown_field", "unknown");
+
+        // when
+        Executable executable = () -> serdesConfig.resolutionArrayNodeDeserialiser(objectMapper)
+                .deserialise(resolutions);
+
+        // then
+        NonRetryableException actual = assertThrows(NonRetryableException.class, executable);
+        assertEquals("Unable to deserialise array node: [%s]".formatted(resolutions.toPrettyString()),
                 actual.getMessage());
     }
 

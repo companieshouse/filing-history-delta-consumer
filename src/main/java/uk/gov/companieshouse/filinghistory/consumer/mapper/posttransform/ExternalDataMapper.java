@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import uk.gov.companieshouse.api.filinghistory.Annotation;
 import uk.gov.companieshouse.api.filinghistory.AssociatedFiling;
 import uk.gov.companieshouse.api.filinghistory.ExternalData;
+import uk.gov.companieshouse.api.filinghistory.Resolution;
 import uk.gov.companieshouse.filinghistory.consumer.serdes.ArrayNodeDeserialiser;
 
 @Component
@@ -22,11 +23,13 @@ public class ExternalDataMapper {
     private final PaperFiledMapper paperFiledMapper;
     private final LinksMapper linksMapper;
     private final ArrayNodeDeserialiser<Annotation> annotationsDeserialiser;
+    private final ArrayNodeDeserialiser<Resolution> resolutionsDeserialiser;
     private final ArrayNodeDeserialiser<AssociatedFiling> associatedFilingDeserialiser;
 
     public ExternalDataMapper(CategoryMapper categoryMapper, SubcategoryMapper subcategoryMapper,
                               DescriptionValuesMapper descriptionValuesMapper, PaperFiledMapper paperFiledMapper,
                               LinksMapper linksMapper, ArrayNodeDeserialiser<Annotation> annotationsDeserialiser,
+            ArrayNodeDeserialiser<Resolution> resolutionsDeserialiser,
                               ArrayNodeDeserialiser<AssociatedFiling> associatedFilingDeserialiser) {
         this.categoryMapper = categoryMapper;
         this.subcategoryMapper = subcategoryMapper;
@@ -34,6 +37,7 @@ public class ExternalDataMapper {
         this.paperFiledMapper = paperFiledMapper;
         this.linksMapper = linksMapper;
         this.annotationsDeserialiser = annotationsDeserialiser;
+        this.resolutionsDeserialiser = resolutionsDeserialiser;
         this.associatedFilingDeserialiser = associatedFilingDeserialiser;
     }
 
@@ -44,6 +48,11 @@ public class ExternalDataMapper {
         List<Annotation> annotations = Optional.ofNullable(
                         getNestedJsonNodeFromJsonNode(dataNode, "annotations"))
                 .map(annotationsArray -> annotationsDeserialiser.deserialise((ArrayNode) annotationsArray))
+                .orElse(null);
+
+        List<Resolution> resolutions = Optional.ofNullable(
+                        getNestedJsonNodeFromJsonNode(dataNode, "resolutions"))
+                .map(resolutionsArray -> resolutionsDeserialiser.deserialise((ArrayNode) resolutionsArray))
                 .orElse(null);
 
         List<AssociatedFiling> associatedFilings = Optional.ofNullable(
@@ -65,6 +74,7 @@ public class ExternalDataMapper {
                 .paperFiled(paperFiledMapper.isPaperFiled(barcode, documentId) ? true : null)
                 .links(linksMapper.map(companyNumber, encodedId))
                 .annotations(annotations)
+                .resolutions(resolutions)
                 .associatedFilings(associatedFilings);
     }
 }
