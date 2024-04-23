@@ -1,0 +1,33 @@
+{
+  "external_data": {
+    "transaction_id": "MjA0MjA3NzE2NnNhbHQ",
+    "barcode": "SFFRIDHP",
+    "action_date": "2009-09-01T00:00:00Z",
+    "category": "mortgage",
+    "date": "2009-09-22T00:00:00Z",
+    "description": "mortgage-alteration-floating-charge-scotland-limited-liability-partnership",
+    "description_values": {
+      "charge_creation_date": "2009-09-01T00:00:00Z",
+      "charge_number": "2"
+    },
+    "links": {
+      "self": "/company/SO300895/filing-history/MjA0MjA3NzE2NnNhbHQ"
+    },
+    "paper_filed": true,
+    "subcategory": "alter",
+    "type": "LLP466(Scot)"
+  },
+  "internal_data": {
+    "company_number": "SO300895",
+    "document_id": "000SFFRIDHP4015",
+    "entity_id": "2042077166",
+    "original_description": "Particulars of an instrument of alteration of a floating charge / charge no: 2",
+    "original_values": {
+      "charge_creation_date": "2009-09-01T00:00:00Z"
+    },
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}
