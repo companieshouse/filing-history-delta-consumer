@@ -56,7 +56,7 @@ class ConsumerRetryableExceptionIT extends AbstractKafkaIT {
 
     @BeforeEach
     public void setup() {
-        testConsumer.poll(Duration.ofMillis(100));
+        testConsumer.poll(Duration.ofMillis(1000));
     }
 
     @Test

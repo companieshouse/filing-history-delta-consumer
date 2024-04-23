@@ -62,7 +62,7 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
     @BeforeEach
     public void setup() {
         testConsumerAspect.resetLatch();
-        testConsumer.poll(Duration.ofMillis(100));
+        testConsumer.poll(Duration.ofMillis(Integer.getInteger("kafka.polling_duration", 1000)));
     }
 
     @ParameterizedTest
