@@ -152,14 +152,11 @@ class DescriptionValuesMapperTest {
         // given
         final JsonNode jsonNode = MAPPER.createObjectNode();
 
-        final DescriptionValues expected = new DescriptionValues();
-
         // when
         final DescriptionValues actual = descriptionValuesMapper.map(jsonNode);
 
         // then
-        assertEquals(expected, actual);
-        assertNull(jsonNode.get("description_values"));
+        assertNull(actual);
     }
 
     @Test

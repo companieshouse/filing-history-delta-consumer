@@ -24,18 +24,17 @@ public class ResolutionNodeMapper extends AbstractNodeMapper implements ChildNod
                 .put(DESCRIPTION_FIELD,
                         StringUtils.isNotBlank(filingHistory.getDescription()) ? filingHistory.getDescription() : "");
 
-        if ("RES15".equals(filingHistory.getFormType())) {
-            childNode.put("date", formatDate.format(filingHistory.getReceiveDate()));
-        }
-
         DescriptionValues descriptionValues = filingHistory.getDescriptionValues();
-        ObjectNode valuesNode = childNode.putObject("description_values");
 
-        putIfNotBlank(valuesNode, "case_start_date", descriptionValues.getCaseStartDate());
-        putIfNotBlank(valuesNode, "res_type", descriptionValues.getResType());
-        putIfNotBlank(valuesNode, DESCRIPTION_FIELD, descriptionValues.getDescription());
-        putIfNotBlank(valuesNode, "date", descriptionValues.getDate());
-        putIfNotBlank(valuesNode, "resolution_date", descriptionValues.getResolutionDate());
+        if (descriptionValues != null) {
+            ObjectNode valuesNode = childNode.putObject("description_values");
+
+            putIfNotBlank(valuesNode, "case_start_date", descriptionValues.getCaseStartDate());
+            putIfNotBlank(valuesNode, "res_type", descriptionValues.getResType());
+            putIfNotBlank(valuesNode, DESCRIPTION_FIELD, descriptionValues.getDescription());
+            putIfNotBlank(valuesNode, "date", descriptionValues.getDate());
+            putIfNotBlank(valuesNode, "resolution_date", descriptionValues.getResolutionDate());
+        }
 
         ObjectNode dataNode = (ObjectNode) parentNode.get("data");
         dataNode.put("type", "RESOLUTIONS")

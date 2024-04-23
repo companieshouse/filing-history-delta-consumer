@@ -45,7 +45,7 @@ class ConsumerInvalidPayloadExceptionIT extends AbstractKafkaIT {
 
     @BeforeEach
     public void drainKafkaTopics() {
-        testConsumer.poll(Duration.ofMillis(1));
+        testConsumer.poll(Duration.ofMillis(1000));
     }
 
     @Test

@@ -1,0 +1,38 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzAzMTY3NTc2N3NhbHQ",
+    "barcode" : "SX8QXRDO",
+    "category" : "resolution",
+    "date" : "2011-02-04T13:40:10Z",
+    "description" : "resolution",
+    "description_values" : {
+      "description" : "Resolutions"
+    },
+    "links" : {
+      "self" : "/company/SC297303/filing-history/MzAzMTY3NTc2N3NhbHQ"
+    },
+    "paper_filed" : true,
+    "resolutions" : [
+      {
+        "category" : "change-of-name",
+        "description" : "resolution-change-of-name",
+        "description_values" : {
+          "resolution_date" : "2011-01-31T00:00:00Z"
+        },
+        "subcategory" : "resolution",
+        "type" : "RES15"
+      }
+    ],
+    "type" : "RESOLUTIONS"
+  },
+  "internal_data": {
+    "original_description" : "Resolutions",
+    "company_number" : "SC297303",
+    "document_id": "000SX8QXRDO4374",
+    "entity_id" : "3031675767",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "resolution"
+  }
+}

@@ -62,12 +62,14 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
     @BeforeEach
     public void setup() {
         testConsumerAspect.resetLatch();
-        testConsumer.poll(Duration.ofMillis(1));
+        testConsumer.poll(Duration.ofMillis(Integer.getInteger("kafka.polling_duration", 1000)));
     }
 
     @ParameterizedTest
     @CsvSource({
             "resolution/RES01",
+            "resolution/RES15_top_level",
+            "resolution/RES15_child",
 
             "annotation/annotation",
 
