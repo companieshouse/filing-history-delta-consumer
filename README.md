@@ -119,7 +119,7 @@ repository
 Before committing any documents to GitHub, please ensure any fields containing sensitive data are
 anonymised.
 
-**Complete the following steps to add another test case, NEEDS UPDATING IF WE CONTINUE TO ADD - CURRENTLY OUT OF DATE**:
+**Complete the following steps to add another test case**:
 
 1. Create a json file called `<category>/X_delta.json` where `X` is the name of the form/rule under test.
     1. To make json snippets easier to organise, we now separate them based on `<category>`.
