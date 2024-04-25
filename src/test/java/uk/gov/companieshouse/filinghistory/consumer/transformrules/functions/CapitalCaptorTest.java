@@ -114,14 +114,17 @@ class CapitalCaptorTest {
                 .put("figure", FIGURE);
 
         ObjectNode capital1 = MAPPER.createObjectNode()
+                .put("date", "2014-05-13T00:00:00Z")
                 .put("currency", "USD")
                 .put("figure", FIGURE);
 
         ObjectNode capital2 = MAPPER.createObjectNode()
+                .put("date", "2014-05-13T00:00:00Z")
                 .put("currency", "HKD")
                 .put("figure", FIGURE);
 
         ObjectNode capital3 = MAPPER.createObjectNode()
+                .put("date", "2014-05-13T00:00:00Z")
                 .put("currency", "JPY")
                 .put("figure", FIGURE);
 
