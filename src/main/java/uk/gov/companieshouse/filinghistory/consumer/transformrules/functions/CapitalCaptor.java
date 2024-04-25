@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.lang.StringUtils;
@@ -43,9 +42,7 @@ public class CapitalCaptor {
         ArrayNode altCaptures = objectMapper.createArrayNode();
 
         while (matcher.find()) {
-            Map<String, Integer> namedGroups = matcher.namedGroups();
-
-            CurrentCaptures currentCaptures = buildCurrentCaptures(namedGroups, matcher, sourceDescription);
+            CurrentCaptures currentCaptures = buildCurrentCaptures(matcher, sourceDescription);
 
             if (currentCaptures.currentlyMatchedGroups().contains("capitalAltDesc")) {
                 currentCaptures.currentCapitalElement().put("description", altDescription);
@@ -57,14 +54,12 @@ public class CapitalCaptor {
         return new CapitalCaptures(captures, altCaptures);
     }
 
-    private CurrentCaptures buildCurrentCaptures(Map<String, Integer> namedGroups,
-                                                 Matcher matcher,
-                                                 final String sourceDescription) {
+    private CurrentCaptures buildCurrentCaptures(Matcher matcher, final String sourceDescription) {
         ObjectNode capture = objectMapper.createObjectNode();
 
         List<String> currentlyMatchedGroups = new ArrayList<>();
 
-        namedGroups.forEach((key, value) -> {
+        matcher.namedGroups().forEach((key, value) -> {
             if (matcher.group(value) != null) {
                 currentlyMatchedGroups.add(key);
                 switch (key) {
