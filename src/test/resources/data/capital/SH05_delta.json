@@ -2,13 +2,13 @@
   "filing_history": [
     {
       "category": "9",
-      "receive_date": "20120118102621",
+      "receive_date": "20110707091055",
       "form_type": "SH05",
-      "description": "NOTICE OF CANCELLATION OF TREASURY SHARES",
-      "barcode": "A10D524J",
-      "document_id": "000A10D524J4716",
-      "company_number": "SE000030",
-      "entity_id": "3089823679",
+      "description": "07/07/11 Statement of Capital GBP 1401444633 29/06/11 Treasury Capital GBP 117553680.5",
+      "barcode": "AXUDAVH0",
+      "document_id": "000AXUDAVH04513",
+      "company_number": "03888792",
+      "entity_id": "3040056831",
       "parent_entity_id": "",
       "parent_form_type": "",
       "pre_scanned_batch": "0"

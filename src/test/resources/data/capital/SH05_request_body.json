@@ -1,24 +1,43 @@
 {
-  "external_data": {
-    "transaction_id": "MzA4OTgyMzY3OXNhbHQ",
-    "barcode": "A10D524J",
-    "category": "capital",
-    "date": "2012-01-18T10:26:21Z",
-    "description": "capital-cancellation-treasury-shares",
-    "links": {
-      "self": "/company/SE000030/filing-history/MzA4OTgyMzY3OXNhbHQ"
+  "external_data" : {
+    "transaction_id" : "MzA0MDA1NjgzMXNhbHQ",
+    "barcode" : "AXUDAVH0",
+    "action_date" : "2011-07-07T00:00:00Z",
+    "category" : "capital",
+    "date" : "2011-07-07T09:10:55Z",
+    "description" : "capital-cancellation-treasury-shares-with-date-currency-capital-figure",
+    "description_values" : {
+      "capital" : [
+        {
+          "figure" : "1,401,444,633",
+          "currency" : "GBP",
+          "date" : "2011-07-07T00:00:00Z"
+        }
+      ],
+      "alt_capital" : [
+        {
+          "figure" : "117,553,680.5",
+          "currency" : "GBP",
+          "description" : "capital-cancellation-treasury-shares-with-date-treasury-capital-figure",
+          "date" : "2011-06-29T00:00:00Z"
+        }
+      ],
+      "date" : "2011-07-07T00:00:00Z"
     },
-    "paper_filed": true,
-    "type": "SH05"
+    "links" : {
+      "self" : "/company/03888792/filing-history/MzA0MDA1NjgzMXNhbHQ"
+    },
+    "paper_filed" : true,
+    "type" : "SH05"
   },
   "internal_data": {
-    "original_description": "Notice of cancellation of treasury shares",
-    "company_number": "SE000030",
-    "document_id": "000A10D524J4716",
-    "entity_id": "3089823679",
-    "parent_entity_id": "",
+    "company_number" : "03888792",
+    "document_id" : "000AXUDAVH04513",
+    "entity_id" : "3040056831",
+    "original_description" : "07/07/11 Statement of Capital gbp 1401444633 29/06/11 Treasury Capital gbp 117553680.5",
     "delta_at": "20211029142043360560",
     "updated_by": "context_id",
-    "transaction_kind": "top-level"
+    "transaction_kind": "top-level",
+    "parent_entity_id": ""
   }
 }
