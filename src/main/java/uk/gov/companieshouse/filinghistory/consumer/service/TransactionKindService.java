@@ -40,17 +40,14 @@ public class TransactionKindService {
             }
             kindEnum = TransactionKindEnum.ANNOTATION;
 
-        } else if (RES_15.equals(kindCriteria.formType())) {
-            if (StringUtils.isNotBlank(kindCriteria.parentEntityId())) {
+        } else if (formTypeService.isResolutionType(kindCriteria.formType())) {
+            if (StringUtils.isNotBlank(kindCriteria.barcode()) && !RES_15.equals(kindCriteria.formType())) {
+                encodedId = encodeTransactionId(kindCriteria.barcode());
+            } else if (StringUtils.isNotBlank(kindCriteria.parentEntityId())) {
                 encodedId = encodeTransactionId(kindCriteria.parentEntityId());
             } else {
                 encodedId = encodeTransactionId(kindCriteria.entityId());
             }
-            kindEnum = TransactionKindEnum.RESOLUTION;
-            
-        } else if (StringUtils.isNotBlank(kindCriteria.barcode())
-                && formTypeService.isResolutionType(kindCriteria.formType())) {
-            encodedId = encodeTransactionId(kindCriteria.barcode());
             kindEnum = TransactionKindEnum.RESOLUTION;
 
         } else if (!formTypeService.isAssociatedFilingBlockListed(kindCriteria)

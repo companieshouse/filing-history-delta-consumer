@@ -1,0 +1,21 @@
+{
+  "filing_history": [
+    {
+      "category": "9",
+      "receive_date": "20100224111028",
+      "form_type": "RES01",
+      "description": "ALTER ARTICLES 19/02/2010",
+      "barcode": "",
+      "document_id": "",
+      "company_number": "05424214",
+      "entity_id": "3010144460",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "description_values": {
+        "res_type": "ALTER ARTICLES"
+      },
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

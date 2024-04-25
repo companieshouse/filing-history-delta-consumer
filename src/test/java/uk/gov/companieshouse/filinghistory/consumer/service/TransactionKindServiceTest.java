@@ -63,6 +63,8 @@ class TransactionKindServiceTest {
 
         // then
         assertEquals(expected, actual);
+        verify(formTypeService).isResolutionType(criteria.formType());
+        verify(formTypeService).isAssociatedFilingBlockListed(criteria);
     }
 
     @Test
@@ -83,6 +85,7 @@ class TransactionKindServiceTest {
 
         // then
         assertEquals(expected, actual);
+        verifyNoInteractions(formTypeService);
     }
 
     @Test
@@ -103,6 +106,7 @@ class TransactionKindServiceTest {
 
         // then
         assertEquals(expected, actual);
+        verifyNoInteractions(formTypeService);
     }
 
     @Test
@@ -126,6 +130,7 @@ class TransactionKindServiceTest {
         // then
         assertEquals(expected, actual);
         verify(formTypeService).isResolutionType("RES01");
+        verifyNoMoreInteractions(formTypeService);
     }
 
     @ParameterizedTest
@@ -134,6 +139,8 @@ class TransactionKindServiceTest {
     }, nullValues = {"null"})
     void shouldEncodeEntityIdWhenResolutionButBarcodeBlank(String barcode) {
         // given
+        when(formTypeService.isResolutionType(any())).thenReturn(true);
+
         TransactionKindCriteria criteria = new TransactionKindCriteria(
                 ENTITY_ID,
                 "",
@@ -142,20 +149,22 @@ class TransactionKindServiceTest {
                 barcode);
         TransactionKindResult expected = new TransactionKindResult(
                 ENCODED_ENTITY_ID,
-                TransactionKindEnum.TOP_LEVEL);
+                TransactionKindEnum.RESOLUTION);
 
         // when
         TransactionKindResult actual = kindService.encodeIdByTransactionKind(criteria);
 
         // then
         assertEquals(expected, actual);
-        verify(formTypeService).isAssociatedFilingBlockListed(criteria);
+        verify(formTypeService).isResolutionType(criteria.formType());
         verifyNoMoreInteractions(formTypeService);
     }
 
     @Test
     void shouldEncodeEntityIdWhenRES15() {
         // given
+        when(formTypeService.isResolutionType(any())).thenReturn(true);
+
         TransactionKindCriteria criteria = new TransactionKindCriteria(
                 ENTITY_ID,
                 "",
@@ -171,7 +180,32 @@ class TransactionKindServiceTest {
 
         // then
         assertEquals(expected, actual);
-        verifyNoInteractions(formTypeService);
+        verify(formTypeService).isResolutionType(criteria.formType());
+        verifyNoMoreInteractions(formTypeService);
+    }
+
+    @Test
+    void shouldEncodeParentEntityIdWhenRES15Child() {
+        // given
+        when(formTypeService.isResolutionType(any())).thenReturn(true);
+
+        TransactionKindCriteria criteria = new TransactionKindCriteria(
+                ENTITY_ID,
+                PARENT_ENTITY_ID,
+                "RES15",
+                "",
+                BARCODE);
+        TransactionKindResult expected = new TransactionKindResult(
+                ENCODED_PARENT_ENTITY_ID,
+                TransactionKindEnum.RESOLUTION);
+
+        // when
+        TransactionKindResult actual = kindService.encodeIdByTransactionKind(criteria);
+
+        // then
+        assertEquals(expected, actual);
+        verify(formTypeService).isResolutionType(criteria.formType());
+        verifyNoMoreInteractions(formTypeService);
     }
 
     @Test
@@ -194,6 +228,7 @@ class TransactionKindServiceTest {
 
         // then
         assertEquals(expected, actual);
+        verify(formTypeService).isResolutionType(criteria.formType());
         verify(formTypeService).isAssociatedFilingBlockListed(criteria);
     }
 
@@ -217,6 +252,7 @@ class TransactionKindServiceTest {
 
         // then
         assertEquals(expected, actual);
+        verify(formTypeService).isResolutionType(criteria.formType());
         verify(formTypeService).isAssociatedFilingBlockListed(criteria);
     }
 
@@ -240,6 +276,7 @@ class TransactionKindServiceTest {
 
         // then
         assertEquals(expected, actual);
+        verify(formTypeService).isResolutionType(criteria.formType());
         verify(formTypeService).isAssociatedFilingBlockListed(criteria);
     }
 
