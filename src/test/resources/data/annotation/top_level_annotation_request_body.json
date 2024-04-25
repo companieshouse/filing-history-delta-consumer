@@ -1,0 +1,37 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzA1ODgxOTgyMXNhbHQ",
+    "annotations" : [
+      {
+        "annotation" : "Clarification A second filed Annual Return was registered 08/06/2012",
+        "category" : "annotation",
+        "date" : "2012-06-08T11:57:11Z",
+        "description" : "annotation",
+        "description_values" : {
+          "description" : "Clarification a second filed Annual Return was registered 08/06/2012"
+        },
+        "type" : "ANNOTATION"
+      }
+    ],
+    "category" : "miscellaneous",
+    "date" : "2012-06-08T11:57:11Z",
+    "description" : "legacy",
+    "description_values" : {
+      "description" : "Clarification a second filed Annual Return was registered 08/06/2012"
+    },
+    "links" : {
+      "self" : "/company/04023892/filing-history/MzA1ODgxOTgyMXNhbHQ"
+    },
+    "paper_filed" : true,
+    "type" : "ANNOTATION"
+  },
+  "internal_data": {
+    "company_number" : "04023892",
+    "entity_id" : "3058819821",
+    "original_description" : "Clarification a second filed Annual Return was registered 08/06/2012",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "annotation",
+    "parent_entity_id": ""
+  }
+}

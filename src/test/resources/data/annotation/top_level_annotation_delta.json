@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "9",
+      "receive_date": "20120608115711",
+      "form_type": "ANNOTATION",
+      "description": "Clarification A second filed Annual Return was registered 08/06/2012",
+      "barcode": "",
+      "document_id": "",
+      "company_number": "04023892",
+      "entity_id": "3058819821",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}
