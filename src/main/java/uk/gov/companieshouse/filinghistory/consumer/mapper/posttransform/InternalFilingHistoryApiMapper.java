@@ -41,11 +41,13 @@ public class InternalFilingHistoryApiMapper {
 
         String barcode = getFieldValueFromJsonNode(topLevelNode, "_barcode");
         String documentId = getFieldValueFromJsonNode(topLevelNode, "_document_id");
+        String matchedDefault = getFieldValueFromJsonNode(topLevelNode, "matched_default");
 
         InternalData internalData = new InternalData()
                 .originalDescription(getFieldValueFromJsonNode(topLevelNode, "original_description"))
                 .parentEntityId(getFieldValueFromJsonNode(topLevelNode, "parent_entity_id"))
                 .entityId(getFieldValueFromJsonNode(topLevelNode, "_entity_id"))
+                .matchedDefault(matchedDefault == null ? null : Integer.parseInt(matchedDefault))
                 .originalValues(
                         originalValuesMapper.map(getNestedJsonNodeFromJsonNode(topLevelNode, "original_values")))
                 .companyNumber(args.companyNumber())

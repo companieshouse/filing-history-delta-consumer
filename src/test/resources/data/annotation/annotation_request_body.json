@@ -26,6 +26,7 @@
     "paper_filed" : true
   },
   "internal_data": {
+    "matched_default": 1,
     "original_description": "A second filed TM01 was registered on the 05 November 2012",
     "company_number" : "12345678",
     "entity_id" : "3047900699",

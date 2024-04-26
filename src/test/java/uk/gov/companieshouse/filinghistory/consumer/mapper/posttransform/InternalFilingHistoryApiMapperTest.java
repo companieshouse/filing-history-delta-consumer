@@ -136,7 +136,8 @@ class InternalFilingHistoryApiMapperTest {
                 .put("parent_entity_id", "")
                 .put("_entity_id", ENTITY_ID)
                 .put("_document_id", InternalFilingHistoryApiMapperTest.DOCUMENT_ID)
-                .put("company_number", InternalFilingHistoryApiMapperTest.COMPANY_NUMBER);
+                .put("company_number", InternalFilingHistoryApiMapperTest.COMPANY_NUMBER)
+                .put("matched_default", "1");
 
         topLevelNode.putObject("original_values");
 
@@ -159,6 +160,7 @@ class InternalFilingHistoryApiMapperTest {
                         .parentEntityId("")
                         .entityId(ENTITY_ID)
                         .documentId(DOCUMENT_ID)
-                        .updatedBy(UPDATED_BY));
+                        .updatedBy(UPDATED_BY)
+                        .matchedDefault(1));
     }
 }
