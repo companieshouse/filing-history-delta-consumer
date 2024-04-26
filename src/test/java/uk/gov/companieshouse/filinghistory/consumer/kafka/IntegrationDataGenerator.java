@@ -1,7 +1,5 @@
 package uk.gov.companieshouse.filinghistory.consumer.kafka;
 
-import static com.mongodb.client.model.Filters.eq;
-import static org.apache.commons.lang3.StringUtils.trim;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import com.jayway.jsonpath.DocumentContext;
@@ -13,21 +11,22 @@ import com.mongodb.ServerApiVersion;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
-import java.nio.charset.StandardCharsets;
+import com.mongodb.client.model.Filters;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.sql.DataSource;
 import oracle.jdbc.pool.OracleDataSource;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.bson.Document;
@@ -52,8 +51,6 @@ public class IntegrationDataGenerator implements ArgumentsProvider {
     private static final String MONGO_CONNECTION = "mongodb://localhost:27017/?retryWrites=false&loadBalanced=false&serverSelectionTimeoutMS=5000&connectTimeoutMS=10000";
     private static final String QUEUE_API_URL = "http://localhost:18201/queue/delta/filing-history";
     private static final String COMPANY_FILING_HISTORY = "company_filing_history";
-    private static final String PERL_SALT = System.getenv("PERL_SALT");
-    private static final String SALT = "salt";
 
     private static final String FIND_ALL_DELTAS = """
             SELECT
@@ -72,9 +69,10 @@ public class IntegrationDataGenerator implements ArgumentsProvider {
                  ) AS api_delta
             FROM
                 capdevjco2.fh_deltas
+            --where transaction_id = 3066842559
             """;
 
-    record Deltas(String transactionId, String javaDelta, String perlDelta) {
+    private record Deltas(String transactionId, String javaDelta, String perlDelta) {
 
     }
 
@@ -102,10 +100,10 @@ public class IntegrationDataGenerator implements ArgumentsProvider {
                     .defaultHeader(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON_VALUE)
                     .build();
 
+            filingHistoryCollection.deleteMany(new Document());
+
             Queue<Arguments> queue = new ConcurrentLinkedQueue<>();
             jdbcTemplate.query(FIND_ALL_DELTAS, new DeltaRowMapper())
-                    .stream()
-                    .parallel()
                     .forEach(deltas -> {
 
                         // TODO Remove delta clean up when DSND-2475 is deployed in CIDEV
@@ -116,18 +114,15 @@ public class IntegrationDataGenerator implements ArgumentsProvider {
 
                                 postDeltaToQueueApi(perlDelta, queueApiClient);
 
-                                DocumentContext documentContext = JsonPath.parse(deltas.javaDelta());
-                                String entityId = documentContext.read("$.filing_history[0].entity_id");
-                                String formType = documentContext.read("$.filing_history[0].form_type");
-                                String parentEntityId = documentContext.read("$.filing_history[0].parent_entity_id");
-                                String barcode = documentContext.read("$.filing_history[0].barcode");
+                                DocumentContext delta = JsonPath.parse(deltas.javaDelta());
+                                String entityId = delta.read("$.filing_history[0].entity_id");
+                                String formType = delta.read("$.filing_history[0].form_type");
 
-                                Document filingHistoryDocument = findFilingHistoryById(filingHistoryCollection,
-                                        entityId, parentEntityId, barcode);
-                                String putRequest = transformToPutRequest(filingHistoryDocument, documentContext);
+                                Document perlDocument = findPerlDocument(filingHistoryCollection, formType, entityId);
+                                String expectedRequestBody = transformToPutRequest(perlDocument, delta);
 
-                                queue.add(Arguments.of(getCategory(filingHistoryDocument), formType, entityId,
-                                        javaDelta, putRequest));
+                                queue.add(Arguments.of(getCategory(perlDocument), formType, entityId, javaDelta,
+                                        expectedRequestBody));
 
                             } else {
                                 logger.warn("No delta JSON found for transaction {}", deltas.transactionId());
@@ -145,14 +140,6 @@ public class IntegrationDataGenerator implements ArgumentsProvider {
         }
     }
 
-    private String cleanWhitespaceInKeys(String delta) {
-        return StringUtils.isNotBlank(delta) ? delta
-                .replaceAll("\"psc_name\\s\"", "\"psc_name\"")
-                .replaceAll("\"property_acquired_date\\s\"", "\"property_acquired_date\"")
-                .replaceAll("\"mortgage_satisfaction_date\\s\"", "\"mortgage_satisfaction_date\"")
-                : delta;
-    }
-
     private void postDeltaToQueueApi(String delta, RestClient queueApiClient) {
         queueApiClient.post()
                 .header("x-request-id", UUID.randomUUID().toString())
@@ -163,27 +150,73 @@ public class IntegrationDataGenerator implements ArgumentsProvider {
                 });
     }
 
+    private Document findPerlDocument(MongoCollection<Document> filingHistoryCollection, String formType,
+            String entityId) {
+        Document document = null;
+        for (int count = 0; count < 500; count++) {
+            try {
+                Thread.sleep(10); // nosonar
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            document = filingHistoryCollection.find().first();
+            if (document != null) {
+                break;
+            }
+        }
+
+        if (document != null) {
+            filingHistoryCollection.deleteMany(Filters.and(Filters.eq("_id", document.get("_id"))));
+            return document;
+        }
+
+        throw new RuntimeException("Failed to read filing history document for form %s, transaction %s"
+                .formatted(formType, entityId));
+    }
+
+    private String cleanWhitespaceInKeys(String delta) {
+        return StringUtils.isNotBlank(delta) ? delta
+                .replaceAll("\"psc_name\\s\"", "\"psc_name\"")
+                .replaceAll("\"property_acquired_date\\s\"", "\"property_acquired_date\"")
+                .replaceAll("\"mortgage_satisfaction_date\\s\"", "\"mortgage_satisfaction_date\"")
+                : delta;
+    }
+
     @SuppressWarnings("unchecked")
-    private String transformToPutRequest(Map<String, Object> filingHistoryDocument, DocumentContext javaDelta) {
+    private String transformToPutRequest(Document filingHistoryDocument, DocumentContext javaDelta) {
         Document putRequest = new Document();
-        String encodedTransactionId = encodeDocumentId((String) filingHistoryDocument.get("_entity_id"), SALT);
+        String encodedTransactionId = (String) filingHistoryDocument.get("_id");
 
         Map<String, Object> externalData = new LinkedHashMap<>((Map<String, Object>) filingHistoryDocument.get("data"));
         externalData.put("transaction_id", encodedTransactionId);
-        externalData.put("barcode", filingHistoryDocument.get("_barcode"));
-        externalData.remove("pages");
 
-        Map<String, Object> links = (Map<String, Object>) externalData.get("links");
+        if (filingHistoryDocument.containsKey("_barcode")) {
+            externalData.put("barcode",
+                    filingHistoryDocument.get("_barcode"));
+        } else if (filingHistoryDocument.containsKey("barcode")) {
+            externalData.put("barcode",
+                    filingHistoryDocument.get("barcode"));
+        }
+
+        externalData.remove("pages");
+        Document links = (Document) externalData.get("links");
         links.remove("document_meta_data");
-        links.put("self", updateSelfLink((String) links.get("self"), encodedTransactionId));
+
+        if (externalData.containsKey("resolutions")) {
+            List<Document> resolutions = (List<Document>) externalData.get("resolutions");
+            resolutions.forEach(doc -> doc.remove("delta_at"));
+        }
+
+        cleanseValuesMap(externalData, "description_values");
 
         Map<String, Object> internalData = new LinkedHashMap<>();
         filingHistoryDocument.forEach((key, value) -> {
             switch (key) {
                 case "_id":
                 case "_barcode":
+                case "barcode":
                 case "delta_at":
-                case "transaction_kind":
                 case "data":
                     break;
                 case "_entity_id":
@@ -198,9 +231,16 @@ public class IntegrationDataGenerator implements ArgumentsProvider {
         });
 
         internalData.put("updated_by", "context_id");
-        internalData.put("transaction_kind", getTransactionKind(filingHistoryDocument));
         internalData.putIfAbsent("parent_entity_id", "");
         internalData.put("delta_at", javaDelta.read("$.delta_at"));
+        cleanseValuesMap(internalData, "original_values");
+        if (externalData.containsKey("category") && "resolution".equals(externalData.get("category"))) {
+            internalData.put("entity_id", javaDelta.read("$.filing_history[0].entity_id"));
+            String documentId = javaDelta.read("$.filing_history[0].document_id");
+            if (StringUtils.isNotBlank(documentId)) {
+                internalData.put("document_id", documentId);
+            }
+        }
 
         putRequest.put("external_data", externalData);
         putRequest.put("internal_data", internalData);
@@ -211,6 +251,30 @@ public class IntegrationDataGenerator implements ArgumentsProvider {
                 .indent(true)
                 .outputMode(JsonMode.SHELL)
                 .build());
+    }
+
+    @SuppressWarnings({"unchecked"})
+    private void cleanseValuesMap(Map<String, Object> data, String key) {
+        if (data.containsKey(key)) {
+            Map<String, Object> valuesMap = new HashMap<>((Map<String, Object>) data.get(key));
+
+            if (valuesMap.isEmpty()) {
+                data.remove(key);
+            } else {
+                Map<String, Object> cleansed = valuesMap.entrySet().stream()
+                        .filter(entry -> entry.getValue() != null && StringUtils.isNotBlank(
+                                entry.getValue().toString()))
+                        .collect(Collectors.toMap(Map.Entry<String, Object>::getKey,
+                                Map.Entry<String, Object>::getValue));
+                if (!valuesMap.equals(cleansed)) {
+                    if (cleansed.isEmpty()) {
+                        data.remove(key);
+                    } else {
+                        data.replace(key, cleansed);
+                    }
+                }
+            }
+        }
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
@@ -235,63 +299,29 @@ public class IntegrationDataGenerator implements ArgumentsProvider {
         return arrayNode;
     }
 
-    private String updateSelfLink(String self, String encodedTransactionId) {
-        int lastSlash = self.lastIndexOf("/");
-        return self.substring(0, lastSlash + 1) + encodedTransactionId;
-    }
-
-    @SuppressWarnings("unchecked")
-    private String getCategory(Map<String, Object> filingHistoryDocument) {
-        return (String) ((Map<String, Object>) filingHistoryDocument.get("data")).get("category");
-    }
-
-    @SuppressWarnings("unchecked")
-    private String getTransactionKind(Map<String, Object> filingHistoryDocument) {
-        return switch ((String) ((Map<String, Object>) filingHistoryDocument.get("data")).get("type")) {
-            case "annotation" -> "annotation";
-            case "resolution" -> "resolution";
-            case "associated-filing" -> "associated-filing";
-            default -> "top-level";
-        };
-    }
-
-    private String encodeDocumentId(String entityId, String salt) {
-        return StringUtils.isBlank(entityId) ? entityId
-                : Base64.encodeBase64URLSafeString((trim(entityId) + salt).getBytes(StandardCharsets.UTF_8));
-    }
-
-    private Document findFilingHistoryById(MongoCollection<Document> filingHistoryCollection, String entityId,
-            String parentEntityId, String barcode) {
-        for (int count = 0; count < 500; count++) {
-            try {
-                Thread.sleep(10); // nosonar
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+    //    @SuppressWarnings("unchecked")
+    private String getCategory(Document filingHistoryDocument) {
+        Document data = (Document) filingHistoryDocument.get("data");
+        String category = (String) ((Document) filingHistoryDocument.get("data")).get("category");
+        if (category == null) {
+            List<?> children = null;
+            if (data.containsKey("annotations")) {
+                children = (List<?>) data.get("annotations");
+            } else if (data.containsKey("resolutions")) {
+                children = (List<?>) data.get("resolutions");
             }
-            Document doc = findFilingHistoryByOneOf(filingHistoryCollection, entityId, parentEntityId, barcode);
-            if (doc != null) {
-                return doc;
+
+            if (children != null) {
+                category = (String) ((Document) children.getFirst()).get("category");
             }
         }
-        throw new RuntimeException("Failed to read filing history document for transaction %s".formatted(entityId));
+
+        if (category == null) {
+            category = "unknown";
+        }
+
+        return category;
     }
-
-    private Document findFilingHistoryByOneOf(MongoCollection<Document> filingHistoryCollection, String entityId,
-            String parentEntityId, String barcode) {
-
-        Document doc = filingHistoryCollection.find(eq("_entity_id", entityId)).first();
-        if (doc == null) {
-            doc = filingHistoryCollection.find(eq("_id", encodeDocumentId(parentEntityId, PERL_SALT))).first();
-        }
-        if (doc == null) {
-            doc = filingHistoryCollection.find(eq("_id", encodeDocumentId(entityId, PERL_SALT))).first();
-        }
-        if (doc == null) {
-            doc = filingHistoryCollection.find(eq("_id", encodeDocumentId(barcode, PERL_SALT))).first();
-        }
-        return doc;
-    }
-
 
     public DataSource chipsSource() throws SQLException {
         OracleDataSource dataSource = new OracleDataSource();

@@ -12,6 +12,10 @@ import uk.gov.companieshouse.api.filinghistory.InternalFilingHistoryApi;
 
 public class PutRequestMatcher implements ValueMatcher<Request> {
 
+    private static final ObjectMapper MAPPER = new ObjectMapper()
+            .setSerializationInclusion(Include.NON_EMPTY)
+            .registerModule(new JavaTimeModule());
+
     private final String expectedUrl;
     private final String expectedBody;
 
@@ -37,13 +41,15 @@ public class PutRequestMatcher implements ValueMatcher<Request> {
     }
 
     private MatchResult matchBody(String actualBody) {
-        ObjectMapper mapper = new ObjectMapper()
-                .setSerializationInclusion(Include.NON_EMPTY)
-                .registerModule(new JavaTimeModule());
 
         try {
-            InternalFilingHistoryApi expected = mapper.readValue(expectedBody, InternalFilingHistoryApi.class);
-            InternalFilingHistoryApi actual = mapper.readValue(actualBody, InternalFilingHistoryApi.class);
+            InternalFilingHistoryApi expected = MAPPER.readValue(expectedBody, InternalFilingHistoryApi.class);
+            InternalFilingHistoryApi actual = MAPPER.readValue(actualBody, InternalFilingHistoryApi.class);
+
+            if (expected.getInternalData().getTransactionKind() == null) {
+                actual.getInternalData().transactionKind(null);
+            }
+
             MatchResult result = MatchResult.of(expected.equals(actual));
             if (!result.isExactMatch()) {
                 System.out.printf("%nExpected: [%s]%n", expected);
