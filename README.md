@@ -100,7 +100,7 @@ To run the tests from the command line use:
 
 ```shell
 HUMAN_LOG=1 KERMIT_PASSWORD=<kermit_password> TRANSACTION_ID_SALT=<perl_salt> RUN_BULK_TEST=1 \
-mvn test -Dtest="ConsumerPositiveComprehensiveIT#shouldConsumeFilingHistoryDeltaTopicAndProcessDeltaFromStream"
+mvn test -Dkafka.polling_duration=1 -Dtest="ConsumerPositiveComprehensiveIT#shouldConsumeFilingHistoryDeltaTopicAndProcessDeltaFromStream"
 ```
 
 _Note:_
@@ -111,8 +111,12 @@ https://companieshouse.atlassian.net/wiki/spaces/TH/pages/4029120676/Harmonia+Te
 the [chs-backend](https://github.com/companieshouse/chs-backend/blob/93494b863fcbb97e99195e54770b30b8ebcd4668/lib/ChsBackend/Roles/Transform.pm#L416)
 repository
 * To run the tests in IntelliJ
-  add `HUMAN_LOG=1; KERMIT_PASSWORD=<kermit_password>; TRANSACTION_ID_SALT=<perl_salt>; RUN_BULK_TEST=1`
+    *
+    Add `HUMAN_LOG=1; KERMIT_PASSWORD=<kermit_password>; TRANSACTION_ID_SALT=<perl_salt>; RUN_BULK_TEST=1`
   settings to the Environment Variables section of the run configuration dialog.
+    * Add `-Dkafka.polling_duration=1-` to the system properties. The complete settings should look
+      like
+        * ```-ea -Dkafka.polling_duration=1```
 
 ### IMPORTANT
 
