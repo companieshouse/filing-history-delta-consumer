@@ -12,7 +12,6 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,7 +39,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.web.client.RestClient;
 
 public class IntegrationDataGenerator implements ArgumentsProvider {
@@ -54,37 +52,41 @@ public class IntegrationDataGenerator implements ArgumentsProvider {
 
     private static final String FIND_ALL_DELTAS = """
             SELECT
-                transaction_id,
-                 (
-                     SELECT
-                         pkg_chs_get_data.f_get_one_transaction(transaction_id, '29-OCT-21 14.20.43.360560000') AS result
-                     FROM
-                         dual
-                 ) AS queue_delta,
-                 (
-                     SELECT
-                         pkg_chs_get_data.f_get_one_transaction_api(transaction_id, '29-OCT-21 14.20.43.360560000') AS result
-                     FROM
-                         dual
-                 ) AS api_delta
+                entity_id,
+                queue_delta,
+                api_delta
             FROM
-                capdevjco2.fh_deltas
-            --where transaction_id = 3066842559
+                (
+                    SELECT
+                        entity_id,
+                        (
+                            SELECT
+                                pkg_chs_get_data.f_get_one_transaction(entity_id, '29-OCT-21 14.20.43.360560000')
+                            FROM
+                                dual
+                        ) AS queue_delta,
+                        (
+                            SELECT
+                                pkg_chs_get_data.f_get_one_transaction_api(entity_id, '29-OCT-21 14.20.43.360560000')
+                            FROM
+                                dual
+                        ) AS api_delta
+                    FROM
+                        capdevjco2.fh_extracted_test_data
+                    WHERE
+                            loaded_into_chips_kermit = 'Y'
+                        -- IDs broken in Perl and Java
+                        AND entity_id NOT IN ( 3153600699, 3178873249, 3180140883, 3168588719, 3183442513,
+                                               3181240723, 3181240912, 3182858493, 3183887704, 3246675970,
+                                               3188166405, 3188752683, 3153598406, 3160750562, 3178873198,
+                                               3157961596, 3183361204 )
+                )
+            WHERE
+                queue_delta IS NOT NULL
             """;
 
-    private record Deltas(String transactionId, String javaDelta, String perlDelta) {
+    private record Deltas(String entity_id, String javaDelta, String perlDelta) {
 
-    }
-
-    static class DeltaRowMapper implements RowMapper<Deltas> {
-
-        @Override
-        public Deltas mapRow(ResultSet rs, int rowNum) throws SQLException {
-            return new Deltas(
-                    rs.getString("transaction_id"),
-                    rs.getString("api_delta"),
-                    rs.getString("queue_delta"));
-        }
     }
 
     @Override
@@ -103,16 +105,16 @@ public class IntegrationDataGenerator implements ArgumentsProvider {
             filingHistoryCollection.deleteMany(new Document());
 
             Queue<Arguments> queue = new ConcurrentLinkedQueue<>();
-            jdbcTemplate.query(FIND_ALL_DELTAS, new DeltaRowMapper())
+            jdbcTemplate.query(FIND_ALL_DELTAS, (rs, rowNum) -> new Deltas(
+                            rs.getString("entity_id"),
+                            rs.getString("api_delta"),
+                            rs.getString("queue_delta")))
                     .forEach(deltas -> {
 
-                        // TODO Remove delta clean up when DSND-2475 is deployed in CIDEV
-                        String perlDelta = cleanWhitespaceInKeys(deltas.perlDelta());
-                        String javaDelta = cleanWhitespaceInKeys(deltas.javaDelta());
                         try {
                             if (deltas.javaDelta() != null && deltas.perlDelta() != null) {
 
-                                postDeltaToQueueApi(perlDelta, queueApiClient);
+                                postDeltaToQueueApi(deltas.perlDelta(), queueApiClient);
 
                                 DocumentContext delta = JsonPath.parse(deltas.javaDelta());
                                 String entityId = delta.read("$.filing_history[0].entity_id");
@@ -121,15 +123,16 @@ public class IntegrationDataGenerator implements ArgumentsProvider {
                                 Document perlDocument = findPerlDocument(filingHistoryCollection, formType, entityId);
                                 String expectedRequestBody = transformToPutRequest(perlDocument, delta);
 
-                                queue.add(Arguments.of(getCategory(perlDocument), formType, entityId, javaDelta,
+                                queue.add(
+                                        Arguments.of(getCategory(perlDocument), formType, entityId, deltas.javaDelta(),
                                         expectedRequestBody));
 
                             } else {
-                                logger.warn("No delta JSON found for transaction {}", deltas.transactionId());
+                                logger.warn("No delta JSON found for transaction {}", deltas.entity_id());
                             }
                         } catch (RuntimeException e) {
                             logger.error("Processing failed for delta: transaction_id {}, Java {}, Perl {}",
-                                    deltas.transactionId, javaDelta, perlDelta);
+                                    deltas.entity_id(), deltas.javaDelta(), deltas.perlDelta());
                         }
                     });
             logger.info("Done");
@@ -173,14 +176,6 @@ public class IntegrationDataGenerator implements ArgumentsProvider {
 
         throw new RuntimeException("Failed to read filing history document for form %s, transaction %s"
                 .formatted(formType, entityId));
-    }
-
-    private String cleanWhitespaceInKeys(String delta) {
-        return StringUtils.isNotBlank(delta) ? delta
-                .replaceAll("\"psc_name\\s\"", "\"psc_name\"")
-                .replaceAll("\"property_acquired_date\\s\"", "\"property_acquired_date\"")
-                .replaceAll("\"mortgage_satisfaction_date\\s\"", "\"mortgage_satisfaction_date\"")
-                : delta;
     }
 
     @SuppressWarnings("unchecked")
@@ -292,7 +287,7 @@ public class IntegrationDataGenerator implements ArgumentsProvider {
         });
     }
 
-    List<?> formatDatesInArray(ArrayList<?> arrayNode) {
+    private List<?> formatDatesInArray(ArrayList<?> arrayNode) {
         if (arrayNode.getFirst() instanceof Document document) {
             formatDates(document);
         }
