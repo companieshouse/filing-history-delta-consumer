@@ -4,7 +4,7 @@
       "category": "9",
       "receive_date": "20170803082940",
       "form_type": "RP04PSC03",
-      "description": "Second filing of PSC03 for The Sovereign",
+      "description": "Second filing of PSC03 for The Testing Monarch",
       "barcode": "D6AZE8PS",
       "document_id": "000D6AZE8PS6724",
       "company_number": "02713536",
@@ -12,7 +12,7 @@
       "parent_entity_id": "",
       "parent_form_type": "",
       "description_values": {
-        "psc_name": "The Sovereign"
+        "psc_name": "The Testing Monarch"
       },
       "pre_scanned_batch": "0"
     }

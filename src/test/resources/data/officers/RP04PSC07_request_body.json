@@ -7,7 +7,7 @@
     "date": "2017-07-31T17:49:31Z",
     "description": "second-filing-cessation-of-a-person-with-significant-control",
     "description_values": {
-      "psc_name": "Richard Newman"
+      "psc_name": "Tester testman"
     },
     "links": {
       "self": "/company/02569290/filing-history/MzE4MTg1Mjc5N3NhbHQ"
@@ -20,9 +20,9 @@
     "company_number" : "02569290",
     "document_id": "000A6ALGR8R6716",
     "entity_id": "3181852797",
-    "original_description": "Second filing of PSC07 for Richard Newman",
+    "original_description": "Second filing of PSC07 for Tester testman",
     "original_values": {
-      "psc_name": "Richard Newman"
+      "psc_name": "Tester testman"
     },
     "updated_by": "context_id",
     "transaction_kind": "top-level",

@@ -7,7 +7,7 @@
     "date": "2020-01-27T15:32:26Z",
     "description": "second-filing-change-details-of-a-person-with-significant-control-limited-liability-partnership",
     "description_values": {
-      "psc_name": "Glen Wiliiam Finegan"
+      "psc_name": "Tester testing testname"
     },
     "links": {
       "self": "/company/OC429371/filing-history/MzI1NTY0OTM3M3NhbHQ"
@@ -20,9 +20,9 @@
     "company_number": "OC429371",
     "document_id": "000A8WSB70Y7629",
     "entity_id": "3255649373",
-    "original_description": "Second filing of LLPSC04 for Glen Wiliiam Finegan",
+    "original_description": "Second filing of LLPSC04 for Tester testing testname",
     "original_values": {
-      "psc_name": "Glen Wiliiam Finegan"
+      "psc_name": "Tester testing testname"
     },
     "updated_by": "context_id",
     "transaction_kind": "top-level",

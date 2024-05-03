@@ -7,7 +7,7 @@
     "date": "2017-08-03T08:29:40Z",
     "description": "second-filing-notification-of-a-person-with-significant-control",
     "description_values": {
-      "psc_name": "The Sovereign"
+      "psc_name": "The Testing Monarch"
     },
     "links": {
       "self": "/company/02713536/filing-history/MzE4MjE0MzM5MnNhbHQ"
@@ -20,9 +20,9 @@
     "company_number": "02713536",
     "document_id": "000D6AZE8PS6724",
     "entity_id": "3182143392",
-    "original_description": "Second filing of PSC03 for The Sovereign",
+    "original_description": "Second filing of PSC03 for The Testing Monarch",
     "original_values": {
-      "psc_name": "The Sovereign"
+      "psc_name": "The Testing Monarch"
     },
     "updated_by": "context_id",
     "transaction_kind": "top-level",

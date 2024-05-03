@@ -4,7 +4,7 @@
       "category": "9",
       "receive_date": "20200127153226",
       "form_type": "RP04LLPSC04",
-      "description": "Second filing of LLPSC04 for Glen Wiliiam Finegan",
+      "description": "Second filing of LLPSC04 for Tester testing testname",
       "barcode": "A8WSB70Y",
       "document_id": "000A8WSB70Y7629",
       "company_number": "OC429371",
@@ -12,7 +12,7 @@
       "parent_entity_id": "",
       "parent_form_type": "",
       "description_values": {
-        "psc_name": "Glen Wiliiam Finegan"
+        "psc_name": "Tester testing testname"
       },
       "pre_scanned_batch": "0"
     }

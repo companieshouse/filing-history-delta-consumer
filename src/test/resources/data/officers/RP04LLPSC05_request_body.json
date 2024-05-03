@@ -7,7 +7,7 @@
     "date": "2020-01-23T15:27:14Z",
     "description": "second-filing-change-details-of-a-person-with-significant-control-limited-liability-partnership",
     "description_values": {
-      "psc_name": "Cambria Scotland Gp Limited"
+      "psc_name": "Testing test Gp Limited"
     },
     "links": {
       "self": "/company/OC397230/filing-history/MzI1NTM3MDg2MXNhbHQ"
@@ -20,9 +20,9 @@
     "company_number": "OC397230",
     "document_id": "000S8WCMAJK7629",
     "entity_id": "3255370861",
-    "original_description": "Second filing of LLPSC05 for Cambria Scotland Gp LIMITED",
+    "original_description": "Second filing of LLPSC05 for Testing test Gp LIMITED",
     "original_values": {
-      "psc_name": "Cambria Scotland Gp Limited"
+      "psc_name": "Testing test Gp Limited"
     },
     "updated_by": "context_id",
     "transaction_kind": "top-level",

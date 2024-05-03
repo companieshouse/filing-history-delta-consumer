@@ -4,7 +4,7 @@
       "category": "9",
       "receive_date": "20170731174931",
       "form_type": "RP04PSC07",
-      "description": "Second filing of PSC07 for Richard Newman",
+      "description": "Second filing of PSC07 for Tester testman",
       "barcode": "A6ALGR8R",
       "document_id": "000A6ALGR8R6716",
       "company_number": "02569290",
@@ -12,7 +12,7 @@
       "parent_entity_id": "",
       "parent_form_type": "",
       "description_values": {
-        "psc_name": "Richard Newman"
+        "psc_name": "Tester testman"
       },
       "pre_scanned_batch": "0"
     }
