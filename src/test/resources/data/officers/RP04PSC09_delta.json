@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "9",
+      "receive_date": "20170810093041",
+      "form_type": "RP04PSC09",
+      "description": "SECOND FILING OF WITHDRAWAL OF PERSON WITH SIGNIFICANT CONTROL STATEMENT DATED 23/06/2017",
+      "barcode": "A6B5XNLK",
+      "document_id": "000A6B5XNLK6729",
+      "company_number": "01679488",
+      "entity_id": "3182656163",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

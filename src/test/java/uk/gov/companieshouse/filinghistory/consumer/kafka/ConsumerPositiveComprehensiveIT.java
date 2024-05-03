@@ -118,7 +118,9 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
             "mortgage/MR04_rule_1", "mortgage/MR04_rule_2", "mortgage/MR04_rule_3", "mortgage/MR05_rule_1",
             "mortgage/MR05_rule_2", "mortgage/MR05_rule_3", "mortgage/MR05_rule_4", "mortgage/MR05_rule_5",
             "mortgage/MR05_rule_6", "mortgage/MR05_rule_7", "mortgage/MR06", "mortgage/MR07", "mortgage/MR08",
-            "mortgage/MR09", "mortgage/MR10", "mortgage/LLMR03", "mortgage/466(Scot)", "mortgage/LLP466(Scot)"
+            "mortgage/MR09", "mortgage/MR10", "mortgage/LLMR03", "mortgage/466(Scot)", "mortgage/LLP466(Scot)",
+            "officers/RP04LLPSC05", "officers/RP04LLPSC04", "officers/RP04PSC09",
+            "officers/RP04PSC07", "officers/RP04PSC03"
     })
     void shouldConsumeFilingHistoryDeltaTopicAndProcessDeltaFromCSV(final String prefix) throws Exception {
         final String delta = IOUtils.resourceToString("/data/%s_delta.json".formatted(prefix), StandardCharsets.UTF_8);

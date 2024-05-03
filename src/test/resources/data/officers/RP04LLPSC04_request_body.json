@@ -1,0 +1,32 @@
+{
+  "external_data": {
+    "transaction_id": "MzI1NTY0OTM3M3NhbHQ",
+    "barcode": "A8WSB70Y",
+    "action_date": null,
+    "category": "persons-with-significant-control",
+    "date": "2020-01-27T15:32:26Z",
+    "description": "second-filing-change-details-of-a-person-with-significant-control-limited-liability-partnership",
+    "description_values": {
+      "psc_name": "Glen Wiliiam Finegan"
+    },
+    "links": {
+      "self": "/company/OC429371/filing-history/MzI1NTY0OTM3M3NhbHQ"
+    },
+    "paper_filed": true,
+    "subcategory": "document-replacement",
+    "type": "RP04LLPSC04"
+  },
+  "internal_data": {
+    "company_number": "OC429371",
+    "document_id": "000A8WSB70Y7629",
+    "entity_id": "3255649373",
+    "original_description": "Second filing of LLPSC04 for Glen Wiliiam Finegan",
+    "original_values": {
+      "psc_name": "Glen Wiliiam Finegan"
+    },
+    "updated_by": "context_id",
+    "transaction_kind": "top-level",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560"
+  }
+}

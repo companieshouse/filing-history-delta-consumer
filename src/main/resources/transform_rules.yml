@@ -17545,8 +17545,6 @@
       data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% original_values.notification_date | bson_date %]'
-      data.description_values.notification_date: '[% original_values.notification_date | bson_date %]'
 - when:
     eq:
       data.type: RP04SLPPSC03
@@ -17832,8 +17830,6 @@
       data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% original_values.cessation_date | bson_date %]'
-      data.description_values.cessation_date: '[% original_values.cessation_date | bson_date %]'
 - when:
     eq:
       data.type: RP04SLPPSC07
@@ -17916,8 +17912,6 @@
       data.description: second-filing-withdrawal-of-a-person-with-significant-control-statement
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% original_values.cessation_date | bson_date %]'
-      data.description_values.withdrawal_date: '[% original_values.cessation_date | bson_date %]'
 - when:
     eq:
       data.type: RP04SLPPSC09
@@ -18019,8 +18013,6 @@
       data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% original_values.change_date | bson_date %]'
-      data.description_values.change_date: '[% original_values.change_date | bson_date %]'
 - when:
     eq:
       data.type: RP04LLPSC05
@@ -18042,8 +18034,6 @@
       data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% original_values.change_date | bson_date %]'
-      data.description_values.change_date: '[% original_values.change_date | bson_date %]'
 - when:
     eq:
       data.type: RP04LLPSC06
