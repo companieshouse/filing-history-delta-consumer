@@ -1,0 +1,32 @@
+{
+  "external_data": {
+    "transaction_id": "MzE4MTg1Mjc5N3NhbHQ",
+    "barcode": "A6ALGR8R",
+    "action_date": null,
+    "category": "persons-with-significant-control",
+    "date": "2017-07-31T17:49:31Z",
+    "description": "second-filing-cessation-of-a-person-with-significant-control",
+    "description_values": {
+      "psc_name": "Tester testman"
+    },
+    "links": {
+      "self": "/company/02569290/filing-history/MzE4MTg1Mjc5N3NhbHQ"
+    },
+    "paper_filed": true,
+    "subcategory": "document-replacement",
+    "type": "RP04PSC07"
+  },
+  "internal_data": {
+    "company_number" : "02569290",
+    "document_id": "000A6ALGR8R6716",
+    "entity_id": "3181852797",
+    "original_description": "Second filing of PSC07 for Tester testman",
+    "original_values": {
+      "psc_name": "Tester testman"
+    },
+    "updated_by": "context_id",
+    "transaction_kind": "top-level",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560"
+  }
+}

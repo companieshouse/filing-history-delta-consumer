@@ -1,0 +1,32 @@
+{
+  "external_data": {
+    "transaction_id": "MzE4MjE0MzM5MnNhbHQ",
+    "barcode": "D6AZE8PS",
+    "action_date": null,
+    "category": "persons-with-significant-control",
+    "date": "2017-08-03T08:29:40Z",
+    "description": "second-filing-notification-of-a-person-with-significant-control",
+    "description_values": {
+      "psc_name": "The Testing Monarch"
+    },
+    "links": {
+      "self": "/company/02713536/filing-history/MzE4MjE0MzM5MnNhbHQ"
+    },
+    "paper_filed": true,
+    "subcategory": "document-replacement",
+    "type": "RP04PSC03"
+  },
+  "internal_data": {
+    "company_number": "02713536",
+    "document_id": "000D6AZE8PS6724",
+    "entity_id": "3182143392",
+    "original_description": "Second filing of PSC03 for The Testing Monarch",
+    "original_values": {
+      "psc_name": "The Testing Monarch"
+    },
+    "updated_by": "context_id",
+    "transaction_kind": "top-level",
+    "parent_entity_id": "",
+    "delta_at": "20211029142043360560"
+  }
+}

@@ -73,7 +73,8 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
 
             "annual_return/363s",
 
-            "officers/EW01RSS", "officers/TM01",
+            "officers/EW01RSS", "officers/TM01", "officers/RP04LLPSC05", "officers/RP04LLPSC04", "officers/RP04PSC09",
+            "officers/RP04PSC07", "officers/RP04PSC03",
 
             "capital/SH03", "capital/SH07", "capital/SH01", "capital/SH02_rule_2", "capital/SH04_rule_4",
             "capital/SH05", "capital/EW05RSS",
