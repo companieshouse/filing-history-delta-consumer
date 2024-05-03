@@ -120,28 +120,27 @@ repository
 
 ### IMPORTANT
 
-Before committing any documents to GitHub, please ensure any fields containing sensitive data are
-anonymised.
+### **Before committing any documents to GitHub, please ensure any fields containing sensitive data are anonymized!**
 
-**Complete the following steps to add another test case**:
+**Complete the following steps to add another test case to the ConsumerPositiveComprehensiveIT, there are 4 main steps**:
 
-1. Create a json file called `<category>/X_delta.json` where `X` is the name of the form/rule under test.
-    1. To make json snippets easier to organise, we now separate them based on `<category>`.
-        1. This would be the category you find when you locate the form type in
+1. ##### Create a json file called `<category>/X_delta.json` where `X` is the name of the form/rule under test.
+    1. Put the json snippets in the correct `<category>` folder in the test resources.
+       1.  This would be the category you find when you locate the form type in
            the `src/main/resources/transform_rules.yml` file.
-        2. And can be further cross-checked by looking
+       2.  And can be further cross-checked by looking
            at [CategoryEnum](https://github.com/companieshouse/private-api-sdk-java/blob/2cb6199837bea4342ce3d4717ad2537dd32f235d/generated_sources/src/main/java/uk/gov/companieshouse/api/filinghistory/ExternalData.java#L45).
     2. If a directory matching the `<category>` does not exist, it should be created under the `src/test/resources/data`
        directory.
     3. The file should contain a valid filing history delta with respect to
        the [API specification](https://github.com/companieshouse/private.api.ch.gov.uk-specifications/blob/c2e3f3558e13efba075c23227709448273d5fdfb/src/main/resources/delta/filing-history-delta-spec.yml).
-    4. Note the `delta_at` field is at the top level whereas the old Perl backend had it within the `filing_history`
+    4. Note the `delta_at` field should be top level for Java deltas. The old Perl backend had it within the `filing_history`
        array.
     5. Deltas can be found within the `fh_deltas` table in Kermit by querying by form
-       type, [see confluence page](https://companieshouse.atlassian.net/wiki/spaces/TEAM4/pages/4403200517/SQL+Queries+to+find+Filing+History+deltas).
-       Alternatively, they can be found in the `queue`collection in MongoDB or by running the `pkg_chs_get_data.f_get_one_transaction_api`
-       package function in CHIPS.
-2. Create a json file called `<category>/X_request_body.json` where `X` is the same as above.
+       type, [see confluence page](https://companieshouse.atlassian.net/wiki/spaces/TEAM4/pages/4403200517/SQL+Queries+to+find+Filing+History+deltas). 
+   6. Alternatively, deltas can be found in the `queue`collection in MongoDB or by running the `pkg_chs_get_data.f_get_one_transaction_api`
+       package function in CHIPS. Finding what you need in staging Mongo and using CHIPS to generate a delta using the `_entity_id` value and package function can work well.
+2. ##### Create a json file called `<category>/X_request_body.json` where `X` is the same as above.
     1. `<category>` would be the same as what was used for the `X_delta.json` file.
     2. The file should contain a valid filing history PUT request body with respect to
        the [API specification](https://github.com/companieshouse/private.api.ch.gov.uk-specifications/blob/1361e79e495b61cdd8101d1814d7d7aeddd8a639/src/main/resources/filing-history/internal-filing-history.json#L55).
@@ -153,15 +152,17 @@ anonymised.
         3. `_barcode` &rarr; `external_data.barcode`
         4. Delete `external_data.pages`
         5. Delete `external_data.links.document_metadata`
-        6. Wrap all other top level fields in `internal_data`
-        7. Add `internal_data.delta_at`:
+        6. Wrap all other fields not in the original `data` block in `internal_data`
+        7. Add `internal_data.delta_at`
         8. Add `internal_data.updated_by` (value should always be "context_id")
         9. Add `internal_data.transaction_kind` ("top-level" for the most part,
-           see `TransactionKindService`)
+           see `TransactionKindEnum` values within `TransactionKindService`)
         10. Add `internal_data.parent_entity_id` (usually an empty string)
-        11. Encode the value of `internal_data.entity_id` with the salt `salt`.
+        11. Encode the value of `internal_data.entity_id` with the salt `salt` using a base64 encoder.
         12. Replace the value of `external_data.transaction_id` with the encoded ID.
         13. Replace the suffix of the value of `external_data.links.self` with the encoded ID.
-        14. Change MongoDB `ISODate`'s to `ISO_INSTANT` format `.000+0000` &rarr; `Z`. (Instants have trailing zeros
-            removed)
-3. Finally, add the prefix, `X` used above, to the `@CsvSource` annotation within `ConsumerPositiveComprehensiveIT`.
+        14. Change MongoDB `ISODate`'s to `ISO_INSTANT` format `.000+0000` &rarr; `Z`. Instants have trailing zeros
+            removed. (i.e., from `ISODate("2017-07-31T17:49:31.000+0000")` to `"2017-07-31T17:49:31Z"`)
+       15. When you are finished there should be only two blocks of data `external_data` and `internal_data`. Follow the example of a request body that is already made if unsure.
+3. ##### ANONYMIZE all data that could be used to identify an officer or company, in delta or request body json snippet. As it says at the top this step is very important and cannot be skipped.
+4. ##### Finally, add the `form_type` of the delta, (the prefix `X` used above), to the `@CsvSource` annotation within `ConsumerPositiveComprehensiveIT`. The test can be run to make sure your `<category>/X_request_body.json` looks as it should.
