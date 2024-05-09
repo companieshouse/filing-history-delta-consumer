@@ -8,7 +8,6 @@ import static com.github.tomakehurst.wiremock.client.WireMock.requestMadeFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.verify;
-import static org.apache.commons.lang3.StringUtils.trim;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
 import static uk.gov.companieshouse.filinghistory.consumer.kafka.KafkaUtils.ERROR_TOPIC;
@@ -26,7 +25,6 @@ import org.apache.avro.io.DatumWriter;
 import org.apache.avro.io.Encoder;
 import org.apache.avro.io.EncoderFactory;
 import org.apache.avro.reflect.ReflectDatumWriter;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -47,7 +45,6 @@ import uk.gov.companieshouse.delta.ChsDelta;
 @WireMockTest(httpPort = 8888)
 class ConsumerPositiveIT extends AbstractKafkaIT {
 
-    private static final String SALT = "salt";
     @Autowired
     private KafkaConsumer<String, byte[]> testConsumer;
     @Autowired
@@ -118,11 +115,10 @@ class ConsumerPositiveIT extends AbstractKafkaIT {
         writer.write(new ChsDelta(delta, 0, "context_id", true), encoder);
 
         FilingHistoryDeleteDelta deleteDelta = objectMapper.readValue(delta, FilingHistoryDeleteDelta.class);
-        String encodedId = Base64.encodeBase64URLSafeString(
-                (trim(deleteDelta.getEntityId()) + SALT).getBytes(StandardCharsets.UTF_8));
+        String entityId = deleteDelta.getEntityId();
 
         final String expectedRequestUri = "/filing-history-data-api/filing-history/%s/internal".formatted(
-                encodedId);
+                entityId);
 
         stubFor(delete(urlEqualTo(expectedRequestUri))
                 .willReturn(aResponse()
