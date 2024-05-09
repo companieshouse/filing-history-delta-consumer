@@ -12,19 +12,14 @@ public class DeleteDeltaService implements DeltaService {
     private final FilingHistoryDeltaDeserialiser deserialiser;
     private final FilingHistoryApiClient apiClient;
 
-    private final TransactionKindService transactionKindService;
-
-    public DeleteDeltaService(FilingHistoryDeltaDeserialiser deserialiser, FilingHistoryApiClient apiClient,
-            TransactionKindService transactionKindService) {
+    public DeleteDeltaService(FilingHistoryDeltaDeserialiser deserialiser, FilingHistoryApiClient apiClient) {
         this.deserialiser = deserialiser;
         this.apiClient = apiClient;
-        this.transactionKindService = transactionKindService;
     }
 
     @Override
     public void process(ChsDelta delta) {
         FilingHistoryDeleteDelta deleteDelta = deserialiser.deserialiseFilingHistoryDeleteDelta(delta.getData());
-        String transactionId = transactionKindService.encodeTransactionId(deleteDelta.getEntityId());
-        apiClient.deleteFilingHistory(transactionId);
+        apiClient.deleteFilingHistory(deleteDelta.getEntityId());
     }
 }

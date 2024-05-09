@@ -83,6 +83,15 @@ within `kafka/ConsumerPositiveComprehensiveIT.java` to cover as many of
 the [transformation rules](https://github.com/companieshouse/filing-history-delta-consumer/blob/df6ee016f916e303474034ace5c3cc346b50d441/src/main/resources/transform_rules.yml)
 as possible.
 
+### Running Comprehensive CSV ITests via Intellij
+This will speed up the running of the comprehensive tests for `shouldConsumeFilingHistoryDeltaTopicAndProcessDeltaFromCSV`.
+
+1. Run the test using Intellij and then immediately stop the test running so that it appears in run configurations at the top right.
+2. Click on the 3 vertical dots and edit the configuration.
+3. Add `KAFKA_POLLING_DURATION=1` to the "Environment variables" box.
+4. Apply and OK.
+5. Run the tests.
+
 ### Running manual bulk integration tests
 
 The bulk integration tests use a set of test deltas, derived from the Live CHIPS database, to check

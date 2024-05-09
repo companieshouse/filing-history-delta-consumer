@@ -18,16 +18,14 @@ import uk.gov.companieshouse.filinghistory.consumer.serdes.FilingHistoryDeltaDes
 class DeleteDeltaServiceTest {
 
     private static final String ENTITY_ID = "entityId";
-    private static final String ENCODED_ID = "encodedId";
     private static final String DELTA_DATA = "delta";
+
     @InjectMocks
     private DeleteDeltaService service;
     @Mock
     private FilingHistoryDeltaDeserialiser deserialiser;
     @Mock
     private FilingHistoryApiClient apiClient;
-    @Mock
-    private TransactionKindService transactionKindService;
     @Mock
     private FilingHistoryDeleteDelta delta;
 
@@ -36,7 +34,6 @@ class DeleteDeltaServiceTest {
         // given
         when(deserialiser.deserialiseFilingHistoryDeleteDelta(any())).thenReturn(delta);
         when(delta.getEntityId()).thenReturn(ENTITY_ID);
-        when(transactionKindService.encodeTransactionId(any())).thenReturn(ENCODED_ID);
 
         ChsDelta chsDelta = new ChsDelta(DELTA_DATA, 0, "contextId", true);
 
@@ -45,7 +42,6 @@ class DeleteDeltaServiceTest {
 
         // then
         verify(deserialiser).deserialiseFilingHistoryDeleteDelta(DELTA_DATA);
-        verify(transactionKindService).encodeTransactionId(ENTITY_ID);
-        verify(apiClient).deleteFilingHistory(ENCODED_ID);
+        verify(apiClient).deleteFilingHistory(ENTITY_ID);
     }
 }

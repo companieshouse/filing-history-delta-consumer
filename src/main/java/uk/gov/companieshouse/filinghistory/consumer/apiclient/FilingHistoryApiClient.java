@@ -41,11 +41,11 @@ public class FilingHistoryApiClient {
         }
     }
 
-    public void deleteFilingHistory(String transactionId) {
+    public void deleteFilingHistory(String entityId) {
         InternalApiClient client = internalApiClientFactory.get();
         client.getHttpClient().setRequestId(DataMapHolder.getRequestId());
 
-        final String formattedUri = DELETE_REQUEST_URI.formatted(transactionId);
+        final String formattedUri = DELETE_REQUEST_URI.formatted(entityId);
 
         try {
             client.privateDeltaResourceHandler()
