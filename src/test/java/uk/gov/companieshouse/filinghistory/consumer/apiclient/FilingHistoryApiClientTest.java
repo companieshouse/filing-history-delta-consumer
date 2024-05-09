@@ -31,6 +31,7 @@ class FilingHistoryApiClientTest {
     private static final String PRE_FORMAT_DELETE_URI = "/filing-history-data-api/filing-history/%s/internal";
     private static final String COMPANY_NUMBER = "12345678";
     private static final String TRANSACTION_ID = "MzA0Mzk3MjY3NXNhbHQ";
+    private static final String ENTITY_ID = "1234567891";
     private static final String REQUEST_ID = "request_id";
 
     @InjectMocks
@@ -151,10 +152,10 @@ class FilingHistoryApiClientTest {
         when(privateDeltaResourceHandler.deleteFilingHistory(anyString())).thenReturn(privateFilingHistoryDelete);
 
         DataMapHolder.get().requestId(REQUEST_ID);
-        final String expectedUri = PRE_FORMAT_DELETE_URI.formatted(TRANSACTION_ID);
+        final String expectedUri = PRE_FORMAT_DELETE_URI.formatted(ENTITY_ID);
 
         // when
-        filingHistoryApiClient.deleteFilingHistory(TRANSACTION_ID);
+        filingHistoryApiClient.deleteFilingHistory(ENTITY_ID);
 
         // then
         verify(apiClient).setRequestId(REQUEST_ID);
@@ -176,10 +177,10 @@ class FilingHistoryApiClientTest {
         when(privateFilingHistoryDelete.execute()).thenThrow(exceptionClass);
 
         DataMapHolder.get().requestId(REQUEST_ID);
-        final String expectedUri = PRE_FORMAT_DELETE_URI.formatted(TRANSACTION_ID);
+        final String expectedUri = PRE_FORMAT_DELETE_URI.formatted(ENTITY_ID);
 
         // when
-        filingHistoryApiClient.deleteFilingHistory(TRANSACTION_ID);
+        filingHistoryApiClient.deleteFilingHistory(ENTITY_ID);
 
         // then
         verify(apiClient).setRequestId(REQUEST_ID);
@@ -201,10 +202,10 @@ class FilingHistoryApiClientTest {
         when(privateFilingHistoryDelete.execute()).thenThrow(exceptionClass);
 
         DataMapHolder.get().requestId(REQUEST_ID);
-        final String expectedUri = PRE_FORMAT_DELETE_URI.formatted(TRANSACTION_ID);
+        final String expectedUri = PRE_FORMAT_DELETE_URI.formatted(ENTITY_ID);
 
         // when
-        filingHistoryApiClient.deleteFilingHistory(TRANSACTION_ID);
+        filingHistoryApiClient.deleteFilingHistory(ENTITY_ID);
 
         // then
         verify(apiClient).setRequestId(REQUEST_ID);
