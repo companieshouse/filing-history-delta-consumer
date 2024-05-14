@@ -1,18 +1,17 @@
 package uk.gov.companieshouse.filinghistory.consumer.kafka;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static uk.gov.companieshouse.filinghistory.consumer.kafka.BulkIntegrationTestUtils.findAllDeltas;
+import static uk.gov.companieshouse.filinghistory.consumer.kafka.BulkIntegrationTestUtils.findFilingHistoryDocument;
+import static uk.gov.companieshouse.filinghistory.consumer.kafka.BulkIntegrationTestUtils.getFilingHistoryCollection;
+import static uk.gov.companieshouse.filinghistory.consumer.kafka.BulkIntegrationTestUtils.getQueueApiRestClient;
+import static uk.gov.companieshouse.filinghistory.consumer.kafka.BulkIntegrationTestUtils.mongoClient;
+import static uk.gov.companieshouse.filinghistory.consumer.kafka.BulkIntegrationTestUtils.postDelta;
 
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
-import com.mongodb.ConnectionString;
-import com.mongodb.MongoClientSettings;
-import com.mongodb.ServerApi;
-import com.mongodb.ServerApiVersion;
 import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -20,14 +19,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import javax.sql.DataSource;
-import oracle.jdbc.pool.OracleDataSource;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.HttpStatus;
 import org.bson.Document;
 import org.bson.json.JsonMode;
 import org.bson.json.JsonWriterSettings;
@@ -36,146 +31,60 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.http.HttpHeaders;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.client.RestClient;
 
 public class IntegrationDataGenerator implements ArgumentsProvider {
 
     private static final Logger logger = LoggerFactory.getLogger(IntegrationDataGenerator.class);
-    private static final String KERMIT_CONNECTION = "jdbc:oracle:thin:KERMITUNIX2/%s@//chd-chipsdb:1521/chipsdev"
-            .formatted(System.getenv("KERMIT_PASSWORD"));
-    private static final String MONGO_CONNECTION = "mongodb://localhost:27017/?retryWrites=false&loadBalanced=false&serverSelectionTimeoutMS=5000&connectTimeoutMS=10000";
-    private static final String QUEUE_API_URL = "http://localhost:18201/queue/delta/filing-history";
-    private static final String COMPANY_FILING_HISTORY = "company_filing_history";
-
-    private static final String FIND_ALL_DELTAS = """
-            SELECT
-                entity_id,
-                queue_delta,
-                api_delta
-            FROM
-                (
-                    SELECT
-                        entity_id,
-                        (
-                            SELECT
-                                pkg_chs_get_data.f_get_one_transaction(entity_id, '29-OCT-21 14.20.43.360560000')
-                            FROM
-                                dual
-                        ) AS queue_delta,
-                        (
-                            SELECT
-                                pkg_chs_get_data.f_get_one_transaction_api(entity_id, '29-OCT-21 14.20.43.360560000')
-                            FROM
-                                dual
-                        ) AS api_delta
-                    FROM
-                        capdevjco2.fh_extracted_test_data
-                    WHERE
-                            loaded_into_chips_kermit = 'Y'
-                        -- IDs broken in Perl and Java
-                        AND entity_id NOT IN ( 3153600699, 3178873249, 3180140883, 3168588719, 3183442513,
-                                               3181240723, 3181240912, 3182858493, 3183887704, 3246675970,
-                                               3188166405, 3188752683, 3153598406, 3160750562, 3178873198,
-                                               3157961596, 3183361204 )
-                )
-            WHERE
-                queue_delta IS NOT NULL
-            """;
-
-    private record Deltas(String entity_id, String javaDelta, String perlDelta) {
-
-    }
 
     @Override
     public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
 
-        try {
-            JdbcTemplate jdbcTemplate = new JdbcTemplate(chipsSource());
-            MongoClient mongoClient = mongoClient();
-            MongoTemplate mongoTemplate = new MongoTemplate(mongoClient, COMPANY_FILING_HISTORY);
-            MongoCollection<Document> filingHistoryCollection = mongoTemplate.getCollection(COMPANY_FILING_HISTORY);
-            RestClient queueApiClient = RestClient.builder()
-                    .baseUrl(QUEUE_API_URL)
-                    .defaultHeader(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON_VALUE)
-                    .build();
+        try (MongoClient mongoClient = mongoClient()) {
+            MongoCollection<Document> filingHistoryCollection = getFilingHistoryCollection(mongoClient);
+            RestClient queueApiClient = getQueueApiRestClient();
 
             filingHistoryCollection.deleteMany(new Document());
 
             Queue<Arguments> queue = new ConcurrentLinkedQueue<>();
-            jdbcTemplate.query(FIND_ALL_DELTAS, (rs, rowNum) -> new Deltas(
-                            rs.getString("entity_id"),
-                            rs.getString("api_delta"),
-                            rs.getString("queue_delta")))
-                    .forEach(deltas -> {
+            findAllDeltas().forEach(deltas -> {
 
-                        try {
-                            if (deltas.javaDelta() != null && deltas.perlDelta() != null) {
+                try {
+                    if (deltas.javaDelta() != null && deltas.perlDelta() != null) {
 
-                                postDeltaToQueueApi(deltas.perlDelta(), queueApiClient);
+                        postDelta(deltas.perlDelta(), queueApiClient);
 
-                                DocumentContext delta = JsonPath.parse(deltas.javaDelta());
-                                String entityId = delta.read("$.filing_history[0].entity_id");
-                                String formType = delta.read("$.filing_history[0].form_type");
+                        DocumentContext delta = JsonPath.parse(deltas.javaDelta());
+                        String entityId = delta.read("$.filing_history[0].entity_id");
+                        String formType = delta.read("$.filing_history[0].form_type");
 
-                                Document perlDocument = findPerlDocument(filingHistoryCollection, formType, entityId);
-                                String expectedRequestBody = transformToPutRequest(perlDocument, delta);
+                        Document perlDocument = findPerlDocument(filingHistoryCollection, formType, entityId);
+                        String expectedRequestBody = transformToPutRequest(perlDocument, delta);
 
-                                queue.add(
-                                        Arguments.of(getCategory(perlDocument), formType, entityId, deltas.javaDelta(),
-                                        expectedRequestBody));
+                        queue.add(Arguments.of(getCategory(perlDocument), formType, entityId, deltas.javaDelta(),
+                                expectedRequestBody));
 
-                            } else {
-                                logger.warn("No delta JSON found for transaction {}", deltas.entity_id());
-                            }
-                        } catch (RuntimeException e) {
-                            logger.error("Processing failed for delta: transaction_id {}, Java {}, Perl {}",
-                                    deltas.entity_id(), deltas.javaDelta(), deltas.perlDelta());
-                        }
-                    });
+                    } else {
+                        logger.warn("No delta JSON found for transaction {}", deltas.entity_id());
+                    }
+                } catch (RuntimeException e) {
+                    logger.error("Processing failed for delta: transaction_id {}, Java {}, Perl {}",
+                            deltas.entity_id(), deltas.javaDelta(), deltas.perlDelta());
+                }
+            });
             logger.info("Done");
             return queue.stream();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             logger.error("Failed accessing the CHIPS database", e);
             throw new RuntimeException(e);
         }
     }
 
-    private void postDeltaToQueueApi(String delta, RestClient queueApiClient) {
-        queueApiClient.post()
-                .header("x-request-id", UUID.randomUUID().toString())
-                .body(delta)
-                .retrieve()
-                .onStatus(status -> status.value() != HttpStatus.SC_OK, (request, response) -> {
-                    throw new RuntimeException(response.getStatusText());
-                });
-    }
-
     private Document findPerlDocument(MongoCollection<Document> filingHistoryCollection, String formType,
             String entityId) {
-        Document document = null;
-        for (int count = 0; count < 500; count++) {
-            try {
-                Thread.sleep(10); // nosonar
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-
-            document = filingHistoryCollection.find().first();
-            if (document != null) {
-                break;
-            }
-        }
-
-        if (document != null) {
-            filingHistoryCollection.deleteMany(Filters.and(Filters.eq("_id", document.get("_id"))));
-            return document;
-        }
-
-        throw new RuntimeException("Failed to read filing history document for form %s, transaction %s"
-                .formatted(formType, entityId));
+        Document document = findFilingHistoryDocument(filingHistoryCollection, formType, entityId, 20_000);
+        filingHistoryCollection.deleteMany(Filters.and(Filters.eq("_id", document.get("_id"))));
+        return document;
     }
 
     @SuppressWarnings("unchecked")
@@ -294,7 +203,6 @@ public class IntegrationDataGenerator implements ArgumentsProvider {
         return arrayNode;
     }
 
-    //    @SuppressWarnings("unchecked")
     private String getCategory(Document filingHistoryDocument) {
         Document data = (Document) filingHistoryDocument.get("data");
         String category = (String) ((Document) filingHistoryDocument.get("data")).get("category");
@@ -316,23 +224,5 @@ public class IntegrationDataGenerator implements ArgumentsProvider {
         }
 
         return category;
-    }
-
-    public DataSource chipsSource() throws SQLException {
-        OracleDataSource dataSource = new OracleDataSource();
-        dataSource.setURL(KERMIT_CONNECTION);
-        return dataSource;
-    }
-
-    public MongoClient mongoClient() {
-        ServerApi serverApi = ServerApi.builder()
-                .version(ServerApiVersion.V1)
-                .build();
-        MongoClientSettings settings = MongoClientSettings.builder()
-                .serverApi(serverApi)
-                .applyConnectionString(new ConnectionString(MONGO_CONNECTION))
-                .build();
-
-        return MongoClients.create(settings);
     }
 }
