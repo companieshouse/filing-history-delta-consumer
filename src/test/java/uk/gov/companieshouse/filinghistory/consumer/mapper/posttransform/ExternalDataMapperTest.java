@@ -30,7 +30,6 @@ class ExternalDataMapperTest {
     private static final String ENCODED_ID = "MzA1Njc0Mjg0N3NqYXNqamQ";
     private static final String BARCODE = "XAITVXAX";
     private static final String DESCRIPTION = "termination-director-company-with-name-termination-date";
-    private static final String DOCUMENT_ID = "000%s4682".formatted(BARCODE);
     private static final String COMPANY_NUMBER = "12345678";
     private static final String DATE = "20110905053919";
     private static final String TYPE = "TM01";
@@ -70,7 +69,7 @@ class ExternalDataMapperTest {
         when(categoryMapper.map(any())).thenReturn(CategoryEnum.OFFICERS);
         when(subcategoryMapper.map(any())).thenReturn(subcategory);
         when(descriptionValuesMapper.map(any())).thenReturn(descriptionValues);
-        when(paperFiledMapper.isPaperFiled(any(), any())).thenReturn(true);
+        when(paperFiledMapper.isPaperFiled(any())).thenReturn(true);
         when(linksMapper.map(any(), any())).thenReturn(links);
         when(annotationsDeserialiser.deserialise(any())).thenReturn(List.of(annotation));
 
@@ -81,7 +80,7 @@ class ExternalDataMapperTest {
         ExternalData expected = buildExpectedData();
 
         // when
-        ExternalData actual = externalDataMapper.mapExternalData(topLevelNode, BARCODE, DOCUMENT_ID, ENCODED_ID,
+        ExternalData actual = externalDataMapper.mapExternalData(topLevelNode, BARCODE, ENCODED_ID,
                 COMPANY_NUMBER);
 
         // then
@@ -89,7 +88,7 @@ class ExternalDataMapperTest {
         verify(subcategoryMapper).map(dataNode);
         verify(categoryMapper).map(dataNode);
         verify(descriptionValuesMapper).map(descriptionValuesNode);
-        verify(paperFiledMapper).isPaperFiled(BARCODE, DOCUMENT_ID);
+        verify(paperFiledMapper).isPaperFiled(BARCODE);
         verify(linksMapper).map(COMPANY_NUMBER, ENCODED_ID);
         verify(annotationsDeserialiser).deserialise(annotations);
     }
@@ -98,17 +97,17 @@ class ExternalDataMapperTest {
     void shouldMapExternalDataWithNullFields() {
         // given
         ExternalData expected = new ExternalData();
-        when(paperFiledMapper.isPaperFiled(any(), any())).thenReturn(false);
+        when(paperFiledMapper.isPaperFiled(any())).thenReturn(false);
 
         // when
-        ExternalData actual = externalDataMapper.mapExternalData(null, null, null, null, null);
+        ExternalData actual = externalDataMapper.mapExternalData(null, null, null, null);
 
         // then
         assertEquals(expected, actual);
         verify(subcategoryMapper).map(null);
         verify(categoryMapper).map(null);
         verify(descriptionValuesMapper).map(null);
-        verify(paperFiledMapper).isPaperFiled(null, null);
+        verify(paperFiledMapper).isPaperFiled(null);
         verify(linksMapper).map(null, null);
         verifyNoInteractions(annotationsDeserialiser);
     }

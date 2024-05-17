@@ -25,7 +25,7 @@ public class InternalFilingHistoryApiMapper {
     private final ExternalDataMapper externalDataMapper;
 
     public InternalFilingHistoryApiMapper(OriginalValuesMapper originalValuesMapper,
-            ExternalDataMapper externalDataMapper) {
+                                          ExternalDataMapper externalDataMapper) {
         this.originalValuesMapper = originalValuesMapper;
         this.externalDataMapper = externalDataMapper;
     }
@@ -56,7 +56,7 @@ public class InternalFilingHistoryApiMapper {
                 .updatedBy(args.updatedBy())
                 .transactionKind(kindResult.kind());
 
-        ExternalData externalData = externalDataMapper.mapExternalData(topLevelNode, barcode, documentId,
+        ExternalData externalData = externalDataMapper.mapExternalData(topLevelNode, barcode,
                 kindResult.encodedId(), args.companyNumber());
 
         return new InternalFilingHistoryApi()
