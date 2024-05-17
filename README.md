@@ -62,15 +62,18 @@ immediately to the <br>`filing-history-delta-filing-history-delta-consumer-inval
 | PORT                          | The port at which the service is hosted in ECS                                                  | 8080                                  |
 
 ## Building the docker image
-
-    mvn package -Dskip.unit.tests=true -Dskip.integration.tests=true jib:dockerBuild
+```bash
+mvn package -Dskip.unit.tests=true -Dskip.integration.tests=true jib:dockerBuild
+```
 
 ## To make local changes
 
 Development mode is available for this service
 in [Docker CHS Development](https://github.com/companieshouse/docker-chs-development).
 
-    ./bin/chs-dev development enable filing-history-delta-consumer
+```bash
+./bin/chs-dev development enable filing-history-delta-consumer
+```
 
 This will clone the `filing-history-delta-consumer` into the repositories folder. Any changes to the code, or resources
 will automatically trigger a rebuild and relaunch.

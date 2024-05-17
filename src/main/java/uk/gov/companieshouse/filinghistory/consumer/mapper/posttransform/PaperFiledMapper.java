@@ -8,15 +8,8 @@ import org.springframework.stereotype.Component;
 public class PaperFiledMapper {
 
     private static final Pattern BARCODE_REGEX = Pattern.compile("^X");
-    private static final Pattern DOCUMENT_ID_REGEX = Pattern.compile("^...X", Pattern.CASE_INSENSITIVE);
 
-    public boolean isPaperFiled(final String barcode, final String documentId) {
-        if (StringUtils.isNotBlank(barcode)) {
-            return !BARCODE_REGEX.matcher(barcode).find();
-        }
-        if (StringUtils.isNotBlank(documentId)) {
-            return !DOCUMENT_ID_REGEX.matcher(documentId).find();
-        }
-        return true;
+    public boolean isPaperFiled(final String barcode) {
+        return StringUtils.isBlank(barcode) || !BARCODE_REGEX.matcher(barcode).find();
     }
 }

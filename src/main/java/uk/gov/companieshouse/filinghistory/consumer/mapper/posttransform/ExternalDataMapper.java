@@ -41,7 +41,7 @@ public class ExternalDataMapper {
         this.associatedFilingDeserialiser = associatedFilingDeserialiser;
     }
 
-    ExternalData mapExternalData(JsonNode topLevelNode, String barcode, String documentId, String encodedId,
+    ExternalData mapExternalData(JsonNode topLevelNode, String barcode, String encodedId,
                                  String companyNumber) {
         JsonNode dataNode = getNestedJsonNodeFromJsonNode(topLevelNode, "data");
 
@@ -71,7 +71,7 @@ public class ExternalDataMapper {
                 .barcode(barcode)
                 .descriptionValues(
                         descriptionValuesMapper.map(getNestedJsonNodeFromJsonNode(dataNode, "description_values")))
-                .paperFiled(paperFiledMapper.isPaperFiled(barcode, documentId) ? true : null)
+                .paperFiled(paperFiledMapper.isPaperFiled(barcode) ? true : null)
                 .links(linksMapper.map(companyNumber, encodedId))
                 .annotations(annotations)
                 .resolutions(resolutions)
