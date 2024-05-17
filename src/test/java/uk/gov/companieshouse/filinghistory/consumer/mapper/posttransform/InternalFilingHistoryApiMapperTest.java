@@ -56,7 +56,7 @@ class InternalFilingHistoryApiMapperTest {
     void shouldMapJsonNodeToRequestBody() {
         // given
         when(originalValuesMapper.map(any())).thenReturn(internalDataOriginalValues);
-        when(externalDataMapper.mapExternalData(any(), any(), any(), any(), any())).thenReturn(externalData);
+        when(externalDataMapper.mapExternalData(any(), any(), any(), any())).thenReturn(externalData);
 
         JsonNode topLevelNode = buildJsonNode();
         JsonNode originalValuesNode = topLevelNode.get("original_values");
@@ -75,7 +75,7 @@ class InternalFilingHistoryApiMapperTest {
         // then
         assertEquals(expected, actualRequestBody);
         verify(originalValuesMapper).map(originalValuesNode);
-        verify(externalDataMapper).mapExternalData(topLevelNode, BARCODE, DOCUMENT_ID, ENCODED_ID, COMPANY_NUMBER);
+        verify(externalDataMapper).mapExternalData(topLevelNode, BARCODE, ENCODED_ID, COMPANY_NUMBER);
     }
 
     @Test
@@ -107,7 +107,7 @@ class InternalFilingHistoryApiMapperTest {
         // then
         assertEquals(expected, actualRequestBody);
         verify(originalValuesMapper).map(null);
-        verify(externalDataMapper).mapExternalData(null, null, null, ENCODED_ID, null);
+        verify(externalDataMapper).mapExternalData(null, null, ENCODED_ID, null);
     }
 
     @Test
