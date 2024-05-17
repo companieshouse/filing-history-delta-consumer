@@ -40,7 +40,6 @@ public class InternalFilingHistoryApiMapper {
                 });
 
         String barcode = getFieldValueFromJsonNode(topLevelNode, "_barcode");
-        String documentId = getFieldValueFromJsonNode(topLevelNode, "_document_id");
         String matchedDefault = getFieldValueFromJsonNode(topLevelNode, "matched_default");
 
         InternalData internalData = new InternalData()
@@ -51,7 +50,7 @@ public class InternalFilingHistoryApiMapper {
                 .originalValues(
                         originalValuesMapper.map(getNestedJsonNodeFromJsonNode(topLevelNode, "original_values")))
                 .companyNumber(args.companyNumber())
-                .documentId(documentId)
+                .documentId(getFieldValueFromJsonNode(topLevelNode, "_document_id"))
                 .deltaAt(args.deltaAt())
                 .updatedBy(args.updatedBy())
                 .transactionKind(kindResult.kind());
