@@ -20,7 +20,7 @@ public class JsonNodeCleaner {
         Map<?, ?> map = objectMapper.convertValue(outputNode, Map.class);
         map.forEach((key, value) -> {
             if ("".equals(value)) {
-                outputNode.set(key.toString(), null);
+                outputNode.putNull(key.toString());
             }
         });
         return outputNode;
