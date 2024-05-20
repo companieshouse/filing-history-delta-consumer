@@ -18,17 +18,21 @@ public class DescriptionValuesMapper {
 
     private final ArrayNodeDeserialiser<AltCapitalDescriptionValue> altCapitalArrayNodeDeserialiser;
     private final ArrayNodeDeserialiser<CapitalDescriptionValue> capitalArrayNodeDeserialiser;
+    private final JsonNodeCleaner jsonNodeCleaner;
 
     public DescriptionValuesMapper(ArrayNodeDeserialiser<AltCapitalDescriptionValue> altCapitalArrayNodeDeserialiser,
-                                   ArrayNodeDeserialiser<CapitalDescriptionValue> capitalArrayNodeDeserialiser) {
+                                   ArrayNodeDeserialiser<CapitalDescriptionValue> capitalArrayNodeDeserialiser, JsonNodeCleaner jsonNodeCleaner) {
         this.altCapitalArrayNodeDeserialiser = altCapitalArrayNodeDeserialiser;
         this.capitalArrayNodeDeserialiser = capitalArrayNodeDeserialiser;
+        this.jsonNodeCleaner = jsonNodeCleaner;
     }
 
-    public DescriptionValues map(final JsonNode jsonNode) {
-        if (jsonNode == null) {
+    public DescriptionValues map(final JsonNode inputNode) {
+        if (inputNode == null) {
             return null;
         }
+
+        JsonNode jsonNode = jsonNodeCleaner.cleanOutEmptyStrings(inputNode);
 
         List<AltCapitalDescriptionValue> altCapital = Optional.ofNullable(
                         getNestedJsonNodeFromJsonNode(jsonNode, "alt_capital"))

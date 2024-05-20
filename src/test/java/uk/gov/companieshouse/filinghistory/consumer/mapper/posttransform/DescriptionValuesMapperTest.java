@@ -41,11 +41,13 @@ class DescriptionValuesMapperTest {
     private CapitalDescriptionValue capitalDescriptionValue;
     @Mock
     private AltCapitalDescriptionValue altCapitalDescriptionValue;
+    @Mock
+    private JsonNodeCleaner jsonNodeCleaner;
 
     @BeforeEach
     void setUp() {
         descriptionValuesMapper = new DescriptionValuesMapper(altCapitalArrayNodeDeserialiser,
-                capitalArrayNodeDeserialiser);
+                capitalArrayNodeDeserialiser, jsonNodeCleaner);
     }
 
     @Test
@@ -137,6 +139,7 @@ class DescriptionValuesMapperTest {
 
         when(altCapitalArrayNodeDeserialiser.deserialise(any())).thenReturn(List.of(altCapitalDescriptionValue));
         when(capitalArrayNodeDeserialiser.deserialise(any())).thenReturn(List.of(capitalDescriptionValue));
+        when(jsonNodeCleaner.cleanOutEmptyStrings(any())).thenReturn(jsonNode);
 
         // when
         final DescriptionValues actual = descriptionValuesMapper.map(jsonNode);
@@ -165,6 +168,25 @@ class DescriptionValuesMapperTest {
 
         // when
         final DescriptionValues actual = descriptionValuesMapper.map(null);
+
+        // then
+        assertNull(actual);
+    }
+
+    @Test
+    void shouldMapDescriptionValuesObjectToNullWhenOnlyEmptyFields() {
+        // given
+        final ObjectNode jsonNode = MAPPER.createObjectNode()
+                .putObject("description_values")
+                .put("description", "");
+
+        final ObjectNode outputNode = MAPPER.createObjectNode()
+                .putNull("description");
+
+        when(jsonNodeCleaner.cleanOutEmptyStrings(any())).thenReturn(outputNode);
+
+        // when
+        final DescriptionValues actual = descriptionValuesMapper.map(jsonNode);
 
         // then
         assertNull(actual);
