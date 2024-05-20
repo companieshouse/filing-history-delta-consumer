@@ -1,0 +1,23 @@
+{
+  "external_data" : {
+    "transaction_id" : "MjUwMjE5MjY2NHNhbHQ",
+    "barcode" : "00492386",
+    "type" : "402R(NI)",
+    "date" : "2008-04-22T00:00:00Z",
+    "category" : "mortgage",
+    "description" : "particulars-of-a-mortgage-charge",
+    "paper_filed" : true,
+    "links" : {
+      "self" : "/company/NI060142/filing-history/MjUwMjE5MjY2NHNhbHQ"
+    }
+  },
+  "internal_data": {
+    "delta_at" : "20240315120619637819",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level",
+    "entity_id" : "2502192664",
+    "company_number" : "NI060142",
+    "document_id" : "NIA097063800000",
+    "parent_entity_id": ""
+  }
+}
