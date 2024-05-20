@@ -139,7 +139,7 @@ class DescriptionValuesMapperTest {
 
         when(altCapitalArrayNodeDeserialiser.deserialise(any())).thenReturn(List.of(altCapitalDescriptionValue));
         when(capitalArrayNodeDeserialiser.deserialise(any())).thenReturn(List.of(capitalDescriptionValue));
-        when(jsonNodeCleaner.cleanOutEmptyStrings(any())).thenReturn(jsonNode);
+        when(jsonNodeCleaner.setEmptyStringsToNull(any())).thenReturn(jsonNode);
 
         // when
         final DescriptionValues actual = descriptionValuesMapper.map(jsonNode);
@@ -183,7 +183,7 @@ class DescriptionValuesMapperTest {
         final ObjectNode outputNode = MAPPER.createObjectNode()
                 .putNull("description");
 
-        when(jsonNodeCleaner.cleanOutEmptyStrings(any())).thenReturn(outputNode);
+        when(jsonNodeCleaner.setEmptyStringsToNull(any())).thenReturn(outputNode);
 
         // when
         final DescriptionValues actual = descriptionValuesMapper.map(jsonNode);

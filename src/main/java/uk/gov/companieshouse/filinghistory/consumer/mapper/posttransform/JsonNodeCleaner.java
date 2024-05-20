@@ -15,7 +15,7 @@ public class JsonNodeCleaner {
         this.objectMapper = objectMapper;
     }
 
-    JsonNode cleanOutEmptyStrings(JsonNode inputNode) {
+    JsonNode setEmptyStringsToNull(JsonNode inputNode) {
         ObjectNode outputNode = (ObjectNode) inputNode;
         Map<?, ?> map = objectMapper.convertValue(outputNode, Map.class);
         for (Map.Entry<?, ?> entry : map.entrySet()) {

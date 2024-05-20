@@ -29,7 +29,7 @@ class JsonNodeCleanerTest {
                 .putNull("description");
 
         // when
-        JsonNode actual = jsonNodeCleaner.cleanOutEmptyStrings(inputNode);
+        JsonNode actual = jsonNodeCleaner.setEmptyStringsToNull(inputNode);
 
         // then
         assertEquals(expected, actual);
@@ -42,7 +42,7 @@ class JsonNodeCleanerTest {
                 .put("description", "description");
 
         // when
-        JsonNode actual = jsonNodeCleaner.cleanOutEmptyStrings(inputNode);
+        JsonNode actual = jsonNodeCleaner.setEmptyStringsToNull(inputNode);
 
         // then
         assertEquals(inputNode, actual);

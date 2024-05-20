@@ -32,7 +32,7 @@ public class DescriptionValuesMapper {
             return null;
         }
 
-        JsonNode jsonNode = jsonNodeCleaner.cleanOutEmptyStrings(inputNode);
+        JsonNode jsonNode = jsonNodeCleaner.setEmptyStringsToNull(inputNode);
 
         List<AltCapitalDescriptionValue> altCapital = Optional.ofNullable(
                         getNestedJsonNodeFromJsonNode(jsonNode, "alt_capital"))
