@@ -62,7 +62,6 @@ public class BulkIntegrationTestUtils {
                         capdevjco2.fh_extracted_test_data
                     WHERE
                             loaded_into_chips_kermit = 'Y'
-                        -- AND entity_id = 108679096
                         -- IDs broken in Perl and Java
                         AND entity_id NOT IN ( 3153600699, 3178873249, 3180140883, 3168588719, 3183442513,
                                                3181240723, 3181240912, 3182858493, 3183887704, 3246675970,

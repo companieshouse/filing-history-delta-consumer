@@ -8,15 +8,14 @@ import static uk.gov.companieshouse.filinghistory.consumer.kafka.BulkIntegration
 import static uk.gov.companieshouse.filinghistory.consumer.kafka.BulkIntegrationTestUtils.getFilingHistoryCollection;
 import static uk.gov.companieshouse.filinghistory.consumer.kafka.BulkIntegrationTestUtils.postDelta;
 
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,12 +37,7 @@ class E2EGetResponseIntegrationIT {
 
     private final RestClient apiClient = getFilingHistoryApiRestClient();
     private final RestClient deltaApi = getDeltaApiRestClient();
-
-    private final ObjectMapper mapper = new ObjectMapper()
-            .setSerializationInclusion(Include.NON_NULL)
-            .setSerializationInclusion(Include.NON_EMPTY)
-            .registerModule(new JavaTimeModule());
-
+    private final ObjectMapper mapper = new ObjectMapper();
     private final MongoClient mongoClient = BulkIntegrationTestUtils.mongoClient();
     private final MongoCollection<Document> filingHistoryCollection = getFilingHistoryCollection(mongoClient);
 
@@ -105,13 +99,9 @@ class E2EGetResponseIntegrationIT {
     private void maskDocumentListKnownBugs(String perlGetListJson, JsonNode perlDocumentList, JsonNode documentList,
             String documentListJson) {
         if (!perlDocumentList.equals(documentList)) {
-            removePaperFiledInDocumentList(perlDocumentList);
-            removePaperFiledInDocumentList(documentList);
-            removeEmptyItemsInDocumentList(perlDocumentList);
+            removeEmptyBarcodeInPerlDocumentList(perlDocumentList);
             removeEmptyItemsInDocumentList(documentList);
-
             removeEmptyDescriptionValuesInDocumentsList(perlDocumentList);
-            removeEmptyDescriptionValuesInDocumentsList(documentList);
 
             // Failure not due to a known bug
             if (!perlDocumentList.equals(documentList)) {
@@ -124,13 +114,9 @@ class E2EGetResponseIntegrationIT {
     private void maskSingleDocumentKnownBugs(String perlGetSingleResponse, JsonNode perlSingleDocument,
             JsonNode singleDocument, String singleDocumentJson) {
         if (!perlSingleDocument.equals(singleDocument)) {
-            removePaperFiled(perlSingleDocument);
-            removePaperFiled(singleDocument);
-            removeEmptyItemsList(perlSingleDocument);
+            removeEmptyBarcodeInPerl(perlSingleDocument);
             removeEmptyItemsList(singleDocument);
-
             removeEmptyDescriptionValues(perlSingleDocument);
-            removeEmptyDescriptionValues(singleDocument);
 
             // Failure not due to a known bug
             if (!perlSingleDocument.equals(singleDocument)) {
@@ -141,8 +127,15 @@ class E2EGetResponseIntegrationIT {
     }
 
     private void removeEmptyDescriptionValues(JsonNode jsonNode) {
-        if (jsonNode.has("description_values") && jsonNode.get("description_values").isEmpty()) {
-            ((ObjectNode) jsonNode).remove("description_values");
+        if (jsonNode.has("description_values")) {
+            JsonNode descriptionValues = jsonNode.get("description_values");
+            for (Iterator<String> it = descriptionValues.fieldNames(); it.hasNext(); ) {
+                String fieldName = it.next();
+                if (descriptionValues.get(fieldName).isEmpty()) {
+                    ((ObjectNode) descriptionValues).remove(fieldName);
+                }
+            }
+            ;
         }
     }
 
@@ -153,16 +146,26 @@ class E2EGetResponseIntegrationIT {
         }
     }
 
-    private void removePaperFiled(JsonNode jsonNode) {
-        if (jsonNode.has("paper_filed") && jsonNode.get("paper_filed").size() == 0) {
-            ((ObjectNode) jsonNode).remove("paper_filed");
+    private void removeEmptyBarcodeInPerl(JsonNode jsonNode) {
+
+        if (jsonNode.has("resolutions")) {
+            if (jsonNode.has("barcode") && jsonNode.get("barcode").isEmpty()) {
+                ((ObjectNode) jsonNode).remove("barcode");
+            }
+
+            JsonNode resolutions = jsonNode.get("resolutions");
+            resolutions.forEach(resolution -> {
+                if (resolution.has("barcode") && resolution.get("barcode").isEmpty()) {
+                    ((ObjectNode) resolution).remove("barcode");
+                }
+            });
         }
     }
 
-    private void removePaperFiledInDocumentList(JsonNode jsonNode) {
+    private void removeEmptyBarcodeInPerlDocumentList(JsonNode jsonNode) {
         if (jsonNode.has("items")) {
             JsonNode items = jsonNode.get("items");
-            items.forEach(this::removePaperFiled);
+            items.forEach(this::removeEmptyBarcodeInPerl);
         }
     }
 
