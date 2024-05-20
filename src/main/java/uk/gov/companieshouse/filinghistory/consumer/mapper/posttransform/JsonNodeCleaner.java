@@ -18,11 +18,11 @@ public class JsonNodeCleaner {
     JsonNode setEmptyStringsToNull(JsonNode inputNode) {
         ObjectNode outputNode = (ObjectNode) inputNode;
         Map<?, ?> map = objectMapper.convertValue(outputNode, Map.class);
-        for (Map.Entry<?, ?> entry : map.entrySet()) {
-            if ("".equals(entry.getValue())) {
-                outputNode.set(entry.getKey().toString(), null);
+        map.forEach((key, value) -> {
+            if ("".equals(value)) {
+                outputNode.set(key.toString(), null);
             }
-        }
+        });
         return outputNode;
     }
 }
