@@ -8678,6 +8678,17 @@
       data.description_values.change_date: '[% changeDate | bson_date %]'
 - when:
     eq:
+      type: CONDIR
+    like:
+      description: '^(?i:CHANGE OF NAME DIRECTED BY ADJUDICATION ON (?<changeDate>\d+\D\d+\D\d+))$'
+  then:
+    set:
+      category: change-of-name
+      description: change-of-name-direction
+      action_date: '[% changeDate | bson_date %]'
+      description_values.change_date: '[% changeDate | bson_date %]'
+- when:
+    eq:
       data.type: NE01
   then:
     set:

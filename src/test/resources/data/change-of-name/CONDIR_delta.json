@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "7",
+      "receive_date": "20140812105656",
+      "form_type": "CONDIR",
+      "description": "Change of Name directed by Adjudication on 11/08/2014",
+      "barcode": "R3E1QERU",
+      "document_id": "",
+      "company_number": "08808844",
+      "entity_id": "3105428378",
+      "parent_entity_id": "3105428490",
+      "parent_form_type": "CERTNM",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20221029142043360560"
+}
