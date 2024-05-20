@@ -1,5 +1,6 @@
 package uk.gov.companieshouse.filinghistory.consumer.mapper.posttransform;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -17,10 +18,11 @@ public class JsonNodeCleaner {
 
     JsonNode setEmptyStringsToNull(JsonNode inputNode) {
         ObjectNode outputNode = (ObjectNode) inputNode;
-        Map<?, ?> map = objectMapper.convertValue(outputNode, Map.class);
+        Map<String, Object> map = objectMapper.convertValue(outputNode, new TypeReference<>() {
+        });
         map.forEach((key, value) -> {
             if ("".equals(value)) {
-                outputNode.putNull(key.toString());
+                outputNode.putNull(key);
             }
         });
         return outputNode;
