@@ -1,0 +1,39 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzEwNTQyODQ5MHNhbHQ",
+    "barcode" : "R3E1QERU",
+    "category" : "change-of-name",
+    "date" : "2014-08-12T10:56:56Z",
+    "action_date" : "2014-08-11T00:00:00Z",
+    "description" : "change-of-name-direction",
+    "description_values" : {
+      "change_date" : "2014-08-11T00:00:00Z"
+    },
+    "links" : {
+      "self" : "/company/08808844/filing-history/MzEwNTQyODQ5MHNhbHQ"
+    },
+    "paper_filed" : true,
+    "associated_filings" : [
+      {
+        "action_date" : "2014-08-11T00:00:00Z",
+        "category" : "change-of-name",
+        "date" : "2014-08-12T10:56:56Z",
+        "description" : "change-of-name-direction",
+        "description_values" : {
+          "change_date" : "2014-08-11T00:00:00Z"
+        },
+        "type" : "CONDIR"
+      }
+    ],
+    "type" : "CONDIR"
+  },
+  "internal_data": {
+    "original_description" : "Change of Name directed by Adjudication on 11/08/2014",
+    "company_number" : "08808844",
+    "entity_id": "3105428378",
+    "parent_entity_id": "3105428490",
+    "delta_at": "20221029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "associated-filing"
+  }
+}
