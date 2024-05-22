@@ -19,6 +19,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -37,6 +38,16 @@ public class IntegrationDataGenerator implements ArgumentsProvider {
 
     private static final Logger logger = LoggerFactory.getLogger(IntegrationDataGenerator.class);
 
+    private static final Set<String> EXCLUSIONS = Set.of(
+            // These entity IDs are for when Java has the correct behaviour
+            "2042077166",
+            "104004155",
+            "3024249751",
+            "3043332581",
+            "3112605554"
+            // END Java has the correct behaviour
+    );
+
     @Override
     public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
 
@@ -51,18 +62,20 @@ public class IntegrationDataGenerator implements ArgumentsProvider {
 
                 try {
                     if (deltas.javaDelta() != null && deltas.perlDelta() != null) {
-
-                        postDelta(deltas.perlDelta(), queueApiClient);
-
                         DocumentContext delta = JsonPath.parse(deltas.javaDelta());
                         String entityId = delta.read("$.filing_history[0].entity_id");
                         String formType = delta.read("$.filing_history[0].form_type");
 
-                        Document perlDocument = findPerlDocument(filingHistoryCollection, formType, entityId);
-                        String expectedRequestBody = transformToPutRequest(perlDocument, delta);
+                        if (!EXCLUSIONS.contains(entityId)) {
 
-                        queue.add(Arguments.of(getCategory(perlDocument), formType, entityId, deltas.javaDelta(),
-                                expectedRequestBody));
+                            postDelta(deltas.perlDelta(), queueApiClient);
+
+                            Document perlDocument = findPerlDocument(filingHistoryCollection, formType, entityId);
+                            String expectedRequestBody = transformToPutRequest(perlDocument, delta);
+
+                            queue.add(Arguments.of(getCategory(perlDocument), formType, entityId, deltas.javaDelta(),
+                                    expectedRequestBody));
+                        }
 
                     } else {
                         logger.warn("No delta JSON found for transaction {}", deltas.entity_id());
