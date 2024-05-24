@@ -1,0 +1,31 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzE4MTIzOTAxNXNhbHQ",
+    "barcode" : "L6A1H4QW",
+    "category" : "persons-with-significant-control",
+    "date" : "2017-07-24T11:49:00Z",
+    "description" : "second-filing-notification-of-a-person-with-significant-control",
+    "description_values" : {
+      "psc_name" : "John Tester Ltd"
+    },
+    "links" : {
+      "self" : "/company/06316353/filing-history/MzE4MTIzOTAxNXNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "document-replacement",
+    "type" : "RP04PSC02"
+  },
+  "internal_data": {
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level",
+    "parent_entity_id": "",
+    "company_number" : "06316353",
+    "document_id" : "000L6A1H4QW6710",
+    "entity_id" : "3181239015",
+    "original_description" : "Second filing of PSC02 for John Tester LTD",
+    "original_values" : {
+      "psc_name" : "John Tester Ltd"
+    }
+  }
+}
