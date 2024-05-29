@@ -1,0 +1,31 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzE4MDU3ODg0OXNhbHQ",
+    "barcode" : "S6AO3D1T",
+    "category" : "persons-with-significant-control",
+    "date" : "2017-07-14T13:11:32Z",
+    "description" : "second-filing-change-details-of-a-person-with-significant-control",
+    "description_values" : {
+      "psc_name" : "Mr John Tester"
+    },
+    "links" : {
+      "self" : "/company/SC220891/filing-history/MzE4MDU3ODg0OXNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "document-replacement",
+    "type" : "RP04PSC04"
+  },
+  "internal_data": {
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level",
+    "parent_entity_id": "",
+    "company_number" : "SC220891",
+    "document_id" : "000S6AO3D1T6702",
+    "entity_id" : "3180578849",
+    "original_description" : "Second filing of PSC04 for Mr John Tester",
+    "original_values" : {
+      "psc_name" : "Mr John Tester"
+    }
+  }
+}

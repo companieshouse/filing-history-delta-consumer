@@ -1,0 +1,31 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzE4MzMyMjI3OXNhbHQ",
+    "barcode" : "A6BNZ6T6",
+    "category" : "persons-with-significant-control",
+    "date" : "2017-08-21T09:48:15Z",
+    "description" : "second-filing-cessation-of-a-person-with-significant-control-limited-liability-partnership",
+    "description_values" : {
+      "psc_name" : "John Tester Inc"
+    },
+    "links" : {
+      "self" : "/company/OC348754/filing-history/MzE4MzMyMjI3OXNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "document-replacement",
+    "type" : "RP04LLPSC07"
+  },
+  "internal_data": {
+    "delta_at": "20211029142043360560",
+    "transaction_kind": "top-level",
+    "updated_by": "context_id",
+    "parent_entity_id": "",
+    "company_number" : "OC348754",
+    "document_id" : "000A6BNZ6T66738",
+    "entity_id" : "3183322279",
+    "original_description" : "Second filing of LLPSC07 for John Tester Inc",
+    "original_values" : {
+      "psc_name" : "John Tester Inc"
+    }
+  }
+}
