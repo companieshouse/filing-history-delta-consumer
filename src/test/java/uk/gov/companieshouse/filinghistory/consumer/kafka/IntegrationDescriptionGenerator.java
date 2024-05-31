@@ -23,29 +23,16 @@ public class IntegrationDescriptionGenerator implements ArgumentsProvider {
 
     private static final String FIND_ALL_DESCRIPTIONS = """
             SELECT
-                id,
-                entity_id,
-                form_type,
-                description,
-                (
-                    SELECT
-                        pkg_chs_get_data.f_get_one_transaction_api(entity_id, '29-OCT-21 14.20.43.360560000')
-                    FROM
-                        dual
-                ) AS delta
+                etd.entity_id   AS entity_id,
+                etd.form_type   AS form_type,
+                etd.description AS description,
+                sd.api_delta    AS delta
             FROM
-                capdevjco2.fh_extracted_test_data
-            WHERE
-                    loaded_into_chips_kermit = 'Y'
-                AND id IS NOT NULL
-                AND entity_id NOT IN ( 3153600699, 3168588719, 3178873249, 3180140883, 3183442513,
-                                       3188166405, 3188752683, 3246675970, 3153598406, 3157961596,
-                                       3160750562, 3178873198, 3181240723, 3181240912, 3182858493,
-                                       3183361204, 3183887704 )
+                     capdevjco2.fh_extracted_test_data etd
+                JOIN capdevjco2.fh_staging_deltas sd ON etd.entity_id = sd.entity_id
             """;
 
-    private record DeltaDescription(String id,
-                                    String entityId,
+    private record DeltaDescription(String entityId,
                                     String formType,
                                     String description,
                                     String delta) {
@@ -60,7 +47,6 @@ public class IntegrationDescriptionGenerator implements ArgumentsProvider {
 
             Queue<Arguments> queue = new ConcurrentLinkedQueue<>();
             jdbcTemplate.query(FIND_ALL_DESCRIPTIONS, (rs, rowNum) -> new DeltaDescription(
-                            rs.getString("id"),
                             rs.getString("entity_id"),
                             rs.getString("form_type"),
                             rs.getString("description").trim(),
@@ -74,8 +60,7 @@ public class IntegrationDescriptionGenerator implements ArgumentsProvider {
 
                             queue.add(
                                     Arguments.of(deltaDescription.entityId(), deltaDescription.formType(),
-                                            deltaDescription.description(), deltaDescription.id(), companyNumber,
-                                            deltaDescription.delta()));
+                                            deltaDescription.description(), companyNumber, deltaDescription.delta()));
 
                         } else {
                             logger.warn("No delta JSON found for transaction {}", deltaDescription.entityId());

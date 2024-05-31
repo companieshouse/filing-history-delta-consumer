@@ -70,7 +70,6 @@ public class BulkIntegrationTestUtils {
                 )
             WHERE
                 queue_delta IS NOT NULL
-            -- FETCH FIRST 600 ROWS ONLY
             """;
 
     private BulkIntegrationTestUtils() {
