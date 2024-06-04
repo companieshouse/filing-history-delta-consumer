@@ -3548,7 +3548,6 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% chargeCreationDate | bson_date %]'
       data.description_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
-      original_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
 - when:
     eq:
       data.type: MR01
@@ -3564,7 +3563,6 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% chargeCreationDate | bson_date %]'
       data.description_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
-      original_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
 - when:
     eq:
       data.type: MR01
@@ -3580,7 +3578,6 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% chargeCreationDate | bson_date %]'
       data.description_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
-      original_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
 - when:
     eq:
       data.type: MR01
@@ -3617,7 +3614,6 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% propertyAcquiredDate | bson_date %]'
       data.description_values.property_acquired_date: '[% propertyAcquiredDate | bson_date %]'
-      original_values.property_acquired_date: '[% propertyAcquiredDate | bson_date %]'
 - when:
     eq:
       data.type: MR02
@@ -3633,7 +3629,6 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% propertyAcquiredDate | bson_date %]'
       data.description_values.property_acquired_date: '[% propertyAcquiredDate | bson_date %]'
-      original_values.property_acquired_date: '[% propertyAcquiredDate | bson_date %]'
 - when:
     eq:
       data.type: MR02
@@ -3649,7 +3644,6 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% propertyAcquiredDate | bson_date %]'
       data.description_values.property_acquired_date: '[% propertyAcquiredDate | bson_date %]'
-      original_values.property_acquired_date: '[% propertyAcquiredDate | bson_date %]'
 - when:
     eq:
       data.type: MR02
@@ -3686,7 +3680,6 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% chargeCreationDate | bson_date %]'
       data.description_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
-      original_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
 - when:
     eq:
       data.type: MR03
@@ -3702,7 +3695,6 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% chargeCreationDate | bson_date %]'
       data.description_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
-      original_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
 - when:
     eq:
       data.type: MR03
@@ -3718,7 +3710,6 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% chargeCreationDate | bson_date %]'
       data.description_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
-      original_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
 - when:
     eq:
       data.type: MR03
@@ -3914,7 +3905,6 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% chargeCreationDate | bson_date %]'
       data.description_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
-      original_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
 - when:
     eq:
       data.type: MR08
@@ -3930,7 +3920,6 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% chargeCreationDate | bson_date %]'
       data.description_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
-      original_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
 - when:
     eq:
       data.type: MR08
@@ -3946,7 +3935,6 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% chargeCreationDate | bson_date %]'
       data.description_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
-      original_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
 - when:
     eq:
       data.type: MR08
@@ -4025,7 +4013,6 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% chargeCreationDate | bson_date %]'
       data.description_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
-      original_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
 - when:
     eq:
       data.type: MR10
@@ -4041,7 +4028,6 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% chargeCreationDate | bson_date %]'
       data.description_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
-      original_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
 - when:
     eq:
       data.type: MR10
@@ -4057,7 +4043,6 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% chargeCreationDate | bson_date %]'
       data.description_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
-      original_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
 - when:
     eq:
       data.type: MR10
@@ -4082,7 +4067,6 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% chargeCreationDate | bson_date %]'
       data.description_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
-      original_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
 - when:
     eq:
       data.type: LLMR01
@@ -4098,7 +4082,6 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% chargeCreationDate | bson_date %]'
       data.description_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
-      original_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
 - when:
     eq:
       data.type: LLMR01
@@ -4114,7 +4097,6 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% chargeCreationDate | bson_date %]'
       data.description_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
-      original_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
 - when:
     eq:
       data.type: LLMR01
@@ -4178,7 +4160,6 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% propertyAcquiredDate | bson_date %]'
       data.description_values.property_acquired_date: '[% propertyAcquiredDate | bson_date %]'
-      original_values.property_acquired_date: '[% propertyAcquiredDate | bson_date %]'
 - when:
     eq:
       data.type: LLMR02
@@ -4194,7 +4175,6 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% propertyAcquiredDate | bson_date %]'
       data.description_values.property_acquired_date: '[% propertyAcquiredDate | bson_date %]'
-      original_values.property_acquired_date: '[% propertyAcquiredDate | bson_date %]'
 - when:
     eq:
       data.type: LLMR02
@@ -4210,7 +4190,6 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% propertyAcquiredDate | bson_date %]'
       data.description_values.property_acquired_date: '[% propertyAcquiredDate | bson_date %]'
-      original_values.property_acquired_date: '[% propertyAcquiredDate | bson_date %]'
 - when:
     eq:
       data.type: LLMR02
@@ -4247,7 +4226,6 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% chargeCreationDate | bson_date %]'
       data.description_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
-      original_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
 - when:
     eq:
       data.type: LLMR03
@@ -4263,7 +4241,6 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% chargeCreationDate | bson_date %]'
       data.description_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
-      original_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
 - when:
     eq:
       data.type: LLMR03
@@ -4279,7 +4256,6 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% chargeCreationDate | bson_date %]'
       data.description_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
-      original_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
 - when:
     eq:
       data.type: LLMR03
@@ -4475,7 +4451,6 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% chargeCreationDate | bson_date %]'
       data.description_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
-      original_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
 - when:
     eq:
       data.type: LLMR08
@@ -4491,7 +4466,6 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% chargeCreationDate | bson_date %]'
       data.description_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
-      original_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
 - when:
     eq:
       data.type: LLMR08
@@ -4507,7 +4481,6 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% chargeCreationDate | bson_date %]'
       data.description_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
-      original_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
 - when:
     eq:
       data.type: LLMR08
@@ -4598,7 +4571,6 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% chargeCreationDate | bson_date %]'
       data.description_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
-      original_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
 - when:
     eq:
       data.type: LLMR10
@@ -4614,7 +4586,6 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% chargeCreationDate | bson_date %]'
       data.description_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
-      original_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
 - when:
     eq:
       data.type: LLMR10
@@ -4630,7 +4601,6 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% chargeCreationDate | bson_date %]'
       data.description_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
-      original_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
 - when:
     eq:
       data.type: LLMR10
@@ -4750,7 +4720,6 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% chargeCreationDate | bson_date %]'
       data.description_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
-      original_values.charge_creation_date: '[% chargeCreationDate | bson_date %]'
 - when:
     eq:
       data.type: LLP466(Scot)
@@ -17462,8 +17431,6 @@
       data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% original_values.notification_date | bson_date %]'
-      data.description_values.notification_date: '[% original_values.notification_date | bson_date %]'
 - when:
     eq:
       data.type: RP04SLPPSC01
@@ -17520,8 +17487,6 @@
       data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% original_values.notification_date | bson_date %]'
-      data.description_values.notification_date: '[% original_values.notification_date | bson_date %]'
 - when:
     eq:
       data.type: RP04SLPPSC02
@@ -17612,8 +17577,6 @@
       data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% original_values.change_date | bson_date %]'
-      data.description_values.change_date: '[% original_values.change_date | bson_date %]'
 - when:
     eq:
       data.type: RP04SLPPSC04
@@ -17646,8 +17609,6 @@
       data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% original_values.change_date | bson_date %]'
-      data.description_values.change_date: '[% original_values.change_date | bson_date %]'
 - when:
     eq:
       data.type: RP04SQPPSC04
@@ -17680,8 +17641,6 @@
       data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% original_values.change_date | bson_date %]'
-      data.description_values.change_date: '[% original_values.change_date | bson_date %]'
 - when:
     eq:
       data.type: RP04PSC05
@@ -17703,8 +17662,6 @@
       data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% original_values.change_date | bson_date %]'
-      data.description_values.change_date: '[% original_values.change_date | bson_date %]'
 - when:
     eq:
       data.type: RP04SLPPSC05
@@ -17726,8 +17683,6 @@
       data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% original_values.change_date | bson_date %]'
-      data.description_values.change_date: '[% original_values.change_date | bson_date %]'
 - when:
     eq:
       data.type: RP04SQPPSC05
@@ -17966,8 +17921,6 @@
       data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% original_values.notification_date | bson_date %]'
-      data.description_values.notification_date: '[% original_values.notification_date | bson_date %]'
 - when:
     eq:
       data.type: RP04LLPSC02
@@ -17978,8 +17931,6 @@
       data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% original_values.notification_date | bson_date %]'
-      data.description_values.notification_date: '[% original_values.notification_date | bson_date %]'
 - when:
     eq:
       data.type: RP04LLPSC03
@@ -17990,8 +17941,6 @@
       data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% original_values.notification_date | bson_date %]'
-      data.description_values.notification_date: '[% original_values.notification_date | bson_date %]'
 - when:
     eq:
       data.type: RP04LLPSC04
@@ -18089,8 +18038,6 @@
       data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% original_values.cessation_date | bson_date %]'
-      data.description_values.cessation_date: '[% original_values.cessation_date | bson_date %]'
 - when:
     eq:
       data.type: RP04LLPSC08

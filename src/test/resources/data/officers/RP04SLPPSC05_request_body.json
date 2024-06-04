@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzI0ODg1MzI3N3NhbHQ",
+    "barcode" : "S8HPFT0P",
+    "category" : "persons-with-significant-control",
+    "date" : "2019-11-08T08:42:20Z",
+    "description" : "second-filing-change-details-of-a-person-with-significant-control",
+    "links" : {
+      "self" : "/company/SL032321/filing-history/MzI0ODg1MzI3N3NhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "document-replacement",
+    "type" : "RP04SLPPSC05"
+  },
+  "internal_data": {
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level",
+    "parent_entity_id": "",
+    "company_number" : "SL032321",
+    "document_id" : "000S8HPFT0P7552",
+    "entity_id" : "3248853277",
+    "original_description" : "Second filing of SLPPSC05 for John Tester Limited"
+  }
+}

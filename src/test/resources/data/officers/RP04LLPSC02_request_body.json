@@ -1,0 +1,31 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzE5NzAwNTM2N3NhbHQ",
+    "barcode" : "A6XZQ4I2",
+    "category" : "persons-with-significant-control",
+    "date" : "2018-02-05T17:32:21Z",
+    "description" : "second-filing-notification-of-a-person-with-significant-control-limited-liability-partnership",
+    "description_values" : {
+      "psc_name" : "John Tester"
+    },
+    "links" : {
+      "self" : "/company/OC349574/filing-history/MzE5NzAwNTM2N3NhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "document-replacement",
+    "type" : "RP04LLPSC02"
+  },
+  "internal_data": {
+    "company_number" : "OC349574",
+    "document_id" : "000A6XZQ4I26926",
+    "entity_id" : "3197005367",
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level",
+    "parent_entity_id": "",
+    "original_description" : "Second filing of LLPSC02 for John Tester",
+    "original_values" : {
+      "psc_name" : "John Tester"
+    }
+  }
+}

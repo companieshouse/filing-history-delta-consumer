@@ -65,6 +65,8 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
         testConsumer.poll(KafkaUtils.kafkaPollingDuration());
     }
 
+    // FIXME: RP04SLPPSC04, RP04SLPPSC05, RP04SQPPSC04
+    //  failing due to missing psc_name in description value object on delta
     @ParameterizedTest
     @CsvSource({
             "change-of-name/CONDIR",
@@ -76,7 +78,9 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
             "annual_return/363s",
 
             "officers/EW01RSS", "officers/TM01", "officers/RP04LLPSC05", "officers/RP04LLPSC04", "officers/RP04PSC09",
-            "officers/RP04PSC07", "officers/RP04PSC03",
+            "officers/RP04PSC07", "officers/RP04PSC03", "officers/RP04LLPSC02", "officers/RP04LLPSC03",
+            "officers/RP04PSC01", "officers/RP04PSC04", "officers/RP04PSC02", "officers/RP04LLPSC01",
+            "officers/RP04PSC05", "officers/RP04LLPSC07",
 
             "capital/SH03", "capital/SH07", "capital/SH01", "capital/SH02_rule_2", "capital/SH04_rule_4",
             "capital/SH05", "capital/EW05RSS",
@@ -122,7 +126,12 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
             "mortgage/MR05_rule_2", "mortgage/MR05_rule_3", "mortgage/MR05_rule_4", "mortgage/MR05_rule_5",
             "mortgage/MR05_rule_6", "mortgage/MR05_rule_7", "mortgage/MR06", "mortgage/MR07", "mortgage/MR08",
             "mortgage/MR09", "mortgage/MR10", "mortgage/LLMR03", "mortgage/466(Scot)", "mortgage/LLP466(Scot)",
-            "mortgage/402R(NI)"
+            "mortgage/402R(NI)",
+
+            // New failing tests below here
+//            "officers/RP04SLPPSC04"
+//            "officers/RP04SLPPSC05"
+//            "officers/RP04SQPPSC04"
     })
     void shouldConsumeFilingHistoryDeltaTopicAndProcessDeltaFromCSV(final String prefix) throws Exception {
         final String delta = IOUtils.resourceToString("/data/%s_delta.json".formatted(prefix), StandardCharsets.UTF_8);

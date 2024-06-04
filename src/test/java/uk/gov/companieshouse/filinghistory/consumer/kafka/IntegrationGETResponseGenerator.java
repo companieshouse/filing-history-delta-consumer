@@ -7,6 +7,7 @@ import static uk.gov.companieshouse.filinghistory.consumer.kafka.BulkIntegration
 import static uk.gov.companieshouse.filinghistory.consumer.kafka.BulkIntegrationTestUtils.getQueueApiRestClient;
 import static uk.gov.companieshouse.filinghistory.consumer.kafka.BulkIntegrationTestUtils.mongoClient;
 import static uk.gov.companieshouse.filinghistory.consumer.kafka.BulkIntegrationTestUtils.postDelta;
+import static uk.gov.companieshouse.filinghistory.consumer.kafka.BulkIntegrationTestUtils.sleep;
 
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
@@ -87,11 +88,7 @@ public class IntegrationGETResponseGenerator implements ArgumentsProvider {
 
         for (int count = 0; count < 2000; count++) {
             try {
-                try {
-                    Thread.sleep(1); // nosonar
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+                sleep(1);
 
                 return backendClient.get()
                         .uri("/company/{companyNumber}/filing-history/{transactionId}", companyNumber, transactionId)
@@ -114,11 +111,7 @@ public class IntegrationGETResponseGenerator implements ArgumentsProvider {
 
         for (int count = 0; count < 2000; count++) {
             try {
-                try {
-                    Thread.sleep(1); // nosonar
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+                sleep(1);
 
                 return backendClient.get()
                         .uri("/company/{companyNumber}/filing-history", companyNumber)

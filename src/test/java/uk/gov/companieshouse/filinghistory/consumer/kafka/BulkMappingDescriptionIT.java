@@ -4,7 +4,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.put;
 import static com.github.tomakehurst.wiremock.client.WireMock.requestMadeFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
+import static com.github.tomakehurst.wiremock.client.WireMock.urlMatching;
 import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -66,17 +66,17 @@ class BulkMappingDescriptionIT extends AbstractKafkaIT {
     @EnabledIfEnvironmentVariable(disabledReason = "Disabled for normal builds", named = "RUN_BULK_TEST",
             matches = "^(1|true|TRUE)$")
     void shouldMapDeltaToExpectedDescription(String entityId, String formType, String expectedDescription,
-            String transactionId, String companyNumber, String delta) throws Exception {
+            String companyNumber, String delta) throws Exception {
         // given
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         Encoder encoder = EncoderFactory.get().directBinaryEncoder(outputStream, null);
         DatumWriter<ChsDelta> writer = new ReflectDatumWriter<>(ChsDelta.class);
         writer.write(new ChsDelta(delta, 0, "context_id", false), encoder);
 
-        final String expectedRequestUri = "/filing-history-data-api/company/%s/filing-history/%s/internal".formatted(
-                companyNumber, transactionId);
+        final String expectedRequestUri = "/filing-history-data-api/company/%s/filing-history/.*/internal".formatted(
+                companyNumber);
 
-        stubFor(put(urlEqualTo(expectedRequestUri))
+        stubFor(put(urlMatching(expectedRequestUri))
                 .willReturn(aResponse()
                         .withStatus(200)));
 
@@ -94,6 +94,6 @@ class BulkMappingDescriptionIT extends AbstractKafkaIT {
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, ERROR_TOPIC)).isZero();
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, INVALID_TOPIC)).isZero();
 
-        verify(requestMadeFor(new PutRequestDescriptionMatcher(expectedRequestUri, expectedDescription)));
+        verify(requestMadeFor(new PutRequestDescriptionMatcher(expectedDescription, delta)));
     }
 }

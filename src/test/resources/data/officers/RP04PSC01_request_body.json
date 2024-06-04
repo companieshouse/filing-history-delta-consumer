@@ -1,0 +1,31 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzE3OTQzNzg2N3NhbHQ",
+    "barcode" : "S69P3KWA",
+    "category" : "persons-with-significant-control",
+    "date" : "2017-06-30T15:53:03Z",
+    "description" : "second-filing-notification-of-a-person-with-significant-control",
+    "description_values" : {
+      "psc_name" : "John Tester"
+    },
+    "links" : {
+      "self" : "/company/SC024440/filing-history/MzE3OTQzNzg2N3NhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "document-replacement",
+    "type" : "RP04PSC01"
+  },
+  "internal_data": {
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level",
+    "parent_entity_id": "",
+    "company_number" : "SC024440",
+    "document_id" : "000S69P3KWA6689",
+    "entity_id" : "3179437867",
+    "original_description" : "Second filing of PSC01 for John Tester",
+    "original_values" : {
+      "psc_name" : "John Tester"
+    }
+  }
+}

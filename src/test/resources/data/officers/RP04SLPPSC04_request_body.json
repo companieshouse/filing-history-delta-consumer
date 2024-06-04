@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "barcode" : "S755SAQX",
+    "transaction_id" : "MzIwNDE5OTY5OHNhbHQ",
+    "category" : "persons-with-significant-control",
+    "date" : "2018-05-03T14:26:35Z",
+    "description" : "second-filing-change-details-of-a-person-with-significant-control",
+    "links" : {
+      "self" : "/company/SL005376/filing-history/MzIwNDE5OTY5OHNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "document-replacement",
+    "type" : "RP04SLPPSC04"
+  },
+  "internal_data": {
+    "delta_at": "20211029142043360560",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level",
+    "parent_entity_id": "",
+    "company_number" : "SL005376",
+    "document_id" : "000S755SAQX6996",
+    "entity_id" : "3204199698",
+    "original_description" : "Second filing of SLPPSC04 for John Tester"
+  }
+}
