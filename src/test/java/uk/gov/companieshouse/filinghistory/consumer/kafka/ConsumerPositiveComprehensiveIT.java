@@ -159,7 +159,7 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
 
         InternalFilingHistoryApi request = objectMapper.readValue(expectedRequestBody, InternalFilingHistoryApi.class);
 
-        final String expectedRequestUri = "/filing-history-data-api/company/%s/filing-history/%s/internal".formatted(
+        final String expectedRequestUri = "/company/%s/filing-history/%s/internal".formatted(
                 request.getInternalData().getCompanyNumber(),
                 request.getExternalData().getTransactionId());
 

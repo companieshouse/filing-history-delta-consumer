@@ -35,7 +35,7 @@ public class BulkIntegrationTestUtils {
     private static final String QUEUE_API_URL = "http://localhost:18201/queue/delta/filing-history";
     private static final String DELTA_API_URL = "http://api.chs.local:4001/delta/filing-history";
     private static final String BACKEND_API_URL = "http://api.chs.local:4001";
-    private static final String FILING_HISTORY_API_URL = "http://api.chs.local:4001/filing-history-data-api";
+    private static final String FILING_HISTORY_API_URL = "http://api.chs.local:4001";
 
     private static final String FIND_ALL_DELTAS = """
             SELECT
