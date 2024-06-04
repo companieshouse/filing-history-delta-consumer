@@ -43,33 +43,10 @@ public class BulkIntegrationTestUtils {
                 queue_delta,
                 api_delta
             FROM
-                (
-                    SELECT
-                        entity_id,
-                        (
-                            SELECT
-                                pkg_chs_get_data.f_get_one_transaction(entity_id, '29-OCT-21 14.20.43.360560000')
-                            FROM
-                                dual
-                        ) AS queue_delta,
-                        (
-                            SELECT
-                                pkg_chs_get_data.f_get_one_transaction_api(entity_id, '29-OCT-21 14.20.43.360560000')
-                            FROM
-                                dual
-                        ) AS api_delta
-                    FROM
-                        capdevjco2.fh_extracted_test_data
-                    WHERE
-                            loaded_into_chips_kermit = 'Y'
-                        -- IDs broken in Perl and Java
-                        AND entity_id NOT IN ( 3153600699, 3178873249, 3180140883, 3168588719, 3183442513,
-                                               3181240723, 3181240912, 3182858493, 3183887704, 3246675970,
-                                               3188166405, 3188752683, 3153598406, 3160750562, 3178873198,
-                                               3157961596, 3183361204 )
-                )
+                capdevjco2.fh_staging_deltas
             WHERE
-                queue_delta IS NOT NULL
+                    entity_id NOT IN (3168588719, 3183361204, -- Broken in Java or Perl consumers
+                                      3183361204, 2030121631, 2041074305) -- Broken in Java consumer
             """;
 
     private BulkIntegrationTestUtils() {
@@ -136,11 +113,7 @@ public class BulkIntegrationTestUtils {
     static Document findFilingHistoryDocument(MongoCollection<Document> collection, String formType, String entityId,
             long waitMillis) {
         for (int count = 0; count < waitMillis; count++) {
-            try {
-                Thread.sleep(1); // nosonar
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            sleep(1);
 
             Document document = collection.find().first();
             if (document != null) {
@@ -160,4 +133,13 @@ public class BulkIntegrationTestUtils {
                 .defaultHeader(HttpHeaders.AUTHORIZATION, AUTH_HEADER)
                 .build();
     }
+
+    public static void sleep(int timeout) {
+        try {
+            Thread.sleep(timeout); // nosonar
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
