@@ -11,8 +11,8 @@ import uk.gov.companieshouse.filinghistory.consumer.logging.DataMapHolder;
 @Component
 public class FilingHistoryApiClient {
 
-    private static final String PUT_REQUEST_URI = "/filing-history-data-api/company/%s/filing-history/%s/internal";
-    private static final String DELETE_REQUEST_URI = "/filing-history-data-api/filing-history/%s/internal";
+    private static final String PUT_REQUEST_URI = "/company/%s/filing-history/%s/internal";
+    private static final String DELETE_REQUEST_URI = "/filing-history/%s/internal";
 
     private final Supplier<InternalApiClient> internalApiClientFactory;
     private final ResponseHandler responseHandler;

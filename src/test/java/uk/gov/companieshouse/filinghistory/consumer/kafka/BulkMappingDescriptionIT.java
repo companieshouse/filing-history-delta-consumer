@@ -73,7 +73,7 @@ class BulkMappingDescriptionIT extends AbstractKafkaIT {
         DatumWriter<ChsDelta> writer = new ReflectDatumWriter<>(ChsDelta.class);
         writer.write(new ChsDelta(delta, 0, "context_id", false), encoder);
 
-        final String expectedRequestUri = "/filing-history-data-api/company/%s/filing-history/.*/internal".formatted(
+        final String expectedRequestUri = "/company/%s/filing-history/.*/internal".formatted(
                 companyNumber);
 
         stubFor(put(urlMatching(expectedRequestUri))

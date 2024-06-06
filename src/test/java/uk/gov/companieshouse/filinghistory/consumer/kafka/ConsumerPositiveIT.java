@@ -79,7 +79,7 @@ class ConsumerPositiveIT extends AbstractKafkaIT {
                 StandardCharsets.UTF_8);
         InternalFilingHistoryApi request = objectMapper.readValue(expectedRequestBody, InternalFilingHistoryApi.class);
 
-        final String expectedRequestUri = "/filing-history-data-api/company/%s/filing-history/%s/internal".formatted(
+        final String expectedRequestUri = "/company/%s/filing-history/%s/internal".formatted(
                 request.getInternalData().getCompanyNumber(),
                 request.getExternalData().getTransactionId());
 
@@ -117,7 +117,7 @@ class ConsumerPositiveIT extends AbstractKafkaIT {
         FilingHistoryDeleteDelta deleteDelta = objectMapper.readValue(delta, FilingHistoryDeleteDelta.class);
         String entityId = deleteDelta.getEntityId();
 
-        final String expectedRequestUri = "/filing-history-data-api/filing-history/%s/internal".formatted(
+        final String expectedRequestUri = "/filing-history/%s/internal".formatted(
                 entityId);
 
         stubFor(delete(urlEqualTo(expectedRequestUri))
