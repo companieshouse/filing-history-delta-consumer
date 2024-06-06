@@ -1,0 +1,45 @@
+{
+  "external_data": {
+    "transaction_id": "QTQ1WklPQk5zYWx0",
+    "barcode": "A45ZIOBN",
+    "category": "resolution",
+    "date": "2015-05-05T12:39:41Z",
+    "description": "resolution",
+    "description_values": {
+      "description": "Resolutions"
+    },
+    "links": {
+      "self": "/company/00699626/filing-history/QTQ1WklPQk5zYWx0"
+    },
+    "paper_filed": true,
+    "resolutions": [
+      {
+        "category": "liquidation",
+        "description": "liquidation-voluntary-special-resolution-to-wind-up-case-start-date",
+        "description_values": {
+          "case_start_date": "2015-04-20T00:00:00Z"
+        },
+        "original_description": "Special resolution to wind up",
+        "subcategory": [
+          "voluntary",
+          "resolution"
+        ],
+        "type": "LRESSP"
+      }
+    ],
+    "type": "RESOLUTIONS"
+  },
+  "internal_data": {
+    "company_number": "00699626",
+    "original_description": "Resolutions",
+    "original_values": {
+      "case_start_date": "20/04/2015"
+    },
+    "entity_id": "3122534835",
+    "parent_entity_id": "",
+    "document_id": "000A45ZIOBN5902",
+    "delta_at": "20240409143956000000",
+    "updated_by": "context_id",
+    "transaction_kind": "resolution"
+  }
+}

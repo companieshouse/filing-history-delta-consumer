@@ -1,6 +1,8 @@
 package uk.gov.companieshouse.filinghistory.consumer.mapper.pretransform;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
@@ -24,6 +26,7 @@ class ResolutionNodeMapperTest {
     private static final ObjectMapper objectMapper = TransformerTestingUtils.getMapper();
     private static final String CASE_START_DATE = "01/01/2010";
     private static final String RES_TYPE = "res type";
+    private static final String CATEGORY = "category";
     private static final String DESCRIPTION = "description";
     private static final String DATE = "02/02/2011";
     private static final String RESOLUTION_DATE = "03/03/2012";
@@ -31,13 +34,15 @@ class ResolutionNodeMapperTest {
     private ResolutionNodeMapper resolutionNodeMapper;
     @Mock
     private FormatDate formatDate;
+    @Mock
+    private CategoryMapper categoryMapper;
 
     @Mock
     private FilingHistory delta;
 
     @BeforeEach
     void setUp() {
-        resolutionNodeMapper = new ResolutionNodeMapper(objectMapper, formatDate);
+        resolutionNodeMapper = new ResolutionNodeMapper(objectMapper, formatDate, categoryMapper);
     }
 
     @ParameterizedTest
@@ -48,6 +53,8 @@ class ResolutionNodeMapperTest {
         // given
         when(delta.getFormType()).thenReturn("form type");
         when(delta.getDescription()).thenReturn(description);
+        when(delta.getCategory()).thenReturn("5");
+        when(categoryMapper.map(any())).thenReturn(CATEGORY);
 
         DescriptionValues descriptionValues = new DescriptionValues()
                 .caseStartDate(CASE_START_DATE)
@@ -72,6 +79,7 @@ class ResolutionNodeMapperTest {
                 .addObject();
         childNode
                 .put("type", "form type")
+                .put("category", CATEGORY)
                 .put(DESCRIPTION, description);
 
         childNode
@@ -88,6 +96,7 @@ class ResolutionNodeMapperTest {
         // then
         assertEquals(expected, actual);
         verifyNoInteractions(formatDate);
+        verify(categoryMapper).map("5");
     }
 
     @Test
@@ -95,6 +104,8 @@ class ResolutionNodeMapperTest {
         // given
         when(delta.getFormType()).thenReturn("RES15");
         when(delta.getDescription()).thenReturn("description");
+        when(delta.getCategory()).thenReturn("5");
+        when(categoryMapper.map(any())).thenReturn(CATEGORY);
 
         ObjectNode parentNode = objectMapper.createObjectNode();
         parentNode.putObject("data");
@@ -110,6 +121,7 @@ class ResolutionNodeMapperTest {
                 .addObject();
         childNode
                 .put("type", "RES15")
+                .put("category", CATEGORY)
                 .put(DESCRIPTION, "description");
 
         // when
@@ -118,5 +130,6 @@ class ResolutionNodeMapperTest {
         // then
         assertEquals(expected, actual);
         verifyNoInteractions(formatDate);
+        verify(categoryMapper).map("5");
     }
 }

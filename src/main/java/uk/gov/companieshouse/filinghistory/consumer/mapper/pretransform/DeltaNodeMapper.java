@@ -10,8 +10,10 @@ import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.For
 @Component
 public class DeltaNodeMapper extends AbstractNodeMapper implements NodeMapper {
 
-    protected DeltaNodeMapper(ObjectMapper objectMapper, FormatDate formatDate) {
+    private final CategoryMapper categoryMapper;
+    protected DeltaNodeMapper(ObjectMapper objectMapper, FormatDate formatDate, CategoryMapper categoryMapper) {
         super(objectMapper, formatDate);
+        this.categoryMapper = categoryMapper;
     }
 
     @Override
@@ -74,6 +76,6 @@ public class DeltaNodeMapper extends AbstractNodeMapper implements NodeMapper {
                 .put("description", filingHistory.getDescription()
                         .replace("<", "\\")
                         .replace("\n", "\\"))
-                .put("category", filingHistory.getCategory());
+                .put("category", categoryMapper.map(filingHistory.getCategory()));
     }
 }

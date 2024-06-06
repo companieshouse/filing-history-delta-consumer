@@ -1,10 +1,7 @@
-package uk.gov.companieshouse.filinghistory.consumer.mapper.posttransform;
+package uk.gov.companieshouse.filinghistory.consumer.mapper.pretransform;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import java.util.Map;
-import java.util.Optional;
 import org.springframework.stereotype.Component;
-import uk.gov.companieshouse.api.filinghistory.ExternalData.CategoryEnum;
 
 @Component
 public class CategoryMapper {
@@ -23,12 +20,7 @@ public class CategoryMapper {
             Map.entry("10", "persons-with-significant-control")
     );
 
-    CategoryEnum map(JsonNode node) {
-        return Optional.ofNullable(node)
-                .map(n -> n.get("category"))
-                .map(JsonNode::textValue)
-                .map(value -> CATEGORIES.getOrDefault(value, value))
-                .map(CategoryEnum::fromValue)
-                .orElse(null);
+    String map(String category) {
+        return CATEGORIES.getOrDefault(category, category);
     }
 }
