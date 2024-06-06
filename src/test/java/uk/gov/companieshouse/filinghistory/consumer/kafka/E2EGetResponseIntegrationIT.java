@@ -136,7 +136,7 @@ class E2EGetResponseIntegrationIT {
                         })
                         .body(String.class);
             } catch (Exception e) {
-                logger.info("Retrying to GET single transaction list for company {}, transaction {}", companyNumber,
+                logger.info("Retrying to GET single transaction for company {}, transaction {}", companyNumber,
                         transactionId, e);
             }
         }
