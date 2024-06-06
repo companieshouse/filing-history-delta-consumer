@@ -45,8 +45,22 @@ public class BulkIntegrationTestUtils {
             FROM
                 capdevjco2.fh_staging_deltas
             WHERE
-                    entity_id NOT IN (3168588719, 3183361204, -- Broken in Java or Perl consumers
-                                      3183361204, 2030121631, 2041074305) -- Broken in Java consumer
+                    entity_id NOT IN (3168588719, 3183361204) -- Broken in Java and Perl consumers
+            """;
+
+    private static final String FIND_ALL_PERL_DOCS = """
+            SELECT
+                entity_id,
+                transaction_id,
+                form_type,
+                company_number,
+                perl_delta,
+                java_delta,
+                perl_document,
+                perl_get_single_response,
+                perl_get_list_response
+            FROM
+                capdevjco2.bulk_testing_perl_docs
             """;
 
     private BulkIntegrationTestUtils() {
@@ -84,6 +98,20 @@ public class BulkIntegrationTestUtils {
                         rs.getString("entity_id"),
                         rs.getString("api_delta"),
                         rs.getString("queue_delta")));
+    }
+
+    static @Nonnull List<PerlDocuments> findAllPerlDocs() throws SQLException {
+        return new JdbcTemplate(chipsSource()).query(BulkIntegrationTestUtils.FIND_ALL_PERL_DOCS,
+                (rs, rowNum) -> new PerlDocuments(
+                        rs.getString("entity_id"),
+                        rs.getString("transaction_id"),
+                        rs.getString("form_type"),
+                        rs.getString("company_number"),
+                        rs.getString("perl_delta"),
+                        rs.getString("java_delta"),
+                        rs.getString("perl_document"),
+                        rs.getString("perl_get_single_response"),
+                        rs.getString("perl_get_list_response")));
     }
 
     static DataSource chipsSource() throws SQLException {

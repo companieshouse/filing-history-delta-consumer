@@ -2,11 +2,11 @@ package uk.gov.companieshouse.filinghistory.consumer.kafka;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static uk.gov.companieshouse.filinghistory.consumer.kafka.BulkIntegrationTestUtils.findFilingHistoryDocument;
 import static uk.gov.companieshouse.filinghistory.consumer.kafka.BulkIntegrationTestUtils.getDeltaApiRestClient;
 import static uk.gov.companieshouse.filinghistory.consumer.kafka.BulkIntegrationTestUtils.getFilingHistoryApiRestClient;
 import static uk.gov.companieshouse.filinghistory.consumer.kafka.BulkIntegrationTestUtils.getFilingHistoryCollection;
 import static uk.gov.companieshouse.filinghistory.consumer.kafka.BulkIntegrationTestUtils.postDelta;
+import static uk.gov.companieshouse.filinghistory.consumer.kafka.BulkIntegrationTestUtils.sleep;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
+import jakarta.annotation.Nullable;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -24,6 +25,7 @@ import java.util.Optional;
 import java.util.UUID;
 import org.apache.http.HttpStatus;
 import org.bson.Document;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
@@ -43,6 +45,11 @@ class E2EGetResponseIntegrationIT {
 
     private final MongoClient mongoClient = BulkIntegrationTestUtils.mongoClient();
     private final MongoCollection<Document> filingHistoryCollection = getFilingHistoryCollection(mongoClient);
+
+    @BeforeEach
+    void setUp() {
+        filingHistoryCollection.deleteMany(new Document());
+    }
 
     @ParameterizedTest(name = "[{index}] {1}/{2}/{0}")
     @ArgumentsSource(IntegrationGETResponseGenerator.class)
@@ -66,22 +73,8 @@ class E2EGetResponseIntegrationIT {
             document = findFilingHistoryDocument(filingHistoryCollection, formType, entityId, 10_000);
             assertNotNull(document);
 
-            String singleDocumentJson = apiClient.get()
-                    .uri("/company/{companyNumber}/filing-history/{transactionId}", companyNumber, transactionId)
-                    .header("x-request-id", UUID.randomUUID().toString())
-                    .retrieve()
-                    .onStatus(status -> status.value() != HttpStatus.SC_OK, (request, response) -> {
-                        throw new RuntimeException(response.getStatusText());
-                    })
-                    .body(String.class);
-            String documentListJson = apiClient.get()
-                    .uri("/company/{companyNumber}/filing-history", companyNumber)
-                    .header("x-request-id", UUID.randomUUID().toString())
-                    .retrieve()
-                    .onStatus(status -> status.value() != HttpStatus.SC_OK, (request, response) -> {
-                        throw new RuntimeException(response.getStatusText());
-                    })
-                    .body(String.class);
+            String singleDocumentJson = fetchSingleTransaction(transactionId, companyNumber, 1_000);
+            String documentListJson = fetchTransactionList(companyNumber, 1_000);
 
             JsonNode javaSingleDocument = parseAndRemoveNulls(singleDocumentJson);
             JsonNode javaDocumentList = parseAndRemoveNulls(documentListJson);
@@ -105,6 +98,67 @@ class E2EGetResponseIntegrationIT {
                 filingHistoryCollection.deleteOne(document);
             }
         }
+    }
+
+    private @Nullable String fetchTransactionList(String companyNumber, long waitMillis) {
+
+        for (int count = 0; count < waitMillis; count++) {
+            sleep(1);
+
+            try {
+                return apiClient.get()
+                        .uri("/company/{companyNumber}/filing-history", companyNumber)
+                        .header("x-request-id", UUID.randomUUID().toString())
+                        .retrieve()
+                        .onStatus(status -> status.value() != HttpStatus.SC_OK, (request, response) -> {
+                            throw new RuntimeException(response.getStatusText());
+                        })
+                        .body(String.class);
+            } catch (Exception e) {
+                logger.info("Retrying to GET transaction list for {}", companyNumber);
+            }
+        }
+
+        throw new RuntimeException("Retrying to GET transaction list for %s".formatted(companyNumber));
+    }
+
+    private @Nullable String fetchSingleTransaction(String transactionId, String companyNumber, long waitMillis) {
+        for (int count = 0; count < waitMillis; count++) {
+            sleep(1);
+
+            try {
+                return apiClient.get()
+                        .uri("/company/{companyNumber}/filing-history/{transactionId}", companyNumber, transactionId)
+                        .header("x-request-id", UUID.randomUUID().toString())
+                        .retrieve()
+                        .onStatus(status -> status.value() != HttpStatus.SC_OK, (request, response) -> {
+                            throw new RuntimeException(response.getStatusText());
+                        })
+                        .body(String.class);
+            } catch (Exception e) {
+                logger.info("Retrying to GET single transaction for company {}, transaction {}", companyNumber,
+                        transactionId, e);
+            }
+        }
+
+        throw new RuntimeException("Retrying to GET transaction for company %s, transaction %s"
+                .formatted(companyNumber, transactionId));
+    }
+
+    private Document findFilingHistoryDocument(MongoCollection<Document> collection, String formType, String entityId,
+            long waitMillis) {
+        for (int count = 0; count < waitMillis; count++) {
+            sleep(1);
+
+            Document document = collection.find().first();
+            if (document != null) {
+                logger.info("Document {} found after {} milliseconds", document.get("_id"), count);
+                return document;
+            }
+        }
+
+        throw new RuntimeException("Failed to read filing history document for form %s, entityId %s"
+                .formatted(formType, entityId));
     }
 
     private void maskSingleDocumentKnownBugs(JsonNode perlSingleDocument, JsonNode javaSingleDocument) {
