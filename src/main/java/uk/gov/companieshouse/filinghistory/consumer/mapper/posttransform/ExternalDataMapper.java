@@ -69,8 +69,7 @@ public class ExternalDataMapper {
                 .transactionId(encodedId)
                 .barcode(barcode)
                 .descriptionValues(
-                        descriptionValuesMapper.map(
-                                getNestedJsonNodeFromJsonNode(dataNode, "description_values")))
+                        descriptionValuesMapper.map(getNestedJsonNodeFromJsonNode(dataNode, "description_values")))
                 .paperFiled(paperFiledMapper.isPaperFiled(barcode) ? true : null)
                 .links(linksMapper.map(companyNumber, encodedId))
                 .annotations(annotations)

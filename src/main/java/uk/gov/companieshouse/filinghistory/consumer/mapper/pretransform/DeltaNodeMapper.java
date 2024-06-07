@@ -11,6 +11,7 @@ import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.For
 public class DeltaNodeMapper extends AbstractNodeMapper implements NodeMapper {
 
     private final CategoryMapper categoryMapper;
+
     protected DeltaNodeMapper(ObjectMapper objectMapper, FormatDate formatDate, CategoryMapper categoryMapper) {
         super(objectMapper, formatDate);
         this.categoryMapper = categoryMapper;
