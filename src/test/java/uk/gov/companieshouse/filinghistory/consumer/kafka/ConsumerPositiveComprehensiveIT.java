@@ -128,9 +128,9 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
 //            "mortgage/MR09", "mortgage/MR10", "mortgage/LLMR03", "mortgage/466(Scot)", "mortgage/LLP466(Scot)",
 //            "mortgage/402R(NI)",
 
-            "mortgage/LLPSC07", "mortgage/LLPSC07_no_description_values"
+//            "mortgage/LLPSC07", "mortgage/LLPSC07_no_description_values"
 
-//            "mortgage/PSC07"
+            "mortgage/PSC07", "mortgage/PSC07_no_description_values"
 
             // New failing tests below here
 //            "officers/RP04SLPPSC04"
