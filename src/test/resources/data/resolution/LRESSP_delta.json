@@ -1,0 +1,21 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20150505123941",
+      "form_type": "LRESSP",
+      "description": "SPECIAL RESOLUTION TO WIND UP",
+      "barcode": "A45ZIOBN",
+      "document_id": "000A45ZIOBN5902",
+      "company_number": "00699626",
+      "entity_id": "3122534835",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "description_values": {
+        "case_start_date": "20/04/2015"
+      },
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20240409143956000000"
+}

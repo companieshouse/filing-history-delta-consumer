@@ -146,8 +146,8 @@ mvn test -Dtest="BulkMappingDescriptionIT#shouldMapDeltaToExpectedDescription"
     - To run from the command line use:
 
 ```shell
-HUMAN_LOG=1 FILING_HISTORY_API_KEY=2ETU8wNAmUcrwOzHRirRyc35mUk_WFOmQbHE1sLr KERMIT_PASSWORD=<kermit_password> TRANSACTION_ID_SALT=<perl_salt> RUN_BULK_TEST=11 \
-mvn test -Dtest="BulkMappingDescriptionIT#shouldMapDeltaToExpectedDescription"
+HUMAN_LOG=1 FILING_HISTORY_API_KEY=2ETU8wNAmUcrwOzHRirRyc35mUk_WFOmQbHE1sLr KERMIT_PASSWORD=<kermit_password> TRANSACTION_ID_SALT=<perl_salt> RUN_BULK_TEST=1 \
+mvn test -Dtest="E2EGetResponseIntegrationIT.shouldMatchGetResponsesFromPerlEndpoints"
 ```
 
 _Note:_

@@ -40,8 +40,6 @@ class ExternalDataMapperTest {
     @InjectMocks
     private ExternalDataMapper externalDataMapper;
     @Mock
-    private CategoryMapper categoryMapper;
-    @Mock
     private SubcategoryMapper subcategoryMapper;
     @Mock
     private DescriptionValuesMapper descriptionValuesMapper;
@@ -66,7 +64,6 @@ class ExternalDataMapperTest {
     @Test
     void shouldMapExternalData() {
         // given
-        when(categoryMapper.map(any())).thenReturn(CategoryEnum.OFFICERS);
         when(subcategoryMapper.map(any())).thenReturn(subcategory);
         when(descriptionValuesMapper.map(any())).thenReturn(descriptionValues);
         when(paperFiledMapper.isPaperFiled(any())).thenReturn(true);
@@ -86,7 +83,6 @@ class ExternalDataMapperTest {
         // then
         assertEquals(expected, actual);
         verify(subcategoryMapper).map(dataNode);
-        verify(categoryMapper).map(dataNode);
         verify(descriptionValuesMapper).map(descriptionValuesNode);
         verify(paperFiledMapper).isPaperFiled(BARCODE);
         verify(linksMapper).map(COMPANY_NUMBER, ENCODED_ID);
@@ -105,7 +101,6 @@ class ExternalDataMapperTest {
         // then
         assertEquals(expected, actual);
         verify(subcategoryMapper).map(null);
-        verify(categoryMapper).map(null);
         verify(descriptionValuesMapper).map(null);
         verify(paperFiledMapper).isPaperFiled(null);
         verify(linksMapper).map(null, null);

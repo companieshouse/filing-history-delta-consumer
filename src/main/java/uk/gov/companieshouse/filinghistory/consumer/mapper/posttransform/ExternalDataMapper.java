@@ -11,13 +11,13 @@ import org.springframework.stereotype.Component;
 import uk.gov.companieshouse.api.filinghistory.Annotation;
 import uk.gov.companieshouse.api.filinghistory.AssociatedFiling;
 import uk.gov.companieshouse.api.filinghistory.ExternalData;
+import uk.gov.companieshouse.api.filinghistory.ExternalData.CategoryEnum;
 import uk.gov.companieshouse.api.filinghistory.Resolution;
 import uk.gov.companieshouse.filinghistory.consumer.serdes.ArrayNodeDeserialiser;
 
 @Component
 public class ExternalDataMapper {
 
-    private final CategoryMapper categoryMapper;
     private final SubcategoryMapper subcategoryMapper;
     private final DescriptionValuesMapper descriptionValuesMapper;
     private final PaperFiledMapper paperFiledMapper;
@@ -26,12 +26,11 @@ public class ExternalDataMapper {
     private final ArrayNodeDeserialiser<Resolution> resolutionsDeserialiser;
     private final ArrayNodeDeserialiser<AssociatedFiling> associatedFilingDeserialiser;
 
-    public ExternalDataMapper(CategoryMapper categoryMapper, SubcategoryMapper subcategoryMapper,
-                              DescriptionValuesMapper descriptionValuesMapper, PaperFiledMapper paperFiledMapper,
-                              LinksMapper linksMapper, ArrayNodeDeserialiser<Annotation> annotationsDeserialiser,
+    public ExternalDataMapper(SubcategoryMapper subcategoryMapper,
+            DescriptionValuesMapper descriptionValuesMapper, PaperFiledMapper paperFiledMapper,
+            LinksMapper linksMapper, ArrayNodeDeserialiser<Annotation> annotationsDeserialiser,
             ArrayNodeDeserialiser<Resolution> resolutionsDeserialiser,
-                              ArrayNodeDeserialiser<AssociatedFiling> associatedFilingDeserialiser) {
-        this.categoryMapper = categoryMapper;
+            ArrayNodeDeserialiser<AssociatedFiling> associatedFilingDeserialiser) {
         this.subcategoryMapper = subcategoryMapper;
         this.descriptionValuesMapper = descriptionValuesMapper;
         this.paperFiledMapper = paperFiledMapper;
@@ -41,9 +40,9 @@ public class ExternalDataMapper {
         this.associatedFilingDeserialiser = associatedFilingDeserialiser;
     }
 
-    ExternalData mapExternalData(JsonNode topLevelNode, String barcode, String encodedId,
-                                 String companyNumber) {
+    ExternalData mapExternalData(JsonNode topLevelNode, String barcode, String encodedId, String companyNumber) {
         JsonNode dataNode = getNestedJsonNodeFromJsonNode(topLevelNode, "data");
+        String category = getFieldValueFromJsonNode(dataNode, "category");
 
         List<Annotation> annotations = Optional.ofNullable(
                         getNestedJsonNodeFromJsonNode(dataNode, "annotations"))
@@ -63,7 +62,7 @@ public class ExternalDataMapper {
         return new ExternalData()
                 .type(getFieldValueFromJsonNode(dataNode, "type"))
                 .date(getFieldValueFromJsonNode(dataNode, "date"))
-                .category(categoryMapper.map(dataNode))
+                .category(category != null ? CategoryEnum.fromValue(category) : null)
                 .subcategory(subcategoryMapper.map(dataNode))
                 .description(getFieldValueFromJsonNode(dataNode, "description"))
                 .actionDate(getFieldValueFromJsonNode(dataNode, "action_date"))

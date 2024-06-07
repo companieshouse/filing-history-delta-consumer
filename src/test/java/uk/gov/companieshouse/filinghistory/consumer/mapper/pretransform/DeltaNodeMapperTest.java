@@ -28,10 +28,12 @@ class DeltaNodeMapperTest {
     private DeltaNodeMapper preTransformMapper;
     @Mock
     private FormatDate formatDate;
+    @Mock
+    private CategoryMapper categoryMapper;
 
     @BeforeEach
     void setUp() {
-        preTransformMapper = new DeltaNodeMapper(objectMapper, formatDate);
+        preTransformMapper = new DeltaNodeMapper(objectMapper, formatDate, categoryMapper);
     }
 
     @Test
@@ -82,6 +84,7 @@ class DeltaNodeMapperTest {
                 .put("resignation_date", "03/02/2013"));
 
         when(formatDate.format(any())).thenReturn("2011-09-05T05:39:19Z");
+        when(categoryMapper.map(any())).thenReturn("officer");
 
         // when
         final ObjectNode actualObjectNode = preTransformMapper.mapToObjectNode(delta.getFilingHistory().getFirst());
@@ -89,6 +92,7 @@ class DeltaNodeMapperTest {
         // then
         assertEquals(expectedTopLevelNode, actualObjectNode);
         verify(formatDate).format("20110905053919");
+        verify(categoryMapper).map("2");
     }
 
 
@@ -104,6 +108,7 @@ class DeltaNodeMapperTest {
                 .put("officer_name", "John Doe"));
 
         when(formatDate.format(any())).thenReturn("2011-09-05T05:39:19Z");
+        when(categoryMapper.map(any())).thenReturn("officer");
 
         // when
         final ObjectNode actualObjectNode = preTransformMapper.mapToObjectNode(delta.getFilingHistory().getFirst());
@@ -111,6 +116,7 @@ class DeltaNodeMapperTest {
         // then
         assertEquals(expectedTopLevelNode, actualObjectNode);
         verify(formatDate).format("20110905053919");
+        verify(categoryMapper).map("2");
     }
 
     @Test
@@ -148,9 +154,10 @@ class DeltaNodeMapperTest {
                 .put("date", "2011-09-05T05:39:19Z")
                 .put("description",
                         "REGISTERED OFFICE CHANGED \\ ON 04/05/88 FROM:\\ 35 KENT HOUSE \\ LANE  BECKENHAM  KENT  BR3 1LE")
-                .put("category", "2");
+                .put("category", "officer");
 
         when(formatDate.format(any())).thenReturn("2011-09-05T05:39:19Z");
+        when(categoryMapper.map(any())).thenReturn("officer");
 
         // when
         final ObjectNode actualObjectNode = preTransformMapper.mapToObjectNode(delta.getFilingHistory().getFirst());
@@ -158,6 +165,7 @@ class DeltaNodeMapperTest {
         // then
         assertEquals(expectedTopLevelNode, actualObjectNode);
         verify(formatDate).format("20110905053919");
+        verify(categoryMapper).map("2");
     }
 
     @Test
@@ -168,6 +176,7 @@ class DeltaNodeMapperTest {
         final JsonNode expectedTopLevelNode = getExpectedJsonNode(null);
 
         when(formatDate.format(any())).thenReturn("2011-09-05T05:39:19Z");
+        when(categoryMapper.map(any())).thenReturn("officer");
 
         // when
         final ObjectNode actualObjectNode = preTransformMapper.mapToObjectNode(delta.getFilingHistory().getFirst());
@@ -175,6 +184,7 @@ class DeltaNodeMapperTest {
         // then
         assertEquals(expectedTopLevelNode, actualObjectNode);
         verify(formatDate).format("20110905053919");
+        verify(categoryMapper).map("2");
     }
 
     @Test
@@ -213,9 +223,10 @@ class DeltaNodeMapperTest {
                 .put("type", "TM01")
                 .put("date", "2011-09-05T05:39:19Z")
                 .put("description", "Appointment Terminated, Director JOHN DOE")
-                .put("category", "2");
+                .put("category", "officer");
 
         when(formatDate.format(any())).thenReturn("2011-09-05T05:39:19Z");
+        when(categoryMapper.map(any())).thenReturn("officer");
 
         // when
         final ObjectNode actualObjectNode = preTransformMapper.mapToObjectNode(delta.getFilingHistory().getFirst());
@@ -223,6 +234,7 @@ class DeltaNodeMapperTest {
         // then
         assertEquals(expectedTopLevelNode, actualObjectNode);
         verify(formatDate).format("20110905053919");
+        verify(categoryMapper).map("2");
     }
 
     private static FilingHistoryDelta getFilingHistoryDelta(DescriptionValues descriptionValues) {
@@ -265,7 +277,7 @@ class DeltaNodeMapperTest {
                 .put("type", "TM01")
                 .put("date", "2011-09-05T05:39:19Z")
                 .put("description", "Appointment Terminated, Director JOHN DOE")
-                .put("category", "2");
+                .put("category", "officer");
 
         return expectedTopLevelNode;
     }

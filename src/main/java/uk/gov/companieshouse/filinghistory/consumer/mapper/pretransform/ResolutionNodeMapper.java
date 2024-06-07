@@ -12,15 +12,18 @@ import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.For
 public class ResolutionNodeMapper extends AbstractNodeMapper implements ChildNodeMapper {
 
     private static final String DESCRIPTION_FIELD = "description";
+    private final CategoryMapper categoryMapper;
 
-    protected ResolutionNodeMapper(ObjectMapper objectMapper, FormatDate formatDate) {
+    protected ResolutionNodeMapper(ObjectMapper objectMapper, FormatDate formatDate, CategoryMapper categoryMapper) {
         super(objectMapper, formatDate);
+        this.categoryMapper = categoryMapper;
     }
 
     @Override
     public ObjectNode mapChildObjectNode(FilingHistory filingHistory, ObjectNode parentNode) {
         ObjectNode childNode = objectMapper.createObjectNode()
                 .put("type", filingHistory.getFormType())
+                .put("category", categoryMapper.map(filingHistory.getCategory()))
                 .put(DESCRIPTION_FIELD,
                         StringUtils.isNotBlank(filingHistory.getDescription()) ? filingHistory.getDescription() : "");
 
