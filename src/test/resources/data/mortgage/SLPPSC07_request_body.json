@@ -1,17 +1,17 @@
 {
   "external_data" : {
-    "transaction_id" : "MzE1Nzk2MTU5NnNhbHQ",
-    "barcode" : "A5FHCM2Y",
-    "action_date" : "2016-08-24T00:00:00Z",
+    "transaction_id" : "MzE4Mzg4NzcwNHNhbHQ",
+    "barcode" : "S6DIPAOO",
+    "action_date" : "2017-08-14T00:00:00Z",
     "category" : "persons-with-significant-control",
-    "date" : "2016-09-22T10:50:25Z",
+    "date" : "2017-08-26T11:12:39Z",
     "description" : "cessation-of-a-person-with-significant-control-scottish-limited-partnership",
     "description_values" : {
-      "psc_name" : "John Tester",
-      "cessation_date" : "2016-08-24T00:00:00Z"
+      "cessation_date" : "2017-08-14T00:00:00Z",
+      "psc_name" : "John Tester Gp Llp"
     },
     "links" : {
-      "self" : "/company/10302571/filing-history/MzE1Nzk2MTU5NnNhbHQ"
+      "self" : "/company/SL031405/filing-history/MzE4Mzg4NzcwNHNhbHQ"
     },
     "paper_filed" : true,
     "subcategory" : "termination",
@@ -22,13 +22,13 @@
     "parent_entity_id": "",
     "transaction_kind": "top-level",
     "updated_by": "context_id",
-    "company_number" : "10302571",
-    "document_id" : "000A5FHCM2Y6411",
-    "entity_id" : "3157961596",
-    "original_description" : "Cessation of john tester as a psc",
+    "company_number" : "SL031405",
+    "document_id" : "000S6DIPAOO6750",
+    "entity_id" : "3183887704",
+    "original_description" : "Cessation of john tester gp LLP as a psc",
     "original_values" : {
-      "psc_name" : "JOHN TESTER",
-      "cessation_date" : "24/08/2016"
+      "cessation_date" : "14/08/2017",
+      "psc_name" : "JOHN TESTER GP LLP"
     }
   }
 }

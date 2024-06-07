@@ -2,18 +2,18 @@
   "filing_history": [
     {
       "category": "9",
-      "receive_date": "20160922105025",
+      "receive_date": "20171026121557",
       "form_type": "SQPPSC07",
-      "description": "Cessation of JOHN TESTER as a PSC",
-      "barcode": "A5FHCM2Y",
-      "document_id": "000A5FHCM2Y6411",
-      "company_number": "10302571",
-      "entity_id": "3157961596",
+      "description": "Cessation of JON BON TESTER CORP as a PSC",
+      "barcode": "S6H2AE1U",
+      "document_id": "000S6H2AE1U6803",
+      "company_number": "SG000331",
+      "entity_id": "3188752683",
       "parent_entity_id": "",
       "parent_form_type": "",
       "description_values": {
-        "cessation_date": "24/08/2016",
-        "psc_name": "JOHN TESTER"
+        "cessation_date": "29/09/2017",
+        "psc_name": "JON BON TESTER CORP"
       },
       "pre_scanned_batch": "1"
     }

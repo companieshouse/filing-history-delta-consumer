@@ -1,17 +1,17 @@
 {
   "external_data" : {
-    "transaction_id" : "MzE1Nzk2MTU5NnNhbHQ",
-    "barcode" : "A5FHCM2Y",
-    "action_date" : "2016-08-24T00:00:00Z",
+    "transaction_id" : "MzE4ODc1MjY4M3NhbHQ",
+    "barcode" : "S6H2AE1U",
+    "action_date" : "2017-09-29T00:00:00Z",
     "category" : "persons-with-significant-control",
-    "date" : "2016-09-22T10:50:25Z",
+    "date" : "2017-10-26T12:15:57Z",
     "description" : "cessation-of-a-person-with-significant-control-scottish-partnership",
     "description_values" : {
-      "psc_name" : "John Tester",
-      "cessation_date" : "2016-08-24T00:00:00Z"
+      "cessation_date" : "2017-09-29T00:00:00Z",
+      "psc_name" : "Jon Bon Tester Corp"
     },
     "links" : {
-      "self" : "/company/10302571/filing-history/MzE1Nzk2MTU5NnNhbHQ"
+      "self" : "/company/SG000331/filing-history/MzE4ODc1MjY4M3NhbHQ"
     },
     "paper_filed" : true,
     "subcategory" : "termination",
@@ -22,13 +22,13 @@
     "parent_entity_id": "",
     "transaction_kind": "top-level",
     "updated_by": "context_id",
-    "company_number" : "10302571",
-    "document_id" : "000A5FHCM2Y6411",
-    "entity_id" : "3157961596",
-    "original_description" : "Cessation of john tester as a psc",
+    "company_number" : "SG000331",
+    "document_id" : "000S6H2AE1U6803",
+    "entity_id" : "3188752683",
+    "original_description" : "Cessation of jon bon tester corp as a psc",
     "original_values" : {
-      "psc_name" : "JOHN TESTER",
-      "cessation_date" : "24/08/2016"
+      "cessation_date" : "29/09/2017",
+      "psc_name" : "JON BON TESTER CORP"
     }
   }
 }
