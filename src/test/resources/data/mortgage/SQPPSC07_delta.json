@@ -1,0 +1,22 @@
+{
+  "filing_history": [
+    {
+      "category": "9",
+      "receive_date": "20160922105025",
+      "form_type": "SQPPSC07",
+      "description": "Cessation of JOHN TESTER as a PSC",
+      "barcode": "A5FHCM2Y",
+      "document_id": "000A5FHCM2Y6411",
+      "company_number": "10302571",
+      "entity_id": "3157961596",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "description_values": {
+        "cessation_date": "24/08/2016",
+        "psc_name": "JOHN TESTER"
+      },
+      "pre_scanned_batch": "1"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

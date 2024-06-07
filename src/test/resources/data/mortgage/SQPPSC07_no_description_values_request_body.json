@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzE1Nzk2MTU5NnNhbHQ",
+    "barcode" : "A5FHCM2Y",
+    "category" : "persons-with-significant-control",
+    "date" : "2016-09-22T10:50:25Z",
+    "description" : "cessation-of-a-person-with-significant-control-without-name-date",
+    "links" : {
+      "self" : "/company/10302571/filing-history/MzE1Nzk2MTU5NnNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "termination",
+    "type" : "SQPPSC07"
+  },
+  "internal_data": {
+    "delta_at": "20211029142043360560",
+    "parent_entity_id": "",
+    "transaction_kind": "top-level",
+    "updated_by": "context_id",
+    "company_number" : "10302571",
+    "document_id" : "000A5FHCM2Y6411",
+    "entity_id" : "3157961596",
+    "original_description" : "Cessation of john tester as a psc"
+  }
+}
