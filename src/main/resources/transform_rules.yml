@@ -16541,25 +16541,26 @@
     eq:
       data.type: PSC07
     like:
-      data.description: '^(?i:CESSATION OF A PSC.*)$'
+      original_values.psc_name: '^(?i:)(?<pscName>.*)$'
+      original_values.cessation_date: '^(?<cessationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: persons-with-significant-control
-      data.description: cessation-of-a-person-with-significant-control-without-name-date
+      data.description: cessation-of-a-person-with-significant-control
+      data.description_values.psc_name: '[% pscName | title_case %]'
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
+      data.action_date: '[% cessationDate | bson_date %]'
+      data.description_values.cessation_date: '[% cessationDate | bson_date %]'
 - when:
     eq:
       data.type: PSC07
   then:
     set:
       data.category: persons-with-significant-control
-      data.description: cessation-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
+      data.description: cessation-of-a-person-with-significant-control-without-name-date
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% original_values.cessation_date | bson_date %]'
-      data.description_values.cessation_date: '[% original_values.cessation_date | bson_date %]'
 - when:
     eq:
       data.type: PSC08
@@ -16711,25 +16712,26 @@
     eq:
       data.type: LLPSC07
     like:
-      data.description: '^(?i:CESSATION OF A PSC.*)$'
+      original_values.psc_name: '^(?i:)(?<pscName>.*)$'
+      original_values.cessation_date: '^(?<cessationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: persons-with-significant-control
-      data.description: cessation-of-a-person-with-significant-control-without-name-date
+      data.description: cessation-of-a-person-with-significant-control-limited-liability-partnership
+      data.description_values.psc_name: '[% pscName | title_case %]'
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
+      data.action_date: '[% cessationDate | bson_date %]'
+      data.description_values.cessation_date: '[% cessationDate | bson_date %]'
 - when:
     eq:
       data.type: LLPSC07
   then:
     set:
       data.category: persons-with-significant-control
-      data.description: cessation-of-a-person-with-significant-control-limited-liability-partnership
-      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
+      data.description: cessation-of-a-person-with-significant-control-without-name-date
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% original_values.cessation_date | bson_date %]'
-      data.description_values.cessation_date: '[% original_values.cessation_date | bson_date %]'
 - when:
     eq:
       data.type: LLPSC08
@@ -16881,25 +16883,26 @@
     eq:
       data.type: SLPPSC07
     like:
-      data.description: '^(?i:CESSATION OF A PSC.*)$'
+      original_values.psc_name: '^(?i:)(?<pscName>.*)$'
+      original_values.cessation_date: '^(?<cessationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: persons-with-significant-control
-      data.description: cessation-of-a-person-with-significant-control-without-name-date
+      data.description: cessation-of-a-person-with-significant-control-scottish-limited-partnership
+      data.description_values.psc_name: '[% pscName | title_case %]'
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
+      data.action_date: '[% cessationDate | bson_date %]'
+      data.description_values.cessation_date: '[% cessationDate | bson_date %]'
 - when:
     eq:
       data.type: SLPPSC07
   then:
     set:
       data.category: persons-with-significant-control
-      data.description: cessation-of-a-person-with-significant-control-scottish-limited-partnership
-      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
+      data.description: cessation-of-a-person-with-significant-control-without-name-date
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% original_values.cessation_date | bson_date %]'
-      data.description_values.cessation_date: '[% original_values.cessation_date | bson_date %]'
 - when:
     eq:
       data.type: SLPPSC08
@@ -18656,25 +18659,26 @@
     eq:
       data.type: SQPPSC07
     like:
-      data.description: '^(?i:CESSATION OF A PSC.*)$'
+      original_values.psc_name: '^(?i:)(?<pscName>.*)$'
+      original_values.cessation_date: '^(?<cessationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: persons-with-significant-control
-      data.description: cessation-of-a-person-with-significant-control-without-name-date
+      data.description: cessation-of-a-person-with-significant-control-scottish-partnership
+      data.description_values.psc_name: '[% pscName | title_case %]'
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
+      data.action_date: '[% cessationDate | bson_date %]'
+      data.description_values.cessation_date: '[% cessationDate | bson_date %]'
 - when:
     eq:
       data.type: SQPPSC07
   then:
     set:
       data.category: persons-with-significant-control
-      data.description: cessation-of-a-person-with-significant-control-scottish-partnership
-      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
+      data.description: cessation-of-a-person-with-significant-control-without-name-date
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% original_values.cessation_date | bson_date %]'
-      data.description_values.cessation_date: '[% original_values.cessation_date | bson_date %]'
 - when:
     eq:
       data.type: SQPPSC08

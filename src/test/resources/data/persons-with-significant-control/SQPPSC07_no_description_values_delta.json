@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "9",
+      "receive_date": "20171026121557",
+      "form_type": "SQPPSC07",
+      "description": "Cessation of JON BON TESTER CORP as a PSC",
+      "barcode": "S6H2AE1U",
+      "document_id": "000S6H2AE1U6803",
+      "company_number": "SG000331",
+      "entity_id": "3188752683",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "1"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

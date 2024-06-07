@@ -1,0 +1,22 @@
+{
+  "filing_history": [
+    {
+      "category": "9",
+      "receive_date": "20170826111239",
+      "form_type": "SLPPSC07",
+      "description": "Cessation of JOHN TESTER GP LLP as a PSC",
+      "barcode": "S6DIPAOO",
+      "document_id": "000S6DIPAOO6750",
+      "company_number": "SL031405",
+      "entity_id": "3183887704",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "description_values": {
+        "cessation_date": "14/08/2017",
+        "psc_name": "JOHN TESTER GP LLP"
+      },
+      "pre_scanned_batch": "1"
+    }
+  ],
+  "delta_at": "20211029142043360560"
+}

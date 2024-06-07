@@ -1,0 +1,25 @@
+{
+  "external_data" : {
+    "transaction_id" : "MzE2ODU4ODcxOXNhbHQ",
+    "barcode" : "A5ZBWRKP",
+    "category" : "persons-with-significant-control",
+    "date" : "2017-02-09T09:47:38Z",
+    "description" : "cessation-of-a-person-with-significant-control-without-name-date",
+    "links" : {
+      "self" : "/company/OC415611/filing-history/MzE2ODU4ODcxOXNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "termination",
+    "type" : "LLPSC07"
+  },
+  "internal_data": {
+    "parent_entity_id": "",
+    "transaction_kind": "top-level",
+    "updated_by": "context_id",
+    "company_number" : "OC415611",
+    "document_id" : "000A5ZBWRKP6547",
+    "entity_id" : "3168588719",
+    "delta_at": "20211029142043360560",
+    "original_description" : "Cessation of jon bon tester as a psc"
+  }
+}
