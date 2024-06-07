@@ -75,7 +75,7 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
 
             "annotation/annotation", "annotation/top_level_annotation",
 
-            "annual_return/363s",
+            "annual-return/363s",
 
             "officers/EW01RSS", "officers/TM01", "officers/RP04LLPSC05", "officers/RP04LLPSC04", "officers/RP04PSC09",
             "officers/RP04PSC07", "officers/RP04PSC03", "officers/RP04LLPSC02", "officers/RP04LLPSC03",
@@ -127,10 +127,11 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
             "mortgage/MR05_rule_6", "mortgage/MR05_rule_7", "mortgage/MR06", "mortgage/MR07", "mortgage/MR08",
             "mortgage/MR09", "mortgage/MR10", "mortgage/LLMR03", "mortgage/466(Scot)", "mortgage/LLP466(Scot)",
             "mortgage/402R(NI)",
-            "mortgage/LLPSC07", "mortgage/LLPSC07_no_description_values",
-            "mortgage/PSC07", "mortgage/PSC07_no_description_values",
-            "mortgage/SLPPSC07", "mortgage/SLPPSC07_no_description_values",
-            "mortgage/SQPPSC07", "mortgage/SQPPSC07_no_description_values"
+
+            "persons-with-significant-control/LLPSC07", "persons-with-significant-control/LLPSC07_no_description_values",
+            "persons-with-significant-control/PSC07", "persons-with-significant-control/PSC07_no_description_values",
+            "persons-with-significant-control/SLPPSC07", "persons-with-significant-control/SLPPSC07_no_description_values",
+            "persons-with-significant-control/SQPPSC07", "persons-with-significant-control/SQPPSC07_no_description_values"
 
             // New failing tests below here
 //            "officers/RP04SLPPSC04"

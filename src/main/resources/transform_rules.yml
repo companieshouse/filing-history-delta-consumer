@@ -16541,8 +16541,8 @@
     eq:
       data.type: PSC07
     like:
-      data.description: '^(?i:CESSATION OF (?<pscName>.+?) AS A PSC.*)$'
-      original_values.cessation_date: '^(?i)(?<cessationDate>\d+\D\d+\D\d+)'
+      original_values.psc_name: '^(?i:)(?<pscName>.*)$'
+      original_values.cessation_date: '^(?<cessationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: persons-with-significant-control
@@ -16712,8 +16712,8 @@
     eq:
       data.type: LLPSC07
     like:
-      data.description: '^(?i:CESSATION OF (?<pscName>.+?) AS A PSC.*)$'
-      original_values.cessation_date: '^(?i)(?<cessationDate>\d+\D\d+\D\d+)'
+      original_values.psc_name: '^(?i:)(?<pscName>.*)$'
+      original_values.cessation_date: '^(?<cessationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: persons-with-significant-control
@@ -16883,8 +16883,8 @@
     eq:
       data.type: SLPPSC07
     like:
-      data.description: '^(?i:CESSATION OF (?<pscName>.+?) AS A PSC.*)$'
-      original_values.cessation_date: '^(?i)(?<cessationDate>\d+\D\d+\D\d+)'
+      original_values.psc_name: '^(?i:)(?<pscName>.*)$'
+      original_values.cessation_date: '^(?<cessationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: persons-with-significant-control
@@ -18659,17 +18659,17 @@
     eq:
       data.type: SQPPSC07
     like:
-      data.description: '^(?i:CESSATION OF (?<pscName>.+?) AS A PSC.*)$'
-      original_values.cessation_date: '^(?i)(?<cessationDate>\d+\D\d+\D\d+)'
+      original_values.psc_name: '^(?i:)(?<pscName>.*)$'
+      original_values.cessation_date: '^(?<cessationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: persons-with-significant-control
       data.description: cessation-of-a-person-with-significant-control-scottish-partnership
-      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
+      data.description_values.psc_name: '[% pscName | title_case %]'
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% original_values.cessation_date | bson_date %]'
-      data.description_values.cessation_date: '[% original_values.cessation_date | bson_date %]'
+      data.action_date: '[% cessationDate | bson_date %]'
+      data.description_values.cessation_date: '[% cessationDate | bson_date %]'
 - when:
     eq:
       data.type: SQPPSC07
