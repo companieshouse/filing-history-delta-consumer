@@ -17584,22 +17584,15 @@
     eq:
       data.type: RP04SLPPSC04
     like:
-      data.description: '^(?i:SECOND FILING OF SLPPSC04$)$'
+      original_values.psc_name: '^(?i:)(?<pscName>.*)$'
+      original_values.cessation_date: '^(?<cessationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: persons-with-significant-control
-      data.description: second-filing-change-to-a-person-with-significant-control-without-name-date
-      data.subcategory: document-replacement
-      original_description: '[% data.description | sentence_case %]'
-- when:
-    eq:
-      data.type: RP04SLPPSC04
-    like:
-      data.description: '^(?i:SECOND FILING FOR FORM SLPPSC04$)$'
-  then:
-    set:
-      data.category: persons-with-significant-control
-      data.description: second-filing-change-to-a-person-with-significant-control-without-name-date
+      data.description: second-filing-change-details-of-a-person-with-significant-control
+      data.description_values.psc_name: '[% pscName | title_case %]'
+      data.description_values.cessation_date: '[% cessationDate | bson_date %]'
+      data.action_date: '[% cessationDate | bson_date %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -17608,18 +17601,6 @@
   then:
     set:
       data.category: persons-with-significant-control
-      data.description: second-filing-change-details-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
-      data.subcategory: document-replacement
-      original_description: '[% data.description | sentence_case %]'
-- when:
-    eq:
-      data.type: RP04SQPPSC04
-    like:
-      data.description: '^(?i:SECOND FILING OF SQPPSC04$)$'
-  then:
-    set:
-      data.category: persons-with-significant-control
       data.description: second-filing-change-to-a-person-with-significant-control-without-name-date
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
@@ -17627,11 +17608,15 @@
     eq:
       data.type: RP04SQPPSC04
     like:
-      data.description: '^(?i:SECOND FILING FOR FROM SQPPSC04$)$'
+      original_values.psc_name: '^(?i:)(?<pscName>.*)$'
+      original_values.cessation_date: '^(?<cessationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: persons-with-significant-control
-      data.description: second-filing-change-to-a-person-with-significant-control-without-name-date
+      data.description: second-filing-change-details-of-a-person-with-significant-control
+      data.description_values.psc_name: '[% pscName | title_case %]'
+      data.description_values.cessation_date: '[% cessationDate | bson_date %]'
+      data.action_date: '[% cessationDate | bson_date %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -17640,8 +17625,7 @@
   then:
     set:
       data.category: persons-with-significant-control
-      data.description: second-filing-change-details-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
+      data.description: second-filing-change-to-a-person-with-significant-control-without-name-date
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -17669,11 +17653,15 @@
     eq:
       data.type: RP04SLPPSC05
     like:
-      data.description: '^(?i:SECOND FILING FOR FORM SLPPSC05$)$'
+      original_values.psc_name: '^(?i:)(?<pscName>.*)$'
+      original_values.cessation_date: '^(?<cessationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: persons-with-significant-control
-      data.description: second-filing-change-to-a-person-with-significant-control-without-name-date
+      data.description: second-filing-change-details-of-a-person-with-significant-control
+      data.description_values.psc_name: '[% pscName | title_case %]'
+      data.description_values.cessation_date: '[% cessationDate | bson_date %]'
+      data.action_date: '[% cessationDate | bson_date %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -17682,8 +17670,7 @@
   then:
     set:
       data.category: persons-with-significant-control
-      data.description: second-filing-change-details-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
+      data.description: second-filing-change-to-a-person-with-significant-control-without-name-date
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
 - when:

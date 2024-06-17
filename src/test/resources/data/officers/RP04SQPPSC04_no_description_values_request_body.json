@@ -4,18 +4,13 @@
     "barcode" : "S8Y5MP42",
     "category" : "persons-with-significant-control",
     "date" : "2020-02-06T09:13:02Z",
-    "action_date" : "2017-01-30T00:00:00Z",
-    "description" : "second-filing-change-details-of-a-person-with-significant-control",
+    "description" : "second-filing-change-to-a-person-with-significant-control-without-name-date",
     "links" : {
       "self" : "/company/SG000422/filing-history/MzI1NjU4OTc4N3NhbHQ"
     },
     "paper_filed" : true,
     "subcategory" : "document-replacement",
-    "type" : "RP04SQPPSC04",
-    "description_values" : {
-      "psc_name" : "John Tester",
-      "cessation_date" : "2017-01-30T00:00:00Z"
-    }
+    "type" : "RP04SQPPSC04"
   },
   "internal_data": {
     "delta_at": "20211029142043360560",
@@ -25,10 +20,6 @@
     "company_number" : "SG000422",
     "document_id" : "000S8Y5MP427643",
     "entity_id" : "3256589787",
-    "original_description" : "Second filing of SQPPSC04 for Mr John Tester",
-    "original_values" : {
-      "cessation_date" : "30/01/2017",
-      "psc_name" : "JOHN TESTER"
-    }
+    "original_description" : "Second filing of SQPPSC04 for Mr John Tester"
   }
 }

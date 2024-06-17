@@ -65,8 +65,6 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
         testConsumer.poll(KafkaUtils.kafkaPollingDuration());
     }
 
-    // FIXME: RP04SLPPSC04, RP04SLPPSC05, RP04SQPPSC04
-    //  failing due to missing psc_name in description value object on delta
     @ParameterizedTest
     @CsvSource({
             "change-of-name/CONDIR",
@@ -82,6 +80,9 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
             "officers/RP04PSC07", "officers/RP04PSC03", "officers/RP04LLPSC02", "officers/RP04LLPSC03",
             "officers/RP04PSC01", "officers/RP04PSC04", "officers/RP04PSC02", "officers/RP04LLPSC01",
             "officers/RP04PSC05", "officers/RP04LLPSC07",
+            "officers/RP04SLPPSC04", "officers/RP04SLPPSC04_no_description_values",
+            "officers/RP04SLPPSC05", "officers/RP04SLPPSC05_no_description_values",
+            "officers/RP04SQPPSC04", "officers/RP04SQPPSC04_no_description_values",
 
             "capital/SH03", "capital/SH07", "capital/SH01", "capital/SH02_rule_2", "capital/SH04_rule_4",
             "capital/SH05", "capital/EW05RSS",
@@ -133,11 +134,6 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
             "persons-with-significant-control/PSC07", "persons-with-significant-control/PSC07_no_description_values",
             "persons-with-significant-control/SLPPSC07", "persons-with-significant-control/SLPPSC07_no_description_values",
             "persons-with-significant-control/SQPPSC07", "persons-with-significant-control/SQPPSC07_no_description_values"
-
-            // New failing tests below here
-//            "officers/RP04SLPPSC04"
-//            "officers/RP04SLPPSC05"
-//            "officers/RP04SQPPSC04"
     })
     void shouldConsumeFilingHistoryDeltaTopicAndProcessDeltaFromCSV(final String prefix) throws Exception {
         final String delta = IOUtils.resourceToString("/data/%s_delta.json".formatted(prefix), StandardCharsets.UTF_8);
