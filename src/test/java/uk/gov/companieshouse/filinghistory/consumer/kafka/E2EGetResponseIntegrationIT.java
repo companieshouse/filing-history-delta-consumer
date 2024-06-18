@@ -9,6 +9,7 @@ import static uk.gov.companieshouse.filinghistory.consumer.kafka.BulkIntegration
 import static uk.gov.companieshouse.filinghistory.consumer.kafka.BulkIntegrationTestUtils.sleep;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonPointer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -73,22 +74,22 @@ class E2EGetResponseIntegrationIT {
             document = findFilingHistoryDocument(filingHistoryCollection, formType, entityId, 10_000);
             assertNotNull(document);
 
-            String singleDocumentJson = fetchSingleTransaction(transactionId, companyNumber, 1_000);
-            String documentListJson = fetchTransactionList(companyNumber, 1_000);
+            String javaGetSingleJson = fetchSingleTransaction(transactionId, companyNumber, 1_000);
+            String javaGetListJson = fetchTransactionList(companyNumber, 1_000);
 
-            JsonNode javaSingleDocument = parseAndRemoveNulls(singleDocumentJson);
-            JsonNode javaDocumentList = parseAndRemoveNulls(documentListJson);
+            JsonNode javaSingleDocument = parseAndRemoveNulls(javaGetSingleJson);
+            JsonNode javaDocumentList = parseAndRemoveNulls(javaGetListJson);
 
             maskSingleDocumentKnownBugs(perlSingleDocument, javaSingleDocument);
             maskDocumentListKnownBugs(perlDocumentList, javaDocumentList);
 
             if (!perlSingleDocument.equals(javaSingleDocument)) {
-                logger.error("Expected: {}", mapper.writeValueAsString(perlSingleDocument));
-                logger.error("  Actual: {}", mapper.writeValueAsString(javaSingleDocument));
+                logger.error("Expected: {}", perlGetSingleJson);
+                logger.error("  Actual: {}", javaGetSingleJson);
             }
             if (!perlDocumentList.equals(javaDocumentList)) {
                 logger.error("Expected list: {}", perlGetListJson);
-                logger.error("  Actual list: {}", documentListJson);
+                logger.error("  Actual list: {}", javaGetListJson);
             }
 
             assertEquals(perlSingleDocument, javaSingleDocument);
@@ -166,7 +167,8 @@ class E2EGetResponseIntegrationIT {
             removeEmptyBarcodeInResolutions(perlSingleDocument, javaSingleDocument);
             removeEmptyDescriptionValues(perlSingleDocument);
             removeEmptyDescriptionValuesMissingOrEmptyInPerl(perlSingleDocument, javaSingleDocument);
-            removeActionDates(perlSingleDocument, javaSingleDocument);
+            removeMismatchedAssociatedFilingsActionDates(perlSingleDocument, javaSingleDocument);
+            removeMismatchedAssociatedFilingsDescriptionValues(perlSingleDocument, javaSingleDocument);
         }
     }
 
@@ -175,39 +177,68 @@ class E2EGetResponseIntegrationIT {
             removeEmptyBarcodeDocumentList(perlDocumentList, javaDocumentList);
             removeEmptyItemsInDocumentList(javaDocumentList);
             removeEmptyDescriptionValuesInDocumentsList(perlDocumentList);
-            removeEmptyActionDatesDocumentList(perlDocumentList, javaDocumentList);
+            removeMismatchedAssociatedFilingsDocumentList(perlDocumentList, javaDocumentList);
             removeEmptyDescriptionValuesMissingOrEmptyInPerlList(perlDocumentList, javaDocumentList);
+            removeMismatchedAssociatedFilingsDescriptionValuesDocumentList(perlDocumentList, javaDocumentList);
         }
     }
 
-    private void removeActionDates(JsonNode perlNode, JsonNode javaNode) {
-        logger.info("Masking root action_dates");
-        if (javaNode != null) {
-            ((ObjectNode) javaNode).remove("action_date");
-        }
-        if (perlNode != null) {
-            ((ObjectNode) perlNode).remove("action_date");
+    private void removeMismatchedAssociatedFilingsActionDates(JsonNode perlNode, JsonNode javaNode) {
+        if (javaNode != null && perlNode != null) {
+            JsonNode jad = javaNode.at(toJsonPtr("associated_filings.0.action_date"));
+            JsonNode pad = perlNode.at(toJsonPtr("associated_filings.0.action_date"));
+
+            if (!jad.getNodeType().equals(pad.getNodeType())) {
+                logger.info("Masking mismatched types for 'associated_filings.0.action_date' values");
+                ((ObjectNode) javaNode.at(toJsonPtr("associated_filings.0"))).remove("action_date");
+                ((ObjectNode) perlNode.at(toJsonPtr("associated_filings.0"))).remove("action_date");
+            }
         }
     }
 
-    private void removeEmptyActionDatesDocumentList(JsonNode perlDocumentList, JsonNode javaDocumentList) {
-        removeActionDates(getFirstItem(javaDocumentList).orElse(null),
+    private void removeMismatchedAssociatedFilingsDocumentList(JsonNode perlDocumentList, JsonNode javaDocumentList) {
+        removeMismatchedAssociatedFilingsActionDates(getFirstItem(javaDocumentList).orElse(null),
+                getFirstItem(perlDocumentList).orElse(null));
+    }
+
+    private void removeMismatchedAssociatedFilingsDescriptionValues(JsonNode perlSingleDocument,
+            JsonNode javaSingleDocument) {
+        if (javaSingleDocument != null && perlSingleDocument != null) {
+            JsonNode jdv = javaSingleDocument.at(toJsonPtr("associated_filings.0.description_values"));
+            JsonNode pdv = perlSingleDocument.at(toJsonPtr("associated_filings.0.description_values"));
+
+            for (Iterator<String> it = jdv.fieldNames(); it.hasNext(); ) {
+                String fieldName = it.next();
+                JsonNode javaVal = jdv.at(toJsonPtr(fieldName));
+                JsonNode perlVal = pdv.at(toJsonPtr(fieldName));
+
+                if (!javaVal.getNodeType().equals(perlVal.getNodeType())) {
+                    logger.info("Masking mismatched types for '%s' values".formatted(fieldName));
+                    ((ObjectNode) jdv).remove(fieldName);
+                    ((ObjectNode) pdv).remove(fieldName);
+                }
+            }
+        }
+    }
+
+    private void removeMismatchedAssociatedFilingsDescriptionValuesDocumentList(JsonNode perlDocumentList,
+            JsonNode javaDocumentList) {
+        removeMismatchedAssociatedFilingsDescriptionValues(getFirstItem(javaDocumentList).orElse(null),
                 getFirstItem(perlDocumentList).orElse(null));
     }
 
     private void removeEmptyDescriptionValues(JsonNode jsonNode) {
         logger.info("Masking empty description_values");
-        if (jsonNode.has("description_values")) {
-            JsonNode descriptionValues = jsonNode.get("description_values");
-            for (Iterator<String> it = descriptionValues.fieldNames(); it.hasNext(); ) {
-                String fieldName = it.next();
-                if (descriptionValues.get(fieldName).textValue().isEmpty()) {
-                    ((ObjectNode) descriptionValues).remove(fieldName);
-                }
+        JsonNode descriptionValues = jsonNode.at(toJsonPtr("description_values"));
+        for (Iterator<String> it = descriptionValues.fieldNames(); it.hasNext(); ) {
+            String fieldName = it.next();
+            if (descriptionValues.get(fieldName).textValue().isEmpty()) {
+                ((ObjectNode) descriptionValues).remove(fieldName);
             }
-            if (jsonNode.get("description_values").isEmpty()) {
-                ((ObjectNode) jsonNode).remove("description_values");
-            }
+        }
+
+        if (descriptionValues.isEmpty()) {
+            ((ObjectNode) jsonNode).remove("description_values");
         }
     }
 
@@ -234,12 +265,9 @@ class E2EGetResponseIntegrationIT {
         }
     }
 
-
     private void removeEmptyDescriptionValuesInDocumentsList(JsonNode jsonNode) {
-        if (jsonNode.has("items")) {
-            JsonNode items = jsonNode.get("items");
-            items.forEach(this::removeEmptyDescriptionValues);
-        }
+        JsonNode items = jsonNode.at(toJsonPtr("items"));
+        items.forEach(this::removeEmptyDescriptionValues);
     }
 
     private void removeEmptyBarcodeInResolutions(JsonNode perlDocument, JsonNode javaDocument) {
@@ -272,17 +300,12 @@ class E2EGetResponseIntegrationIT {
     }
 
     private Optional<JsonNode> getFirstItem(JsonNode documentList) {
-        if (documentList.has("items")) {
-            JsonNode items = documentList.get("items");
-            if (!items.isEmpty()) {
-                return Optional.ofNullable(items.get(0));
-            }
-        }
-        return Optional.empty();
+        JsonNode items = documentList.at(toJsonPtr("items"));
+        return items.isEmpty() ? Optional.empty() : Optional.of(items.get(0));
     }
 
     private void removeEmptyItemsInDocumentList(JsonNode jsonNode) {
-        if (jsonNode.has("items") && jsonNode.get("items").isEmpty()) {
+        if (jsonNode.at(toJsonPtr("items")).isEmpty()) {
             ((ObjectNode) jsonNode).remove("items");
         }
     }
@@ -292,5 +315,9 @@ class E2EGetResponseIntegrationIT {
                 mapper.writeValueAsString(
                         mapper.readValue(json, new TypeReference<LinkedHashMap<String, ?>>() {
                         })));
+    }
+
+    public static JsonPointer toJsonPtr(String path) {
+        return JsonPointer.compile("/%s".formatted(path.replace(".", "/")));
     }
 }
