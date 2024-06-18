@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "9",
+      "receive_date": "19930715115929",
+      "form_type": "BR3",
+      "description": "CHANGE OF NAME 23/04/93  BANK ME",
+      "barcode": "",
+      "document_id": "",
+      "company_number": "FC010396",
+      "entity_id": "114652499",
+      "parent_entity_id": "110357693",
+      "parent_form_type": "BR4",
+      "pre_scanned_batch": "1"
+    }
+  ],
+  "delta_at": "20240409143956000000"
+}

@@ -1,0 +1,32 @@
+{
+  "external_data": {
+    "transaction_id": "MzA1OTgyMzA5MnNhbHQ",
+    "barcode": "A1BQ08P7",
+    "category" : "change-of-name",
+    "date" : "2012-06-26T16:34:26Z",
+    "description" : "change-of-name-exemption",
+    "type" : "NE01",
+    "associated_filings" : [
+      {
+        "category" : "change-of-name",
+        "date" : "2012-06-26T16:34:26Z",
+        "description" : "change-of-name-exemption",
+        "type" : "NE01",
+        "original_description": "Exemption from requirement as to use of \"LIMITED\" or \"CYFYNGEDIG\" on Change of Name"
+      }
+    ],
+    "links" : {
+      "self" : "/company/06305498/filing-history/MzA1OTgyMzA5MnNhbHQ"
+    },
+    "paper_filed" : true
+  },
+  "internal_data": {
+    "original_description": "Exemption from requirement as to use of \"LIMITED\" or \"CYFYNGEDIG\" on Change of Name",
+    "company_number": "06305498",
+    "entity_id": "3059823052",
+    "updated_by": "context_id",
+    "transaction_kind": "associated-filing",
+    "parent_entity_id": "3059823092",
+    "delta_at": "20240409143956000000"
+  }
+}

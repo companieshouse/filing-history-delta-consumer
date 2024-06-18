@@ -1,0 +1,37 @@
+{
+  "external_data": {
+    "transaction_id": "MjAzNDM5ODM2MnNhbHQ",
+    "barcode": "ACZOLAFJ",
+    "date": "2009-06-04T14:29:00Z",
+    "type": "43(3)",
+    "category": "reregistration",
+    "description": "legacy",
+    "description_values": {
+      "description": "Application rereg as PLC"
+    },
+    "associated_filings" : [
+      {
+        "category" : "reregistration",
+        "date" : "2009-06-04T14:29:00Z",
+        "description" : "legacy",
+        "description_values" : {
+          "description" : "Application rereg as PLC"
+        },
+        "type" : "43(3)"
+      }
+    ],
+    "links" : {
+      "self" : "/company/06907325/filing-history/MjAzNDM5ODM2MnNhbHQ"
+    },
+    "paper_filed" : true
+  },
+  "internal_data": {
+    "company_number": "06907325",
+    "entity_id": "2034399354",
+    "document_id": "000ACZOLAFJ3774",
+    "updated_by": "context_id",
+    "transaction_kind": "associated-filing",
+    "parent_entity_id": "2034398362",
+    "delta_at": "20240409143956000000"
+  }
+}

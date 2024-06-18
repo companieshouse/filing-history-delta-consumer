@@ -1,0 +1,32 @@
+{
+  "external_data": {
+    "transaction_id": "MzA1MzYxNDAxMHNhbHQ",
+    "barcode": "S13OUN2O",
+    "category" : "change-of-name",
+    "date" : "2012-03-06T08:30:47Z",
+    "description" : "change-of-name-community-interest-company",
+    "type" : "CICCON",
+    "associated_filings" : [
+      {
+        "category" : "change-of-name",
+        "date" : "2012-03-06T08:30:47Z",
+        "description" : "change-of-name-community-interest-company",
+        "type" : "CICCON",
+        "original_description": "Notice of Change of Name NM01 - Resolution"
+      }
+    ],
+    "links" : {
+      "self" : "/company/SC403964/filing-history/MzA1MzYxNDAxMHNhbHQ"
+    },
+    "paper_filed" : true
+  },
+  "internal_data": {
+    "original_description": "Notice of Change of Name NM01 - Resolution",
+    "company_number": "SC403964",
+    "entity_id": "3053613930",
+    "updated_by": "context_id",
+    "transaction_kind": "associated-filing",
+    "parent_entity_id": "3053614010",
+    "delta_at": "20240409143956000000"
+  }
+}

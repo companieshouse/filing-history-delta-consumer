@@ -1,0 +1,33 @@
+{
+  "external_data": {
+    "transaction_id": "MzQyNDgxNzg3M3NhbHQ",
+    "date": "2024-06-11T15:15:56Z",
+    "type": "CERT12A",
+    "category": "incorporation",
+    "description": "certificate-of-registration-and-designation-as-a-private-fund-limited-partnership",
+    "subcategory": "certificate",
+    "associated_filings": [
+      {
+        "category": "incorporation",
+        "date": "2024-06-11T15:15:56Z",
+        "description": "certificate-of-registration-and-designation-as-a-private-fund-limited-partnership",
+        "subcategory": "certificate",
+        "type": "CERT12A",
+        "original_description": "CERT12A"
+      }
+    ],
+    "links": {
+      "self": "/company/SL036921/filing-history/MzQyNDgxNzg3M3NhbHQ"
+    },
+    "paper_filed": true
+  },
+  "internal_data": {
+    "original_description": "CERT12A",
+    "company_number": "SL036921",
+    "entity_id": "3424892066",
+    "updated_by": "context_id",
+    "transaction_kind": "associated-filing",
+    "parent_entity_id": "3424817873",
+    "delta_at": "20240409143956000000"
+  }
+}

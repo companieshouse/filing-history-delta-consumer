@@ -1,0 +1,32 @@
+{
+  "external_data": {
+    "transaction_id": "MzAzMTY3NTgyNHNhbHQ",
+    "barcode": "SX8R5RDX",
+    "category" : "change-of-name",
+    "date" : "2011-02-04T13:40:42Z",
+    "description" : "change-of-name-notice",
+    "type" : "CONNOT",
+    "associated_filings" : [
+      {
+        "category" : "change-of-name",
+        "date" : "2011-02-04T13:40:42Z",
+        "description" : "change-of-name-notice",
+        "type" : "CONNOT",
+        "original_description": "Notice of Change of Name NM01 - Resolution"
+      }
+    ],
+    "links" : {
+      "self" : "/company/SC297303/filing-history/MzAzMTY3NTgyNHNhbHQ"
+    },
+    "paper_filed" : true
+  },
+  "internal_data": {
+    "original_description": "Notice of Change of Name NM01 - Resolution",
+    "company_number": "SC297303",
+    "entity_id": "3031675809",
+    "updated_by": "context_id",
+    "transaction_kind": "associated-filing",
+    "parent_entity_id": "3031675824",
+    "delta_at": "20240409143956000000"
+  }
+}

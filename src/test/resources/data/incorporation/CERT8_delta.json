@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "9",
+      "receive_date": "20080527125651",
+      "form_type": "CERT8",
+      "description": "AUTHORISATION TO COMMENCE BUSINESS AND BORROW",
+      "barcode": "A8YXAZXJ",
+      "document_id": "",
+      "company_number": "06474941",
+      "entity_id": "2006082517",
+      "parent_entity_id": "2006082501",
+      "parent_form_type": "117",
+      "pre_scanned_batch": "1"
+    }
+  ],
+  "delta_at": "20240409143956000000"
+}

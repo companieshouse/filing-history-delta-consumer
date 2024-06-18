@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "9",
+      "receive_date": "20090902155241",
+      "form_type": "139",
+      "description": "APPLICATION FOR REREG. AS PRIVATE: COURT ORDER",
+      "barcode": "CXQRC002",
+      "document_id": "000CXQRC0023837",
+      "company_number": "02391409",
+      "entity_id": "2040525187",
+      "parent_entity_id": "2040524964",
+      "parent_form_type": "OC138",
+      "pre_scanned_batch": "1"
+    }
+  ],
+  "delta_at": "20240409143956000000"
+}

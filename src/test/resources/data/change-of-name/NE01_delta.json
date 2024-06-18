@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "9",
+      "receive_date": "20120626163426",
+      "form_type": "NE01",
+      "description": "Exemption from requirement as to use of \"limited\" or \"cyfyngedig\" on Change of Name",
+      "barcode": "A1BQ08P7",
+      "document_id": "",
+      "company_number": "06305498",
+      "entity_id": "3059823052",
+      "parent_entity_id": "3059823092",
+      "parent_form_type": "CERTNM",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20240409143956000000"
+}

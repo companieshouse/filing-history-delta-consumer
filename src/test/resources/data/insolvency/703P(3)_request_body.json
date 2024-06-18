@@ -1,0 +1,37 @@
+{
+  "external_data": {
+    "transaction_id": "MjA0MTA3MzA0N3NhbHQ",
+    "barcode": "A4I9VD0D",
+    "date": "2009-09-10T11:42:17Z",
+    "type": "703P(3)",
+    "category": "insolvency",
+    "description": "legacy",
+    "description_values": {
+      "description": "Appointment of liquidator of overseas company"
+    },
+    "associated_filings" : [
+      {
+        "category" : "insolvency",
+        "date" : "2009-09-10T11:42:17Z",
+        "description" : "legacy",
+        "description_values" : {
+          "description" : "Appointment of liquidator of overseas company"
+        },
+        "type" : "703P(3)"
+      }
+    ],
+    "links" : {
+      "self" : "/company/FC027329/filing-history/MjA0MTA3MzA0N3NhbHQ"
+    },
+    "paper_filed" : true
+  },
+  "internal_data": {
+    "company_number": "FC027329",
+    "entity_id": "2041074305",
+    "document_id": "000A4I9VD0D4005",
+    "updated_by": "context_id",
+    "transaction_kind": "associated-filing",
+    "parent_entity_id": "2041073047",
+    "delta_at": "20240409143956000000"
+  }
+}

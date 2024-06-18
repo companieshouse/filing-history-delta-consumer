@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "9",
+      "receive_date": "19931123115941",
+      "form_type": "BR6",
+      "description": "BR6",
+      "barcode": "",
+      "document_id": "",
+      "company_number": "FC017541",
+      "entity_id": "80469793",
+      "parent_entity_id": "60179750",
+      "parent_form_type": "BR4",
+      "pre_scanned_batch": "1"
+    }
+  ],
+  "delta_at": "20240409143956000000"
+}

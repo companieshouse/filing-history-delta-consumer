@@ -1,0 +1,35 @@
+{
+  "external_data": {
+    "transaction_id": "MTIzMzQzMzg4c2FsdA",
+    "date": "1993-08-02T11:59:46Z",
+    "type": "BR5",
+    "category": "annual-return",
+    "description": "legacy",
+    "description_values": {
+      "description": "BR000828 address change 27/05/93 404-406 finchley road london NW2 2HR"
+    },
+    "associated_filings" : [
+      {
+        "category" : "annual-return",
+        "date" : "1993-08-02T11:59:46Z",
+        "description" : "legacy",
+        "description_values" : {
+          "description" : "BR000828 address change 27/05/93 404-406 finchley road london NW2 2HR"
+        },
+        "type" : "BR5"
+      }
+    ],
+    "links" : {
+      "self" : "/company/FC017342/filing-history/MTIzMzQzMzg4c2FsdA"
+    },
+    "paper_filed" : true
+  },
+  "internal_data": {
+    "company_number": "FC017342",
+    "entity_id": "73903479",
+    "updated_by": "context_id",
+    "transaction_kind": "associated-filing",
+    "parent_entity_id": "123343388",
+    "delta_at": "20240409143956000000"
+  }
+}

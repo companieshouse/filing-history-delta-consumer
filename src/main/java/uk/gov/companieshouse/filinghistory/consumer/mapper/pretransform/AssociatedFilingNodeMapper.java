@@ -20,7 +20,10 @@ public class AssociatedFilingNodeMapper extends AbstractNodeMapper implements Ch
                 .put("type", filingHistory.getFormType())
                 .put("date", formatDate.format(filingHistory.getReceiveDate()))
                 .put("description",
-                        StringUtils.isNotBlank(filingHistory.getDescription()) ? filingHistory.getDescription() : "");
+                        StringUtils.isNotBlank(filingHistory.getDescription()) ?
+                                filingHistory.getDescription()
+                                        .replace("<", "\\")
+                                        .replace("\n", "\\") : "");
 
         ObjectNode dataNode = (ObjectNode) parentNode.get("data");
         dataNode.putArray("associated_filings").add(childNode);

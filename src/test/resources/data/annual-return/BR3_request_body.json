@@ -1,0 +1,35 @@
+{
+  "external_data": {
+    "transaction_id": "MTEwMzU3Njkzc2FsdA",
+    "date": "1993-07-15T11:59:29Z",
+    "type": "BR3",
+    "category": "annual-return",
+    "description": "legacy",
+    "description_values": {
+      "description": "Change of name 23/04/93 bank me"
+    },
+    "associated_filings" : [
+      {
+        "category" : "annual-return",
+        "date" : "1993-07-15T11:59:29Z",
+        "description" : "legacy",
+        "description_values" : {
+          "description" : "Change of name 23/04/93 bank me"
+        },
+        "type" : "BR3"
+      }
+    ],
+    "links" : {
+      "self" : "/company/FC010396/filing-history/MTEwMzU3Njkzc2FsdA"
+    },
+    "paper_filed" : true
+  },
+  "internal_data": {
+    "company_number": "FC010396",
+    "entity_id": "114652499",
+    "updated_by": "context_id",
+    "transaction_kind": "associated-filing",
+    "parent_entity_id": "110357693",
+    "delta_at": "20240409143956000000"
+  }
+}

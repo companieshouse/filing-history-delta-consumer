@@ -1,0 +1,33 @@
+{
+  "external_data": {
+    "transaction_id": "MzA1NzEyMzQwMnNhbHQ",
+    "date": "2012-05-08T14:47:24Z",
+    "type": "CERT12",
+    "category": "incorporation",
+    "description": "certificate-registration-limited-partnership",
+    "subcategory": "certificate",
+    "associated_filings": [
+      {
+        "category": "incorporation",
+        "date": "2012-05-08T14:47:24Z",
+        "description": "certificate-registration-limited-partnership",
+        "subcategory": "certificate",
+        "type": "CERT12",
+        "original_description": "LIMITED PARTNERSHIP"
+      }
+    ],
+    "links": {
+      "self": "/company/LP014997/filing-history/MzA1NzEyMzQwMnNhbHQ"
+    },
+    "paper_filed": true
+  },
+  "internal_data": {
+    "original_description": "LIMITED PARTNERSHIP",
+    "company_number": "LP014997",
+    "entity_id": "3057123839",
+    "updated_by": "context_id",
+    "transaction_kind": "associated-filing",
+    "parent_entity_id": "3057123402",
+    "delta_at": "20240409143956000000"
+  }
+}

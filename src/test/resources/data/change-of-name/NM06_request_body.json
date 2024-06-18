@@ -1,0 +1,32 @@
+{
+  "external_data": {
+    "transaction_id": "MzA3NjcyODQ0NHNhbHQ",
+    "barcode": "A26O98GA",
+    "category" : "change-of-name",
+    "date" : "2013-04-23T08:45:11Z",
+    "description" : "change-of-name-request-comments",
+    "type" : "NM06",
+    "associated_filings" : [
+      {
+        "category" : "change-of-name",
+        "date" : "2013-04-23T08:45:11Z",
+        "description" : "change-of-name-request-comments",
+        "type" : "NM06",
+        "original_description": "Request to seek comments of government department or other specified body on change of name"
+      }
+    ],
+    "links" : {
+      "self" : "/company/06800945/filing-history/MzA3NjcyODQ0NHNhbHQ"
+    },
+    "paper_filed" : true
+  },
+  "internal_data": {
+    "original_description": "Request to seek comments of government department or other specified body on change of name",
+    "company_number": "06800945",
+    "entity_id": "3076728241",
+    "updated_by": "context_id",
+    "transaction_kind": "associated-filing",
+    "parent_entity_id": "3076728444",
+    "delta_at": "20240409143956000000"
+  }
+}

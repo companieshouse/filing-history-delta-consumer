@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "9",
+      "receive_date": "20090604142900",
+      "form_type": "43(3)",
+      "description": "APPLICATION REREG AS PLC",
+      "barcode": "ACZOLAFJ",
+      "document_id": "000ACZOLAFJ3774",
+      "company_number": "06907325",
+      "entity_id": "2034399354",
+      "parent_entity_id": "2034398362",
+      "parent_form_type": "43(3)e",
+      "pre_scanned_batch": "1"
+    }
+  ],
+  "delta_at": "20240409143956000000"
+}

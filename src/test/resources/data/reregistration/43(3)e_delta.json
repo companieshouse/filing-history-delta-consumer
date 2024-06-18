@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "9",
+      "receive_date": "20090930141425",
+      "form_type": "43(3)e",
+      "description": "DECLARATION REREG AS PLC",
+      "barcode": "ASYZBDPC",
+      "document_id": "000ASYZBDPC4019",
+      "company_number": "06716286",
+      "entity_id": "2042517268",
+      "parent_entity_id": "2042516160",
+      "parent_form_type": "43(3)",
+      "pre_scanned_batch": "1"
+    }
+  ],
+  "delta_at": "20240409143956000000"
+}

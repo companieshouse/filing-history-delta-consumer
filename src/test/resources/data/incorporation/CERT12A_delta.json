@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "6",
+      "receive_date": "20240611151556",
+      "form_type": "CERT12A",
+      "description": "CERT12A",
+      "barcode": "",
+      "document_id": "",
+      "company_number": "SL036921",
+      "entity_id": "3424892066",
+      "parent_entity_id": "3424817873",
+      "parent_form_type": "LP7(S)",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20240409143956000000"
+}

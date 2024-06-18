@@ -1,0 +1,35 @@
+{
+  "external_data": {
+    "transaction_id": "NjAxNzk3NTBzYWx0",
+    "date": "1993-11-23T11:59:41Z",
+    "type": "BR6",
+    "category": "officers",
+    "description": "legacy",
+    "description_values": {
+      "description": "BR6"
+    },
+    "associated_filings" : [
+      {
+        "category" : "officers",
+        "date" : "1993-11-23T11:59:41Z",
+        "description" : "legacy",
+        "description_values" : {
+          "description" : "BR6"
+        },
+        "type" : "BR6"
+      }
+    ],
+    "links" : {
+      "self" : "/company/FC017541/filing-history/NjAxNzk3NTBzYWx0"
+    },
+    "paper_filed" : true
+  },
+  "internal_data": {
+    "company_number": "FC017541",
+    "entity_id": "80469793",
+    "updated_by": "context_id",
+    "transaction_kind": "associated-filing",
+    "parent_entity_id": "60179750",
+    "delta_at": "20240409143956000000"
+  }
+}
