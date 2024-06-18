@@ -17585,14 +17585,11 @@
       data.type: RP04SLPPSC04
     like:
       original_values.psc_name: '^(?i:)(?<pscName>.*)$'
-      original_values.cessation_date: '^(?<cessationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-change-details-of-a-person-with-significant-control
       data.description_values.psc_name: '[% pscName | title_case %]'
-      data.description_values.cessation_date: '[% cessationDate | bson_date %]'
-      data.action_date: '[% cessationDate | bson_date %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -17609,14 +17606,11 @@
       data.type: RP04SQPPSC04
     like:
       original_values.psc_name: '^(?i:)(?<pscName>.*)$'
-      original_values.cessation_date: '^(?<cessationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-change-details-of-a-person-with-significant-control
       data.description_values.psc_name: '[% pscName | title_case %]'
-      data.description_values.cessation_date: '[% cessationDate | bson_date %]'
-      data.action_date: '[% cessationDate | bson_date %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -17654,14 +17648,11 @@
       data.type: RP04SLPPSC05
     like:
       original_values.psc_name: '^(?i:)(?<pscName>.*)$'
-      original_values.cessation_date: '^(?<cessationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-change-details-of-a-person-with-significant-control
       data.description_values.psc_name: '[% pscName | title_case %]'
-      data.description_values.cessation_date: '[% cessationDate | bson_date %]'
-      data.action_date: '[% cessationDate | bson_date %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
 - when:

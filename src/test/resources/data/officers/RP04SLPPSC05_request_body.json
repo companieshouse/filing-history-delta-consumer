@@ -4,7 +4,6 @@
     "barcode" : "S8HPFT0P",
     "category" : "persons-with-significant-control",
     "date" : "2019-11-08T08:42:20Z",
-    "action_date" : "2017-01-30T00:00:00Z",
     "description" : "second-filing-change-details-of-a-person-with-significant-control",
     "links" : {
       "self" : "/company/SL032321/filing-history/MzI0ODg1MzI3N3NhbHQ"
@@ -13,8 +12,7 @@
     "subcategory" : "document-replacement",
     "type" : "RP04SLPPSC05",
     "description_values" : {
-      "psc_name" : "John Tester",
-      "cessation_date" : "2017-01-30T00:00:00Z"
+      "psc_name" : "John Tester"
     }
   },
   "internal_data": {
@@ -27,7 +25,6 @@
     "entity_id" : "3248853277",
     "original_description" : "Second filing of SLPPSC05 for John Tester LIMITED",
     "original_values" : {
-      "cessation_date" : "30/01/2017",
       "psc_name" : "JOHN TESTER"
     }
   }
