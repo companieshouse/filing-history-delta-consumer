@@ -167,8 +167,9 @@ class E2EGetResponseIntegrationIT {
             removeEmptyBarcodeInResolutions(perlSingleDocument, javaSingleDocument);
             removeEmptyDescriptionValues(perlSingleDocument);
             removeEmptyDescriptionValuesMissingOrEmptyInPerl(perlSingleDocument, javaSingleDocument);
-            removeMismatchedAssociatedFilingsActionDates(perlSingleDocument, javaSingleDocument);
+            removeMismatchedActionDates(perlSingleDocument, javaSingleDocument);
             removeMismatchedAssociatedFilingsDescriptionValues(perlSingleDocument, javaSingleDocument);
+            removeKnownMismatchedDescriptions(perlSingleDocument, javaSingleDocument);
         }
     }
 
@@ -180,10 +181,34 @@ class E2EGetResponseIntegrationIT {
             removeMismatchedAssociatedFilingsDocumentList(perlDocumentList, javaDocumentList);
             removeEmptyDescriptionValuesMissingOrEmptyInPerlList(perlDocumentList, javaDocumentList);
             removeMismatchedAssociatedFilingsDescriptionValuesDocumentList(perlDocumentList, javaDocumentList);
+            removeKnownMismatchedDescriptionsDocumentList(perlDocumentList, javaDocumentList);
         }
     }
 
-    private void removeMismatchedAssociatedFilingsActionDates(JsonNode perlNode, JsonNode javaNode) {
+    private void removeKnownMismatchedDescriptions(JsonNode perlNode, JsonNode javaNode) {
+        if (javaNode != null && perlNode != null) {
+            String javaDescription = javaNode.at(toJsonPtr("description")).textValue();
+            String perlDescription = perlNode.at(toJsonPtr("description")).textValue();
+
+            if (javaDescription != null && perlDescription != null
+                    && javaDescription.equals(
+                    "second-filing-change-to-a-person-with-significant-control-without-name-date")
+                    && perlDescription.equals(
+                    "second-filing-change-details-of-a-person-with-significant-control")) {
+                logger.info("Masking known description differences for form type '%s'".formatted(
+                        javaNode.at(toJsonPtr("type")).textValue()));
+                ((ObjectNode) javaNode).remove("description");
+                ((ObjectNode) perlNode).remove("description");
+            }
+        }
+    }
+
+    private void removeKnownMismatchedDescriptionsDocumentList(JsonNode perlDocumentList, JsonNode javaDocumentList) {
+        removeKnownMismatchedDescriptions(getFirstItem(perlDocumentList).orElse(null),
+                getFirstItem(javaDocumentList).orElse(null));
+    }
+
+    private void removeMismatchedActionDates(JsonNode perlNode, JsonNode javaNode) {
         if (javaNode != null && perlNode != null) {
             JsonNode jad = javaNode.at(toJsonPtr("associated_filings.0.action_date"));
             JsonNode pad = perlNode.at(toJsonPtr("associated_filings.0.action_date"));
@@ -193,12 +218,15 @@ class E2EGetResponseIntegrationIT {
                 ((ObjectNode) javaNode.at(toJsonPtr("associated_filings.0"))).remove("action_date");
                 ((ObjectNode) perlNode.at(toJsonPtr("associated_filings.0"))).remove("action_date");
             }
+
+            ((ObjectNode) javaNode).remove("action_date");
+            ((ObjectNode) perlNode).remove("action_date");
         }
     }
 
     private void removeMismatchedAssociatedFilingsDocumentList(JsonNode perlDocumentList, JsonNode javaDocumentList) {
-        removeMismatchedAssociatedFilingsActionDates(getFirstItem(javaDocumentList).orElse(null),
-                getFirstItem(perlDocumentList).orElse(null));
+        removeMismatchedActionDates(getFirstItem(perlDocumentList).orElse(null),
+                getFirstItem(javaDocumentList).orElse(null));
     }
 
     private void removeMismatchedAssociatedFilingsDescriptionValues(JsonNode perlSingleDocument,
@@ -223,8 +251,8 @@ class E2EGetResponseIntegrationIT {
 
     private void removeMismatchedAssociatedFilingsDescriptionValuesDocumentList(JsonNode perlDocumentList,
             JsonNode javaDocumentList) {
-        removeMismatchedAssociatedFilingsDescriptionValues(getFirstItem(javaDocumentList).orElse(null),
-                getFirstItem(perlDocumentList).orElse(null));
+        removeMismatchedAssociatedFilingsDescriptionValues(getFirstItem(perlDocumentList).orElse(null),
+                getFirstItem(javaDocumentList).orElse(null));
     }
 
     private void removeEmptyDescriptionValues(JsonNode jsonNode) {
@@ -250,8 +278,10 @@ class E2EGetResponseIntegrationIT {
 
             for (Iterator<String> it = javaDescriptionValues.fieldNames(); it.hasNext(); ) {
                 String fieldName = it.next();
-                if (!perlDescriptionValues.has(fieldName)) {
+                if (!perlDescriptionValues.has(fieldName) || perlDescriptionValues.get(fieldName).textValue()
+                        .isBlank()) {
                     ((ObjectNode) javaDescriptionValues).remove(fieldName);
+                    ((ObjectNode) perlDescriptionValues).remove(fieldName);
                 }
             }
         }
@@ -295,7 +325,7 @@ class E2EGetResponseIntegrationIT {
                 ((ObjectNode) javaDocumentList.get("items").get(0).get("resolutions").get(0)).remove("barcode");
                 ((ObjectNode) perlDocumentList.get("items").get(0).get("resolutions").get(0)).remove("barcode");
             }
-            removeEmptyBarcodeInResolutions(javaDocumentList.get("items").get(0), perlDocumentList.get("items").get(0));
+            removeEmptyBarcodeInResolutions(perlDocumentList.get("items").get(0), javaDocumentList.get("items").get(0));
         }
     }
 

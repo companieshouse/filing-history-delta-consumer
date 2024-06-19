@@ -45,7 +45,7 @@ public class BulkIntegrationTestUtils {
             FROM
                 capdevjco2.fh_staging_deltas
             WHERE
-                    entity_id NOT IN (3168588719, 3183361204) -- Broken in Java and Perl consumers
+                entity_id NOT IN (3168588719, 3183361204) -- Broken in Java and Perl consumers
             """;
 
     private static final String FIND_ALL_PERL_DOCS = """
