@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "9",
+      "receive_date": "20130423084511",
+      "form_type": "NM06",
+      "description": "Request to seek comments of government department or other specified body on change of name",
+      "barcode": "A26O98GA",
+      "document_id": "",
+      "company_number": "06800945",
+      "entity_id": "3076728241",
+      "parent_entity_id": "3076728444",
+      "parent_form_type": "CERTNM",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20240409143956000000"
+}

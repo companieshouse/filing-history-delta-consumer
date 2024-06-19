@@ -1,0 +1,34 @@
+{
+  "external_data": {
+    "transaction_id": "MjAwNjA4MjUwMXNhbHQ",
+    "barcode": "A8YXAZXJ",
+    "date": "2008-05-27T12:56:51Z",
+    "type": "CERT8",
+    "category": "incorporation",
+    "description": "certificate-authorisation-to-commence-business-borrow",
+    "subcategory": "certificate",
+    "associated_filings": [
+      {
+        "category": "incorporation",
+        "date": "2008-05-27T12:56:51Z",
+        "description": "certificate-authorisation-to-commence-business-borrow",
+        "subcategory": "certificate",
+        "type": "CERT8",
+        "original_description": "Authorisation to commence business and borrow"
+      }
+    ],
+    "links": {
+      "self": "/company/06474941/filing-history/MjAwNjA4MjUwMXNhbHQ"
+    },
+    "paper_filed": true
+  },
+  "internal_data": {
+    "original_description": "Authorisation to commence business and borrow",
+    "company_number": "06474941",
+    "entity_id": "2006082517",
+    "updated_by": "context_id",
+    "transaction_kind": "associated-filing",
+    "parent_entity_id": "2006082501",
+    "delta_at": "20240409143956000000"
+  }
+}

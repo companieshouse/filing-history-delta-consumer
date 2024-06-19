@@ -1,0 +1,32 @@
+{
+  "external_data": {
+    "transaction_id": "MzA5ODk1OTAwOHNhbHQ",
+    "barcode": "A365YO2G",
+    "category" : "incorporation",
+    "date" : "2014-04-28T15:59:16Z",
+    "description" : "incorporation-community-interest-company",
+    "type" : "CICINC",
+    "associated_filings" : [
+      {
+        "category" : "incorporation",
+        "date" : "2014-04-28T15:59:16Z",
+        "description" : "incorporation-community-interest-company",
+        "type" : "CICINC",
+        "original_description": "Bespoke Articles"
+      }
+    ],
+    "links" : {
+      "self" : "/company/09015264/filing-history/MzA5ODk1OTAwOHNhbHQ"
+    },
+    "paper_filed" : true
+  },
+  "internal_data": {
+    "original_description": "Bespoke Articles",
+    "company_number": "09015264",
+    "entity_id": "3098962063",
+    "updated_by": "context_id",
+    "transaction_kind": "associated-filing",
+    "parent_entity_id": "3098959008",
+    "delta_at": "20240409143956000000"
+  }
+}

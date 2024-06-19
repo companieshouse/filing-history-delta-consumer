@@ -5626,6 +5626,15 @@
       original_description: '[% data.description | sentence_case %]'
 - when:
     eq:
+      type: CERT13
+  then:
+    set:
+      category: change-of-name
+      description: certificate-change-of-name-limited-partnership
+      subcategory: certificate
+      original_description: '[% description | sentence_case %]'
+- when:
+    eq:
       data.type: CERT14
   then:
     set:
@@ -5823,6 +5832,15 @@
       original_description: '[% data.description | sentence_case %]'
 - when:
     eq:
+      type: CERT8
+  then:
+    set:
+      category: incorporation
+      description: certificate-authorisation-to-commence-business-borrow
+      subcategory: certificate
+      original_description: '[% description | sentence_case %]'
+- when:
+    eq:
       data.type: CERT9
   then:
     set:
@@ -5867,6 +5885,15 @@
       original_description: '[% data.description | sentence_case %]'
 - when:
     eq:
+      type: CERT12
+  then:
+    set:
+      category: incorporation
+      description: certificate-registration-limited-partnership
+      subcategory: certificate
+      original_description: '[% description | sentence_case %]'
+- when:
+    eq:
       data.type: CERTIPS
   then:
     set:
@@ -5884,6 +5911,16 @@
       data.description_values.description: '[% data.description | sentence_case %]'
       data.subcategory: certificate
       original_description: '[% data.description | sentence_case %]'
+- when:
+    eq:
+      type: CERTNM
+  then:
+    set:
+      category: change-of-name
+      description: certificate-change-of-name-company
+      description_values.description: '[% description | sentence_case %]'
+      subcategory: certificate
+      original_description: '[% description | sentence_case %]'
 - when:
     eq:
       data.type: DISS40
@@ -8666,6 +8703,14 @@
       original_description: '[% data.description | sentence_case %]'
 - when:
     eq:
+      type: NE01
+  then:
+    set:
+      category: change-of-name
+      description: change-of-name-exemption
+      original_description: '[% description | sentence_case %]'
+- when:
+    eq:
       type: NM01
   then:
     set:
@@ -8742,12 +8787,28 @@
       original_description: '[% data.description | sentence_case %]'
 - when:
     eq:
+      type: NM06
+  then:
+    set:
+      category: change-of-name
+      description: change-of-name-request-comments
+      original_description: '[% description | sentence_case %]'
+- when:
+    eq:
       data.type: CONNOT
   then:
     set:
       data.category: change-of-name
       data.description: change-of-name-notice
       original_description: '[% data.description | sentence_case %]'
+- when:
+    eq:
+      type: CONNOT
+  then:
+    set:
+      category: change-of-name
+      description: change-of-name-notice
+      original_description: '[% description | sentence_case %]'
 - when:
     eq:
       data.type: OSNM01
@@ -8801,6 +8862,14 @@
       data.category: change-of-name
       data.description: change-of-name-community-interest-company
       original_description: '[% data.description | sentence_case %]'
+- when:
+    eq:
+      type: CICCON
+  then:
+    set:
+      category: change-of-name
+      description: change-of-name-community-interest-company
+      original_description: '[% description | sentence_case %]'
 - when:
     eq:
       type: ANNOTATION
@@ -9082,6 +9151,14 @@
       data.category: incorporation
       data.description: incorporation-community-interest-company
       original_description: '[% data.description | sentence_case %]'
+- when:
+    eq:
+      type: CICINC
+  then:
+    set:
+      category: incorporation
+      description: incorporation-community-interest-company
+      original_description: '[% description | sentence_case %]'
 - when:
     eq:
       data.type: HC01
@@ -11279,6 +11356,14 @@
       data.category: reregistration
       data.description: legacy
       data.description_values.description: '[% data.description | sentence_case %]'
+- when:
+    eq:
+      type: 691-REREG
+  then:
+    set:
+      category: reregistration
+      description: legacy
+      description_values.description: '[% description | sentence_case %]'
 - when:
     eq:
       data.type: 692(1)(c)
@@ -15572,6 +15657,14 @@
       data.description_values.description: '[% data.description | sentence_case %]'
 - when:
     eq:
+      type: 703P(3)
+  then:
+    set:
+      category: insolvency
+      description: legacy
+      description_values.description: '[% description | sentence_case %]'
+- when:
+    eq:
       data.type: 703Q(1)
   then:
     set:
@@ -15586,6 +15679,14 @@
       data.category: insolvency
       data.description: legacy
       data.description_values.description: '[% data.description | sentence_case %]'
+- when:
+    eq:
+      type: 703Q(2)
+  then:
+    set:
+      category: insolvency
+      description: legacy
+      description_values.description: '[% description | sentence_case %]'
 - when:
     eq:
       data.type: 701a
@@ -15636,6 +15737,14 @@
       data.description_values.description: '[% data.description | sentence_case %]'
 - when:
     eq:
+      type: BR3
+  then:
+    set:
+      category: annual-return
+      description: legacy
+      description_values.description: '[% description | sentence_case %]'
+- when:
+    eq:
       data.type: BR4
   then:
     set:
@@ -15652,12 +15761,28 @@
       data.description_values.description: '[% data.description | sentence_case %]'
 - when:
     eq:
+      type: BR5
+  then:
+    set:
+      category: annual-return
+      description: legacy
+      description_values.description: '[% description | sentence_case %]'
+- when:
+    eq:
       data.type: BR6
   then:
     set:
       data.category: officers
       data.description: legacy
       data.description_values.description: '[% data.description | sentence_case %]'
+- when:
+    eq:
+      type: BR6
+  then:
+    set:
+      category: officers
+      description: legacy
+      description_values.description: '[% description | sentence_case %]'
 - when:
     eq:
       data.type: BR7
@@ -15748,6 +15873,14 @@
       data.description_values.description: '[% data.description | sentence_case %]'
 - when:
     eq:
+      type: 122
+  then:
+    set:
+      category: capital
+      description: legacy
+      description_values.description: '[% description | sentence_case %]'
+- when:
+    eq:
       data.type: 123
   then:
     set:
@@ -15810,6 +15943,14 @@
       data.category: reregistration
       data.description: legacy
       data.description_values.description: '[% data.description | sentence_case %]'
+- when:
+    eq:
+      type: 139
+  then:
+    set:
+      category: reregistration
+      description: legacy
+      description_values.description: '[% description | sentence_case %]'
 - when:
     eq:
       data.type: 147
@@ -16196,12 +16337,28 @@
       data.description_values.description: '[% data.description | sentence_case %]'
 - when:
     eq:
+      type: 43(3)
+  then:
+    set:
+      category: reregistration
+      description: legacy
+      description_values.description: '[% description | sentence_case %]'
+- when:
+    eq:
       data.type: 43(3)e
   then:
     set:
       data.category: reregistration
       data.description: legacy
       data.description_values.description: '[% data.description | sentence_case %]'
+- when:
+    eq:
+      type: 43(3)e
+  then:
+    set:
+      category: reregistration
+      description: legacy
+      description_values.description: '[% description | sentence_case %]'
 - when:
     eq:
       data.type: 47b
@@ -18483,6 +18640,15 @@
       original_description: '[% data.description | sentence_case %]'
 - when:
     eq:
+      type: CERT12A
+  then:
+    set:
+      category: incorporation
+      subcategory: certificate
+      description: certificate-of-registration-and-designation-as-a-private-fund-limited-partnership
+      original_description: '[% description | sentence_case %]'
+- when:
+    eq:
       data.type: CERT12B
   then:
     set:
@@ -18490,6 +18656,15 @@
       data.subcategory: certificate
       data.description: certificate-of-designation-as-a-private-fund-limited-partnership
       original_description: '[% data.description | sentence_case %]'
+- when:
+    eq:
+      type: CERT12B
+  then:
+    set:
+      category: incorporation
+      subcategory: certificate
+      description: certificate-of-designation-as-a-private-fund-limited-partnership
+      original_description: '[% description | sentence_case %]'
 - when:
     eq:
       data.type: SQP1

@@ -1,0 +1,33 @@
+{
+  "external_data": {
+    "transaction_id": "MzE3OTMxMzE1MHNhbHQ",
+    "date": "2017-06-29T14:49:12Z",
+    "type": "CERT12B",
+    "category": "incorporation",
+    "description": "certificate-of-designation-as-a-private-fund-limited-partnership",
+    "subcategory": "certificate",
+    "associated_filings": [
+      {
+        "category": "incorporation",
+        "date": "2017-06-29T14:49:12Z",
+        "description": "certificate-of-designation-as-a-private-fund-limited-partnership",
+        "subcategory": "certificate",
+        "type": "CERT12B",
+        "original_description": "Certificate of designation as a private fund LIMITED PARTNERSHIP"
+      }
+    ],
+    "links": {
+      "self": "/company/LP017415/filing-history/MzE3OTMxMzE1MHNhbHQ"
+    },
+    "paper_filed": true
+  },
+  "internal_data": {
+    "original_description": "Certificate of designation as a private fund LIMITED PARTNERSHIP",
+    "company_number": "LP017415",
+    "entity_id": "3179313406",
+    "updated_by": "context_id",
+    "transaction_kind": "associated-filing",
+    "parent_entity_id": "3179313150",
+    "delta_at": "20240409143956000000"
+  }
+}

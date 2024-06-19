@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "8",
+      "receive_date": "19960716115827",
+      "form_type": "122",
+      "description": "£   IC      1011938/911188  12/07/96  £ SR 10075000@0.01=100750",
+      "barcode": "",
+      "document_id": "",
+      "company_number": "SC146920",
+      "entity_id": "109243961",
+      "parent_entity_id": "134765012",
+      "parent_form_type": "122",
+      "pre_scanned_batch": "1"
+    }
+  ],
+  "delta_at": "20240409143956000000"
+}

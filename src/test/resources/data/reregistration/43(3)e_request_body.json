@@ -1,0 +1,37 @@
+{
+  "external_data": {
+    "transaction_id": "MjA0MjUxNjE2MHNhbHQ",
+    "barcode": "ASYZBDPC",
+    "date": "2009-09-30T14:14:25Z",
+    "type": "43(3)e",
+    "category": "reregistration",
+    "description": "legacy",
+    "description_values": {
+      "description": "Declaration rereg as PLC"
+    },
+    "associated_filings" : [
+      {
+        "category" : "reregistration",
+        "date" : "2009-09-30T14:14:25Z",
+        "description" : "legacy",
+        "description_values" : {
+          "description" : "Declaration rereg as PLC"
+        },
+        "type" : "43(3)e"
+      }
+    ],
+    "links" : {
+      "self" : "/company/06716286/filing-history/MjA0MjUxNjE2MHNhbHQ"
+    },
+    "paper_filed" : true
+  },
+  "internal_data": {
+    "company_number": "06716286",
+    "entity_id": "2042517268",
+    "document_id": "000ASYZBDPC4019",
+    "updated_by": "context_id",
+    "transaction_kind": "associated-filing",
+    "parent_entity_id": "2042516160",
+    "delta_at": "20240409143956000000"
+  }
+}

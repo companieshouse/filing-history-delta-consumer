@@ -1,0 +1,34 @@
+{
+  "external_data": {
+    "transaction_id": "MzA3MzYyMjA5MnNhbHQ",
+    "barcode": "A22OVFM0",
+    "category": "change-of-name",
+    "date": "2013-02-27T08:41:53Z",
+    "description": "certificate-change-of-name-limited-partnership",
+    "subcategory": "certificate",
+    "type": "CERT13",
+    "associated_filings": [
+      {
+        "category": "change-of-name",
+        "date": "2013-02-27T08:41:53Z",
+        "description": "certificate-change-of-name-limited-partnership",
+        "subcategory": "certificate",
+        "type": "CERT13",
+        "original_description": "Certificate- name change of a LIMITED PARTNERSHIP"
+      }
+    ],
+    "links": {
+      "self": "/company/SL010027/filing-history/MzA3MzYyMjA5MnNhbHQ"
+    },
+    "paper_filed": true
+  },
+  "internal_data": {
+    "original_description": "Certificate- name change of a LIMITED PARTNERSHIP",
+    "company_number": "SL010027",
+    "entity_id": "3073622108",
+    "updated_by": "context_id",
+    "transaction_kind": "associated-filing",
+    "parent_entity_id": "3073622092",
+    "delta_at": "20240409143956000000"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "external_data": {
+    "transaction_id": "MjA0MDUyNDk2NHNhbHQ",
+    "barcode": "CXQRC002",
+    "date": "2009-09-02T15:52:41Z",
+    "type": "139",
+    "category": "reregistration",
+    "description": "legacy",
+    "description_values": {
+      "description": "Application for rereg. As private: court order"
+    },
+    "associated_filings": [
+      {
+        "category": "reregistration",
+        "date": "2009-09-02T15:52:41Z",
+        "description": "legacy",
+        "description_values": {
+          "description": "Application for rereg. As private: court order"
+        },
+        "type": "139"
+      }
+    ],
+    "links": {
+      "self": "/company/02391409/filing-history/MjA0MDUyNDk2NHNhbHQ"
+    },
+    "paper_filed": true
+  },
+  "internal_data": {
+    "company_number": "02391409",
+    "entity_id": "2040525187",
+    "document_id": "000CXQRC0023837",
+    "updated_by": "context_id",
+    "transaction_kind": "associated-filing",
+    "parent_entity_id": "2040524964",
+    "delta_at": "20240409143956000000"
+  }
+}

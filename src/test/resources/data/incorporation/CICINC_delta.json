@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "6",
+      "receive_date": "20140428155916",
+      "form_type": "CICINC",
+      "description": "Bespoke Articles",
+      "barcode": "A365YO2G",
+      "document_id": "",
+      "company_number": "09015264",
+      "entity_id": "3098962063",
+      "parent_entity_id": "3098959008",
+      "parent_form_type": "CICINC",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20240409143956000000"
+}

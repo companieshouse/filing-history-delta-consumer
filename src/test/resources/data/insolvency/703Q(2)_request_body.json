@@ -1,0 +1,37 @@
+{
+  "external_data": {
+    "transaction_id": "MjAyODAwNTkzMnNhbHQ",
+    "barcode": "A90JU8OS",
+    "date": "2009-04-07T11:15:52Z",
+    "type": "703Q(2)",
+    "category": "insolvency",
+    "description": "legacy",
+    "description_values": {
+      "description": "Cessation of overseas company subject to insolvency proceedings"
+    },
+    "associated_filings" : [
+      {
+        "category" : "insolvency",
+        "date" : "2009-04-07T11:15:52Z",
+        "description" : "legacy",
+        "description_values" : {
+          "description" : "Cessation of overseas company subject to insolvency proceedings"
+        },
+        "type" : "703Q(2)"
+      }
+    ],
+    "links" : {
+      "self" : "/company/FC017011/filing-history/MjAyODAwNTkzMnNhbHQ"
+    },
+    "paper_filed" : true
+  },
+  "internal_data": {
+    "company_number": "FC017011",
+    "entity_id": "2030121631",
+    "document_id": "000A90JU8OS3736",
+    "updated_by": "context_id",
+    "transaction_kind": "associated-filing",
+    "parent_entity_id": "2028005932",
+    "delta_at": "20240409143956000000"
+  }
+}

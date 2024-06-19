@@ -1,0 +1,36 @@
+{
+  "external_data": {
+    "transaction_id": "NzMzNjg5MDJzYWx0",
+    "barcode": "KDS698X9",
+    "date": "1995-02-28T11:59:56Z",
+    "type": "691-REREG",
+    "category": "reregistration",
+    "description": "legacy",
+    "description_values": {
+      "description": "Rereg as place of business"
+    },
+    "associated_filings" : [
+      {
+        "category" : "reregistration",
+        "date" : "1995-02-28T11:59:56Z",
+        "description" : "legacy",
+        "description_values" : {
+          "description" : "Rereg as place of business"
+        },
+        "type" : "691-REREG"
+      }
+    ],
+    "links" : {
+      "self" : "/company/FC017523/filing-history/NzMzNjg5MDJzYWx0"
+    },
+    "paper_filed" : true
+  },
+  "internal_data": {
+    "company_number": "FC017523",
+    "entity_id": "107060482",
+    "updated_by": "context_id",
+    "transaction_kind": "associated-filing",
+    "parent_entity_id": "73368902",
+    "delta_at": "20240409143956000000"
+  }
+}

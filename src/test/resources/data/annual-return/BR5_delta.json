@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "9",
+      "receive_date": "19930802115946",
+      "form_type": "BR5",
+      "description": "BR000828 ADDRESS CHANGE 27/05/93  404-406 FINCHLEY ROAD  LONDON  NW2 2HR",
+      "barcode": "",
+      "document_id": "",
+      "company_number": "FC017342",
+      "entity_id": "73903479",
+      "parent_entity_id": "123343388",
+      "parent_form_type": "BR6",
+      "pre_scanned_batch": "1"
+    }
+  ],
+  "delta_at": "20240409143956000000"
+}

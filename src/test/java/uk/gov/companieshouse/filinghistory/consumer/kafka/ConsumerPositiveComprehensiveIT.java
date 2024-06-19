@@ -67,14 +67,17 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
 
     @ParameterizedTest
     @CsvSource({
-            "change-of-name/CONDIR",
+            "reregistration/139", "reregistration/43(3)", "reregistration/43(3)e", "reregistration/691-REREG",
+
+            "change-of-name/CONDIR", "change-of-name/CERT13", "change-of-name/CERTNM", "change-of-name/CICCON",
+            "change-of-name/CONNOT", "change-of-name/NE01", "change-of-name/NM06",
 
             "resolution/RES01", "resolution/RES01_no_barcode", "resolution/RES15_top_level", "resolution/RES15_child",
             "resolution/LRESSP",
 
             "annotation/annotation", "annotation/top_level_annotation",
 
-            "annual-return/363s",
+            "annual-return/363s", "annual-return/BR3", "annual-return/BR5",
 
             "officers/EW01RSS", "officers/TM01", "officers/RP04LLPSC05", "officers/RP04LLPSC04", "officers/RP04PSC09",
             "officers/RP04PSC07", "officers/RP04PSC03", "officers/RP04LLPSC02", "officers/RP04LLPSC03",
@@ -83,9 +86,10 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
             "officers/RP04SLPPSC04", "officers/RP04SLPPSC04_no_description_values",
             "officers/RP04SLPPSC05", "officers/RP04SLPPSC05_no_description_values",
             "officers/RP04SQPPSC04", "officers/RP04SQPPSC04_no_description_values",
+            "officers/BR6",
 
             "capital/SH03", "capital/SH07", "capital/SH01", "capital/SH02_rule_2", "capital/SH04_rule_4",
-            "capital/SH05", "capital/EW05RSS",
+            "capital/SH05", "capital/EW05RSS", "capital/122",
 
             "accounts/AA_rule_17", "accounts/AA_rule_9", "accounts/AA_rule_10", "accounts/AA_rule_8",
             "accounts/AA_rule_6", "accounts/AA_rule_12", "accounts/AA_rule_14", "accounts/AA_rule_20",
@@ -95,11 +99,13 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
             "address/287",
 
             "incorporation/child_transaction/model_articles", "incorporation/child_transaction/newinc",
+            "incorporation/OE01", "incorporation/CERT8", "incorporation/CERT12", "incorporation/CERT12A",
+            "incorporation/CERT12B", "incorporation/CICINC",
 
             "insolvency/3.10", "insolvency/4.13", "insolvency/4.20_rule_2", "insolvency/4.31", "insolvency/4.33",
             "insolvency/4.35", "insolvency/4.38", "insolvency/4.40", "insolvency/4.43", "insolvency/WU15(Scot)",
             "insolvency/WU16(Scot)", "insolvency/WU17(Scot)", "insolvency/WU18(Scot)", "insolvency/4.44",
-            "insolvency/4.46", "insolvency/4.48", "insolvency/4.51", "incorporation/OE01", "insolvency/4.68_rule_3",
+            "insolvency/4.46", "insolvency/4.48", "insolvency/4.51", "insolvency/4.68_rule_3",
             "insolvency/4.20_rule_1", "insolvency/4.68_rule_1", "insolvency/4.69", "insolvency/4.70", "insolvency/4.71",
             "insolvency/4.72", "insolvency/4.17(Scot)", "insolvency/4.9(Scot)", "insolvency/C04.2(Scot)",
             "insolvency/WU01", "insolvency/WU01(Scot)", "insolvency/C0LIQ", "insolvency/COCOMP_rule_2",
@@ -121,7 +127,9 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
             "insolvency/1(Scot)", "insolvency/1.3(Scot)_rule_1", "insolvency/1.3(Scot)_rule_2",
             "insolvency/1.4(Scot)", "insolvency/2.2(Scot)", "insolvency/2.12(Scot)", "insolvency/2.26B(Scot)",
             "insolvency/2.27B(Scot)", "insolvency/2.29B(Scot)", "insolvency/2.30B(Scot)", "insolvency/12.1",
+            "insolvency/703P(3)", "insolvency/703Q(2)",
             "insolvency/AM15(Scot)", "insolvency/AM23(Scot)", "insolvency/NCOP", "insolvency/RM01(Scot)",
+
             "mortgage/MR01_rule_4", "mortgage/MR01_rule_5", "mortgage/MR02_rule_3", "mortgage/MR02_rule_4",
             "mortgage/MR03_rule_4",
             "mortgage/MR04_rule_1", "mortgage/MR04_rule_2", "mortgage/MR04_rule_3", "mortgage/MR05_rule_1",

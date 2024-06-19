@@ -35,13 +35,14 @@ class AssociatedFilingNodeMapperTest {
 
     @ParameterizedTest
     @CsvSource({
-            "''",
-            "description"})
-    void shouldMapAssociatedFilingObjectNode(final String description) {
+            "'', ''",
+            "description, description",
+            "'description<with\nextra chars', 'description\\with\\extra chars'"})
+    void shouldMapAssociatedFilingObjectNode(final String deltaDescription, final String expectedDescription) {
         // given
         when(delta.getFormType()).thenReturn("form type");
         when(formatDate.format(any())).thenReturn("date");
-        when(delta.getDescription()).thenReturn(description);
+        when(delta.getDescription()).thenReturn(deltaDescription);
 
         ObjectNode parentNode = objectMapper.createObjectNode();
         parentNode.putObject("data");
@@ -52,7 +53,7 @@ class AssociatedFilingNodeMapperTest {
                 .addObject()
                 .put("type", "form type")
                 .put("date", "date")
-                .put("description", description);
+                .put("description", expectedDescription);
 
         // when
         ObjectNode actual = associatedFilingNodeMapper.mapChildObjectNode(delta, parentNode);

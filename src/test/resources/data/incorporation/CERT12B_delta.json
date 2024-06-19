@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "9",
+      "receive_date": "20170629144912",
+      "form_type": "CERT12B",
+      "description": "CERTIFICATE OF DESIGNATION AS A PRIVATE FUND LIMITED PARTNERSHIP",
+      "barcode": "",
+      "document_id": "",
+      "company_number": "LP017415",
+      "entity_id": "3179313406",
+      "parent_entity_id": "3179313150",
+      "parent_form_type": "LP8",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20240409143956000000"
+}

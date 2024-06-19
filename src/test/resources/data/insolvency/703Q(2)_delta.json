@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "5",
+      "receive_date": "20090407111552",
+      "form_type": "703Q(2)",
+      "description": "CESSATION OF OVERSEAS COMPANY SUBJECT TO INSOLVENCY PROCEEDINGS",
+      "barcode": "A90JU8OS",
+      "document_id": "000A90JU8OS3736",
+      "company_number": "FC017011",
+      "entity_id": "2030121631",
+      "parent_entity_id": "2028005932",
+      "parent_form_type": "703Q(1)",
+      "pre_scanned_batch": "1"
+    }
+  ],
+  "delta_at": "20240409143956000000"
+}
