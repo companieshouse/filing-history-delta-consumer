@@ -22,7 +22,6 @@ import jakarta.annotation.Nullable;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.Optional;
 import java.util.UUID;
 import org.apache.http.HttpStatus;
 import org.bson.Document;
@@ -69,36 +68,29 @@ class E2EGetResponseIntegrationIT {
         postDelta(delta, deltaApi);
 
         // Then
-        Document document = null;
-        try {
-            document = findFilingHistoryDocument(filingHistoryCollection, formType, entityId, 10_000);
-            assertNotNull(document);
+        Document document = findFilingHistoryDocument(filingHistoryCollection, formType, entityId, 10_000);
+        assertNotNull(document);
 
-            String javaGetSingleJson = fetchSingleTransaction(transactionId, companyNumber, 1_000);
-            String javaGetListJson = fetchTransactionList(companyNumber, 1_000);
+        String javaGetSingleJson = fetchSingleTransaction(transactionId, companyNumber, 1_000);
+        String javaGetListJson = fetchTransactionList(companyNumber, 1_000);
 
-            JsonNode javaSingleDocument = parseAndRemoveNulls(javaGetSingleJson);
-            JsonNode javaDocumentList = parseAndRemoveNulls(javaGetListJson);
+        JsonNode javaSingleDocument = parseAndRemoveNulls(javaGetSingleJson);
+        JsonNode javaDocumentList = parseAndRemoveNulls(javaGetListJson);
 
-            maskSingleDocumentKnownBugs(perlSingleDocument, javaSingleDocument);
-            maskDocumentListKnownBugs(perlDocumentList, javaDocumentList);
+        maskSingleDocumentKnownBugs(perlSingleDocument, javaSingleDocument);
+        maskDocumentListKnownBugs(perlDocumentList, javaDocumentList);
 
-            if (!perlSingleDocument.equals(javaSingleDocument)) {
-                logger.error("Expected: {}", perlGetSingleJson);
-                logger.error("  Actual: {}", javaGetSingleJson);
-            }
-            if (!perlDocumentList.equals(javaDocumentList)) {
-                logger.error("Expected list: {}", perlGetListJson);
-                logger.error("  Actual list: {}", javaGetListJson);
-            }
-
-            assertEquals(perlSingleDocument, javaSingleDocument);
-            assertEquals(perlDocumentList, javaDocumentList);
-        } finally {
-            if (document != null) {
-                filingHistoryCollection.deleteOne(document);
-            }
+        if (!perlSingleDocument.equals(javaSingleDocument)) {
+            logger.error("Expected: {}", perlGetSingleJson);
+            logger.error("  Actual: {}", javaGetSingleJson);
         }
+        if (!perlDocumentList.equals(javaDocumentList)) {
+            logger.error("Expected list: {}", perlGetListJson);
+            logger.error("  Actual list: {}", javaGetListJson);
+        }
+
+        assertEquals(perlSingleDocument, javaSingleDocument);
+        assertEquals(perlDocumentList, javaDocumentList);
     }
 
     private @Nullable String fetchTransactionList(String companyNumber, long waitMillis) {
@@ -166,7 +158,7 @@ class E2EGetResponseIntegrationIT {
         if (!perlSingleDocument.equals(javaSingleDocument)) {
             removeEmptyBarcodeInResolutions(perlSingleDocument, javaSingleDocument);
             removeEmptyDescriptionValues(perlSingleDocument);
-            removeEmptyDescriptionValuesMissingOrEmptyInPerl(perlSingleDocument, javaSingleDocument);
+            removeEmptyDescriptionValuesMissingOrEmptyInPerlFromJava(perlSingleDocument, javaSingleDocument);
             removeMismatchedActionDates(perlSingleDocument, javaSingleDocument);
             removeMismatchedAssociatedFilingsDescriptionValues(perlSingleDocument, javaSingleDocument);
             removeKnownMismatchedDescriptions(perlSingleDocument, javaSingleDocument);
@@ -179,14 +171,14 @@ class E2EGetResponseIntegrationIT {
             removeEmptyItemsInDocumentList(javaDocumentList);
             removeEmptyDescriptionValuesInDocumentsList(perlDocumentList);
             removeMismatchedAssociatedFilingsDocumentList(perlDocumentList, javaDocumentList);
-            removeEmptyDescriptionValuesMissingOrEmptyInPerlList(perlDocumentList, javaDocumentList);
+            removeEmptyDescriptionValuesMissingOrEmptyInPerlListFromJava(perlDocumentList, javaDocumentList);
             removeMismatchedAssociatedFilingsDescriptionValuesDocumentList(perlDocumentList, javaDocumentList);
             removeKnownMismatchedDescriptionsDocumentList(perlDocumentList, javaDocumentList);
         }
     }
 
     private void removeKnownMismatchedDescriptions(JsonNode perlNode, JsonNode javaNode) {
-        if (javaNode != null && perlNode != null) {
+        if (!javaNode.isEmpty() && !perlNode.isEmpty()) {
             String javaDescription = javaNode.at(toJsonPtr("description")).textValue();
             String perlDescription = perlNode.at(toJsonPtr("description")).textValue();
 
@@ -204,29 +196,28 @@ class E2EGetResponseIntegrationIT {
     }
 
     private void removeKnownMismatchedDescriptionsDocumentList(JsonNode perlDocumentList, JsonNode javaDocumentList) {
-        removeKnownMismatchedDescriptions(getFirstItem(perlDocumentList).orElse(null),
-                getFirstItem(javaDocumentList).orElse(null));
+        removeKnownMismatchedDescriptions(getFirstItem(perlDocumentList), getFirstItem(javaDocumentList));
     }
 
     private void removeMismatchedActionDates(JsonNode perlNode, JsonNode javaNode) {
-        if (javaNode != null && perlNode != null) {
-            JsonNode jad = javaNode.at(toJsonPtr("associated_filings.0.action_date"));
-            JsonNode pad = perlNode.at(toJsonPtr("associated_filings.0.action_date"));
-
-            if (!jad.getNodeType().equals(pad.getNodeType())) {
+        if (!javaNode.isEmpty() && !perlNode.isEmpty()) {
+            if (!javaNode.at(toJsonPtr("associated_filings.0.action_date")).getNodeType()
+                    .equals(perlNode.at(toJsonPtr("associated_filings.0.action_date")).getNodeType())) {
                 logger.info("Masking mismatched types for 'associated_filings.0.action_date' values");
                 ((ObjectNode) javaNode.at(toJsonPtr("associated_filings.0"))).remove("action_date");
                 ((ObjectNode) perlNode.at(toJsonPtr("associated_filings.0"))).remove("action_date");
             }
 
-            ((ObjectNode) javaNode).remove("action_date");
-            ((ObjectNode) perlNode).remove("action_date");
+            if (!javaNode.at(toJsonPtr("action_date")).getNodeType().equals(perlNode.at(toJsonPtr("action_date")))) {
+                logger.info("Masking mismatched types for 'action_date' values");
+                ((ObjectNode) javaNode).remove("action_date");
+                ((ObjectNode) perlNode).remove("action_date");
+            }
         }
     }
 
     private void removeMismatchedAssociatedFilingsDocumentList(JsonNode perlDocumentList, JsonNode javaDocumentList) {
-        removeMismatchedActionDates(getFirstItem(perlDocumentList).orElse(null),
-                getFirstItem(javaDocumentList).orElse(null));
+        removeMismatchedActionDates(getFirstItem(perlDocumentList), getFirstItem(javaDocumentList));
     }
 
     private void removeMismatchedAssociatedFilingsDescriptionValues(JsonNode perlSingleDocument,
@@ -237,10 +228,8 @@ class E2EGetResponseIntegrationIT {
 
             for (Iterator<String> it = jdv.fieldNames(); it.hasNext(); ) {
                 String fieldName = it.next();
-                JsonNode javaVal = jdv.at(toJsonPtr(fieldName));
-                JsonNode perlVal = pdv.at(toJsonPtr(fieldName));
 
-                if (!javaVal.getNodeType().equals(perlVal.getNodeType())) {
+                if (!jdv.at(toJsonPtr(fieldName)).getNodeType().equals(pdv.at(toJsonPtr(fieldName)).getNodeType())) {
                     logger.info("Masking mismatched types for '%s' values".formatted(fieldName));
                     ((ObjectNode) jdv).remove(fieldName);
                     ((ObjectNode) pdv).remove(fieldName);
@@ -251,8 +240,8 @@ class E2EGetResponseIntegrationIT {
 
     private void removeMismatchedAssociatedFilingsDescriptionValuesDocumentList(JsonNode perlDocumentList,
             JsonNode javaDocumentList) {
-        removeMismatchedAssociatedFilingsDescriptionValues(getFirstItem(perlDocumentList).orElse(null),
-                getFirstItem(javaDocumentList).orElse(null));
+        removeMismatchedAssociatedFilingsDescriptionValues(getFirstItem(perlDocumentList),
+                getFirstItem(javaDocumentList));
     }
 
     private void removeEmptyDescriptionValues(JsonNode jsonNode) {
@@ -270,29 +259,24 @@ class E2EGetResponseIntegrationIT {
         }
     }
 
-    private void removeEmptyDescriptionValuesMissingOrEmptyInPerl(JsonNode perlSingleDocument,
+    private void removeEmptyDescriptionValuesMissingOrEmptyInPerlFromJava(JsonNode perlSingleDocument,
             JsonNode javaSingleDocument) {
-        if (perlSingleDocument.has("description_values") && javaSingleDocument.has("description_values")) {
-            JsonNode javaDescriptionValues = javaSingleDocument.get("description_values");
-            JsonNode perlDescriptionValues = perlSingleDocument.get("description_values");
+        JsonNode javaDescriptionValues = javaSingleDocument.at(toJsonPtr("description_values"));
+        JsonNode perlDescriptionValues = perlSingleDocument.at(toJsonPtr("description_values"));
 
-            for (Iterator<String> it = javaDescriptionValues.fieldNames(); it.hasNext(); ) {
-                String fieldName = it.next();
-                if (!perlDescriptionValues.has(fieldName) || perlDescriptionValues.get(fieldName).textValue()
-                        .isBlank()) {
-                    ((ObjectNode) javaDescriptionValues).remove(fieldName);
-                    ((ObjectNode) perlDescriptionValues).remove(fieldName);
-                }
+        for (Iterator<String> it = javaDescriptionValues.fieldNames(); it.hasNext(); ) {
+            String fieldName = it.next();
+            if (!perlDescriptionValues.has(fieldName) || perlDescriptionValues.get(fieldName).textValue()
+                    .isBlank()) {
+                ((ObjectNode) javaDescriptionValues).remove(fieldName);
             }
         }
     }
 
-    private void removeEmptyDescriptionValuesMissingOrEmptyInPerlList(JsonNode perlDocumentList,
+    private void removeEmptyDescriptionValuesMissingOrEmptyInPerlListFromJava(JsonNode perlDocumentList,
             JsonNode javaDocumentList) {
-        if (perlDocumentList.has("items") && javaDocumentList.has("items")) {
-            removeEmptyDescriptionValuesMissingOrEmptyInPerl(perlDocumentList.get("items").get(0),
-                    javaDocumentList.get("items").get(0));
-        }
+        removeEmptyDescriptionValuesMissingOrEmptyInPerlFromJava(perlDocumentList.at(toJsonPtr("items.0")),
+                javaDocumentList.at(toJsonPtr("items.0")));
     }
 
     private void removeEmptyDescriptionValuesInDocumentsList(JsonNode jsonNode) {
@@ -304,34 +288,33 @@ class E2EGetResponseIntegrationIT {
 
         if (perlDocument.has("resolutions")) {
 
-            if (!perlDocument.has("barcode") || perlDocument.get("barcode").isEmpty()) {
+            if (perlDocument.at(toJsonPtr("barcode")).isEmpty()) {
                 logger.info("Masking root barcodes");
                 ((ObjectNode) javaDocument).remove("barcode");
                 ((ObjectNode) perlDocument).remove("barcode");
             }
 
-            if (perlDocument.get("resolutions").get(0).has("barcode")
-                    && perlDocument.get("resolutions").get(0).get("barcode").isEmpty()) {
+            if (perlDocument.at(toJsonPtr("resolutions.0.barcode")).isEmpty()) {
                 logger.info("Masking resolutions barcodes");
-                ((ObjectNode) javaDocument.get("resolutions").get(0)).remove("barcode");
-                ((ObjectNode) perlDocument.get("resolutions").get(0)).remove("barcode");
+                ((ObjectNode) javaDocument.at(toJsonPtr("resolutions.0"))).remove("barcode");
+                ((ObjectNode) perlDocument.at(toJsonPtr("resolutions.0"))).remove("barcode");
             }
         }
     }
 
     private void removeEmptyBarcodeDocumentList(JsonNode perlDocumentList, JsonNode javaDocumentList) {
-        if (javaDocumentList.has("items") && !javaDocumentList.get("items").isEmpty()) {
-            if (javaDocumentList.get("items").get(0).has("resolutions")) {
-                ((ObjectNode) javaDocumentList.get("items").get(0).get("resolutions").get(0)).remove("barcode");
-                ((ObjectNode) perlDocumentList.get("items").get(0).get("resolutions").get(0)).remove("barcode");
+        if (!javaDocumentList.at(toJsonPtr("items")).isEmpty()) {
+            if (!javaDocumentList.at(toJsonPtr("items.0.resolutions")).isEmpty()) {
+                ((ObjectNode) javaDocumentList.at(toJsonPtr("items.0.resolutions.0"))).remove("barcode");
+                ((ObjectNode) perlDocumentList.at(toJsonPtr("items.0.resolutions.0"))).remove("barcode");
             }
-            removeEmptyBarcodeInResolutions(perlDocumentList.get("items").get(0), javaDocumentList.get("items").get(0));
+            removeEmptyBarcodeInResolutions(perlDocumentList.at(toJsonPtr("items.0")),
+                    javaDocumentList.at(toJsonPtr("items.0")));
         }
     }
 
-    private Optional<JsonNode> getFirstItem(JsonNode documentList) {
-        JsonNode items = documentList.at(toJsonPtr("items"));
-        return items.isEmpty() ? Optional.empty() : Optional.of(items.get(0));
+    private JsonNode getFirstItem(JsonNode documentList) {
+        return documentList.at(toJsonPtr("items.0"));
     }
 
     private void removeEmptyItemsInDocumentList(JsonNode jsonNode) {
