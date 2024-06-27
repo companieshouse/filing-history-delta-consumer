@@ -1,0 +1,24 @@
+{
+  "external_data": {
+    "transaction_id": "MzA4NDA0NjgyNHNhbHQ",
+    "barcode": "L2FRIZPU",
+    "category": "change-of-name",
+    "date": "2013-08-29T12:45:40Z",
+    "description": "certificate-re-registration-old-public-company-to-private-limited-company",
+    "links": {
+      "self": "/company/05424046/filing-history/MzA4NDA0NjgyNHNhbHQ"
+    },
+    "paper_filed": true,
+    "subcategory": "certificate",
+    "type": "CERT22"
+  },
+  "internal_data": {
+    "original_description": "Cert. Of rereg of old public company to PLC",
+    "company_number" : "05424046",
+    "entity_id" : "3084046824",
+    "delta_at": "20240105174112065026",
+    "parent_entity_id": "3084046692",
+    "transaction_kind": "associated-filing",
+    "updated_by": "context_id"
+  }
+}

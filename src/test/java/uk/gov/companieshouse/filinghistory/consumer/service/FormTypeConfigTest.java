@@ -20,7 +20,7 @@ class FormTypeConfigTest {
         List<String> actual = formTypeConfig.formTypeBlockList("associated_filings_block_list.csv");
 
         // then
-        assertEquals(347, actual.size());
+        assertEquals(346, actual.size());
     }
 
     @Test
