@@ -1,0 +1,25 @@
+{
+  "external_data": {
+    "transaction_id": "MzA4NDA0NjY5MnNhbHQ",
+    "barcode": "L2FRIZQI",
+    "category": "change-of-name",
+    "date": "2013-08-29T12:45:39Z",
+    "description": "reregistration-public-to-private-following-court-order",
+    "links": {
+      "self": "/company/05424046/filing-history/MzA4NDA0NjY5MnNhbHQ"
+    },
+    "paper_filed": true,
+    "type": "RR08"
+  },
+  "internal_data": {
+    "original_description": "Application by a public company for re-registration as a private company following a court order reducing capital",
+    "company_number": "05424046",
+    "entity_id": "3084046692",
+    "parent_entity_id": "",
+    "document_id" : "000L2FRIZQI5298",
+    "delta_at": "20240105173313878185",
+    "updated_by": "context_id",
+    "transaction_kind": "top-level"
+  }
+}
+
