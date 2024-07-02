@@ -37,6 +37,8 @@ class FormatNumberTest {
                 Arguments.of("123.45", "123.45"),
                 Arguments.of("1234567.89", "1,234,567.89"),
                 Arguments.of("1234.1234", "1,234.1234"),
-                Arguments.of("32533136.894660", "32,533,136.894660"));
+                Arguments.of("32533136.894660", "32,533,136.894660"),
+                Arguments.of("0.01", "0.01"),
+                Arguments.of(".001", ".001"));
     }
 }
