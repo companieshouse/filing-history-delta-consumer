@@ -71,6 +71,7 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
 
             "change-of-name/CONDIR", "change-of-name/CERT13", "change-of-name/CERTNM", "change-of-name/CICCON",
             "change-of-name/CONNOT", "change-of-name/NE01", "change-of-name/NM06", "change-of-name/CERT22",
+            "change-of-name/CERT22_child", "change-of-name/RR08",
 
             "resolution/RES01", "resolution/RES01_no_barcode", "resolution/RES15_top_level", "resolution/RES15_child",
             "resolution/LRESSP",
