@@ -34,7 +34,7 @@ class UpsertDeltaServiceTest {
     private InternalFilingHistoryApi apiRequest;
 
     @Test
-    void shouldSuccessfullyPassDeserialisedAndMappedDeltaToApiClient() throws Exception {
+    void shouldSuccessfullyPassDeserialisedAndMappedDeltaToApiClient() {
         // given
         when(deserialiser.deserialiseFilingHistoryDelta(any())).thenReturn(delta);
         when(mapper.processDelta(any(), anyString())).thenReturn(apiRequest);

@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "9",
+      "receive_date": "20130829124539",
+      "form_type": "RR08",
+      "description": "Application by a public company for re-registration as a private company following a court order reducing capital",
+      "barcode": "L2FRIZQI",
+      "document_id": "000L2FRIZQI5298",
+      "company_number": "05424046",
+      "entity_id": "3084046692",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "1"
+    }
+  ],
+  "delta_at": "20240105173313878185"
+}

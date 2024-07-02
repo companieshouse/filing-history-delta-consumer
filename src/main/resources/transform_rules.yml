@@ -5756,7 +5756,7 @@
   then:
     set:
       category: change-of-name
-      description: certificate-re-registration-old-public-company-to-public-limited-company
+      description: certificate-re-registration-old-public-company-to-private-limited-company
       subcategory: certificate
 - when:
     eq:
@@ -5764,7 +5764,7 @@
   then:
     set:
       data.category: change-of-name
-      data.description: certificate-re-registration-old-public-company-to-public-limited-company
+      data.description: certificate-re-registration-old-public-company-to-private-limited-company
       data.subcategory: certificate
       original_description: '[% data.description | sentence_case %]'
 - when:

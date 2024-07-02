@@ -2,7 +2,6 @@ package uk.gov.companieshouse.filinghistory.consumer.transformrules.functions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.text.ParseException;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -14,7 +13,7 @@ class FormatNumberTest {
 
     @ParameterizedTest
     @MethodSource("inputNumberStringsAndExpectedNumberStrings")
-    void shouldFormatNumberWithCommasDelimitingThousands(String numberToFormat, String expected) throws ParseException {
+    void shouldFormatNumberWithCommasDelimitingThousands(String numberToFormat, String expected) {
         // given
 
         // when

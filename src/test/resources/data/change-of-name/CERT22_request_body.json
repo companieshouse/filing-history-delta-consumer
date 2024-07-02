@@ -1,0 +1,23 @@
+{
+  "external_data" : {
+    "transaction_id" : "MDA3NTIyNjQ4MnNhbHQ",
+    "category" : "change-of-name",
+    "date" : "1991-05-09T11:57:30Z",
+    "description" : "certificate-re-registration-old-public-company-to-private-limited-company",
+    "links" : {
+      "self" : "/company/00413483/filing-history/MDA3NTIyNjQ4MnNhbHQ"
+    },
+    "paper_filed" : true,
+    "subcategory" : "certificate",
+    "type" : "CERT22"
+  },
+  "internal_data": {
+    "entity_id" : "0075226482",
+    "company_number" : "00413483",
+    "original_description" : "Cert. Of rereg of old public company to PLC",
+    "delta_at": "20240409143956000000",
+    "parent_entity_id": "",
+    "transaction_kind": "top-level",
+    "updated_by": "context_id"
+  }
+}
