@@ -1,0 +1,34 @@
+{
+  "external_data": {
+    "transaction_id": "MzAxMDE0NDQ2MHNhbHQ",
+    "category": "resolution",
+    "date": "1994-01-15T00:00:00Z",
+    "description": "resolution",
+    "description_values": {
+      "description": "Resolutions"
+    },
+    "paper_filed": true,
+    "links": {
+      "self": "/company/05424214/filing-history/MzAxMDE0NDQ2MHNhbHQ"
+    },
+    "resolutions": [
+      {
+        "category": "miscellaneous",
+        "description": "legacy",
+        "subcategory": "resolution",
+        "type": "RES"
+      }
+    ],
+    "type": "RESOLUTIONS"
+  },
+  "internal_data": {
+    "original_description": "Resolutions",
+    "company_number": "05424214",
+    "document_id": "301022272688702",
+    "entity_id": "3010144460",
+    "parent_entity_id": "",
+    "delta_at": "20240716115737728650",
+    "updated_by": "context_id",
+    "transaction_kind": "resolution"
+  }
+}

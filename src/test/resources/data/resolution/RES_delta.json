@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "9",
+      "receive_date": "19940115000000",
+      "form_type": "RES",
+      "description": "RES",
+      "barcode": "",
+      "document_id": "301022272688702",
+      "company_number": "05424214",
+      "entity_id": "3010144460",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20240716115737728650"
+}
