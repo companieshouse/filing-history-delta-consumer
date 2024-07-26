@@ -2370,6 +2370,14 @@
       original_description: '[% data.description | sentence_case %]'
 - when:
     eq:
+      type: RES
+  then:
+    set:
+      category: miscellaneous
+      description: legacy
+      subcategory: resolution
+- when:
+    eq:
       data.type: LIQ MISC RES
   then:
     set:

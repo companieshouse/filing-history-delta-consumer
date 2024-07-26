@@ -74,7 +74,7 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
             "change-of-name/CERT22_child", "change-of-name/RR08",
 
             "resolution/RES01", "resolution/RES01_no_barcode", "resolution/RES15_top_level", "resolution/RES15_child",
-            "resolution/LRESSP",
+            "resolution/LRESSP", "resolution/RES",
 
             "annotation/annotation", "annotation/top_level_annotation",
 
