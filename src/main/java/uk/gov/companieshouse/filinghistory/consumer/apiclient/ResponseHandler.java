@@ -21,12 +21,14 @@ public class ResponseHandler {
 
     public void handle(ApiErrorResponseException ex) {
         final int statusCode = ex.getStatusCode();
-        if (HttpStatus.valueOf(statusCode).is5xxServerError()) {
-            LOGGER.info(API_ERROR_RESPONSE_MESSAGE.formatted(statusCode), DataMapHolder.getLogMap());
-            throw new RetryableException(API_ERROR_RESPONSE_MESSAGE.formatted(statusCode), ex);
-        } else {
+        final HttpStatus httpStatus = HttpStatus.valueOf(ex.getStatusCode());
+
+        if (HttpStatus.CONFLICT.equals(httpStatus) || HttpStatus.BAD_REQUEST.equals(httpStatus)) {
             LOGGER.error(API_ERROR_RESPONSE_MESSAGE.formatted(statusCode), DataMapHolder.getLogMap());
             throw new NonRetryableException(API_ERROR_RESPONSE_MESSAGE.formatted(statusCode), ex);
+        }  else {
+            LOGGER.info(API_ERROR_RESPONSE_MESSAGE.formatted(statusCode), DataMapHolder.getLogMap());
+            throw new RetryableException(API_ERROR_RESPONSE_MESSAGE.formatted(statusCode), ex);
         }
     }
 

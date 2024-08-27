@@ -20,9 +20,9 @@ immediately to the <br>`filing-history-delta-filing-history-delta-consumer-inval
 | API Response | Attempt          | Topic published to                                         |
 |--------------|------------------|------------------------------------------------------------|
 | 2xx          | any              | _does not republish_                                       |
-| 4xx          | any              | filing-history-delta-filing-history-delta-consumer-invalid |
-| 5xx          | < max_attempts   | filing-history-delta-filing-history-delta-consumer-retry   |
-| 5xx          | \>= max_attempts | filing-history-delta-filing-history-delta-consumer-error   |
+| 400 or 409   | any              | filing-history-delta-filing-history-delta-consumer-invalid |
+| 4xx or 5xx   | < max_attempts   | filing-history-delta-filing-history-delta-consumer-retry   |
+| 4xx or 5xx   | \>= max_attempts | filing-history-delta-filing-history-delta-consumer-error   |
 
 ## System requirements
 

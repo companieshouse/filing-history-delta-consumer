@@ -31,13 +31,17 @@ class ResponseHandlerTest {
 
     @ParameterizedTest
     @CsvSource({
+            "401",
+            "403",
+            "404",
+            "405",
             "500",
             "501",
             "502",
             "503",
             "504"
     })
-    void shouldHandleApiErrorResponseByThrowingRetryableExceptionWhen5xxStatusCode(final int httpStatusCode) {
+    void shouldHandleApiErrorResponseByThrowingRetryableExceptionForSpecificStatusCodes(final int httpStatusCode) {
         // given
         when(apiErrorResponseException.getStatusCode()).thenReturn(httpStatusCode);
 
@@ -51,13 +55,9 @@ class ResponseHandlerTest {
     @ParameterizedTest
     @CsvSource({
             "400",
-            "401",
-            "403",
-            "404",
-            "405",
             "409"
     })
-    void shouldHandleApiErrorResponseByThrowingNonRetryableExceptionWhenNot5xxStatusCode(final int httpStatusCode) {
+    void shouldHandleApiErrorResponseByThrowingNonRetryableExceptionFor400And409(final int httpStatusCode) {
         // given
         when(apiErrorResponseException.getStatusCode()).thenReturn(httpStatusCode);
 
