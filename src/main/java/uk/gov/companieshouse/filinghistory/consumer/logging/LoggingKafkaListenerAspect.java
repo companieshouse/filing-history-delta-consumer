@@ -11,6 +11,7 @@ import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
 import uk.gov.companieshouse.delta.ChsDelta;
 import uk.gov.companieshouse.filinghistory.consumer.exception.NonRetryableException;
+import uk.gov.companieshouse.filinghistory.consumer.exception.RetryableException;
 import uk.gov.companieshouse.logging.Logger;
 import uk.gov.companieshouse.logging.LoggerFactory;
 
@@ -48,6 +49,9 @@ class LoggingKafkaListenerAspect {
                     DataMapHolder.getLogMap());
 
             return result;
+        } catch (RetryableException ex) {
+            LOGGER.info(EXCEPTION_MESSAGE.formatted(ex.getClass().getSimpleName()), DataMapHolder.getLogMap());
+            throw ex;
         } catch (Exception ex) {
             LOGGER.error(EXCEPTION_MESSAGE.formatted(ex.getClass().getSimpleName()), ex, DataMapHolder.getLogMap());
             throw ex;

@@ -59,8 +59,6 @@ public class TransactionKindService {
             encodedId = encodeTransactionId(kindCriteria.entityId());
             kindEnum = TransactionKindEnum.TOP_LEVEL;
         }
-
-        LOGGER.debug("Transaction Kind: [%s]".formatted(kindEnum.getValue()), DataMapHolder.getLogMap());
         return new TransactionKindResult(encodedId, kindEnum);
     }
 

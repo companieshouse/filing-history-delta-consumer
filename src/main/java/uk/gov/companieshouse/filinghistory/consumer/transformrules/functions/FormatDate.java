@@ -74,7 +74,7 @@ public class FormatDate extends AbstractTransformer {
             }
             return DateTimeFormatter.ISO_INSTANT.format(nodeTextAsDate.toInstant());
         } catch (Exception e) {
-            logger.error(e.getMessage(), e, DataMapHolder.getLogMap());
+            logger.error("Failed to parse date: %s. %s".formatted(nodeText, e.getMessage()), e, DataMapHolder.getLogMap());
             throw new NonRetryableException("Failed to parse date string %s".formatted(nodeText), e);
         }
     }
