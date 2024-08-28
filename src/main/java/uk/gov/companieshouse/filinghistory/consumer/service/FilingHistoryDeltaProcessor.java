@@ -51,13 +51,13 @@ public class FilingHistoryDeltaProcessor {
 
         ObjectNode preTransformNode = preTransformMapper.mapDeltaToObjectNode(kindResult.kind(), filingHistory);
 
-        ObjectNode transformedParentNode = (ObjectNode) transformerService.transform(preTransformNode, entityId);
+        ObjectNode transformedParentNode = (ObjectNode) transformerService.transform(preTransformNode);
         ObjectNode dataNode = (ObjectNode) transformedParentNode.get("data");
 
         childArrayKeys.forEach(key -> {
             ArrayNode childArray = (ArrayNode) dataNode.get(key);
             if (childArray != null && childArray.get(0) != null) {
-                dataNode.putArray(key).add(transformerService.transform(childArray.get(0), entityId));
+                dataNode.putArray(key).add(transformerService.transform(childArray.get(0)));
             }
         });
 
