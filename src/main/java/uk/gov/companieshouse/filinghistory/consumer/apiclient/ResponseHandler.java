@@ -18,20 +18,18 @@ public class ResponseHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(NAMESPACE);
     private static final String API_INFO_RESPONSE_MESSAGE = "Call to API failed, status code: %d. %s";
-    private static final String API_ERROR_RESPONSE_MESSAGE = "Call to API failed, status code: %d.";
-    private static final String URI_VALIDATION_EXCEPTION_MESSAGE = "Failed call to filing history API due to invalid URI";
+    private static final String API_ERROR_RESPONSE_MESSAGE = "Call to API failed, status code: %d";
+    private static final String URI_VALIDATION_EXCEPTION_MESSAGE = "Invalid URI";
 
     public void handle(ApiErrorResponseException ex) {
         final int statusCode = ex.getStatusCode();
         final HttpStatus httpStatus = HttpStatus.valueOf(ex.getStatusCode());
 
         if (HttpStatus.CONFLICT.equals(httpStatus) || HttpStatus.BAD_REQUEST.equals(httpStatus)) {
-            LOGGER.error(API_ERROR_RESPONSE_MESSAGE.formatted(statusCode), ex,
-                    DataMapHolder.getLogMap());
+            LOGGER.error(API_ERROR_RESPONSE_MESSAGE.formatted(statusCode), ex, DataMapHolder.getLogMap());
             throw new NonRetryableException(API_ERROR_RESPONSE_MESSAGE.formatted(statusCode), ex);
-        }  else {
-            LOGGER.info(API_INFO_RESPONSE_MESSAGE.formatted(statusCode, Arrays.toString(ex.getStackTrace())),
-                    DataMapHolder.getLogMap());
+        } else {
+            LOGGER.info(API_INFO_RESPONSE_MESSAGE.formatted(statusCode, Arrays.toString(ex.getStackTrace())), DataMapHolder.getLogMap());
             throw new RetryableException(API_ERROR_RESPONSE_MESSAGE.formatted(statusCode), ex);
         }
     }

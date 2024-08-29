@@ -19,11 +19,6 @@ public class LinksMapper {
             LOGGER.error("Company Number and Transaction ID must not be null", DataMapHolder.getLogMap());
             throw new IllegalArgumentException("Cannot map self link with null or empty data");
         }
-
-        DataMapHolder.get()
-                .companyNumber(companyNumber);
-        LOGGER.debug("Successfully mapped self link", DataMapHolder.getLogMap());
-
         return new Links()
                 .self("/company/%s/filing-history/%s".formatted(companyNumber, transactionId));
     }
