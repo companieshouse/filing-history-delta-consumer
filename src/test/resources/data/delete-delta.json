@@ -1,5 +1,10 @@
 {
   "entity_id": "131854271",
   "action": "DELETE",
-  "delta_at": "20230724093435661593"
+  "delta_at": "20230724093435661593",
+  "barcode": "",
+  "parent_entity_id": "3043972675",
+  "parent_form_type": "TM01",
+  "form_type": "ANNOTATION",
+  "company_number": "12345678"
 }
