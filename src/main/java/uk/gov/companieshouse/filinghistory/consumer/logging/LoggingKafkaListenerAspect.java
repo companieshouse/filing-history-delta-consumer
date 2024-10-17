@@ -1,7 +1,12 @@
 package uk.gov.companieshouse.filinghistory.consumer.logging;
 
+import static org.springframework.kafka.retrytopic.RetryTopicHeaders.DEFAULT_HEADER_ATTEMPTS;
+import static org.springframework.kafka.support.KafkaHeaders.OFFSET;
+import static org.springframework.kafka.support.KafkaHeaders.RECEIVED_PARTITION;
+import static org.springframework.kafka.support.KafkaHeaders.RECEIVED_TOPIC;
 import static uk.gov.companieshouse.filinghistory.consumer.Application.NAMESPACE;
 
+import java.nio.ByteBuffer;
 import java.util.Optional;
 import java.util.UUID;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -9,6 +14,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageHeaders;
 import org.springframework.stereotype.Component;
 import uk.gov.companieshouse.delta.ChsDelta;
 import uk.gov.companieshouse.filinghistory.consumer.exception.NonRetryableException;
@@ -39,16 +45,20 @@ class LoggingKafkaListenerAspect {
         int retryCount = 0;
         try {
             Message<?> message = (Message<?>) joinPoint.getArgs()[0];
-            retryCount = Optional.ofNullable((Integer) joinPoint.getArgs()[1]).orElse(1) - 1;
+            MessageHeaders headers = message.getHeaders();
+
+            retryCount = Optional.ofNullable(headers.get(DEFAULT_HEADER_ATTEMPTS))
+                    .map(attempts -> ByteBuffer.wrap((byte[]) attempts).getInt())
+                    .orElse(1) - 1;
             ChsDelta chsDelta = extractChsDelta(message.getPayload());
             DataMapHolder.initialise(Optional.ofNullable(chsDelta.getContextId())
                     .orElse(UUID.randomUUID().toString()));
 
             DataMapHolder.get()
                     .retryCount(retryCount)
-                    .topic((String) joinPoint.getArgs()[2])
-                    .partition((Integer) joinPoint.getArgs()[3])
-                    .offset((Long) joinPoint.getArgs()[4]);
+                    .topic((String) headers.get(RECEIVED_TOPIC))
+                    .partition((Integer) headers.get(RECEIVED_PARTITION))
+                    .offset((Long) headers.get(OFFSET));
 
             LOGGER.info(chsDelta.getIsDelete() ? LOG_MESSAGE_DELETE_RECEIVED : LOG_MESSAGE_RECEIVED,
                     DataMapHolder.getLogMap());
@@ -79,6 +89,8 @@ class LoggingKafkaListenerAspect {
         if (payload instanceof ChsDelta chsDelta) {
             return chsDelta;
         }
-        throw new NonRetryableException("Invalid payload type. payload: %s".formatted(payload.toString()));
+        String errorMessage = "Invalid payload type, payload: [%s]".formatted(payload.toString());
+        LOGGER.error(errorMessage, DataMapHolder.getLogMap());
+        throw new NonRetryableException(errorMessage);
     }
 }
