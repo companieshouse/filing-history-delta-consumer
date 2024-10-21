@@ -3,7 +3,7 @@ aws_profile = "staging-eu-west-2"
 
 # service configs
 use_set_environment_files = true
-log_level = "trace"
+log_level = "info"
 
 # Scheduled scaling of tasks
 service_autoscale_enabled  = true
@@ -12,4 +12,4 @@ service_scaleup_schedule   = "5 6 * * ? *"
 
 required_cpus = 512
 required_memory = 1024
-service_autoscale_scale_in_cooldown = 600
+service_autoscale_scale_out_cooldown = 600

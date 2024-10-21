@@ -29,36 +29,37 @@ module "ecs-service" {
   vpc_id                  = data.aws_vpc.vpc.id
   ecs_cluster_id          = data.aws_ecs_cluster.ecs_cluster.id
   task_execution_role_arn = data.aws_iam_role.ecs_cluster_iam_role.arn
-  batch_service           = true
+  batch_service = true
 
   # ECS Task container health check
   use_task_container_healthcheck = true
   healthcheck_path               = local.healthcheck_path
-  healthcheck_matcher            = local.healthcheck_matcher
+  healthcheck_matcher = local.healthcheck_matcher
 
   # Docker container details
   docker_registry   = var.docker_registry
   docker_repo       = local.docker_repo
   container_version = var.filing_history_delta_consumer_version
-  container_port    = local.container_port
+  container_port = local.container_port
 
   # Service configuration
   service_name = local.service_name
-  name_prefix  = local.name_prefix
+  name_prefix = local.name_prefix
 
   # Service performance and scaling configs
-  desired_task_count                  = var.desired_task_count
-  max_task_count                      = var.max_task_count
-  required_cpus                       = var.required_cpus
-  required_memory                     = var.required_memory
-  service_autoscale_enabled           = var.service_autoscale_enabled
-  service_autoscale_target_value_cpu  = var.service_autoscale_target_value_cpu
-  service_autoscale_scale_in_cooldown = var.service_autoscale_scale_in_cooldown
-  service_scaledown_schedule          = var.service_scaledown_schedule
-  service_scaleup_schedule            = var.service_scaleup_schedule
-  use_capacity_provider               = var.use_capacity_provider
-  use_fargate                         = var.use_fargate
-  fargate_subnets                     = local.application_subnet_ids
+  desired_task_count                   = var.desired_task_count
+  max_task_count                       = var.max_task_count
+  required_cpus                        = var.required_cpus
+  required_memory                      = var.required_memory
+  service_autoscale_enabled            = var.service_autoscale_enabled
+  service_autoscale_target_value_cpu   = var.service_autoscale_target_value_cpu
+  service_autoscale_scale_in_cooldown  = var.service_autoscale_scale_in_cooldown
+  service_autoscale_scale_out_cooldown = var.service_autoscale_scale_out_cooldown
+  service_scaledown_schedule           = var.service_scaledown_schedule
+  service_scaleup_schedule             = var.service_scaleup_schedule
+  use_capacity_provider                = var.use_capacity_provider
+  use_fargate                          = var.use_fargate
+  fargate_subnets = local.application_subnet_ids
 
   # Service environment variable and secret configs
   task_environment          = local.task_environment
@@ -73,5 +74,5 @@ module "secrets" {
   name_prefix = "${local.service_name}-${var.environment}"
   environment = var.environment
   kms_key_id  = data.aws_kms_key.kms_key.id
-  secrets     = nonsensitive(local.service_secrets)
+  secrets = nonsensitive(local.service_secrets)
 }
