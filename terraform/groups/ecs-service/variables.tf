@@ -28,19 +28,19 @@ variable "docker_registry" {
 # Service performance and scaling configs
 # ------------------------------------------------------------------------------
 variable "desired_task_count" {
-  type = number
+  type        = number
   description = "The desired ECS task count for this service"
-  default = 1 # defaulted low for dev environments, override for production
+  default     = 1 # defaulted low for dev environments, override for production
 }
 variable "required_cpus" {
-  type = number
+  type        = number
   description = "The required cpu resource for this service. 1024 here is 1 vCPU"
-  default = 256 # defaulted low for dev environments, override for production
+  default     = 256 # defaulted low for dev environments, override for production
 }
 variable "required_memory" {
-  type = number
+  type        = number
   description = "The required memory for this service"
-  default = 512 # defaulted low for node service in dev environments, override for production
+  default     = 512 # defaulted low for node service in dev environments, override for production
 }
 
 variable "max_task_count" {
@@ -71,7 +71,12 @@ variable "service_autoscale_target_value_cpu" {
 }
 variable "service_autoscale_scale_in_cooldown" {
   type        = number
-  description = "Cooldown in seconds for ECS Service scale in"
+  description = "Cooldown in seconds for ECS Service scale in (run fewer tasks)"
+  default     = 300
+}
+variable "service_autoscale_scale_out_cooldown" {
+  type        = number
+  description = "Cooldown in seconds for ECS Service scale out (add more tasks)"
   default     = 300
 }
 variable "service_scaledown_schedule" {
@@ -80,7 +85,7 @@ variable "service_scaledown_schedule" {
   # Typically used to stop all tasks in a service to save resource costs overnight.
   # E.g. a value of '55 19 * * ? *' would be Mon-Sun 7:55pm.  An empty string indicates that no schedule should be created.
 
-  default     = ""
+  default = ""
 }
 variable "service_scaleup_schedule" {
   type        = string
@@ -88,7 +93,7 @@ variable "service_scaleup_schedule" {
   # Typically used to start all tasks in a service after it has been shutdown overnight.
   # E.g. a value of '5 6 * * ? *' would be Mon-Sun 6:05am.  An empty string indicates that no schedule should be created.
 
-  default     = ""
+  default = ""
 }
 
 # ----------------------------------------------------------------------
