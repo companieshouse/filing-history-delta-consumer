@@ -1,5 +1,6 @@
 package uk.gov.companieshouse.filinghistory.consumer.apiclient;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
@@ -9,6 +10,7 @@ import static org.mockito.Mockito.when;
 import java.util.function.Supplier;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.function.Executable;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -23,16 +25,21 @@ import uk.gov.companieshouse.api.handler.delta.filinghistory.request.PrivateFili
 import uk.gov.companieshouse.api.handler.exception.URIValidationException;
 import uk.gov.companieshouse.api.http.HttpClient;
 import uk.gov.companieshouse.filinghistory.consumer.logging.DataMapHolder;
+import uk.gov.companieshouse.filinghistory.consumer.service.DeleteApiClientRequest;
 
 @ExtendWith(MockitoExtension.class)
 class FilingHistoryApiClientTest {
 
     private static final String PRE_FORMAT_URI = "/company/%s/filing-history/%s/internal";
-    private static final String PRE_FORMAT_DELETE_URI = "/filing-history/%s/internal";
+    private static final String PRE_FORMAT_DELETE_URI = "/company/%s/filing-history/%s/internal";
     private static final String COMPANY_NUMBER = "12345678";
     private static final String TRANSACTION_ID = "MzA0Mzk3MjY3NXNhbHQ";
     private static final String ENTITY_ID = "1234567891";
     private static final String REQUEST_ID = "request_id";
+    private static final String DELTA_AT = "20240219123045999999";
+    private static final DeleteApiClientRequest API_CLIENT_REQUEST =
+            new DeleteApiClientRequest("MzA0Mzk3MjY3NXNhbHQ", "12345678",
+                    "1234567891", "20240219123045999999");
 
     @InjectMocks
     private FilingHistoryApiClient filingHistoryApiClient;
@@ -149,18 +156,19 @@ class FilingHistoryApiClientTest {
         when(internalApiClientFactory.get()).thenReturn(internalApiClient);
         when(internalApiClient.getHttpClient()).thenReturn(apiClient);
         when(internalApiClient.privateDeltaResourceHandler()).thenReturn(privateDeltaResourceHandler);
-        when(privateDeltaResourceHandler.deleteFilingHistory(anyString())).thenReturn(privateFilingHistoryDelete);
+        when(privateDeltaResourceHandler.deleteFilingHistory(anyString(), anyString(), anyString()))
+                .thenReturn(privateFilingHistoryDelete);
 
         DataMapHolder.get().requestId(REQUEST_ID);
-        final String expectedUri = PRE_FORMAT_DELETE_URI.formatted(ENTITY_ID);
+        final String expectedUri = PRE_FORMAT_DELETE_URI.formatted(COMPANY_NUMBER, TRANSACTION_ID);
 
         // when
-        filingHistoryApiClient.deleteFilingHistory(ENTITY_ID);
+        filingHistoryApiClient.deleteFilingHistory(API_CLIENT_REQUEST);
 
         // then
         verify(apiClient).setRequestId(REQUEST_ID);
         verify(internalApiClient).privateDeltaResourceHandler();
-        verify(privateDeltaResourceHandler).deleteFilingHistory(expectedUri);
+        verify(privateDeltaResourceHandler).deleteFilingHistory(expectedUri, DELTA_AT, ENTITY_ID);
         verify(privateFilingHistoryDelete).execute();
         verifyNoInteractions(responseHandler);
     }
@@ -173,19 +181,19 @@ class FilingHistoryApiClientTest {
         when(internalApiClientFactory.get()).thenReturn(internalApiClient);
         when(internalApiClient.getHttpClient()).thenReturn(apiClient);
         when(internalApiClient.privateDeltaResourceHandler()).thenReturn(privateDeltaResourceHandler);
-        when(privateDeltaResourceHandler.deleteFilingHistory(anyString())).thenReturn(privateFilingHistoryDelete);
+        when(privateDeltaResourceHandler.deleteFilingHistory(anyString(), anyString(), anyString())).thenReturn(privateFilingHistoryDelete);
         when(privateFilingHistoryDelete.execute()).thenThrow(exceptionClass);
 
         DataMapHolder.get().requestId(REQUEST_ID);
-        final String expectedUri = PRE_FORMAT_DELETE_URI.formatted(ENTITY_ID);
+        final String expectedUri = PRE_FORMAT_DELETE_URI.formatted(COMPANY_NUMBER, TRANSACTION_ID);
 
         // when
-        filingHistoryApiClient.deleteFilingHistory(ENTITY_ID);
+        filingHistoryApiClient.deleteFilingHistory(API_CLIENT_REQUEST);
 
         // then
         verify(apiClient).setRequestId(REQUEST_ID);
         verify(internalApiClient).privateDeltaResourceHandler();
-        verify(privateDeltaResourceHandler).deleteFilingHistory(expectedUri);
+        verify(privateDeltaResourceHandler).deleteFilingHistory(expectedUri, DELTA_AT, ENTITY_ID);
         verify(privateFilingHistoryDelete).execute();
         verify(responseHandler).handle(any(exceptionClass));
     }
@@ -198,20 +206,36 @@ class FilingHistoryApiClientTest {
         when(internalApiClientFactory.get()).thenReturn(internalApiClient);
         when(internalApiClient.getHttpClient()).thenReturn(apiClient);
         when(internalApiClient.privateDeltaResourceHandler()).thenReturn(privateDeltaResourceHandler);
-        when(privateDeltaResourceHandler.deleteFilingHistory(anyString())).thenReturn(privateFilingHistoryDelete);
+        when(privateDeltaResourceHandler.deleteFilingHistory(anyString(), anyString(), anyString())).thenReturn(privateFilingHistoryDelete);
         when(privateFilingHistoryDelete.execute()).thenThrow(exceptionClass);
 
         DataMapHolder.get().requestId(REQUEST_ID);
-        final String expectedUri = PRE_FORMAT_DELETE_URI.formatted(ENTITY_ID);
+        final String expectedUri = PRE_FORMAT_DELETE_URI.formatted(COMPANY_NUMBER, TRANSACTION_ID);
 
         // when
-        filingHistoryApiClient.deleteFilingHistory(ENTITY_ID);
+        filingHistoryApiClient.deleteFilingHistory(API_CLIENT_REQUEST);
 
         // then
         verify(apiClient).setRequestId(REQUEST_ID);
         verify(internalApiClient).privateDeltaResourceHandler();
-        verify(privateDeltaResourceHandler).deleteFilingHistory(expectedUri);
+        verify(privateDeltaResourceHandler).deleteFilingHistory(expectedUri, DELTA_AT, ENTITY_ID);
         verify(privateFilingHistoryDelete).execute();
         verify(responseHandler).handle(any(exceptionClass));
     }
-}
+
+    @Test
+    void deleteShouldThrowIllegalArgumentExceptionWhenDeltaAtIsMissing() {
+        // given
+        DeleteApiClientRequest MISSING_DELTA_AT_REQUEST =
+                new DeleteApiClientRequest("MzA0Mzk3MjY3NXNhbHQ", "12345678",
+                        "1234567891", null);
+        // when
+        Executable actual = () -> filingHistoryApiClient.deleteFilingHistory(MISSING_DELTA_AT_REQUEST);
+
+        // then
+        assertThrows(IllegalArgumentException.class, actual);
+        verifyNoInteractions(internalApiClient);
+        verifyNoInteractions(privateDeltaResourceHandler);
+        verifyNoInteractions(privateFilingHistoryDelete);
+        verifyNoInteractions(responseHandler);
+    }}

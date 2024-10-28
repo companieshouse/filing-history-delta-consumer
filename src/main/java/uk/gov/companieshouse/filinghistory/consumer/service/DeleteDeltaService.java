@@ -11,15 +11,29 @@ public class DeleteDeltaService implements DeltaService {
 
     private final FilingHistoryDeltaDeserialiser deserialiser;
     private final FilingHistoryApiClient apiClient;
+    private final TransactionKindService kindService;
 
-    public DeleteDeltaService(FilingHistoryDeltaDeserialiser deserialiser, FilingHistoryApiClient apiClient) {
+    public DeleteDeltaService(FilingHistoryDeltaDeserialiser deserialiser, FilingHistoryApiClient apiClient,
+            TransactionKindService kindService) {
         this.deserialiser = deserialiser;
         this.apiClient = apiClient;
+        this.kindService = kindService;
     }
 
     @Override
     public void process(ChsDelta delta) {
         FilingHistoryDeleteDelta deleteDelta = deserialiser.deserialiseFilingHistoryDeleteDelta(delta.getData());
-        apiClient.deleteFilingHistory(deleteDelta.getEntityId());
+
+        TransactionKindCriteria criteria = new TransactionKindCriteria(
+                deleteDelta.getEntityId(),
+                deleteDelta.getParentEntityId(),
+                deleteDelta.getFormType(),
+                deleteDelta.getParentFormType(),
+                deleteDelta.getBarcode());
+
+        TransactionKindResult kindResult = kindService.encodeIdByTransactionKind(criteria);
+        DeleteApiClientRequest clientRequest = new DeleteApiClientRequest(kindResult.encodedId(),
+                deleteDelta.getCompanyNumber(), deleteDelta.getEntityId(), deleteDelta.getDeltaAt());
+        apiClient.deleteFilingHistory(clientRequest);
     }
 }
