@@ -15,8 +15,6 @@ import uk.gov.companieshouse.logging.LoggerFactory;
 
 @Component
 public class TransactionKindService {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(NAMESPACE);
     private static final String ANNOTATION = "ANNOTATION";
     private static final String RES_15 = "RES15";
 
@@ -62,7 +60,7 @@ public class TransactionKindService {
         return new TransactionKindResult(encodedId, kindEnum);
     }
 
-    public String encodeTransactionId(String id) {
+    private String encodeTransactionId(String id) {
         String encodedId = StringUtils.isBlank(id) ? id
                 : Base64.encodeBase64URLSafeString((trim(id) + transactionIdSalt).getBytes(StandardCharsets.UTF_8));
         DataMapHolder.get().transactionId(encodedId);

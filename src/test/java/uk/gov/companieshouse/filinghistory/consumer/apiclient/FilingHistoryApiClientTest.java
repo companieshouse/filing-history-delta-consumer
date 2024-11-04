@@ -38,8 +38,7 @@ class FilingHistoryApiClientTest {
     private static final String REQUEST_ID = "request_id";
     private static final String DELTA_AT = "20240219123045999999";
     private static final DeleteApiClientRequest API_CLIENT_REQUEST =
-            new DeleteApiClientRequest("MzA0Mzk3MjY3NXNhbHQ", "12345678",
-                    "1234567891", "20240219123045999999");
+            new DeleteApiClientRequest(TRANSACTION_ID, COMPANY_NUMBER,ENTITY_ID, DELTA_AT);
 
     @InjectMocks
     private FilingHistoryApiClient filingHistoryApiClient;
@@ -222,20 +221,4 @@ class FilingHistoryApiClientTest {
         verify(privateFilingHistoryDelete).execute();
         verify(responseHandler).handle(any(exceptionClass));
     }
-
-    @Test
-    void deleteShouldThrowIllegalArgumentExceptionWhenDeltaAtIsMissing() {
-        // given
-        DeleteApiClientRequest MISSING_DELTA_AT_REQUEST =
-                new DeleteApiClientRequest("MzA0Mzk3MjY3NXNhbHQ", "12345678",
-                        "1234567891", null);
-        // when
-        Executable actual = () -> filingHistoryApiClient.deleteFilingHistory(MISSING_DELTA_AT_REQUEST);
-
-        // then
-        assertThrows(IllegalArgumentException.class, actual);
-        verifyNoInteractions(internalApiClient);
-        verifyNoInteractions(privateDeltaResourceHandler);
-        verifyNoInteractions(privateFilingHistoryDelete);
-        verifyNoInteractions(responseHandler);
-    }}
+}

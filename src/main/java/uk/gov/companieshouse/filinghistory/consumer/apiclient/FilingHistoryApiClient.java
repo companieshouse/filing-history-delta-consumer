@@ -19,10 +19,9 @@ public class FilingHistoryApiClient {
 
     private static final String PUT_REQUEST_URI = "/company/%s/filing-history/%s/internal";
     private static final String DELETE_REQUEST_URI = "/company/%s/filing-history/%s/internal";
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(NAMESPACE);
     private final Supplier<InternalApiClient> internalApiClientFactory;
     private final ResponseHandler responseHandler;
-    private static final Logger LOGGER = LoggerFactory.getLogger(NAMESPACE);
 
     public FilingHistoryApiClient(Supplier<InternalApiClient> internalApiClientFactory, ResponseHandler responseHandler) {
         this.internalApiClientFactory = internalApiClientFactory;
@@ -49,12 +48,6 @@ public class FilingHistoryApiClient {
     }
 
     public void deleteFilingHistory(DeleteApiClientRequest apiClientRequest) {
-        String deltaAt = apiClientRequest.deltaAt();
-        if (StringUtils.isBlank(deltaAt)) {
-            LOGGER.error("Missing delta_at in request", DataMapHolder.getLogMap());
-            throw new IllegalArgumentException("delta_at null or empty");
-        }
-
         InternalApiClient client = internalApiClientFactory.get();
         client.getHttpClient().setRequestId(DataMapHolder.getRequestId());
 
@@ -64,7 +57,8 @@ public class FilingHistoryApiClient {
 
         try {
             client.privateDeltaResourceHandler()
-                    .deleteFilingHistory(formattedUri, deltaAt, apiClientRequest.entityId())
+                    .deleteFilingHistory(formattedUri, apiClientRequest.deltaAt(),
+                            apiClientRequest.entityId())
                     .execute();
         } catch (ApiErrorResponseException ex) {
             responseHandler.handle(ex);
