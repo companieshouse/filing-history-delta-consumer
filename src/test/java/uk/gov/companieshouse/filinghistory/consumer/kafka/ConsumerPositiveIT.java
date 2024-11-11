@@ -115,10 +115,11 @@ class ConsumerPositiveIT extends AbstractKafkaIT {
         writer.write(new ChsDelta(delta, 0, "context_id", true), encoder);
 
         FilingHistoryDeleteDelta deleteDelta = objectMapper.readValue(delta, FilingHistoryDeleteDelta.class);
-        String entityId = deleteDelta.getEntityId();
+        String companyNumber = deleteDelta.getCompanyNumber();
+        String transactionId = "MzA0Mzk3MjY3NXNhbHQ";
 
-        final String expectedRequestUri = "/filing-history/%s/internal".formatted(
-                entityId);
+        final String expectedRequestUri = "/company/%s/filing-history/%s/internal".formatted(
+                companyNumber, transactionId);
 
         stubFor(delete(urlEqualTo(expectedRequestUri))
                 .willReturn(aResponse()
