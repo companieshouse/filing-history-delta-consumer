@@ -29,7 +29,7 @@ public class FormatDate extends AbstractTransformer {
     private static final DateTimeFormatter INPUT_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
     private static final DateTimeFormatter SLASHES_FORMATTER = DateTimeFormatter.ofPattern("d/M/yyyy");
     private static final DateTimeFormatter TWO_YEAR_SLASHES_FORMATTER = new DateTimeFormatterBuilder()
-            .appendPattern("d/MM/")
+            .appendPattern("d/M/")
             .appendValueReduced(ChronoField.YEAR, 2, 2, 1970)
             .toFormatter();
     private static final Pattern ISO_DATE_PATTERN = Pattern.compile("^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$");
