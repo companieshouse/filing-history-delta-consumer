@@ -26,9 +26,9 @@ public class FormatDate extends AbstractTransformer {
 
     private static final Logger logger = LoggerFactory.getLogger(NAMESPACE);
 
-    private static final DateTimeFormatter INPUT_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
-    private static final DateTimeFormatter SLASHES_FORMATTER = DateTimeFormatter.ofPattern("d/M/yyyy");
-    private static final DateTimeFormatter TWO_YEAR_SLASHES_FORMATTER = new DateTimeFormatterBuilder()
+    private static final DateTimeFormatter NO_SLASHES = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+    private static final DateTimeFormatter FOUR_DIGIT_YEAR_SLASHES = DateTimeFormatter.ofPattern("d/M/yyyy");
+    private static final DateTimeFormatter TWO_DIGIT_YEAR_SLASHES = new DateTimeFormatterBuilder()
             .appendPattern("d/M/")
             .appendValueReduced(ChronoField.YEAR, 2, 2, 1970)
             .toFormatter();
@@ -56,21 +56,21 @@ public class FormatDate extends AbstractTransformer {
     }
 
     private String doFormat(String nodeText) {
-
         try {
             if (StringUtils.isEmpty(nodeText)) {
                 return nodeText;
             }
             ZonedDateTime nodeTextAsDate;
             boolean hasSlash = nodeText.contains("/");
-            if (hasSlash && nodeText.length() > 8) {
-                nodeTextAsDate = LocalDate.parse(nodeText, SLASHES_FORMATTER).atStartOfDay(UTC);
-            } else if (nodeText.length() == 8 && !hasSlash) {
-                nodeTextAsDate = LocalDate.parse(nodeText, DateTimeFormatter.BASIC_ISO_DATE).atStartOfDay(UTC);
+            String year = nodeText.substring(nodeText.lastIndexOf("/") + 1);
+            if (hasSlash && year.length() == 4) {
+                nodeTextAsDate = LocalDate.parse(nodeText, FOUR_DIGIT_YEAR_SLASHES).atStartOfDay(UTC);
+            } else if (hasSlash) {
+                nodeTextAsDate = LocalDate.parse(nodeText, TWO_DIGIT_YEAR_SLASHES).atStartOfDay(UTC);
             } else if (nodeText.length() == 14) {
-                nodeTextAsDate = LocalDateTime.parse(nodeText, INPUT_FORMATTER).atZone(UTC);
+                nodeTextAsDate = LocalDateTime.parse(nodeText, NO_SLASHES).atZone(UTC);
             } else {
-                nodeTextAsDate = LocalDate.parse(nodeText, TWO_YEAR_SLASHES_FORMATTER).atStartOfDay(UTC);
+                nodeTextAsDate = LocalDate.parse(nodeText, DateTimeFormatter.BASIC_ISO_DATE).atStartOfDay(UTC);
             }
             return DateTimeFormatter.ISO_INSTANT.format(nodeTextAsDate.toInstant());
         } catch (Exception e) {
