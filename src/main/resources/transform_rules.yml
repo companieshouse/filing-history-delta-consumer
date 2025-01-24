@@ -6349,6 +6349,30 @@
     eq:
       data.type: AA
     like:
+      data.description: '(^FILING EXEMPTION SUBSIDIARY ACCOUNTS MADE UP TO (?<madeUpDate>\d+\D\d+\D\d+)$)'
+  then:
+    set:
+      data.category: accounts
+      data.description: accounts-with-accounts-type-filing-exemption-subsiduary
+      original_description: '[% data.description | sentence_case %]'
+      data.action_date: '[% madeUpDate | bson_date %]'
+      data.description_values.made_up_date: '[% madeUpDate | bson_date %]'
+- when:
+    eq:
+      data.type: AA
+    like:
+      data.description: '^(?i:(?<madeUpDate>\d+\D\d+\D\d+) FILING EXEMPTION SUBSIDUARY)'
+  then:
+    set:
+      data.category: accounts
+      data.description: accounts-with-accounts-type-filing-exemption-subsiduary
+      original_description: '[% data.description | sentence_case %]'
+      data.action_date: '[% madeUpDate | bson_date %]'
+      data.description_values.made_up_date: '[% madeUpDate | bson_date %]'
+- when:
+    eq:
+      data.type: AA
+    like:
       data.description: '^(?i:.*?(?<madeUpDate>\d+\D\d+\D\d+).*)$'
   then:
     set:
