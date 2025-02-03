@@ -19153,7 +19153,7 @@
     eq:
       data.type: RP09
     like:
-      data.description: '^(?i:Member''s service address changed to (?<companyNumber>.+?) - (?<defaultAddress>.+?), for (?<officerName>.+?) on (?<changeDate>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:Members service address changed to (?<companyNumber>.+?) - (?<defaultAddress>.+?), for (?<officerName>.+?) on (?<changeDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: address
@@ -19181,7 +19181,7 @@
     eq:
       data.type: RP09
     like:
-      data.description: '^(?i:Member''s registered or principal office address changed to (?<companyNumber>.+?) - (?<defaultAddress>.+?), for (?<officerName>.+?) on (?<changeDate>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:Members registered or principal office address changed to (?<companyNumber>.+?) - (?<defaultAddress>.+?), for (?<officerName>.+?) on (?<changeDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: address
@@ -19209,20 +19209,6 @@
     eq:
       data.type: RP10
     like:
-      data.description: '^(?i:Member''s service address changed to (?<companyNumber>.+?) - (?<defaultAddress>.+?), for (?<pscName>.+?) on (?<changeDate>\d+\D\d+\D\d+))$'
-  then:
-    set:
-      data.category: address
-      data.description: default-companies-house-service-address-applied-psc
-      original_description: '[% data.description | sentence_case %]'
-      data.description_values.company_number: '[% companyNumber | sentence_case %]'
-      data.description_values.psc_name: '[% pscName | title_case %]'
-      data.description_values.default_address: '[% defaultAddress | address_case %]'
-      data.description_values.change_date: '[% changeDate | bson_date %]'
-- when:
-    eq:
-      data.type: RP10
-    like:
       data.description: '^(?i:PSC''s registered or principal office address changed to (?<companyNumber>.+?) - (?<defaultAddress>.+?), for (?<pscName>.+?) on (?<changeDate>\d+\D\d+\D\d+))$'  then:
     set:
       data.category: address
@@ -19236,33 +19222,7 @@
     eq:
       data.type: RP10
     like:
-      data.description: '^(?i:Member''s registered or principal office address changed to (?<companyNumber>.+?) - (?<defaultAddress>.+?), for (?<pscName>.+?) on (?<changeDate>\d+\D\d+\D\d+))$'  then:
-    set:
-      data.category: address
-      data.description: default-companies-house-service-address-applied-psc
-      original_description: '[% data.description | sentence_case %]'
-      data.description_values.company_number: '[% companyNumber | sentence_case %]'
-      data.description_values.psc_name: '[% pscName | title_case %]'
-      data.description_values.default_address: '[% defaultAddress | address_case %]'
-      data.description_values.change_date: '[% changeDate | bson_date %]'
-- when:
-    eq:
-      data.type: RP10
-    like:
       data.description: '^(?i:PSC''s principal office address changed to (?<companyNumber>.+?) - (?<defaultAddress>.+?), for (?<pscName>.+?) on (?<changeDate>\d+\D\d+\D\d+))$'  then:
-    set:
-      data.category: address
-      data.description: default-companies-house-service-address-applied-psc
-      original_description: '[% data.description | sentence_case %]'
-      data.description_values.company_number: '[% companyNumber | sentence_case %]'
-      data.description_values.psc_name: '[% pscName | title_case %]'
-      data.description_values.default_address: '[% defaultAddress | address_case %]'
-      data.description_values.change_date: '[% changeDate | bson_date %]'
-- when:
-    eq:
-      data.type: RP10
-    like:
-      data.description: '^(?i:Member''s principal office address changed to (?<companyNumber>.+?) - (?<defaultAddress>.+?), for (?<pscName>.+?) on (?<changeDate>\d+\D\d+\D\d+))$'  then:
     set:
       data.category: address
       data.description: default-companies-house-service-address-applied-psc
