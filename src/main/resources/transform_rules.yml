@@ -19195,7 +19195,7 @@
     eq:
       data.type: RP10
     like:
-      data.description: '^(?i:PSC''s service address changed to (?<companyNumber>.+?) - (?<defaultAddress>.+?), for (?<pscName>.+?) on (?<changeDate>\d+\D\d+\D\d+))$'  then:
+      data.description: '^(?i:PSC''s service address changed to (?<companyNumber>.+?) - (?<defaultAddress>.+?), for (?<pscName>.+?) on (?<changeDate>\d+\D\d+\D\d+))$'  
   then:
     set:
       data.category: address
@@ -19209,7 +19209,8 @@
     eq:
       data.type: RP10
     like:
-      data.description: '^(?i:PSC''s registered or principal office address changed to (?<companyNumber>.+?) - (?<defaultAddress>.+?), for (?<pscName>.+?) on (?<changeDate>\d+\D\d+\D\d+))$'  then:
+      data.description: '^(?i:PSC''s registered or principal office address changed to (?<companyNumber>.+?) - (?<defaultAddress>.+?), for (?<pscName>.+?) on (?<changeDate>\d+\D\d+\D\d+))$'  
+  then:
     set:
       data.category: address
       data.description: default-companies-house-service-address-applied-psc
@@ -19222,7 +19223,8 @@
     eq:
       data.type: RP10
     like:
-      data.description: '^(?i:PSC''s principal office address changed to (?<companyNumber>.+?) - (?<defaultAddress>.+?), for (?<pscName>.+?) on (?<changeDate>\d+\D\d+\D\d+))$'  then:
+      data.description: '^(?i:PSC''s principal office address changed to (?<companyNumber>.+?) - (?<defaultAddress>.+?), for (?<pscName>.+?) on (?<changeDate>\d+\D\d+\D\d+))$'
+  then:
     set:
       data.category: address
       data.description: default-companies-house-service-address-applied-psc
