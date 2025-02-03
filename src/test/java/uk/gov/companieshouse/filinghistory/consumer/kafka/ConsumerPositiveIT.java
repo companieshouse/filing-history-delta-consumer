@@ -3,6 +3,7 @@ package uk.gov.companieshouse.filinghistory.consumer.kafka;
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.delete;
 import static com.github.tomakehurst.wiremock.client.WireMock.deleteRequestedFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.put;
 import static com.github.tomakehurst.wiremock.client.WireMock.requestMadeFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
@@ -101,7 +102,9 @@ class ConsumerPositiveIT extends AbstractKafkaIT {
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, ERROR_TOPIC)).isZero();
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, INVALID_TOPIC)).isZero();
 
-        verify(requestMadeFor(new PutRequestMatcher(expectedRequestUri, expectedRequestBody)));
+        verify(requestMadeFor(new PutRequestMatcher(expectedRequestUri, expectedRequestBody))
+                .withHeader("X-REQUEST-ID", equalTo("context_id"))
+        );
     }
 
     @Test
@@ -138,6 +141,11 @@ class ConsumerPositiveIT extends AbstractKafkaIT {
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, ERROR_TOPIC)).isZero();
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, INVALID_TOPIC)).isZero();
 
-        verify(deleteRequestedFor(urlEqualTo(expectedRequestUri)));
+        verify(deleteRequestedFor(urlEqualTo(expectedRequestUri))
+                .withHeader("X-REQUEST-ID", equalTo("context_id"))
+                .withHeader("X-DELTA-AT", equalTo("20230724093435661593"))
+                .withHeader("X-ENTITY-ID", equalTo("131854271"))
+                .withHeader("X-PARENT-ENTITY-ID", equalTo("3043972675"))
+        );
     }
 }

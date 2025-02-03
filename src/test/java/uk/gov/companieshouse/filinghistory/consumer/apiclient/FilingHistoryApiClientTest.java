@@ -1,6 +1,5 @@
 package uk.gov.companieshouse.filinghistory.consumer.apiclient;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
@@ -10,7 +9,6 @@ import static org.mockito.Mockito.when;
 import java.util.function.Supplier;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.function.Executable;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -35,10 +33,17 @@ class FilingHistoryApiClientTest {
     private static final String COMPANY_NUMBER = "12345678";
     private static final String TRANSACTION_ID = "MzA0Mzk3MjY3NXNhbHQ";
     private static final String ENTITY_ID = "1234567891";
+    private static final String PARENT_ENTITY_ID = "2234567891";
     private static final String REQUEST_ID = "request_id";
     private static final String DELTA_AT = "20240219123045999999";
     private static final DeleteApiClientRequest API_CLIENT_REQUEST =
-            new DeleteApiClientRequest(TRANSACTION_ID, COMPANY_NUMBER,ENTITY_ID, DELTA_AT);
+            DeleteApiClientRequest.builder()
+                    .transactionId(TRANSACTION_ID)
+                    .companyNumber(COMPANY_NUMBER)
+                    .entityId(ENTITY_ID)
+                    .deltaAt(DELTA_AT)
+                    .parentEntityId(PARENT_ENTITY_ID)
+                    .build();
 
     @InjectMocks
     private FilingHistoryApiClient filingHistoryApiClient;
@@ -155,7 +160,7 @@ class FilingHistoryApiClientTest {
         when(internalApiClientFactory.get()).thenReturn(internalApiClient);
         when(internalApiClient.getHttpClient()).thenReturn(apiClient);
         when(internalApiClient.privateDeltaResourceHandler()).thenReturn(privateDeltaResourceHandler);
-        when(privateDeltaResourceHandler.deleteFilingHistory(anyString(), anyString(), anyString()))
+        when(privateDeltaResourceHandler.deleteFilingHistory(anyString(), anyString(), anyString(), anyString()))
                 .thenReturn(privateFilingHistoryDelete);
 
         DataMapHolder.get().requestId(REQUEST_ID);
@@ -167,7 +172,7 @@ class FilingHistoryApiClientTest {
         // then
         verify(apiClient).setRequestId(REQUEST_ID);
         verify(internalApiClient).privateDeltaResourceHandler();
-        verify(privateDeltaResourceHandler).deleteFilingHistory(expectedUri, DELTA_AT, ENTITY_ID);
+        verify(privateDeltaResourceHandler).deleteFilingHistory(expectedUri, DELTA_AT, ENTITY_ID, PARENT_ENTITY_ID);
         verify(privateFilingHistoryDelete).execute();
         verifyNoInteractions(responseHandler);
     }
@@ -180,7 +185,8 @@ class FilingHistoryApiClientTest {
         when(internalApiClientFactory.get()).thenReturn(internalApiClient);
         when(internalApiClient.getHttpClient()).thenReturn(apiClient);
         when(internalApiClient.privateDeltaResourceHandler()).thenReturn(privateDeltaResourceHandler);
-        when(privateDeltaResourceHandler.deleteFilingHistory(anyString(), anyString(), anyString())).thenReturn(privateFilingHistoryDelete);
+        when(privateDeltaResourceHandler.deleteFilingHistory(anyString(), anyString(), anyString(), anyString())).thenReturn(
+                privateFilingHistoryDelete);
         when(privateFilingHistoryDelete.execute()).thenThrow(exceptionClass);
 
         DataMapHolder.get().requestId(REQUEST_ID);
@@ -192,7 +198,7 @@ class FilingHistoryApiClientTest {
         // then
         verify(apiClient).setRequestId(REQUEST_ID);
         verify(internalApiClient).privateDeltaResourceHandler();
-        verify(privateDeltaResourceHandler).deleteFilingHistory(expectedUri, DELTA_AT, ENTITY_ID);
+        verify(privateDeltaResourceHandler).deleteFilingHistory(expectedUri, DELTA_AT, ENTITY_ID, PARENT_ENTITY_ID);
         verify(privateFilingHistoryDelete).execute();
         verify(responseHandler).handle(any(exceptionClass));
     }
@@ -205,7 +211,8 @@ class FilingHistoryApiClientTest {
         when(internalApiClientFactory.get()).thenReturn(internalApiClient);
         when(internalApiClient.getHttpClient()).thenReturn(apiClient);
         when(internalApiClient.privateDeltaResourceHandler()).thenReturn(privateDeltaResourceHandler);
-        when(privateDeltaResourceHandler.deleteFilingHistory(anyString(), anyString(), anyString())).thenReturn(privateFilingHistoryDelete);
+        when(privateDeltaResourceHandler.deleteFilingHistory(anyString(), anyString(), anyString(), anyString())).thenReturn(
+                privateFilingHistoryDelete);
         when(privateFilingHistoryDelete.execute()).thenThrow(exceptionClass);
 
         DataMapHolder.get().requestId(REQUEST_ID);
@@ -217,7 +224,7 @@ class FilingHistoryApiClientTest {
         // then
         verify(apiClient).setRequestId(REQUEST_ID);
         verify(internalApiClient).privateDeltaResourceHandler();
-        verify(privateDeltaResourceHandler).deleteFilingHistory(expectedUri, DELTA_AT, ENTITY_ID);
+        verify(privateDeltaResourceHandler).deleteFilingHistory(expectedUri, DELTA_AT, ENTITY_ID, PARENT_ENTITY_ID);
         verify(privateFilingHistoryDelete).execute();
         verify(responseHandler).handle(any(exceptionClass));
     }

@@ -18,12 +18,23 @@ import uk.gov.companieshouse.filinghistory.consumer.serdes.FilingHistoryDeltaDes
 @ExtendWith(MockitoExtension.class)
 class DeleteDeltaServiceTest {
 
+    private static final String CONTEXT_ID = "context_id";
+    private static final String TRANSACTION_ID = "ABCD1234EFGH";
+    private static final String COMPANY_NUMBER = "12345678";
+    private static final String ENTITY_ID = "98765432";
+    private static final String DELTA_AT = "20240219123045999999";
+    private static final String PARENT_ENTITY_ID = "88765432";
     private static final String DELTA_DATA = "delta";
     private static final TransactionKindResult KIND_RESULT =
-            new TransactionKindResult("ABCD1234EFGH", TransactionKindEnum.ANNOTATION);
+            new TransactionKindResult(TRANSACTION_ID, TransactionKindEnum.ANNOTATION);
     private static final DeleteApiClientRequest API_CLIENT_REQUEST =
-            new DeleteApiClientRequest("ABCD1234EFGH", "12345678",
-                    "98765432", "20240219123045999999");
+            DeleteApiClientRequest.builder()
+                    .transactionId(TRANSACTION_ID)
+                    .companyNumber(COMPANY_NUMBER)
+                    .entityId(ENTITY_ID)
+                    .deltaAt(DELTA_AT)
+                    .parentEntityId(PARENT_ENTITY_ID)
+                    .build();
 
     @InjectMocks
     private DeleteDeltaService service;
@@ -41,11 +52,12 @@ class DeleteDeltaServiceTest {
         // given
         when(deserialiser.deserialiseFilingHistoryDeleteDelta(any())).thenReturn(delta);
         when(kindService.encodeIdByTransactionKind(any())).thenReturn(KIND_RESULT);
-        when(delta.getDeltaAt()).thenReturn("20240219123045999999");
-        when(delta.getEntityId()).thenReturn("98765432");
-        when(delta.getCompanyNumber()).thenReturn("12345678");
+        when(delta.getDeltaAt()).thenReturn(DELTA_AT);
+        when(delta.getEntityId()).thenReturn(ENTITY_ID);
+        when(delta.getCompanyNumber()).thenReturn(COMPANY_NUMBER);
+        when(delta.getParentEntityId()).thenReturn(PARENT_ENTITY_ID);
 
-        ChsDelta chsDelta = new ChsDelta(DELTA_DATA, 0, "contextId", true);
+        ChsDelta chsDelta = new ChsDelta(DELTA_DATA, 0, CONTEXT_ID, true);
 
         // when
         service.process(chsDelta);

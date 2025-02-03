@@ -1,6 +1,7 @@
 package uk.gov.companieshouse.filinghistory.consumer.kafka;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.put;
 import static com.github.tomakehurst.wiremock.client.WireMock.requestMadeFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
@@ -192,6 +193,8 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, ERROR_TOPIC)).isZero();
         assertThat(KafkaUtils.noOfRecordsForTopic(consumerRecords, INVALID_TOPIC)).isZero();
 
-        verify(requestMadeFor(new PutRequestMatcher(expectedRequestUri, expectedRequestBody)));
+        verify(requestMadeFor(new PutRequestMatcher(expectedRequestUri, expectedRequestBody))
+                .withHeader("X-REQUEST-ID", equalTo("context_id"))
+        );
     }
 }
