@@ -19139,7 +19139,7 @@
     eq:
       data.type: RP09
     like:
-      data.description: '^(?i:Director''s \(or Secretary''s\) \(or Member''s\) \(or PSC''s\) service address changed to (?<companyNumber>.+?) - (?<defaultAddress>.+?), for (?<officerName>.+?) on (?<changeDate>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:Director''s \(or Secretary''s\) \(or Member''s\) service address changed to (?<companyNumber>.+?) - (?<defaultAddress>.+?), for (?<officerName>.+?) on (?<changeDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: address
@@ -19153,7 +19153,7 @@
     eq:
       data.type: RP09
     like:
-      data.description: '^(?i:Director''s \(or Secretary''s\) \(or Member''s\) \(or PSC''s\) registered or principal office address changed to (?<companyNumber>.+?) - (?<defaultAddress>.+?), for (?<officerName>.+?) on (?<changeDate>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:Director''s \(or Secretary''s\) \(or Member''s\) registered or principal office address changed to (?<companyNumber>.+?) - (?<defaultAddress>.+?), for (?<officerName>.+?) on (?<changeDate>\d+\D\d+\D\d+))$'
   then:
     set:
       data.category: address
