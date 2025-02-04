@@ -32,8 +32,15 @@ public class DeleteDeltaService implements DeltaService {
                 deleteDelta.getBarcode());
 
         TransactionKindResult kindResult = kindService.encodeIdByTransactionKind(criteria);
-        DeleteApiClientRequest clientRequest = new DeleteApiClientRequest(kindResult.encodedId(),
-                deleteDelta.getCompanyNumber(), deleteDelta.getEntityId(), deleteDelta.getDeltaAt());
+
+        DeleteApiClientRequest clientRequest = DeleteApiClientRequest.builder()
+                .transactionId(kindResult.encodedId())
+                .companyNumber(deleteDelta.getCompanyNumber())
+                .entityId(deleteDelta.getEntityId())
+                .deltaAt(deleteDelta.getDeltaAt())
+                .parentEntityId(deleteDelta.getParentEntityId())
+                .build();
+
         apiClient.deleteFilingHistory(clientRequest);
     }
 }

@@ -1,9 +1,6 @@
 package uk.gov.companieshouse.filinghistory.consumer.apiclient;
 
-import static uk.gov.companieshouse.filinghistory.consumer.Application.NAMESPACE;
-
 import java.util.function.Supplier;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import uk.gov.companieshouse.api.InternalApiClient;
 import uk.gov.companieshouse.api.error.ApiErrorResponseException;
@@ -11,8 +8,6 @@ import uk.gov.companieshouse.api.filinghistory.InternalFilingHistoryApi;
 import uk.gov.companieshouse.api.handler.exception.URIValidationException;
 import uk.gov.companieshouse.filinghistory.consumer.logging.DataMapHolder;
 import uk.gov.companieshouse.filinghistory.consumer.service.DeleteApiClientRequest;
-import uk.gov.companieshouse.logging.Logger;
-import uk.gov.companieshouse.logging.LoggerFactory;
 
 @Component
 public class FilingHistoryApiClient {
@@ -57,7 +52,7 @@ public class FilingHistoryApiClient {
         try {
             client.privateDeltaResourceHandler()
                     .deleteFilingHistory(formattedUri, apiClientRequest.deltaAt(),
-                            apiClientRequest.entityId())
+                            apiClientRequest.entityId(), apiClientRequest.parentEntityId())
                     .execute();
         } catch (ApiErrorResponseException ex) {
             responseHandler.handle(ex);

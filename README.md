@@ -63,7 +63,7 @@ immediately to the <br>`filing-history-delta-filing-history-delta-consumer-inval
 
 ## Building the docker image
 ```bash
-mvn package -Dskip.unit.tests=true -Dskip.integration.tests=true jib:dockerBuild
+make docker-image
 ```
 
 ## To make local changes
