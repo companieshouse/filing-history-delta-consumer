@@ -62,6 +62,7 @@ immediately to the <br>`filing-history-delta-filing-history-delta-consumer-inval
 | PORT                          | The port at which the service is hosted in ECS                                                  | 8080                                  |
 
 ## Building the docker image
+
 ```bash
 make docker-image
 ```
