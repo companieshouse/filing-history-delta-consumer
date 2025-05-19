@@ -22,8 +22,6 @@ public class FormTypeConfig {
     @Bean
     public List<String> formTypeBlockList(@Value("${associated-filings.block-list}") final String file) {
         InputStream stream = getClass().getResourceAsStream("/%s".formatted(file));
-        LOGGER.info("TEST");
-
         if (stream == null) {
             LOGGER.error("Block list file not found: [%s]".formatted(file), DataMapHolder.getLogMap());
             throw new NonRetryableException("Block list file not found: [%s]".formatted(file));
