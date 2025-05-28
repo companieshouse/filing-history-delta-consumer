@@ -1,0 +1,22 @@
+{
+  "filing_history": [
+    {
+      "category": "9",
+      "receive_date": "20240910131020",
+      "form_type": "PSC01",
+      "description": "NOTIFICATION OF A PERSON WITH SIGNIFICANT CONTROL JOHN TESTER",
+      "barcode": "XDBC6C3V",
+      "document_id": "000XDBC6C3V9308",
+      "company_number": "14575942",
+      "entity_id": "3435154857",
+      "parent_entity_id": "",
+      "parent_form_type": "",
+      "description_values": {
+        "notification_date": "14/08/2017",
+        "psc_name": "JOHN TESTER"
+      },
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20250507101150570002"
+}
