@@ -16603,11 +16603,27 @@
     eq:
       data.type: PSC01
     like:
-      data.description: '^(?i:NOTIFICATION OF A PERSON WITH SIGNIFICANT CONTROL)$'
+      data.description: '^(?i:NOTIFICATION OF A PERSON WITH SIGNIFICANT CONTROL (?<pscName>.+?))$'
+      original_values.notification_date: '^(?<notificationDate>\d+\D\d+\D\d+)$'
   then:
     set:
       data.category: persons-with-significant-control
-      data.description: notification-of-a-person-with-significant-control-without-name-date
+      data.description: notification-of-a-person-with-significant-control
+      data.description_values.psc_name: '[% pscName | title_case %]'
+      data.subcategory: notifications
+      original_description: '[% data.description | sentence_case %]'
+      data.action_date: '[% notificationDate | bson_date %]'
+      data.description_values.notification_date: '[% notificationDate | bson_date %]'
+- when:
+    eq:
+      data.type: PSC01
+    like:
+      data.description: '^(?i:NOTIFICATION OF A PERSON WITH SIGNIFICANT CONTROL (?<pscName>.+?))$'
+  then:
+    set:
+      data.category: persons-with-significant-control
+      data.description: notification-of-a-person-with-significant-control-with-name
+      data.description_values.psc_name: '[% pscName | title_case %]'
       data.subcategory: notifications
       original_description: '[% data.description | sentence_case %]'
 - when:
@@ -16616,12 +16632,9 @@
   then:
     set:
       data.category: persons-with-significant-control
-      data.description: notification-of-a-person-with-significant-control
-      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
+      data.description: notification-of-a-person-with-significant-control-without-name-date
       data.subcategory: notifications
       original_description: '[% data.description | sentence_case %]'
-      data.action_date: '[% original_values.notification_date | bson_date %]'
-      data.description_values.notification_date: '[% original_values.notification_date | bson_date %]'
 - when:
     eq:
       data.type: PSC02

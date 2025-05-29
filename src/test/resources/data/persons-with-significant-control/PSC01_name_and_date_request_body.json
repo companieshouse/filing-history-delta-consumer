@@ -1,0 +1,33 @@
+{
+  "external_data": {
+    "transaction_id": "MzQzNTE1NDg1N3NhbHQ",
+    "barcode": "XDBC6C3V",
+    "type": "PSC01",
+    "date": "2024-09-10T13:10:20Z",
+    "category": "persons-with-significant-control",
+    "subcategory": "notifications",
+    "description": "notification-of-a-person-with-significant-control",
+    "description_values": {
+      "notification_date": "2017-08-14T00:00:00Z",
+      "psc_name": "John Tester"
+    },
+    "action_date": "2017-08-14T00:00:00Z",
+    "links": {
+      "self": "/company/14575942/filing-history/MzQzNTE1NDg1N3NhbHQ"
+    }
+  },
+  "internal_data": {
+    "entity_id": "3435154857",
+    "company_number": "14575942",
+    "document_id": "000XDBC6C3V9308",
+    "original_description": "Notification of a person with significant control john tester",
+    "original_values": {
+      "notification_date": "14/08/2017",
+      "psc_name": "JOHN TESTER"
+    },
+    "delta_at": "20250507101150570002",
+    "parent_entity_id": "",
+    "transaction_kind": "top-level",
+    "updated_by": "context_id"
+  }
+}
