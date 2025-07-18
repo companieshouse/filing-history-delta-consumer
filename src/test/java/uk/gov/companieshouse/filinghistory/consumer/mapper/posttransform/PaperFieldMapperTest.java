@@ -9,7 +9,7 @@ class PaperFieldMapperTest {
 
     private final PaperFiledMapper mapper = new PaperFiledMapper();
 
-    @ParameterizedTest(name = "Test isPaperFiled should be {2} with barcode: {0}, fileCategory: {1}")
+    @ParameterizedTest(name = "Test isPaperFiled should be {2} with barcode: {0}, formType: {1}")
     @CsvSource(value = {
             "XAITVXAX , null , false",
             "TAITVXAX , null , true",
@@ -26,11 +26,11 @@ class PaperFieldMapperTest {
             
     },
             nullValues = {"null"})
-    void testPaperFieldReturnsBooleanCorrectly(final String barcode, final String fileCategory, final boolean expected) {
+    void testPaperFieldReturnsBooleanCorrectly(final String barcode, final String formType, final boolean expected) {
         // given
 
         // when
-        final boolean actual = mapper.isPaperFiled(barcode, fileCategory);
+        final boolean actual = mapper.isPaperFiled(barcode, formType);
 
         // then
         assertEquals(expected, actual);

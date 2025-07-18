@@ -92,7 +92,7 @@ class ExternalDataMapperTest {
     }
 
         @Test
-    void shouldMapExternalDataWithFileCategoryAnnotation() {
+    void shouldMapExternalDataWithFormTypeAnnotation() {
         // given
         when(subcategoryMapper.map(any())).thenReturn(subcategory);
         when(descriptionValuesMapper.map(any())).thenReturn(descriptionValues);
