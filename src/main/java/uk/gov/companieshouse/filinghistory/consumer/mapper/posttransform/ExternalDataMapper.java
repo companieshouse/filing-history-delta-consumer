@@ -43,6 +43,7 @@ public class ExternalDataMapper {
     ExternalData mapExternalData(JsonNode topLevelNode, String barcode, String encodedId, String companyNumber) {
         JsonNode dataNode = getNestedJsonNodeFromJsonNode(topLevelNode, "data");
         String category = getFieldValueFromJsonNode(dataNode, "category");
+        String formType = getFieldValueFromJsonNode(dataNode, "form_type");
 
         List<Annotation> annotations = Optional.ofNullable(
                         getNestedJsonNodeFromJsonNode(dataNode, "annotations"))
@@ -70,7 +71,7 @@ public class ExternalDataMapper {
                 .barcode(barcode)
                 .descriptionValues(
                         descriptionValuesMapper.map(getNestedJsonNodeFromJsonNode(dataNode, "description_values")))
-                .paperFiled(paperFiledMapper.isPaperFiled(barcode) ? true : null)
+                .paperFiled(paperFiledMapper.isPaperFiled(barcode, formType) ? true : null)
                 .links(linksMapper.map(companyNumber, encodedId))
                 .annotations(annotations)
                 .resolutions(resolutions)
