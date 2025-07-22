@@ -78,6 +78,7 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
             "resolution/LRESSP", "resolution/RES",
 
             "annotation/annotation", "annotation/top_level_annotation",
+            "annotation/non_paper_filed_annotation",
 
             "annual-return/363s", "annual-return/BR3", "annual-return/BR5",
 

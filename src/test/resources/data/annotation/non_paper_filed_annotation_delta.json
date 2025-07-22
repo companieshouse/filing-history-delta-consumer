@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "9",
+      "receive_date": "20111126112755",
+      "form_type": "ANNOTATION",
+      "description": "Any information marked (#) was made unavailable on 26 November 2011 under Section 1088 of the Companies Act 2006",
+      "barcode": "",
+      "document_id": "",
+      "company_number": "07092777",
+      "entity_id": "7048892941",
+      "parent_entity_id": "5048892941",
+      "parent_form_type": "AA",
+      "pre_scanned_batch": "0"
+    }
+  ],
+  "delta_at": "20211029142043360561"
+}
