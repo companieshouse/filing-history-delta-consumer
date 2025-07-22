@@ -38,6 +38,7 @@ class ExternalDataMapperTest {
     private static final String SUBCATEGORY = "termination";
     private static final ObjectMapper MAPPER = TransformerTestingUtils.getMapper();
     private static final String ANNOTATION = "ANNOTATION";
+    private static final String AA = "AA";
 
     @InjectMocks
     private ExternalDataMapper externalDataMapper;
@@ -68,11 +69,11 @@ class ExternalDataMapperTest {
         // given
         when(subcategoryMapper.map(any())).thenReturn(subcategory);
         when(descriptionValuesMapper.map(any())).thenReturn(descriptionValues);
-        when(paperFiledMapper.isPaperFiled(any(), eq(null))).thenReturn(true);
+        when(paperFiledMapper.isPaperFiled(any(), any(), eq(null))).thenReturn(true);
         when(linksMapper.map(any(), any())).thenReturn(links);
         when(annotationsDeserialiser.deserialise(any())).thenReturn(List.of(annotation));
 
-        JsonNode topLevelNode = buildJsonNode(null);
+        JsonNode topLevelNode = buildJsonNode(TYPE, null);
         JsonNode dataNode = topLevelNode.get("data");
         JsonNode descriptionValuesNode = dataNode.get("description_values");
 
@@ -86,7 +87,7 @@ class ExternalDataMapperTest {
         assertEquals(expected, actual);
         verify(subcategoryMapper).map(dataNode);
         verify(descriptionValuesMapper).map(descriptionValuesNode);
-        verify(paperFiledMapper).isPaperFiled(BARCODE, null);
+        verify(paperFiledMapper).isPaperFiled(BARCODE, TYPE, null);
         verify(linksMapper).map(COMPANY_NUMBER, ENCODED_ID);
         verify(annotationsDeserialiser).deserialise(annotations);
     }
@@ -96,15 +97,15 @@ class ExternalDataMapperTest {
         // given
         when(subcategoryMapper.map(any())).thenReturn(subcategory);
         when(descriptionValuesMapper.map(any())).thenReturn(descriptionValues);
-        when(paperFiledMapper.isPaperFiled(any(), eq(ANNOTATION))).thenReturn(false);
+        when(paperFiledMapper.isPaperFiled(any(), eq(ANNOTATION), eq(AA))).thenReturn(false);
         when(linksMapper.map(any(), any())).thenReturn(links);
         when(annotationsDeserialiser.deserialise(any())).thenReturn(List.of(annotation));
 
-        JsonNode topLevelNode = buildJsonNode(ANNOTATION);
+        JsonNode topLevelNode = buildJsonNode(ANNOTATION, AA);
         JsonNode dataNode = topLevelNode.get("data");
         JsonNode descriptionValuesNode = dataNode.get("description_values");
 
-        ExternalData expected = buildExpectedData(null);
+        ExternalData expected = buildExpectedData(null, ANNOTATION);
 
         // when
         ExternalData actual = externalDataMapper.mapExternalData(topLevelNode, BARCODE, ENCODED_ID,
@@ -114,7 +115,7 @@ class ExternalDataMapperTest {
         assertEquals(expected, actual);
         verify(subcategoryMapper).map(dataNode);
         verify(descriptionValuesMapper).map(descriptionValuesNode);
-        verify(paperFiledMapper).isPaperFiled(BARCODE, "ANNOTATION");
+        verify(paperFiledMapper).isPaperFiled(BARCODE, ANNOTATION, AA);
         verify(linksMapper).map(COMPANY_NUMBER, ENCODED_ID);
         verify(annotationsDeserialiser).deserialise(annotations);
     }
@@ -123,7 +124,7 @@ class ExternalDataMapperTest {
     void shouldMapExternalDataWithNullFields() {
         // given
         ExternalData expected = new ExternalData();
-        when(paperFiledMapper.isPaperFiled(any(), any())).thenReturn(false);
+        when(paperFiledMapper.isPaperFiled(any(), any(), any())).thenReturn(false);
 
         // when
         ExternalData actual = externalDataMapper.mapExternalData(null, null, null, null);
@@ -132,22 +133,23 @@ class ExternalDataMapperTest {
         assertEquals(expected, actual);
         verify(subcategoryMapper).map(null);
         verify(descriptionValuesMapper).map(null);
-        verify(paperFiledMapper).isPaperFiled(null, null);
+        verify(paperFiledMapper).isPaperFiled(null, null, null);
         verify(linksMapper).map(null, null);
         verifyNoInteractions(annotationsDeserialiser);
     }
 
-    private JsonNode buildJsonNode(final String formType) {
+    private JsonNode buildJsonNode(final String formType, final String parentFormType) {
         ObjectNode topLevelNode = MAPPER.createObjectNode();
+        topLevelNode.put("parent_form_type", parentFormType);
+
         ObjectNode dataNode = topLevelNode.putObject("data");
 
-        dataNode.put("type", TYPE)
+        dataNode.put("type", formType)
                 .put("date", DATE)
                 .put("category", CATEGORY)
                 .put("subcategory", SUBCATEGORY)
                 .put("description", DESCRIPTION)
-                .put("action_date", DATE)
-                .put("form_type", formType);
+                .put("action_date", DATE);
 
         dataNode.putObject("description_values");
         dataNode.putIfAbsent("annotations", annotations);
@@ -156,10 +158,14 @@ class ExternalDataMapperTest {
     }
 
     private ExternalData buildExpectedData(Boolean isPaperFiled) {
+        return buildExpectedData(isPaperFiled, TYPE);
+    }
+
+    private ExternalData buildExpectedData(Boolean isPaperFiled, String type) {
         return new ExternalData()
                 .transactionId(ENCODED_ID)
                 .barcode(BARCODE)
-                .type(TYPE)
+                .type(type)
                 .date(DATE)
                 .category(CategoryEnum.OFFICERS)
                 .subcategory(subcategory)
