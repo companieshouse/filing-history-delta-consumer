@@ -1,0 +1,37 @@
+{
+  "external_data" : {
+    "transaction_id" : "NTA0ODg5Mjk0MXNhbHQ",
+    "category" : "miscellaneous",
+    "description" : "legacy",
+    "description_values" : {
+      "description" : "Any information marked (#) was made unavailable on 26 November 2011 under Section 1088 of the Companies Act 2006"
+    },
+    "type" : "ANNOTATION",
+    "date" : "2011-11-26T11:27:55Z",
+    "annotations" : [
+      {
+        "annotation" : "Any information marked (#) was made unavailable on 26 November 2011 under Section 1088 of the Companies Act 2006",
+        "category" : "annotation",
+        "date" : "2011-11-26T11:27:55Z",
+        "description" : "annotation",
+        "description_values" : {
+          "description" : "Any information marked (#) was made unavailable on 26 November 2011 under Section 1088 of the Companies Act 2006"
+        },
+        "type" : "ANNOTATION"
+      }
+    ],
+    "links" : {
+      "self" : "/company/07092777/filing-history/NTA0ODg5Mjk0MXNhbHQ"
+    }
+  },
+  "internal_data": {
+    "matched_default": 1,
+    "original_description": "Any information marked (#) was made unavailable on 26 November 2011 under Section 1088 of the Companies Act 2006",
+    "company_number" : "07092777",
+    "entity_id": "7048892941",
+    "parent_entity_id": "5048892941",
+    "delta_at": "20211029142043360561",
+    "updated_by": "context_id",
+    "transaction_kind": "annotation"
+  }
+}

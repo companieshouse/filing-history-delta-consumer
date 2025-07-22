@@ -2,6 +2,7 @@ package uk.gov.companieshouse.filinghistory.consumer.mapper.posttransform;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
@@ -36,6 +37,8 @@ class ExternalDataMapperTest {
     private static final String CATEGORY = "officers";
     private static final String SUBCATEGORY = "termination";
     private static final ObjectMapper MAPPER = TransformerTestingUtils.getMapper();
+    private static final String ANNOTATION = "ANNOTATION";
+    private static final String AA = "AA";
 
     @InjectMocks
     private ExternalDataMapper externalDataMapper;
@@ -66,15 +69,15 @@ class ExternalDataMapperTest {
         // given
         when(subcategoryMapper.map(any())).thenReturn(subcategory);
         when(descriptionValuesMapper.map(any())).thenReturn(descriptionValues);
-        when(paperFiledMapper.isPaperFiled(any())).thenReturn(true);
+        when(paperFiledMapper.isPaperFiled(any(), any(), eq(null))).thenReturn(true);
         when(linksMapper.map(any(), any())).thenReturn(links);
         when(annotationsDeserialiser.deserialise(any())).thenReturn(List.of(annotation));
 
-        JsonNode topLevelNode = buildJsonNode();
+        JsonNode topLevelNode = buildJsonNode(TYPE, null);
         JsonNode dataNode = topLevelNode.get("data");
         JsonNode descriptionValuesNode = dataNode.get("description_values");
 
-        ExternalData expected = buildExpectedData();
+        ExternalData expected = buildExpectedData(true);
 
         // when
         ExternalData actual = externalDataMapper.mapExternalData(topLevelNode, BARCODE, ENCODED_ID,
@@ -84,7 +87,35 @@ class ExternalDataMapperTest {
         assertEquals(expected, actual);
         verify(subcategoryMapper).map(dataNode);
         verify(descriptionValuesMapper).map(descriptionValuesNode);
-        verify(paperFiledMapper).isPaperFiled(BARCODE);
+        verify(paperFiledMapper).isPaperFiled(BARCODE, TYPE, null);
+        verify(linksMapper).map(COMPANY_NUMBER, ENCODED_ID);
+        verify(annotationsDeserialiser).deserialise(annotations);
+    }
+
+        @Test
+    void shouldMapExternalDataWithFormTypeAnnotation() {
+        // given
+        when(subcategoryMapper.map(any())).thenReturn(subcategory);
+        when(descriptionValuesMapper.map(any())).thenReturn(descriptionValues);
+        when(paperFiledMapper.isPaperFiled(any(), eq(ANNOTATION), eq(AA))).thenReturn(false);
+        when(linksMapper.map(any(), any())).thenReturn(links);
+        when(annotationsDeserialiser.deserialise(any())).thenReturn(List.of(annotation));
+
+        JsonNode topLevelNode = buildJsonNode(ANNOTATION, AA);
+        JsonNode dataNode = topLevelNode.get("data");
+        JsonNode descriptionValuesNode = dataNode.get("description_values");
+
+        ExternalData expected = buildExpectedData(null, ANNOTATION);
+
+        // when
+        ExternalData actual = externalDataMapper.mapExternalData(topLevelNode, BARCODE, ENCODED_ID,
+                COMPANY_NUMBER);
+
+        // then
+        assertEquals(expected, actual);
+        verify(subcategoryMapper).map(dataNode);
+        verify(descriptionValuesMapper).map(descriptionValuesNode);
+        verify(paperFiledMapper).isPaperFiled(BARCODE, ANNOTATION, AA);
         verify(linksMapper).map(COMPANY_NUMBER, ENCODED_ID);
         verify(annotationsDeserialiser).deserialise(annotations);
     }
@@ -93,7 +124,7 @@ class ExternalDataMapperTest {
     void shouldMapExternalDataWithNullFields() {
         // given
         ExternalData expected = new ExternalData();
-        when(paperFiledMapper.isPaperFiled(any())).thenReturn(false);
+        when(paperFiledMapper.isPaperFiled(any(), any(), any())).thenReturn(false);
 
         // when
         ExternalData actual = externalDataMapper.mapExternalData(null, null, null, null);
@@ -102,16 +133,18 @@ class ExternalDataMapperTest {
         assertEquals(expected, actual);
         verify(subcategoryMapper).map(null);
         verify(descriptionValuesMapper).map(null);
-        verify(paperFiledMapper).isPaperFiled(null);
+        verify(paperFiledMapper).isPaperFiled(null, null, null);
         verify(linksMapper).map(null, null);
         verifyNoInteractions(annotationsDeserialiser);
     }
 
-    private JsonNode buildJsonNode() {
+    private JsonNode buildJsonNode(final String formType, final String parentFormType) {
         ObjectNode topLevelNode = MAPPER.createObjectNode();
+        topLevelNode.put("parent_form_type", parentFormType);
+
         ObjectNode dataNode = topLevelNode.putObject("data");
 
-        dataNode.put("type", TYPE)
+        dataNode.put("type", formType)
                 .put("date", DATE)
                 .put("category", CATEGORY)
                 .put("subcategory", SUBCATEGORY)
@@ -124,11 +157,15 @@ class ExternalDataMapperTest {
         return topLevelNode;
     }
 
-    private ExternalData buildExpectedData() {
+    private ExternalData buildExpectedData(Boolean isPaperFiled) {
+        return buildExpectedData(isPaperFiled, TYPE);
+    }
+
+    private ExternalData buildExpectedData(Boolean isPaperFiled, String type) {
         return new ExternalData()
                 .transactionId(ENCODED_ID)
                 .barcode(BARCODE)
-                .type(TYPE)
+                .type(type)
                 .date(DATE)
                 .category(CategoryEnum.OFFICERS)
                 .subcategory(subcategory)
@@ -136,7 +173,7 @@ class ExternalDataMapperTest {
                 .descriptionValues(descriptionValues)
                 .actionDate(DATE)
                 .links(links)
-                .paperFiled(true)
+                .paperFiled(isPaperFiled)
                 .annotations(List.of(annotation));
     }
 }
