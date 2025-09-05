@@ -9532,6 +9532,41 @@
 - when:
     eq:
       data.type: RP01
+    like:
+      data.description: '^(?i:REPLACEMENT FILING WITH MUD (?<madeUpDate>\d+\D\d+\D\d+) FOR FORM (?<formType>.+?))$'
+  then:
+    set:
+      data.category: document-replacement
+      data.description: replacement-filing-of-form-with-form-type-made-up-date
+      data.description_values.form_type: '[% formType %]'
+      data.subcategory: annual-return
+      original_description: '[% data.description | sentence_case %]'
+      data.action_date: '[% madeUpDate | bson_date %]'
+      data.description_values.made_up_date: '[% madeUpDate | bson_date %]'
+- when:
+    eq:
+      data.type: RP01
+    like:
+      data.description: '^(?i:REPLACEMENT FILING FOR FORM (?<formType>.+?))$'
+  then:
+    set:
+      data.category: document-replacement
+      data.description: replacement-filing-of-form-with-form-type
+      data.description_values.form_type: '[% formType %]'
+      data.subcategory: annual-return
+      original_description: '[% data.description | sentence_case %]'
+- when:
+    eq:
+      data.type: RP01
+  then:
+    set:
+      data.category: document-replacement
+      data.description: replacement-filing-of-form
+      data.subcategory: annual-return
+      original_description: '[% data.description | sentence_case %]'
+- when:
+    eq:
+      data.type: RP01
   then:
     set:
       data.category: document-replacement
@@ -17293,6 +17328,18 @@
       original_description: '[% data.description | sentence_case %]'
 - when:
     eq:
+      data.type: RP01AP01
+    like:
+      data.description: '^(?i:Replacement filing of AP01 for (?<officerName>.+?))$'
+  then:
+    set:
+      data.category: officers
+      data.description: replacement-filing-of-director-appointment-with-name
+      data.description_values.officer_name: '[% officerName | title_case %]'
+      data.subcategory: document-replacement
+      original_description: '[% data.description | sentence_case %]'
+- when:
+    eq:
       data.type: RP04AP02
     like:
       data.description: '^(?i:Second filing of AP02 for (?<officerName>.+?))$'
@@ -17499,6 +17546,18 @@
       data.description_values.made_up_date: '[% madeUpDate | bson_date %]'
 - when:
     eq:
+      data.type: RP01CS01
+    like:
+      data.description: '^(?i:Replacement filing of Confirmation Statement Dated (?<madeUpDate>\d+\D\d+\D\d+))$'
+  then:
+    set:
+      data.category: confirmation-statement
+      data.subcategory: document-replacement
+      data.description: replacement-filing-of-confirmation-statement-with-made-up-date
+      original_description: '[% data.description | sentence_case %]'
+      data.description_values.made_up_date: '[% madeUpDate | bson_date %]'
+- when:
+    eq:
       data.type: RP04LLCS01
     like:
       data.description: '^(?i:Second filing of Confirmation Statement Dated (?<madeUpDate>\d+\D\d+\D\d+))$'
@@ -17633,6 +17692,18 @@
     set:
       data.category: persons-with-significant-control
       data.description: second-filing-notification-of-a-person-with-significant-control
+      data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
+      data.subcategory: document-replacement
+      original_description: '[% data.description | sentence_case %]'
+- when:
+    eq:
+      data.type: RP01PSC01
+    like:
+      data.description: '^(?i:REPLACEMENT FILING OF PSC01$)$'
+  then:
+    set:
+      data.category: persons-with-significant-control
+      data.description: replacement-filing-notification-of-a-person-with-significant-control
       data.description_values.psc_name: '[% original_values.psc_name | title_case %]'
       data.subcategory: document-replacement
       original_description: '[% data.description | sentence_case %]'
@@ -18253,6 +18324,22 @@
       data.action_date: '[% date | bson_date %]'
       data.category: capital
       data.description: second-filing-capital-allotment-shares
+      data.description_values.date: '[% date | bson_date %]'
+      original_description: '[% data.description | sentence_case %]'
+    exec:
+      process_capital: [ '[% data.description %]', '[% extract %]' ]
+- when:
+    eq:
+      data.type: RP01SH01
+    like:
+      data.description: '^(?i:REPLACEMENT FILING SH01 - (?<date>\d+\D\d+\D\d+) STATEMENT OF CAPITAL[; ](?:\w+) (?:\d+\.\d+|\.\d+|\d+))$'
+  then:
+    define:
+      extract: '(?i:\bSTATEMENT OF CAPITAL[; ](?<capitalCurrency>\w+) (?<capitalFigure>\d+\.\d+|\.\d+|\d+))'
+    set:
+      data.action_date: '[% date | bson_date %]'
+      data.category: capital
+      data.description: replacement-filing-capital-allotment-shares
       data.description_values.date: '[% date | bson_date %]'
       original_description: '[% data.description | sentence_case %]'
     exec:
