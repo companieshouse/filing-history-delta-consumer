@@ -1,6 +1,6 @@
 package uk.gov.companieshouse.filinghistory.consumer.transformrules.functions;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 @Component
