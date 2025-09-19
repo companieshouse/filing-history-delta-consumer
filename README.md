@@ -40,7 +40,7 @@ immediately to the <br>`filing-history-delta-filing-history-delta-consumer-inval
     * `filing-history-delta-consumer`
     * `filing-history-data-api`
     * `chs-kafka-api`
-3. Boot up the services' containers on docker using tilt `tilt up`.
+3. Boot up the services' containers on docker-chs-development using `chs-dev up`.
 4. Messages can be produced to the filing-history-delta topic using the instructions given
    in [CHS Delta API](https://github.com/companieshouse/chs-delta-api).
 
