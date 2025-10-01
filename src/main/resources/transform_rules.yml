@@ -11175,6 +11175,14 @@
       original_description: '[% data.description | sentence_case %]'
 - when:
     eq:
+      data.type: LP5D
+  then:
+    set:
+      data.description: registration-as-a-limited-partnership
+      data.category: incorporation
+      original_description: '[% data.description | sentence_case %]'
+- when:
+    eq:
       data.type: LP6
   then:
     set:

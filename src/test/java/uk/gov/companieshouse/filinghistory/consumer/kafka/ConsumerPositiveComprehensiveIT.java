@@ -104,6 +104,7 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
             "incorporation/child_transaction/model_articles", "incorporation/child_transaction/newinc",
             "incorporation/OE01", "incorporation/CERT8", "incorporation/CERT12", "incorporation/CERT12A",
             "incorporation/CERT12B", "incorporation/CICINC",
+            "incorporation/LP5D",
 
             "insolvency/3.10", "insolvency/4.13", "insolvency/4.20_rule_2", "insolvency/4.31", "insolvency/4.33",
             "insolvency/4.35", "insolvency/4.38", "insolvency/4.40", "insolvency/4.43", "insolvency/WU15(Scot)",
