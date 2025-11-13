@@ -7174,6 +7174,21 @@
       original_description: '[% data.description | sentence_case %]'
 - when:
     eq:
+      data.type: LPAP01
+    like:
+      data.description: '^(?i:GENERAL PARTNER \D(PERSON)\D APPOINTED (?<officerName>.+?))$'
+      original_values.appointment_date: '^(?<appointmentDate>\d+\D\d+\D\d+)$'
+  then:
+    set:
+      data.category: officers
+      data.description: appoint-person-general-partner-limited-partnership-with-name-appointment-date
+      data.description_values.officer_name: '[% officerName | title_case %]'
+      data.subcategory: appointments
+      original_description: '[% data.description | sentence_case %]'
+      data.action_date: '[% appointmentDate | bson_date %]'
+      data.description_values.appointment_date: '[% appointmentDate | bson_date %]'
+- when:
+    eq:
       data.type: AP01
     like:
       data.description: '^(?i:DIRECTOR APPOINTED (?<officerName>.+?))$'
@@ -7260,6 +7275,21 @@
       original_description: '[% data.description | sentence_case %]'
 - when:
     eq:
+      data.type: LPAP03
+    like:
+      data.description: '^(?i:LIMITED PARTNER \D(PERSON)\D APPOINTED (?<officerName>.+?))$'
+      original_values.appointment_date: '^(?<appointmentDate>\d+\D\d+\D\d+)$'
+  then:
+    set:
+      data.category: officers
+      data.description: appoint-person-limited-partner-limited-partnership-with-name-appointment-date
+      data.description_values.officer_name: '[% officerName | title_case %]'
+      data.subcategory: appointments
+      original_description: '[% data.description | sentence_case %]'
+      data.action_date: '[% appointmentDate | bson_date %]'
+      data.description_values.appointment_date: '[% appointmentDate | bson_date %]'
+- when:
+    eq:
       data.type: AP03
     like:
       data.description: '^(?i:SECRETARY APPOINTED (?<officerName>.+?))$'
@@ -7294,6 +7324,21 @@
       data.description: appoint-person-secretary-company
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
+- when:
+    eq:
+      data.type: LPAP02
+    like:
+      data.description: '^(?i:GENERAL PARTNER \D(LEGAL ENTITY)\D APPOINTED (?<officerName>.+?))$'
+      original_values.appointment_date: '^(?<appointmentDate>\d+\D\d+\D\d+)$'
+  then:
+    set:
+      data.category: officers
+      data.description: appoint-corporate-general-partner-limited-partnership-with-name-appointment-date
+      data.description_values.officer_name: '[% officerName | title_case %]'
+      data.subcategory: appointments
+      original_description: '[% data.description | sentence_case %]'
+      data.action_date: '[% appointmentDate | bson_date %]'
+      data.description_values.appointment_date: '[% appointmentDate | bson_date %]'
 - when:
     eq:
       data.type: AP02
@@ -7379,6 +7424,21 @@
       data.description: appoint-corporate-director-company
       data.subcategory: appointments
       original_description: '[% data.description | sentence_case %]'
+- when:
+    eq:
+      data.type: LPAP04
+    like:
+      data.description: '^(?i:LIMITED PARTNER \D(LEGAL ENTITY)\D APPOINTED (?<officerName>.+?))$'
+      original_values.appointment_date: '^(?<appointmentDate>\d+\D\d+\D\d+)$'
+  then:
+    set:
+      data.category: officers
+      data.description: appoint-corporate-limited-partner-limited-partnership-with-name-appointment-date
+      data.description_values.officer_name: '[% officerName | title_case %]'
+      data.subcategory: appointments
+      original_description: '[% data.description | sentence_case %]'
+      data.action_date: '[% appointmentDate | bson_date %]'
+      data.description_values.appointment_date: '[% appointmentDate | bson_date %]'
 - when:
     eq:
       data.type: AP04
