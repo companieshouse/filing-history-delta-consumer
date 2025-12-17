@@ -94,6 +94,10 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
             "officers/LPAP02",
             "officers/LPAP03",
             "officers/LPAP04",
+            "officers/LPTM01",
+            "officers/LPTM02",
+            "officers/LPTM03",
+            "officers/LPTM04",
 
             "capital/SH03", "capital/SH07", "capital/SH01", "capital/SH02_rule_2", "capital/SH04_rule_4",
             "capital/SH05", "capital/EW05RSS", "capital/122",
