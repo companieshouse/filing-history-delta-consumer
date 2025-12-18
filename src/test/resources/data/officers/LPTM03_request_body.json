@@ -20,7 +20,7 @@
     "action_date" : "2025-10-09T00:00:00Z",
     "category" : "officers",
     "subcategory": "termination",
-    "description" : "termination-person-limited-partner-limited-partnership-with-name-appointment-date",
+    "description" : "termination-person-limited-partner-limited-partnership-with-name-termination-date",
     "description_values": {
       "officer_name": "Leigh Smith",
       "termination_date": "2025-10-09T00:00:00Z"

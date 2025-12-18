@@ -8569,7 +8569,7 @@
   then:
     set:
       data.category: officers
-      data.description: termination-person-general-partner-limited-partnership-with-name-appointment-date
+      data.description: termination-person-general-partner-limited-partnership-with-name-termination-date
       data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
@@ -8584,7 +8584,7 @@
   then:
     set:
       data.category: officers
-      data.description: termination-corporate-general-partner-limited-partnership-with-name-appointment-date
+      data.description: termination-corporate-general-partner-limited-partnership-with-name-termination-date
       data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
@@ -8599,7 +8599,7 @@
   then:
     set:
       data.category: officers
-      data.description: termination-person-limited-partner-limited-partnership-with-name-appointment-date
+      data.description: termination-person-limited-partner-limited-partnership-with-name-termination-date
       data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
@@ -8614,7 +8614,7 @@
   then:
     set:
       data.category: officers
-      data.description: termination-corporate-limited-partner-limited-partnership-with-name-appointment-date
+      data.description: termination-corporate-limited-partner-limited-partnership-with-name-termination-date
       data.description_values.officer_name: '[% officerName | title_case %]'
       data.subcategory: termination
       original_description: '[% data.description | sentence_case %]'
