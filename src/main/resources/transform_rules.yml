@@ -8562,6 +8562,66 @@
       original_description: '[% data.description | sentence_case %]'
 - when:
     eq:
+      data.type: LPTM01
+    like:
+      original_values.resignation_date: '^(?<terminationDate>\d+\D\d+\D\d+)$'
+      original_values.officer_name: '^(?<officerName>.+?)$'
+  then:
+    set:
+      data.category: officers
+      data.description: termination-person-general-partner-limited-partnership-with-name-termination-date
+      data.description_values.officer_name: '[% officerName | title_case %]'
+      data.subcategory: termination
+      original_description: '[% data.description | sentence_case %]'
+      data.action_date: '[% terminationDate | bson_date %]'
+      data.description_values.termination_date: '[% terminationDate | bson_date %]'
+- when:
+    eq:
+      data.type: LPTM02
+    like:
+      original_values.resignation_date: '^(?<terminationDate>\d+\D\d+\D\d+)$'
+      original_values.officer_name: '^(?<officerName>.+?)$'
+  then:
+    set:
+      data.category: officers
+      data.description: termination-corporate-general-partner-limited-partnership-with-name-termination-date
+      data.description_values.officer_name: '[% officerName | title_case %]'
+      data.subcategory: termination
+      original_description: '[% data.description | sentence_case %]'
+      data.action_date: '[% terminationDate | bson_date %]'
+      data.description_values.termination_date: '[% terminationDate | bson_date %]'
+- when:
+    eq:
+      data.type: LPTM03
+    like:
+      original_values.resignation_date: '^(?<terminationDate>\d+\D\d+\D\d+)$'
+      original_values.officer_name: '^(?<officerName>.+?)$'
+  then:
+    set:
+      data.category: officers
+      data.description: termination-person-limited-partner-limited-partnership-with-name-termination-date
+      data.description_values.officer_name: '[% officerName | title_case %]'
+      data.subcategory: termination
+      original_description: '[% data.description | sentence_case %]'
+      data.action_date: '[% terminationDate | bson_date %]'
+      data.description_values.termination_date: '[% terminationDate | bson_date %]'
+- when:
+    eq:
+      data.type: LPTM04
+    like:
+      original_values.resignation_date: '^(?<terminationDate>\d+\D\d+\D\d+)$'
+      original_values.officer_name: '^(?<officerName>.+?)$'
+  then:
+    set:
+      data.category: officers
+      data.description: termination-corporate-limited-partner-limited-partnership-with-name-termination-date
+      data.description_values.officer_name: '[% officerName | title_case %]'
+      data.subcategory: termination
+      original_description: '[% data.description | sentence_case %]'
+      data.action_date: '[% terminationDate | bson_date %]'
+      data.description_values.termination_date: '[% terminationDate | bson_date %]'
+- when:
+    eq:
       data.type: LLTM01
     like:
       original_values.resignation_date: '^(?<terminationDate>\d+\D\d+\D\d+)$'

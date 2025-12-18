@@ -1,10 +1,10 @@
 {
   "filing_history": [
     {
-      "category": "9",
+      "category": "2",
       "receive_date": "20250405101206",
-      "form_type": "LPAP02",
-      "description": "GENERAL PARTNER (LEGAL ENTITY) APPOINTED STOKER AND SONS",
+      "form_type": "LPTM02",
+      "description": "Appointment Terminated, General partner in a limited partnership STOKER AND SONS",
       "barcode": "X2GSDWU2",
       "document_id": "",
       "company_number": "LP123456",
@@ -12,7 +12,7 @@
       "parent_entity_id": "",
       "parent_form_type": "",
       "description_values": {
-        "appointment_date": "09/10/2025",
+        "resignation_date": "09/10/2025",
         "OFFICER_NAME": "Stoker and Sons"
       },
       "pre_scanned_batch": "0"
