@@ -1,0 +1,22 @@
+{
+  "internal_data": {
+    "entity_id" : "9622245781",
+    "company_number" : "LP017709",
+    "original_description" : "Principal place of business changed on 01/02/2026 from 16 queen street, cardiff, CF10 2BU, wales",
+    "delta_at" : "20211029142043360560",
+    "updated_by" : "context_id",
+    "transaction_kind": "top-level",
+    "parent_entity_id": ""
+  },
+  "external_data" : {
+    "transaction_id" : "OTYyMjI0NTc4MXNhbHQ",
+    "barcode" : "XNSZBW2K",
+    "type" : "LP6D",
+    "date" : "2022-08-03T11:31:27Z",
+    "category" : "address",
+    "description" : "update-to-limited-partnership-details-update-principal-office-address",
+    "links" : {
+      "self" : "/company/LP017709/filing-history/OTYyMjI0NTc4MXNhbHQ"
+    }
+  }
+}
