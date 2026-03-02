@@ -11343,6 +11343,54 @@
       original_description: '[% data.description | sentence_case %]'
 - when:
     eq:
+      data.type: LP6D
+    like:
+      data.description: '^(?i:CHANGE OF NAME ON (?<changeDate>\d+\D\d+\D\d+) FROM.*)$'
+  then:
+    set:
+      data.description: update-to-limited-partnership-details-change-of-name
+      data.category: change-of-name
+      original_description: '[% data.description | sentence_case %]'
+- when:
+    eq:
+      data.type: LP6D
+    like:
+      data.description: '^(?i:REGISTERED OFFICE CHANGED ON (?<changeDate>\d+\D\d+\D\d+) FROM.*)$'
+  then:
+    set:
+      data.description: update-to-limited-partnership-details-registered-office-address
+      data.category: address
+      original_description: '[% data.description | sentence_case %]'
+- when:
+    eq:
+      data.type: LP6D
+    like:
+      data.description: '^(?i:PRINCIPAL PLACE OF BUSINESS CHANGED ON (?<changeDate>\d+\D\d+\D\d+) FROM.*)$'
+  then:
+    set:
+      data.description: update-to-limited-partnership-details-principal-office-address
+      data.category: address
+      original_description: '[% data.description | sentence_case %]'
+- when:
+    eq:
+      data.type: LP6D
+    like:
+      data.description: '^(?i:CHANGE OF TERM ON (?<changeDate>\d+\D\d+\D\d+) FROM.*)$'
+  then:
+    set:
+      data.description: update-to-limited-partnership-details-term
+      data.category: miscellaneous
+      original_description: '[% data.description | sentence_case %]'
+- when:
+    eq:
+      data.type: LP6D
+  then:
+    set:
+      data.description: update-to-limited-partnership-details
+      data.category: miscellaneous
+      original_description: '[% data.description | sentence_case %]'
+- when:
+    eq:
       data.type: LP8
   then:
     set:
