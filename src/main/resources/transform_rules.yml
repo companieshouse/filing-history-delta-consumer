@@ -8022,9 +8022,6 @@
       data.description: change-corporate-secretary-company
       data.subcategory: officers
       original_description: '[% data.description | sentence_case %]'
-
-
-
 - when:
     eq:
       data.type: LPCH01
@@ -8117,8 +8114,6 @@
       data.description: change-limited-partner-limited-partnership
       data.subcategory: change
       original_description: '[% data.description | sentence_case %]'
-
-
 - when:
     eq:
       data.type: OSCH01
