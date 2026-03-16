@@ -8024,6 +8024,98 @@
       original_description: '[% data.description | sentence_case %]'
 - when:
     eq:
+      data.type: LPCH01
+    like:
+      data.description: "^(?i:GENERAL PARTNER'S CHANGE OF PARTICULARS / (?<officerName>.+?) / (?<changeDate>\\d+\\D\\d+\\D\\d+).*)$"
+  then:
+    set:
+      data.category: officers
+      data.description: change-person-general-partner-limited-partnership-with-change-date
+      data.description_values.officer_name: '[% officerName | title_case %]'
+      data.subcategory: change
+      original_description: '[% data.description | sentence_case %]'
+      data.action_date: '[% changeDate | bson_date %]'
+      data.description_values.change_date: '[% changeDate | bson_date %]'
+- when:
+    eq:
+      data.type: LPCH01
+  then:
+    set:
+      data.category: officers
+      data.description: change-general-partner-limited-partnership
+      data.subcategory: change
+      original_description: '[% data.description | sentence_case %]'
+- when:
+    eq:
+      data.type: LPCH02
+    like:
+      data.description: "^(?i:CORPORATE GENERAL PARTNER'S CHANGE OF PARTICULARS / (?<officerName>.+?) / (?<changeDate>\\d+\\D\\d+\\D\\d+).*)$"
+  then:
+    set:
+      data.category: officers
+      data.description: change-corporate-general-partner-limited-partnership-with-change-date
+      data.description_values.officer_name: '[% officerName | title_case %]'
+      data.subcategory: change
+      original_description: '[% data.description | sentence_case %]'
+      data.action_date: '[% changeDate | bson_date %]'
+      data.description_values.change_date: '[% changeDate | bson_date %]'
+- when:
+    eq:
+      data.type: LPCH02
+  then:
+    set:
+      data.category: officers
+      data.description: change-general-partner-limited-partnership
+      data.subcategory: change
+      original_description: '[% data.description | sentence_case %]'
+- when:
+    eq:
+      data.type: LPCH03
+    like:
+      data.description: "^(?i:LIMITED PARTNER'S CHANGE OF PARTICULARS / (?<officerName>.+?) / (?<changeDate>\\d+\\D\\d+\\D\\d+).*)$"
+  then:
+    set:
+      data.category: officers
+      data.description: change-person-limited-partner-limited-partnership-with-change-date
+      data.description_values.officer_name: '[% officerName | title_case %]'
+      data.subcategory: change
+      original_description: '[% data.description | sentence_case %]'
+      data.action_date: '[% changeDate | bson_date %]'
+      data.description_values.change_date: '[% changeDate | bson_date %]'
+- when:
+    eq:
+      data.type: LPCH03
+  then:
+    set:
+      data.category: officers
+      data.description: change-limited-partner-limited-partnership
+      data.subcategory: change
+      original_description: '[% data.description | sentence_case %]'
+- when:
+    eq:
+      data.type: LPCH04
+    like:
+      data.description: "^(?i:CORPORATE LIMITED PARTNER'S CHANGE OF PARTICULARS / (?<officerName>.+?) / (?<changeDate>\\d+\\D\\d+\\D\\d+).*)$"
+  then:
+    set:
+      data.category: officers
+      data.description: change-corporate-limited-partner-limited-partnership-with-change-date
+      data.description_values.officer_name: '[% officerName | title_case %]'
+      data.subcategory: change
+      original_description: '[% data.description | sentence_case %]'
+      data.action_date: '[% changeDate | bson_date %]'
+      data.description_values.change_date: '[% changeDate | bson_date %]'
+- when:
+    eq:
+      data.type: LPCH04
+  then:
+    set:
+      data.category: officers
+      data.description: change-limited-partner-limited-partnership
+      data.subcategory: change
+      original_description: '[% data.description | sentence_case %]'
+- when:
+    eq:
       data.type: OSCH01
     like:
       data.description: "^(?i:(?<branchNumber>(?:FC|SF|NF|BR)\\d{6})\\s+(?<changeType>(?:ADDRESS|NAME|BUSINESS) CHANGE)\\s+(?<changeDate>\\d+\\D\\d+\\D\\d+)\\s+(?<changeDetails>.+))$"
