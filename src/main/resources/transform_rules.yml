@@ -7189,6 +7189,15 @@
       data.description_values.appointment_date: '[% appointmentDate | bson_date %]'
 - when:
     eq:
+      data.type: LPAP01
+  then:
+    set:
+      data.category: officers
+      data.description: appoint-general-partner-limited-partnership
+      data.subcategory: appointments
+      original_description: '[% data.description | sentence_case %]'
+- when:
+    eq:
       data.type: AP01
     like:
       data.description: '^(?i:DIRECTOR APPOINTED (?<officerName>.+?))$'
@@ -7290,6 +7299,15 @@
       data.description_values.appointment_date: '[% appointmentDate | bson_date %]'
 - when:
     eq:
+      data.type: LPAP03
+  then:
+    set:
+      data.category: officers
+      data.description: appoint-limited-partner-limited-partnership
+      data.subcategory: appointments
+      original_description: '[% data.description | sentence_case %]'
+- when:
+    eq:
       data.type: AP03
     like:
       data.description: '^(?i:SECRETARY APPOINTED (?<officerName>.+?))$'
@@ -7339,6 +7357,15 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% appointmentDate | bson_date %]'
       data.description_values.appointment_date: '[% appointmentDate | bson_date %]'
+- when:
+    eq:
+      data.type: LPAP02
+  then:
+    set:
+      data.category: officers
+      data.description: appoint-general-partner-limited-partnership
+      data.subcategory: appointments
+      original_description: '[% data.description | sentence_case %]'
 - when:
     eq:
       data.type: AP02
@@ -7439,6 +7466,15 @@
       original_description: '[% data.description | sentence_case %]'
       data.action_date: '[% appointmentDate | bson_date %]'
       data.description_values.appointment_date: '[% appointmentDate | bson_date %]'
+- when:
+    eq:
+      data.type: LPAP04
+  then:
+    set:
+      data.category: officers
+      data.description: appoint-limited-partner-limited-partnership
+      data.subcategory: appointments
+      original_description: '[% data.description | sentence_case %]'
 - when:
     eq:
       data.type: AP04
