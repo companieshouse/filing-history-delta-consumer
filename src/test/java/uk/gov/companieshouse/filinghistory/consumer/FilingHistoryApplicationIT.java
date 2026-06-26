@@ -12,10 +12,12 @@ import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
 class FilingHistoryApplicationIT {
 
     @Autowired
@@ -23,7 +25,7 @@ class FilingHistoryApplicationIT {
 
     @Test
     void shouldStartApplication() {
-        Executable executable = () -> Application.main(new String[0]);
+        Executable executable = () -> Application.main(new String[] {"--spring.profiles.active=test"});
         assertDoesNotThrow(executable);
     }
 

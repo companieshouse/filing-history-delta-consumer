@@ -21,12 +21,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import uk.gov.companieshouse.filinghistory.consumer.service.DeltaServiceRouter;
 
 @SpringBootTest
+@ActiveProfiles("test")
 class ConsumerInvalidPayloadExceptionIT extends AbstractKafkaIT {
 
     @Autowired
