@@ -7,10 +7,15 @@ import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.core.env.Environment;
+
+import java.util.stream.Stream;
 
 @ExtendWith(MockitoExtension.class)
 class SecretsStartupValidatorTest {
@@ -35,48 +40,25 @@ class SecretsStartupValidatorTest {
         assertDoesNotThrow(executable);
     }
 
-    @Test
-    void shouldThrowExceptionWhenTransactionIdSaltIsMissing() {
-        // given
-        when(environment.getProperty("TRANSACTION_ID_SALT", "")).thenReturn("");
-        when(environment.getProperty("FILING_HISTORY_API_KEY", "")).thenReturn("some-api-key");
-        when(environment.getProperty("API_LOCAL_URL", "")).thenReturn("https://example.com");
+    @ParameterizedTest(name = "should throw when salt=''{0}'', apiKey=''{1}'', apiUrl=''{2}''")
+    @MethodSource("missingVariableCases")
+    void shouldThrowExceptionWhenAnyRequiredEnvironmentVariableIsMissing(
+            String transactionIdSalt, String apiKey, String apiUrl) {
 
-        // when
-        IllegalStateException exception = assertThrows(IllegalStateException.class,
-                () -> new SecretsStartupValidator(environment));
+        when(environment.getProperty("TRANSACTION_ID_SALT", "")).thenReturn(transactionIdSalt);
+        when(environment.getProperty("FILING_HISTORY_API_KEY", "")).thenReturn(apiKey);
+        when(environment.getProperty("API_LOCAL_URL", "")).thenReturn(apiUrl);
 
-        // then
+        IllegalStateException exception = assertThrows(IllegalStateException.class, () -> new SecretsStartupValidator(environment));
+
         assertEquals(ERROR_MESSAGE, exception.getMessage());
     }
 
-    @Test
-    void shouldThrowExceptionWhenApiKeyIsMissing() {
-        // given
-        when(environment.getProperty("TRANSACTION_ID_SALT", "")).thenReturn("some-salt");
-        when(environment.getProperty("FILING_HISTORY_API_KEY", "")).thenReturn("");
-        when(environment.getProperty("API_LOCAL_URL", "")).thenReturn("https://example.com");
-
-        // when
-        IllegalStateException exception = assertThrows(IllegalStateException.class,
-                () -> new SecretsStartupValidator(environment));
-
-        // then
-        assertEquals(ERROR_MESSAGE, exception.getMessage());
-    }
-
-    @Test
-    void shouldThrowExceptionWhenApiUrlIsMissing() {
-        // given
-        when(environment.getProperty("TRANSACTION_ID_SALT", "")).thenReturn("some-salt");
-        when(environment.getProperty("FILING_HISTORY_API_KEY", "")).thenReturn("some-api-key");
-        when(environment.getProperty("API_LOCAL_URL", "")).thenReturn("");
-
-        // when
-        IllegalStateException exception = assertThrows(IllegalStateException.class,
-                () -> new SecretsStartupValidator(environment));
-
-        // then
-        assertEquals(ERROR_MESSAGE, exception.getMessage());
+    private static Stream<Arguments> missingVariableCases() {
+        return Stream.of(
+                Arguments.of("", "some-api-key", "https://example.com"), // Missing TRANSACTION_ID_SALT
+                Arguments.of("some-salt", "", "https://example.com"),    // Missing FILING_HISTORY_API_KEY
+                Arguments.of("some-salt", "some-api-key", "")            // Missing API_LOCAL_URL
+        );
     }
 }
