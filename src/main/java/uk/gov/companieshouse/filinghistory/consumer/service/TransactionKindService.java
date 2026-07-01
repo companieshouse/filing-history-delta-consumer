@@ -60,6 +60,13 @@ public class TransactionKindService {
         return new TransactionKindResult(encodedId, kindEnum);
     }
 
+    /**
+     * Note that the transaction ID returned from this method is a non-secret identifier and must not be relied on for
+     * authorisation downstream.
+     *
+     * @param id The id to encode
+     * @return An encoded transaction id
+     */
     private String encodeTransactionId(String id) {
         String encodedId = StringUtils.isBlank(id) ? id
                 : Base64.encodeBase64URLSafeString((trim(id) + transactionIdSalt).getBytes(StandardCharsets.UTF_8));
