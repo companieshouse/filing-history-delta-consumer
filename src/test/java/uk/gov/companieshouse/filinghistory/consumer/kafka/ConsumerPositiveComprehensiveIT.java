@@ -178,7 +178,10 @@ class ConsumerPositiveComprehensiveIT extends AbstractKafkaIT {
             "persons-with-significant-control/SLPPSC07", "persons-with-significant-control/SLPPSC07_no_description_values",
             "persons-with-significant-control/SQPPSC07", "persons-with-significant-control/SQPPSC07_no_description_values",
             "persons-with-significant-control/PSC01_name_and_date", "persons-with-significant-control/PSC01_name_no_date",
-            "persons-with-significant-control/PSC01_date_no_name", "persons-with-significant-control/PSC01_no_name_no_date"
+            "persons-with-significant-control/PSC01_date_no_name", "persons-with-significant-control/PSC01_no_name_no_date",
+            "confirmation-statement/CS01_with_updates", "confirmation-statement/CS01_no_updates", "confirmation-statement/CS01_no_mention_of_updates",
+            "confirmation-statement/LPCS01_with_updates", "confirmation-statement/LPCS01_no_updates", "confirmation-statement/LPCS01_no_mention_of_updates",
+            "confirmation-statement/SLPCS01_with_updates", "confirmation-statement/SLPCS01_no_updates", "confirmation-statement/SLPCS01_no_mention_of_updates"
     })
     void shouldConsumeFilingHistoryDeltaTopicAndProcessDeltaFromCSV(final String prefix) throws Exception {
         final String delta = IOUtils.resourceToString("/data/%s_delta.json".formatted(prefix), StandardCharsets.UTF_8);

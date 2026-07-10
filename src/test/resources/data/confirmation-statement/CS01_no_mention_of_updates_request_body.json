@@ -1,0 +1,26 @@
+{
+  "external_data": {
+    "transaction_id": "OTYxMjEzMTQ3OXNhbHQ",
+    "category" : "confirmation-statement",
+    "barcode": "096S9WPT",
+    "date" : "2020-06-12T14:53:25Z",
+    "description" : "confirmation-statement",
+    "description_values" : {
+      "original_description" : "Confirmation statement made on 11/03/19, and that's it"
+    },
+    "links" : {
+      "self" : "/company/SC663220/filing-history/OTYxMjEzMTQ3OXNhbHQ"
+    },
+    "paper_filed" : true,
+    "type" : "CS01"
+  },
+  "internal_data": {
+    "company_number" : "SC663220",
+    "entity_id" : "9612131479",
+    "original_description" : "Confirmation statement made on 11/03/19, and that's it",
+    "parent_entity_id": "",
+    "transaction_kind": "top-level",
+    "updated_by": "context_id",
+    "delta_at": "20230314110234098734"
+  }
+}
