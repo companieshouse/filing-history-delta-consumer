@@ -17898,14 +17898,84 @@
       data.description_values.made_up_date: '[% madeUpDate | bson_date %]'
 - when:
     eq:
-      data.type: SLPCS01
+      data.type: LPCS01
     like:
-      data.description: '^(?i:CONFIRMATION STATEMENT MADE ON (?<madeUpDate>\d+\D\d+\D\d+))$'
+      data.description: '^(?i:CONFIRMATION STATEMENT MADE ON (?<madeUpDate>\d+\D\d+\D\d+), NO UPDATES)$'
+  then:
+    set:
+      data.category: confirmation-statement
+      data.description: confirmation-statement-with-no-updates
+      original_description: '[% data.description | sentence_case %]'
+      data.action_date: '[% madeUpDate | bson_date %]'
+      data.description_values.made_up_date: '[% madeUpDate | bson_date %]'
+- when:
+    eq:
+      data.type: LPCS01
+    like:
+      data.description: '^(?i:CONFIRMATION STATEMENT MADE ON (?<madeUpDate>\d+\D\d+\D\d+), WITH UPDATES)$'
+  then:
+    set:
+      data.category: confirmation-statement
+      data.description: confirmation-statement-with-updates
+      original_description: '[% data.description | sentence_case %]'
+      data.action_date: '[% madeUpDate | bson_date %]'
+      data.description_values.made_up_date: '[% madeUpDate | bson_date %]'
+- when:
+    eq:
+      data.type: LPCS01
+    like:
+      data.description: '^(?i:CONFIRMATION STATEMENT MADE ON (?<madeUpDate>\d+\D\d+\D\d+)).*$'
   then:
     set:
       data.category: confirmation-statement
       data.description: confirmation-statement-with-made-up-date
       original_description: '[% data.description | sentence_case %]'
+      data.action_date: '[% madeUpDate | bson_date %]'
+      data.description_values.made_up_date: '[% madeUpDate | bson_date %]'
+- when:
+    eq:
+      data.type: LPCS01
+  then:
+    set:
+      data.category: confirmation-statement
+      data.description: confirmation-statement
+      original_description: '[% data.description | sentence_case %]'
+      data.description_values.original_description: '[% data.description | sentence_case %]'
+- when:
+    eq:
+      data.type: SLPCS01
+    like:
+      data.description: '^(?i:CONFIRMATION STATEMENT MADE ON (?<madeUpDate>\d+\D\d+\D\d+), NO UPDATES)$'
+  then:
+    set:
+      data.category: confirmation-statement
+      data.description: confirmation-statement-with-no-updates
+      original_description: '[% data.description | sentence_case %]'
+      data.action_date: '[% madeUpDate | bson_date %]'
+      data.description_values.made_up_date: '[% madeUpDate | bson_date %]'
+- when:
+    eq:
+      data.type: SLPCS01
+    like:
+      data.description: '^(?i:CONFIRMATION STATEMENT MADE ON (?<madeUpDate>\d+\D\d+\D\d+), WITH UPDATES)$'
+  then:
+    set:
+      data.category: confirmation-statement
+      data.description: confirmation-statement-with-updates
+      original_description: '[% data.description | sentence_case %]'
+      data.action_date: '[% madeUpDate | bson_date %]'
+      data.description_values.made_up_date: '[% madeUpDate | bson_date %]'
+- when:
+    eq:
+      data.type: SLPCS01
+    like:
+      data.description: '^(?i:CONFIRMATION STATEMENT MADE ON (?<madeUpDate>\d+\D\d+\D\d+)).*$'
+  then:
+    set:
+      data.category: confirmation-statement
+      data.description: confirmation-statement-with-made-up-date
+      original_description: '[% data.description | sentence_case %]'
+      data.action_date: '[% madeUpDate | bson_date %]'
       data.description_values.made_up_date: '[% madeUpDate | bson_date %]'
 - when:
     eq:

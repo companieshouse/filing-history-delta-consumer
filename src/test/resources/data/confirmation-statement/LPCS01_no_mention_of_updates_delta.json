@@ -1,0 +1,18 @@
+{
+  "filing_history": [
+    {
+      "category": "1",
+      "receive_date": "20200612145325",
+      "form_type": "LPCS01",
+      "description": "CONFIRMATION STATEMENT MADE ON 11/03/19, AND THAT'S IT",
+      "barcode": "096S9WPX",
+      "document_id": "",
+      "company_number": "NL000893",
+      "entity_id": "9612131479",
+      "parent_entity_id":"",
+      "parent_form_type":"",
+      "pre_scanned_batch":"0"
+    }
+  ],
+  "delta_at":"20230314110234098734"
+}

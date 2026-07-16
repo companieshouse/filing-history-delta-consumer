@@ -1,0 +1,27 @@
+{
+  "external_data": {
+    "transaction_id": "OTYxMjEzMTQ3OXNhbHQ",
+    "action_date" : "2019-03-11T00:00:00Z",
+    "category" : "confirmation-statement",
+    "barcode": "096S9WPX",
+    "date" : "2020-06-12T14:53:25Z",
+    "description" : "confirmation-statement-with-no-updates",
+    "description_values" : {
+      "made_up_date" : "2019-03-11T00:00:00Z"
+    },
+    "links" : {
+      "self" : "/company/NL000893/filing-history/OTYxMjEzMTQ3OXNhbHQ"
+    },
+    "paper_filed" : true,
+    "type" : "LPCS01"
+  },
+  "internal_data": {
+    "company_number" : "NL000893",
+    "entity_id" : "9612131479",
+    "original_description" : "Confirmation statement made on 11/03/19, no updates",
+    "parent_entity_id": "",
+    "transaction_kind": "top-level",
+    "updated_by": "context_id",
+    "delta_at": "20230314110234098734"
+  }
+}
