@@ -7,7 +7,6 @@ import uk.gov.companieshouse.api.filinghistory.utils.TransactionKindResult;
 import uk.gov.companieshouse.api.filinghistory.utils.TransactionKindService;
 import uk.gov.companieshouse.delta.ChsDelta;
 import uk.gov.companieshouse.filinghistory.consumer.apiclient.FilingHistoryApiClient;
-import uk.gov.companieshouse.filinghistory.consumer.logging.DataMapHolder;
 import uk.gov.companieshouse.filinghistory.consumer.serdes.FilingHistoryDeltaDeserialiser;
 
 @Component
