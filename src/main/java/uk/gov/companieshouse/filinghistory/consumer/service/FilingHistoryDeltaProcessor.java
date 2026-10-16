@@ -6,7 +6,11 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 import uk.gov.companieshouse.api.delta.FilingHistory;
 import uk.gov.companieshouse.api.delta.FilingHistoryDelta;
+import uk.gov.companieshouse.api.filinghistory.InternalData.TransactionKindEnum;
 import uk.gov.companieshouse.api.filinghistory.InternalFilingHistoryApi;
+import uk.gov.companieshouse.api.filinghistory.utils.TransactionKindCriteria;
+import uk.gov.companieshouse.api.filinghistory.utils.TransactionKindResult;
+import uk.gov.companieshouse.api.filinghistory.utils.TransactionKindService;
 import uk.gov.companieshouse.filinghistory.consumer.logging.DataMapHolder;
 import uk.gov.companieshouse.filinghistory.consumer.mapper.posttransform.InternalFilingHistoryApiMapper;
 import uk.gov.companieshouse.filinghistory.consumer.mapper.posttransform.InternalFilingHistoryApiMapperArguments;
@@ -49,7 +53,8 @@ public class FilingHistoryDeltaProcessor {
 
         TransactionKindResult kindResult = kindService.encodeIdByTransactionKind(criteria);
 
-        ObjectNode preTransformNode = preTransformMapper.mapDeltaToObjectNode(kindResult.kind(), filingHistory);
+        ObjectNode preTransformNode = preTransformMapper.mapDeltaToObjectNode(
+                TransactionKindEnum.valueOf(kindResult.getKind().name()), filingHistory);
 
         ObjectNode transformedParentNode = (ObjectNode) transformerService.transform(preTransformNode);
         ObjectNode dataNode = (ObjectNode) transformedParentNode.get("data");

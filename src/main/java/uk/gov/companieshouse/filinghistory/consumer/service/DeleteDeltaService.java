@@ -2,8 +2,12 @@ package uk.gov.companieshouse.filinghistory.consumer.service;
 
 import org.springframework.stereotype.Component;
 import uk.gov.companieshouse.api.delta.FilingHistoryDeleteDelta;
+import uk.gov.companieshouse.api.filinghistory.utils.TransactionKindCriteria;
+import uk.gov.companieshouse.api.filinghistory.utils.TransactionKindResult;
+import uk.gov.companieshouse.api.filinghistory.utils.TransactionKindService;
 import uk.gov.companieshouse.delta.ChsDelta;
 import uk.gov.companieshouse.filinghistory.consumer.apiclient.FilingHistoryApiClient;
+import uk.gov.companieshouse.filinghistory.consumer.logging.DataMapHolder;
 import uk.gov.companieshouse.filinghistory.consumer.serdes.FilingHistoryDeltaDeserialiser;
 
 @Component
@@ -34,7 +38,7 @@ public class DeleteDeltaService implements DeltaService {
         TransactionKindResult kindResult = kindService.encodeIdByTransactionKind(criteria);
 
         DeleteApiClientRequest clientRequest = DeleteApiClientRequest.builder()
-                .transactionId(kindResult.encodedId())
+                .transactionId(kindResult.getEncodedId())
                 .companyNumber(deleteDelta.getCompanyNumber())
                 .entityId(deleteDelta.getEntityId())
                 .deltaAt(deleteDelta.getDeltaAt())
