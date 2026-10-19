@@ -6,7 +6,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
-import static uk.gov.companieshouse.api.filinghistory.InternalData.TransactionKindEnum.TOP_LEVEL;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,10 +18,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import uk.gov.companieshouse.api.filinghistory.ExternalData;
 import uk.gov.companieshouse.api.filinghistory.InternalData;
+import uk.gov.companieshouse.api.filinghistory.InternalData.TransactionKindEnum;
 import uk.gov.companieshouse.api.filinghistory.InternalDataOriginalValues;
 import uk.gov.companieshouse.api.filinghistory.InternalFilingHistoryApi;
+import uk.gov.companieshouse.api.filinghistory.utils.TransactionKind;
+import uk.gov.companieshouse.api.filinghistory.utils.TransactionKindResult;
 import uk.gov.companieshouse.filinghistory.consumer.exception.NonRetryableException;
-import uk.gov.companieshouse.filinghistory.consumer.service.TransactionKindResult;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.TransformerTestingUtils;
 
 @ExtendWith(MockitoExtension.class)
@@ -84,7 +85,7 @@ class InternalFilingHistoryApiMapperTest {
         InternalFilingHistoryApi expected = new InternalFilingHistoryApi()
                 .externalData(null)
                 .internalData(new InternalData()
-                        .transactionKind(TOP_LEVEL)
+                        .transactionKind(TransactionKindEnum.TOP_LEVEL)
                         .deltaAt(null)
                         .originalValues(null)
                         .originalDescription(null)
@@ -145,14 +146,14 @@ class InternalFilingHistoryApiMapperTest {
     }
 
     private static TransactionKindResult buildTransactionKindResult() {
-        return new TransactionKindResult(ENCODED_ID, TOP_LEVEL);
+        return new TransactionKindResult(ENCODED_ID, TransactionKind.TOP_LEVEL);
     }
 
     private InternalFilingHistoryApi buildExpectedTM01RequestBody() {
         return new InternalFilingHistoryApi()
                 .externalData(externalData)
                 .internalData(new InternalData()
-                        .transactionKind(TOP_LEVEL)
+                        .transactionKind(TransactionKindEnum.TOP_LEVEL)
                         .deltaAt(DELTA_AT)
                         .originalValues(internalDataOriginalValues)
                         .originalDescription(ORIGINAL_DESCRIPTION)

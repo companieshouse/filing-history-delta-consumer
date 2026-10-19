@@ -9,10 +9,11 @@ import java.util.Optional;
 import org.springframework.stereotype.Component;
 import uk.gov.companieshouse.api.filinghistory.ExternalData;
 import uk.gov.companieshouse.api.filinghistory.InternalData;
+import uk.gov.companieshouse.api.filinghistory.InternalData.TransactionKindEnum;
 import uk.gov.companieshouse.api.filinghistory.InternalFilingHistoryApi;
+import uk.gov.companieshouse.api.filinghistory.utils.TransactionKindResult;
 import uk.gov.companieshouse.filinghistory.consumer.exception.NonRetryableException;
 import uk.gov.companieshouse.filinghistory.consumer.logging.DataMapHolder;
-import uk.gov.companieshouse.filinghistory.consumer.service.TransactionKindResult;
 import uk.gov.companieshouse.logging.Logger;
 import uk.gov.companieshouse.logging.LoggerFactory;
 
@@ -53,10 +54,10 @@ public class InternalFilingHistoryApiMapper {
                 .documentId(getFieldValueFromJsonNode(topLevelNode, "_document_id"))
                 .deltaAt(args.deltaAt())
                 .updatedBy(args.updatedBy())
-                .transactionKind(kindResult.kind());
+                .transactionKind(TransactionKindEnum.valueOf(kindResult.getKind().name()));
 
         ExternalData externalData = externalDataMapper.mapExternalData(topLevelNode, barcode,
-                kindResult.encodedId(), args.companyNumber());
+                kindResult.getEncodedId(), args.companyNumber());
 
         return new InternalFilingHistoryApi()
                 .internalData(internalData)

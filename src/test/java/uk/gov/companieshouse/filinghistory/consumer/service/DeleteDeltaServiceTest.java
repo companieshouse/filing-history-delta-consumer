@@ -10,7 +10,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import uk.gov.companieshouse.api.delta.FilingHistoryDeleteDelta;
-import uk.gov.companieshouse.api.filinghistory.InternalData.TransactionKindEnum;
+import uk.gov.companieshouse.api.filinghistory.utils.TransactionKind;
+import uk.gov.companieshouse.api.filinghistory.utils.TransactionKindResult;
+import uk.gov.companieshouse.api.filinghistory.utils.TransactionKindService;
 import uk.gov.companieshouse.delta.ChsDelta;
 import uk.gov.companieshouse.filinghistory.consumer.apiclient.FilingHistoryApiClient;
 import uk.gov.companieshouse.filinghistory.consumer.serdes.FilingHistoryDeltaDeserialiser;
@@ -26,7 +28,7 @@ class DeleteDeltaServiceTest {
     private static final String PARENT_ENTITY_ID = "88765432";
     private static final String DELTA_DATA = "delta";
     private static final TransactionKindResult KIND_RESULT =
-            new TransactionKindResult(TRANSACTION_ID, TransactionKindEnum.ANNOTATION);
+            new TransactionKindResult(TRANSACTION_ID, TransactionKind.ANNOTATION);
     private static final DeleteApiClientRequest API_CLIENT_REQUEST =
             DeleteApiClientRequest.builder()
                     .transactionId(TRANSACTION_ID)

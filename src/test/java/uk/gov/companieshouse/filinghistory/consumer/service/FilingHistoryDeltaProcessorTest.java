@@ -3,12 +3,11 @@ package uk.gov.companieshouse.filinghistory.consumer.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
-import static uk.gov.companieshouse.api.filinghistory.InternalData.TransactionKindEnum.ANNOTATION;
-import static uk.gov.companieshouse.api.filinghistory.InternalData.TransactionKindEnum.TOP_LEVEL;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -21,7 +20,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import uk.gov.companieshouse.api.delta.DescriptionValues;
 import uk.gov.companieshouse.api.delta.FilingHistory;
 import uk.gov.companieshouse.api.delta.FilingHistoryDelta;
+import uk.gov.companieshouse.api.filinghistory.InternalData.TransactionKindEnum;
 import uk.gov.companieshouse.api.filinghistory.InternalFilingHistoryApi;
+import uk.gov.companieshouse.api.filinghistory.utils.TransactionKind;
+import uk.gov.companieshouse.api.filinghistory.utils.TransactionKindCriteria;
+import uk.gov.companieshouse.api.filinghistory.utils.TransactionKindResult;
+import uk.gov.companieshouse.api.filinghistory.utils.TransactionKindService;
 import uk.gov.companieshouse.filinghistory.consumer.mapper.posttransform.InternalFilingHistoryApiMapper;
 import uk.gov.companieshouse.filinghistory.consumer.mapper.posttransform.InternalFilingHistoryApiMapperArguments;
 import uk.gov.companieshouse.filinghistory.consumer.mapper.pretransform.PreTransformMapper;
@@ -80,8 +84,6 @@ class FilingHistoryDeltaProcessorTest {
     @Test
     void shouldProcessDeltaObjectAndReturnMappedInternalFilingHistoryApiObject() {
         // given
-        final TransactionKindCriteria criteria = new TransactionKindCriteria(ENTITY_ID, PARENT_ENTITY_ID,
-                TM01_FORM_TYPE, PARENT_FORM_TYPE, BARCODE);
         InternalFilingHistoryApiMapperArguments expectedArguments = new InternalFilingHistoryApiMapperArguments(
                 transformedParentNode,
                 kindResult,
@@ -91,7 +93,7 @@ class FilingHistoryDeltaProcessorTest {
         final FilingHistoryDelta delta = buildFilingHistoryDelta();
 
         when(kindService.encodeIdByTransactionKind(any())).thenReturn(kindResult);
-        when(kindResult.kind()).thenReturn(TOP_LEVEL);
+        when(kindResult.getKind()).thenReturn(TransactionKind.TOP_LEVEL);
         when(preTransformMapper.mapDeltaToObjectNode(any(), any())).thenReturn(preTransformNode);
         when(transformerService.transform(any())).thenReturn(transformedParentNode);
         when(transformedParentNode.get(any())).thenReturn(dataNode);
@@ -102,8 +104,9 @@ class FilingHistoryDeltaProcessorTest {
 
         // then
         assertEquals(expected, actual);
-        verify(kindService).encodeIdByTransactionKind(criteria);
-        verify(preTransformMapper).mapDeltaToObjectNode(TOP_LEVEL, delta.getFilingHistory().getFirst());
+        verify(kindService).encodeIdByTransactionKind(argThat(this::matchesExpectedKindCriteria));
+        verify(preTransformMapper).mapDeltaToObjectNode(TransactionKindEnum.TOP_LEVEL,
+                delta.getFilingHistory().getFirst());
         verify(transformerService).transform(preTransformNode);
         verifyNoMoreInteractions(preTransformMapper);
         verifyNoMoreInteractions(transformerService);
@@ -113,8 +116,6 @@ class FilingHistoryDeltaProcessorTest {
     @Test
     void shouldProcessDeltaObjectAndChildObjectAndReturnMappedInternalFilingHistoryApiObject() {
         // given
-        final TransactionKindCriteria criteria = new TransactionKindCriteria(ENTITY_ID, PARENT_ENTITY_ID,
-                TM01_FORM_TYPE, PARENT_FORM_TYPE, BARCODE);
         InternalFilingHistoryApiMapperArguments expectedArguments = new InternalFilingHistoryApiMapperArguments(
                 transformedParentNode,
                 kindResult,
@@ -124,7 +125,7 @@ class FilingHistoryDeltaProcessorTest {
         final FilingHistoryDelta delta = buildFilingHistoryDelta();
 
         when(kindService.encodeIdByTransactionKind(any())).thenReturn(kindResult);
-        when(kindResult.kind()).thenReturn(ANNOTATION);
+        when(kindResult.getKind()).thenReturn(TransactionKind.ANNOTATION);
         when(preTransformMapper.mapDeltaToObjectNode(any(), any())).thenReturn(preTransformNode);
         when(transformerService.transform(any())).thenReturn(transformedParentNode);
         when(transformedParentNode.get(any())).thenReturn(dataNode);
@@ -139,8 +140,9 @@ class FilingHistoryDeltaProcessorTest {
 
         // then
         assertEquals(expected, actual);
-        verify(kindService).encodeIdByTransactionKind(criteria);
-        verify(preTransformMapper).mapDeltaToObjectNode(ANNOTATION, delta.getFilingHistory().getFirst());
+        verify(kindService).encodeIdByTransactionKind(argThat(this::matchesExpectedKindCriteria));
+        verify(preTransformMapper).mapDeltaToObjectNode(TransactionKindEnum.ANNOTATION,
+                delta.getFilingHistory().getFirst());
         verify(transformerService).transform(preTransformNode);
         verifyNoMoreInteractions(preTransformMapper);
         verify(transformedParentNode).get("data");
@@ -155,8 +157,6 @@ class FilingHistoryDeltaProcessorTest {
     @Test
     void shouldProcessDeltaObjectWithEmptyChildArrayAndReturnMappedInternalFilingHistoryApiObject() {
         // given
-        final TransactionKindCriteria criteria = new TransactionKindCriteria(ENTITY_ID, PARENT_ENTITY_ID,
-                TM01_FORM_TYPE, PARENT_FORM_TYPE, BARCODE);
         InternalFilingHistoryApiMapperArguments expectedArguments = new InternalFilingHistoryApiMapperArguments(
                 transformedParentNode,
                 kindResult,
@@ -166,7 +166,7 @@ class FilingHistoryDeltaProcessorTest {
         final FilingHistoryDelta delta = buildFilingHistoryDelta();
 
         when(kindService.encodeIdByTransactionKind(any())).thenReturn(kindResult);
-        when(kindResult.kind()).thenReturn(ANNOTATION);
+        when(kindResult.getKind()).thenReturn(TransactionKind.ANNOTATION);
         when(preTransformMapper.mapDeltaToObjectNode(any(), any())).thenReturn(preTransformNode);
         when(transformerService.transform(any())).thenReturn(transformedParentNode);
         when(transformedParentNode.get(any())).thenReturn(dataNode);
@@ -178,8 +178,9 @@ class FilingHistoryDeltaProcessorTest {
 
         // then
         assertEquals(expected, actual);
-        verify(kindService).encodeIdByTransactionKind(criteria);
-        verify(preTransformMapper).mapDeltaToObjectNode(ANNOTATION, delta.getFilingHistory().getFirst());
+        verify(kindService).encodeIdByTransactionKind(argThat(this::matchesExpectedKindCriteria));
+        verify(preTransformMapper).mapDeltaToObjectNode(TransactionKindEnum.ANNOTATION,
+                delta.getFilingHistory().getFirst());
         verify(transformerService).transform(preTransformNode);
         verifyNoMoreInteractions(preTransformMapper);
         verify(transformedParentNode).get("data");
@@ -206,5 +207,13 @@ class FilingHistoryDeltaProcessorTest {
                         .descriptionValues(DESCRIPTION_VALUES)
                         .preScannedBatch(PRE_SCANNED_BATCH)))
                 .deltaAt(DELTA_AT);
+    }
+
+    private boolean matchesExpectedKindCriteria(TransactionKindCriteria criteria) {
+        return ENTITY_ID.equals(criteria.getEntityId())
+                && PARENT_ENTITY_ID.equals(criteria.getParentEntityId())
+                && TM01_FORM_TYPE.equals(criteria.getFormType())
+                && PARENT_FORM_TYPE.equals(criteria.getParentFormType())
+                && BARCODE.equals(criteria.getBarcode());
     }
 }
