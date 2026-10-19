@@ -1,6 +1,6 @@
 package uk.gov.companieshouse.filinghistory.consumer.kafka;
 
-import jakarta.annotation.PreDestroy;
+import javax.annotation.PreDestroy;
 import org.springframework.stereotype.Component;
 
 @Component

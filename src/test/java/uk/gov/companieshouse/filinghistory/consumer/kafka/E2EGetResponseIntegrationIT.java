@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.UUID;
+import org.apache.http.HttpStatus;
 import org.bson.Document;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
@@ -30,7 +31,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.client.RestClient;
 
 class E2EGetResponseIntegrationIT {
@@ -103,7 +103,7 @@ class E2EGetResponseIntegrationIT {
                         .uri("/company/{companyNumber}/filing-history", companyNumber)
                         .header("x-request-id", UUID.randomUUID().toString())
                         .retrieve()
-                        .onStatus(status -> status.value() != HttpStatus.OK.value(), (request, response) -> {
+                        .onStatus(status -> status.value() != HttpStatus.SC_OK, (request, response) -> {
                             throw new RuntimeException(response.getStatusText());
                         })
                         .body(String.class);
@@ -124,7 +124,7 @@ class E2EGetResponseIntegrationIT {
                         .uri("/company/{companyNumber}/filing-history/{transactionId}", companyNumber, transactionId)
                         .header("x-request-id", UUID.randomUUID().toString())
                         .retrieve()
-                        .onStatus(status -> status.value() != HttpStatus.OK.value(), (request, response) -> {
+                        .onStatus(status -> status.value() != HttpStatus.SC_OK, (request, response) -> {
                             throw new RuntimeException(response.getStatusText());
                         })
                         .body(String.class);
