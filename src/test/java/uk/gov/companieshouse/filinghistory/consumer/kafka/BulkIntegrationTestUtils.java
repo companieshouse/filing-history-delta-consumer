@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 import javax.sql.DataSource;
 import oracle.jdbc.pool.OracleDataSource;
-import org.apache.http.HttpStatus;
+import org.springframework.http.HttpStatus;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,7 +87,7 @@ public class BulkIntegrationTestUtils {
                 .header("x-request-id", UUID.randomUUID().toString())
                 .body(delta)
                 .retrieve()
-                .onStatus(status -> status.value() != HttpStatus.SC_OK, (request, response) -> {
+                .onStatus(status -> status.value() != HttpStatus.OK.value(), (request, response) -> {
                     throw new RuntimeException(response.getStatusText());
                 });
     }
