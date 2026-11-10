@@ -25,7 +25,6 @@
     <commons-text.version>1.15.0</commons-text.version>
     <wiremock.version>3.13.2</wiremock.version>
     <jetty.version>12.1.14</jetty.version>
-    <jetty-http.version>12.1.14</jetty-http.version>
     <httpclient.version>4.5.14</httpclient.version>
 
 
@@ -59,14 +58,13 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-      <!-- Pin Jetty: 12.1.14 depends on org.apache.directory.api:api-parent:2.1.8, missing from Artifactory -->
-<!--      <dependency>-->
-<!--        <groupId>org.eclipse.jetty</groupId>-->
-<!--        <version>${jetty.version}</version>-->
-<!--        <type>pom</type>-->
-<!--        <scope>import</scope>-->
-<!--      </dependency>-->
-      <!-- Then Spring Boot BOM -->
+      <dependency>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-bom</artifactId>
+        <version>${jetty.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
@@ -74,44 +72,10 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-
-      <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-server</artifactId>
-        <version>${jetty-http.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-http</artifactId>
-        <version>${jetty-http.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.eclipse.jetty.ee10</groupId>
-        <artifactId>jetty-ee10-servlet</artifactId>
-        <version>${jetty-http.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-xml</artifactId>
-        <version>${jetty.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-client</artifactId>
-        <version>${jetty.version}</version>
-      </dependency>
     </dependencies>
   </dependencyManagement>
 
   <dependencies>
-    <!--the following transitive dependencies are added specifically to avoid vulnerabilities-->
-<!--    <dependency>-->
-<!--      <groupId>org.apache.avro</groupId>-->
-<!--      <artifactId>avro</artifactId>-->
-<!--      <version>1.12.0</version>-->
-<!--    </dependency>-->
-    <!--end transitive dependencies-->
-
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter</artifactId>
@@ -167,12 +131,6 @@
           <groupId>io.grpc</groupId>
           <artifactId>grpc-context</artifactId>
         </exclusion>
-
-<!--        &lt;!&ndash; Excluding to address CVE-2025-48924 commons-lang pulled transitively&ndash;&gt;-->
-<!--        <exclusion>-->
-<!--          <groupId>commons-lang</groupId>-->
-<!--          <artifactId>commons-lang</artifactId>-->
-<!--        </exclusion>-->
       </exclusions>
     </dependency>
     <dependency>
@@ -190,28 +148,6 @@
       <groupId>uk.gov.companieshouse</groupId>
       <artifactId>kafka-models</artifactId>
       <version>${kafka-models.version}</version>
-<!--      <exclusions>-->
-<!--        <exclusion>-->
-<!--          <groupId>commons-fileupload</groupId>-->
-<!--          <artifactId>commons-fileupload</artifactId>-->
-<!--        </exclusion>-->
-<!--        <exclusion>-->
-<!--          <groupId>org.eclipse.jetty</groupId>-->
-<!--          <artifactId>jetty-xml</artifactId>-->
-<!--        </exclusion>-->
-<!--        <exclusion>-->
-<!--          <groupId>org.eclipse.jetty</groupId>-->
-<!--          <artifactId>jetty-client</artifactId>-->
-<!--        </exclusion>-->
-<!--        <exclusion>-->
-<!--          <groupId>org.eclipse.jetty.http2</groupId>-->
-<!--          <artifactId>http2-server</artifactId>-->
-<!--        </exclusion>-->
-<!--        <exclusion>-->
-<!--          <groupId>org.eclipse.jetty</groupId>-->
-<!--          <artifactId>jetty-webapp</artifactId>-->
-<!--        </exclusion>-->
-<!--      </exclusions>-->
     </dependency>
 
 
