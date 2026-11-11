@@ -3,12 +3,12 @@ package uk.gov.companieshouse.filinghistory.consumer.transformrules.parsers;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import java.util.List;
 import org.junit.jupiter.api.Test;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.dataformat.yaml.YAMLMapper;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.TransformerTestingUtils;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.ReplaceProperty;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.SentenceCase;
@@ -17,7 +17,7 @@ import uk.gov.companieshouse.filinghistory.consumer.transformrules.rules.Default
 
 class DefaultPropertiesTest {
 
-    private static final ObjectMapper MAPPER = new ObjectMapper(new YAMLFactory());
+    private static final ObjectMapper MAPPER = YAMLMapper.builder().configureForJackson2().build();
 
     private final TransformerFactory transformerFactory = TransformerTestingUtils.getTransformerFactory();
 
@@ -32,7 +32,7 @@ class DefaultPropertiesTest {
             """;
 
     @Test
-    void shouldCompileDefaultRule() throws JsonProcessingException {
+    void shouldCompileDefaultRule() throws JacksonException {
 
         List<RuleProperties> ruleProperties = MAPPER.readValue(DEFAULT, new TypeReference<>() {
         });

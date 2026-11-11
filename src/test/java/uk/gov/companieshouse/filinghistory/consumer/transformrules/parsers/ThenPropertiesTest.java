@@ -4,13 +4,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import java.util.List;
 import java.util.regex.Pattern;
 import org.junit.jupiter.api.Test;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.dataformat.yaml.YAMLMapper;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.TransformerTestingUtils;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.ReplaceProperty;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.SentenceCase;
@@ -19,7 +19,7 @@ import uk.gov.companieshouse.filinghistory.consumer.transformrules.rules.Then;
 
 class ThenPropertiesTest {
 
-    private static final ObjectMapper MAPPER = new ObjectMapper(new YAMLFactory());
+    private static final ObjectMapper MAPPER = YAMLMapper.builder().configureForJackson2().build();
 
     private final TransformerFactory transformerFactory = TransformerTestingUtils.getTransformerFactory();
 
@@ -82,7 +82,7 @@ class ThenPropertiesTest {
                   """;
 
     @Test
-    void shouldCompileWithOneDefineClause() throws JsonProcessingException {
+    void shouldCompileWithOneDefineClause() throws JacksonException {
         List<RuleProperties> ruleProperties = MAPPER.readValue(THEN_WITH_DEFINE_AND_EXEC,
                 new TypeReference<>() {
                 });
@@ -101,7 +101,7 @@ class ThenPropertiesTest {
     }
 
     @Test
-    void shouldCompileWithTwoDefineClauses() throws JsonProcessingException {
+    void shouldCompileWithTwoDefineClauses() throws JacksonException {
         List<RuleProperties> ruleProperties = MAPPER.readValue(THEN_WITH_TWO_DEFINE_ELEMENTS,
                 new TypeReference<>() {
                 });
@@ -122,7 +122,7 @@ class ThenPropertiesTest {
     }
 
     @Test
-    void shouldCompileWithPlaceholderFunction() throws JsonProcessingException {
+    void shouldCompileWithPlaceholderFunction() throws JacksonException {
         List<RuleProperties> ruleProperties = MAPPER.readValue(THEN_WITH_PLACEHOLDER_FUNCTION,
                 new TypeReference<>() {
                 });
@@ -148,7 +148,7 @@ class ThenPropertiesTest {
     }
 
     @Test
-    void shouldCompileWithPlaceholderCaptureGroupButNoFunction() throws JsonProcessingException {
+    void shouldCompileWithPlaceholderCaptureGroupButNoFunction() throws JacksonException {
         List<RuleProperties> ruleProperties = MAPPER.readValue(THEN_WITH_PLACEHOLDER_CAPTURE_GROUP_NO_FUNCTION,
                 new TypeReference<>() {
                 });

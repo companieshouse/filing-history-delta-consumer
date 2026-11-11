@@ -2,8 +2,6 @@ package uk.gov.companieshouse.filinghistory.consumer.transformrules.functions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -13,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.node.ObjectNode;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.TransformerTestingUtils;
 
 class TitleCaseTest {

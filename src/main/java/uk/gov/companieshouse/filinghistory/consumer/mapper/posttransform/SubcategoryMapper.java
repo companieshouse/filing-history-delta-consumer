@@ -1,8 +1,8 @@
 package uk.gov.companieshouse.filinghistory.consumer.mapper.posttransform;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.springframework.stereotype.Component;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.node.ArrayNode;
 import uk.gov.companieshouse.filinghistory.consumer.serdes.ArrayNodeDeserialiser;
 
 @Component
@@ -23,7 +23,7 @@ public class SubcategoryMapper {
         return switch (subcategoryNode) {
             case null -> null;
             case ArrayNode arrayNode -> stringArrayNodeDeserialiser.deserialise(arrayNode);
-            default -> subcategoryNode.textValue();
+            default -> subcategoryNode.stringValue(null);
         };
     }
 }

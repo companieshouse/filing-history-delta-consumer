@@ -7,14 +7,14 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 import uk.gov.companieshouse.api.delta.FilingHistoryDeleteDelta;
 import uk.gov.companieshouse.api.delta.FilingHistoryDelta;
 import uk.gov.companieshouse.filinghistory.consumer.exception.NonRetryableException;
@@ -34,7 +34,7 @@ class FilingHistoryDeltaDeserialiserTest {
     private FilingHistoryDeleteDelta expectedDeleteDelta;
 
     @Test
-    void shouldDeserialiseFilingHistoryDelta() throws JsonProcessingException {
+    void shouldDeserialiseFilingHistoryDelta() throws JacksonException {
         // given
         when(objectMapper.readValue(anyString(), eq(FilingHistoryDelta.class))).thenReturn(expectedDelta);
 
@@ -47,10 +47,10 @@ class FilingHistoryDeltaDeserialiserTest {
     }
 
     @Test
-    void shouldThrowNonRetryableExceptionWhenJsonProcessingExceptionThrown() throws JsonProcessingException {
+    void shouldThrowNonRetryableExceptionWhenJacksonExceptionThrown() throws JacksonException {
         // given
         when(objectMapper.readValue(anyString(), eq(FilingHistoryDelta.class))).thenThrow(
-                JsonProcessingException.class);
+                JacksonException.class);
 
         // when
         Executable executable = () -> deserialiser.deserialiseFilingHistoryDelta(FILING_HISTORY_DELTA);
@@ -62,7 +62,7 @@ class FilingHistoryDeltaDeserialiserTest {
     }
 
     @Test
-    void shouldDeserialiseFilingHistoryDeleteDelta() throws JsonProcessingException {
+    void shouldDeserialiseFilingHistoryDeleteDelta() throws JacksonException {
         // given
         when(objectMapper.readValue(anyString(), eq(FilingHistoryDeleteDelta.class))).thenReturn(expectedDeleteDelta);
 
@@ -75,11 +75,11 @@ class FilingHistoryDeltaDeserialiserTest {
     }
 
     @Test
-    void shouldThrowNonRetryableExceptionWhenJsonProcessingExceptionThrownFromDeleteDelta()
-            throws JsonProcessingException {
+    void shouldThrowNonRetryableExceptionWhenJacksonExceptionThrownFromDeleteDelta()
+            throws JacksonException {
         // given
         when(objectMapper.readValue(anyString(), eq(FilingHistoryDeleteDelta.class))).thenThrow(
-                JsonProcessingException.class);
+                JacksonException.class);
 
         // when
         Executable executable = () -> deserialiser.deserialiseFilingHistoryDeleteDelta(FILING_HISTORY_DELETE_DELTA);

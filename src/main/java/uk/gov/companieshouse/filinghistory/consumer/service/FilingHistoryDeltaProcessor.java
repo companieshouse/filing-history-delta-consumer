@@ -1,9 +1,9 @@
 package uk.gov.companieshouse.filinghistory.consumer.service;
 
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.List;
 import org.springframework.stereotype.Component;
+import tools.jackson.databind.node.ArrayNode;
+import tools.jackson.databind.node.ObjectNode;
 import uk.gov.companieshouse.api.delta.FilingHistory;
 import uk.gov.companieshouse.api.delta.FilingHistoryDelta;
 import uk.gov.companieshouse.api.filinghistory.InternalFilingHistoryApi;

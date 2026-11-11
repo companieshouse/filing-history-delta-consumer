@@ -1,8 +1,8 @@
 package uk.gov.companieshouse.filinghistory.consumer.transformrules;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.AddressCase;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.AnnotationTransformer;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.CapitalCaptor;
@@ -17,10 +17,9 @@ import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.Tra
 
 public class TransformerTestingUtils {
 
-    private static final ObjectMapper MAPPER =
-            new ObjectMapper()
-                    .setSerializationInclusion(JsonInclude.Include.NON_NULL)
-                    .registerModule(new JavaTimeModule());
+    private static final ObjectMapper MAPPER = JsonMapper.builderWithJackson2Defaults()
+            .changeDefaultPropertyInclusion(incl -> incl.withValueInclusion(JsonInclude.Include.NON_NULL))
+            .build();
 
     private static final FormatDate BSON_DATE = new FormatDate(MAPPER);
     private static final LowerCase LOWER_CASE = new LowerCase();

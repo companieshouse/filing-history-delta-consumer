@@ -149,6 +149,10 @@
       <artifactId>kafka-models</artifactId>
       <version>${kafka-models.version}</version>
     </dependency>
+    <dependency>
+      <groupId>tools.jackson.dataformat</groupId>
+      <artifactId>jackson-dataformat-yaml</artifactId>
+    </dependency>
 
 
     <dependency>

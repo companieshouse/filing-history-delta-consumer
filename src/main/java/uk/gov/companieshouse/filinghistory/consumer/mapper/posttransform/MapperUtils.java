@@ -1,6 +1,6 @@
 package uk.gov.companieshouse.filinghistory.consumer.mapper.posttransform;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 
 public final class MapperUtils {
 
@@ -11,7 +11,7 @@ public final class MapperUtils {
         if (node == null) {
             return null;
         }
-        return node.get(field) != null ? node.get(field).textValue() : null;
+        return node.get(field) != null ? node.get(field).stringValue(null) : null;
     }
 
     static JsonNode getNestedJsonNodeFromJsonNode(final JsonNode node, final String field) {
