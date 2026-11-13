@@ -3,11 +3,11 @@ package uk.gov.companieshouse.filinghistory.consumer.mapper.posttransform;
 import static uk.gov.companieshouse.filinghistory.consumer.mapper.posttransform.MapperUtils.getFieldValueFromJsonNode;
 import static uk.gov.companieshouse.filinghistory.consumer.mapper.posttransform.MapperUtils.getNestedJsonNodeFromJsonNode;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Component;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.node.ArrayNode;
 import uk.gov.companieshouse.api.filinghistory.AltCapitalDescriptionValue;
 import uk.gov.companieshouse.api.filinghistory.CapitalDescriptionValue;
 import uk.gov.companieshouse.api.filinghistory.DescriptionValues;

@@ -9,13 +9,14 @@ import static uk.gov.companieshouse.filinghistory.consumer.kafka.BulkIntegration
 import static uk.gov.companieshouse.filinghistory.consumer.kafka.BulkIntegrationTestUtils.sleep;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonPointer;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import tools.jackson.core.JsonPointer;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.DeserializationFeature;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.databind.node.ObjectNode;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import jakarta.annotation.Nullable;
@@ -23,7 +24,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.UUID;
-import org.apache.http.HttpStatus;
+import org.springframework.http.HttpStatus;
 import org.bson.Document;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
@@ -39,9 +40,10 @@ class E2EGetResponseIntegrationIT {
 
     private final RestClient apiClient = getFilingHistoryApiRestClient();
     private final RestClient deltaApi = getDeltaApiRestClient();
-    private final ObjectMapper mapper = new ObjectMapper()
-            .setSerializationInclusion(JsonInclude.Include.NON_NULL)
-            .registerModule(new JavaTimeModule());
+    private final ObjectMapper mapper = JsonMapper.builder()
+            .enable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+            .changeDefaultPropertyInclusion(incl -> incl.withValueInclusion(JsonInclude.Include.NON_NULL))
+            .build();
 
     private final MongoClient mongoClient = BulkIntegrationTestUtils.mongoClient();
     private final MongoCollection<Document> filingHistoryCollection = getFilingHistoryCollection(mongoClient);
@@ -103,7 +105,7 @@ class E2EGetResponseIntegrationIT {
                         .uri("/company/{companyNumber}/filing-history", companyNumber)
                         .header("x-request-id", UUID.randomUUID().toString())
                         .retrieve()
-                        .onStatus(status -> status.value() != HttpStatus.SC_OK, (request, response) -> {
+                        .onStatus(status -> status.value() != HttpStatus.OK.value(), (request, response) -> {
                             throw new RuntimeException(response.getStatusText());
                         })
                         .body(String.class);
@@ -124,7 +126,7 @@ class E2EGetResponseIntegrationIT {
                         .uri("/company/{companyNumber}/filing-history/{transactionId}", companyNumber, transactionId)
                         .header("x-request-id", UUID.randomUUID().toString())
                         .retrieve()
-                        .onStatus(status -> status.value() != HttpStatus.SC_OK, (request, response) -> {
+                        .onStatus(status -> status.value() != HttpStatus.OK.value(), (request, response) -> {
                             throw new RuntimeException(response.getStatusText());
                         })
                         .body(String.class);
@@ -179,8 +181,8 @@ class E2EGetResponseIntegrationIT {
 
     private void removeKnownMismatchedDescriptions(JsonNode perlNode, JsonNode javaNode) {
         if (!javaNode.isEmpty() && !perlNode.isEmpty()) {
-            String javaDescription = javaNode.at(toJsonPtr("description")).textValue();
-            String perlDescription = perlNode.at(toJsonPtr("description")).textValue();
+            String javaDescription = javaNode.at(toJsonPtr("description")).stringValue(null);
+            String perlDescription = perlNode.at(toJsonPtr("description")).stringValue(null);
 
             if (javaDescription != null && perlDescription != null
                     && javaDescription.equals(
@@ -188,7 +190,7 @@ class E2EGetResponseIntegrationIT {
                     && perlDescription.equals(
                     "second-filing-change-details-of-a-person-with-significant-control")) {
                 logger.info("Masking known description differences for form type '%s'".formatted(
-                        javaNode.at(toJsonPtr("type")).textValue()));
+                        javaNode.at(toJsonPtr("type")).stringValue(null)));
                 ((ObjectNode) javaNode).remove("description");
                 ((ObjectNode) perlNode).remove("description");
             }
@@ -226,7 +228,7 @@ class E2EGetResponseIntegrationIT {
             JsonNode jdv = javaSingleDocument.at(toJsonPtr("associated_filings.0.description_values"));
             JsonNode pdv = perlSingleDocument.at(toJsonPtr("associated_filings.0.description_values"));
 
-            for (Iterator<String> it = jdv.fieldNames(); it.hasNext(); ) {
+            for (Iterator<String> it = jdv.propertyNames().iterator(); it.hasNext(); ) {
                 String fieldName = it.next();
 
                 if (!jdv.at(toJsonPtr(fieldName)).getNodeType().equals(pdv.at(toJsonPtr(fieldName)).getNodeType())) {
@@ -247,9 +249,9 @@ class E2EGetResponseIntegrationIT {
     private void removeEmptyDescriptionValues(JsonNode jsonNode) {
         logger.info("Masking empty description_values");
         JsonNode descriptionValues = jsonNode.at(toJsonPtr("description_values"));
-        for (Iterator<String> it = descriptionValues.fieldNames(); it.hasNext(); ) {
+        for (Iterator<String> it = descriptionValues.propertyNames().iterator(); it.hasNext(); ) {
             String fieldName = it.next();
-            if (descriptionValues.get(fieldName).textValue().isEmpty()) {
+            if (descriptionValues.get(fieldName).stringValue(null).isEmpty()) {
                 ((ObjectNode) descriptionValues).remove(fieldName);
             }
         }
@@ -264,9 +266,9 @@ class E2EGetResponseIntegrationIT {
         JsonNode javaDescriptionValues = javaSingleDocument.at(toJsonPtr("description_values"));
         JsonNode perlDescriptionValues = perlSingleDocument.at(toJsonPtr("description_values"));
 
-        for (Iterator<String> it = javaDescriptionValues.fieldNames(); it.hasNext(); ) {
+        for (Iterator<String> it = javaDescriptionValues.propertyNames().iterator(); it.hasNext(); ) {
             String fieldName = it.next();
-            if (!perlDescriptionValues.has(fieldName) || perlDescriptionValues.get(fieldName).textValue()
+            if (!perlDescriptionValues.has(fieldName) || perlDescriptionValues.get(fieldName).stringValue(null)
                     .isBlank()) {
                 ((ObjectNode) javaDescriptionValues).remove(fieldName);
             }
@@ -323,7 +325,7 @@ class E2EGetResponseIntegrationIT {
         }
     }
 
-    private JsonNode parseAndRemoveNulls(String json) throws JsonProcessingException {
+    private JsonNode parseAndRemoveNulls(String json) throws JacksonException {
         return mapper.readTree(
                 mapper.writeValueAsString(
                         mapper.readValue(json, new TypeReference<LinkedHashMap<String, ?>>() {

@@ -2,8 +2,8 @@ package uk.gov.companieshouse.filinghistory.consumer.mapper.posttransform;
 
 import static uk.gov.companieshouse.filinghistory.consumer.mapper.posttransform.MapperUtils.getFieldValueFromJsonNode;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.stereotype.Component;
+import tools.jackson.databind.JsonNode;
 import uk.gov.companieshouse.api.filinghistory.InternalDataOriginalValues;
 
 @Component

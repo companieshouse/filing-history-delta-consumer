@@ -1,7 +1,7 @@
 package uk.gov.companieshouse.filinghistory.consumer.transformrules.rules;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import java.util.Map;
+import tools.jackson.databind.JsonNode;
 
 public record Rule(When when, Then then, Default defaultRule) {
 
