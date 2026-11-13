@@ -5,13 +5,15 @@ import com.github.tomakehurst.wiremock.http.Request;
 import com.github.tomakehurst.wiremock.matching.MatchResult;
 import com.github.tomakehurst.wiremock.matching.ValueMatcher;
 import tools.jackson.core.JacksonException;
+import tools.jackson.databind.DeserializationFeature;
 import tools.jackson.databind.ObjectMapper;
 import tools.jackson.databind.json.JsonMapper;
 import uk.gov.companieshouse.api.filinghistory.InternalFilingHistoryApi;
 
 public class PutRequestDescriptionMatcher implements ValueMatcher<Request> {
 
-    private static final ObjectMapper MAPPER = JsonMapper.builderWithJackson2Defaults()
+    private static final ObjectMapper MAPPER = JsonMapper.builder()
+            .enable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
             .changeDefaultPropertyInclusion(incl -> incl.withValueInclusion(Include.NON_EMPTY))
             .build();
 

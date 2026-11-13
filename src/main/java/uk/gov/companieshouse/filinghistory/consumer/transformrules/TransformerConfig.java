@@ -18,7 +18,7 @@ public class TransformerConfig {
     @Bean
     public TransformerService transformRules(@Value("${transform.rules}") String rulesFile,
             TransformerFactory transformerFactory) {
-        ObjectMapper mapper = YAMLMapper.builder().configureForJackson2().build();
+        ObjectMapper mapper = new YAMLMapper();
         InputStream stream = getClass().getResourceAsStream("/%s".formatted(rulesFile));
         List<RuleProperties> ruleProperties = mapper.readValue(stream, new TypeReference<>() {
         });

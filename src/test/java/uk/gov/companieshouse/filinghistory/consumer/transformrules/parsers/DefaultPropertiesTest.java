@@ -17,7 +17,7 @@ import uk.gov.companieshouse.filinghistory.consumer.transformrules.rules.Default
 
 class DefaultPropertiesTest {
 
-    private static final ObjectMapper MAPPER = YAMLMapper.builder().configureForJackson2().build();
+    private static final ObjectMapper MAPPER = new YAMLMapper();
 
     private final TransformerFactory transformerFactory = TransformerTestingUtils.getTransformerFactory();
 

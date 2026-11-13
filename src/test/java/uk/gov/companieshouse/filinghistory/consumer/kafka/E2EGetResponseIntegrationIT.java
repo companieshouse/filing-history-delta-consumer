@@ -13,6 +13,7 @@ import tools.jackson.core.JsonPointer;
 import tools.jackson.core.JacksonException;
 import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.DeserializationFeature;
 import tools.jackson.databind.ObjectMapper;
 import tools.jackson.databind.json.JsonMapper;
 import tools.jackson.databind.node.ObjectNode;
@@ -39,7 +40,8 @@ class E2EGetResponseIntegrationIT {
 
     private final RestClient apiClient = getFilingHistoryApiRestClient();
     private final RestClient deltaApi = getDeltaApiRestClient();
-    private final ObjectMapper mapper = JsonMapper.builderWithJackson2Defaults()
+    private final ObjectMapper mapper = JsonMapper.builder()
+            .enable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
             .changeDefaultPropertyInclusion(incl -> incl.withValueInclusion(JsonInclude.Include.NON_NULL))
             .build();
 

@@ -19,7 +19,7 @@ import uk.gov.companieshouse.filinghistory.consumer.transformrules.rules.Then;
 
 class ThenPropertiesTest {
 
-    private static final ObjectMapper MAPPER = YAMLMapper.builder().configureForJackson2().build();
+    private static final ObjectMapper MAPPER = new YAMLMapper();
 
     private final TransformerFactory transformerFactory = TransformerTestingUtils.getTransformerFactory();
 

@@ -1,6 +1,7 @@
 package uk.gov.companieshouse.filinghistory.consumer.transformrules;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import tools.jackson.databind.DeserializationFeature;
 import tools.jackson.databind.ObjectMapper;
 import tools.jackson.databind.json.JsonMapper;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.AddressCase;
@@ -17,7 +18,8 @@ import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.Tra
 
 public class TransformerTestingUtils {
 
-    private static final ObjectMapper MAPPER = JsonMapper.builderWithJackson2Defaults()
+    private static final ObjectMapper MAPPER = JsonMapper.builder()
+            .enable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
             .changeDefaultPropertyInclusion(incl -> incl.withValueInclusion(JsonInclude.Include.NON_NULL))
             .build();
 
