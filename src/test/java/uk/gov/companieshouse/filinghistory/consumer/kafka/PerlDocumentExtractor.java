@@ -22,7 +22,7 @@ import java.sql.SQLException;
 import java.util.Objects;
 import java.util.UUID;
 import org.apache.commons.io.FileUtils;
-import org.apache.http.HttpStatus;
+import org.springframework.http.HttpStatus;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -122,7 +122,7 @@ public class PerlDocumentExtractor {
                         .uri("/company/{companyNumber}/filing-history/{transactionId}", companyNumber, transactionId)
                         .header("x-request-id", UUID.randomUUID().toString())
                         .retrieve()
-                        .onStatus(status -> status.value() != HttpStatus.SC_OK, (request, response) -> {
+                        .onStatus(status -> status.value() != HttpStatus.OK.value(), (request, response) -> {
                             throw new RuntimeException(response.getStatusText());
                         })
                         .body(String.class);
@@ -145,7 +145,7 @@ public class PerlDocumentExtractor {
                         .uri("/company/{companyNumber}/filing-history", companyNumber)
                         .header("x-request-id", UUID.randomUUID().toString())
                         .retrieve()
-                        .onStatus(status -> status.value() != HttpStatus.SC_OK, (request, response) -> {
+                        .onStatus(status -> status.value() != HttpStatus.OK.value(), (request, response) -> {
                             throw new RuntimeException(response.getStatusText());
                         })
                         .body(String.class);

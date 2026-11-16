@@ -4,9 +4,9 @@ import static uk.gov.companieshouse.filinghistory.consumer.Application.NAMESPACE
 import static uk.gov.companieshouse.filinghistory.consumer.mapper.posttransform.MapperUtils.getFieldValueFromJsonNode;
 import static uk.gov.companieshouse.filinghistory.consumer.mapper.posttransform.MapperUtils.getNestedJsonNodeFromJsonNode;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import java.util.Optional;
 import org.springframework.stereotype.Component;
+import tools.jackson.databind.JsonNode;
 import uk.gov.companieshouse.api.filinghistory.ExternalData;
 import uk.gov.companieshouse.api.filinghistory.InternalData;
 import uk.gov.companieshouse.api.filinghistory.InternalFilingHistoryApi;

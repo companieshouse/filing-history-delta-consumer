@@ -2,13 +2,13 @@ package uk.gov.companieshouse.filinghistory.consumer.transformrules;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.node.ObjectNode;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.TransformerFactory;
 
 class TransformerServiceTest {
@@ -87,7 +87,7 @@ class TransformerServiceTest {
     }
 
     @Test
-    void transformTM01() throws JsonProcessingException {
+    void transformTM01() throws JacksonException {
         // given
         JsonNode delta = MAPPER.readTree(TM01_REQUEST_BODY);
 
@@ -126,7 +126,7 @@ class TransformerServiceTest {
     }
 
     @Test
-    void transformAA() throws JsonProcessingException {
+    void transformAA() throws JacksonException {
         // given
         JsonNode delta = MAPPER.readTree(AA_REQUEST_BODY);
 
@@ -156,7 +156,7 @@ class TransformerServiceTest {
     }
 
     @Test
-    void transformWithDefineAndExec() throws JsonProcessingException {
+    void transformWithDefineAndExec() throws JacksonException {
         // given
         JsonNode delta = MAPPER.readTree(REQUEST_WITH_DEFINE_EXEC);
 
@@ -190,7 +190,7 @@ class TransformerServiceTest {
     }
 
     @Test
-    void transformAA01() throws JsonProcessingException {
+    void transformAA01() throws JacksonException {
         // given
         JsonNode delta = MAPPER.readTree(REQUEST_WITH_TWO_LIKE_CAPTURE_GROUPS);
 
@@ -219,7 +219,7 @@ class TransformerServiceTest {
 
 
     @Test
-    void transformUsingDefaultRule() throws JsonProcessingException {
+    void transformUsingDefaultRule() throws JacksonException {
         // given
         JsonNode delta = MAPPER.readTree(MATCH_DEFAULT_RULE);
 

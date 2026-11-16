@@ -2,15 +2,15 @@ package uk.gov.companieshouse.filinghistory.consumer.transformrules.functions;
 
 import static uk.gov.companieshouse.filinghistory.consumer.transformrules.TransformerUtils.toJsonPtr;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.MissingNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.node.MissingNode;
+import tools.jackson.databind.node.ObjectNode;
 
 public abstract class AbstractTransformer implements Transformer {
 
@@ -52,7 +52,7 @@ public abstract class AbstractTransformer implements Transformer {
         if (captureValue != null) {
             fieldToTransform = captureValue;
         } else if (!(sourceValue instanceof MissingNode) && sourceValue != null) {
-            fieldToTransform = sourceValue.textValue();
+            fieldToTransform = sourceValue.stringValue(null);
         } else {
             fieldToTransform = sourceFieldOrCapture; // is a substitution
         }

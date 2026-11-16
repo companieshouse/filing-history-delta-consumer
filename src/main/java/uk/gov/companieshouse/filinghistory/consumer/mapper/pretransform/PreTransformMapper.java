@@ -2,9 +2,9 @@ package uk.gov.companieshouse.filinghistory.consumer.mapper.pretransform;
 
 import static uk.gov.companieshouse.api.filinghistory.InternalData.TransactionKindEnum.TOP_LEVEL;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.List;
 import org.springframework.stereotype.Component;
+import tools.jackson.databind.node.ObjectNode;
 import uk.gov.companieshouse.api.delta.ChildProperties;
 import uk.gov.companieshouse.api.delta.FilingHistory;
 import uk.gov.companieshouse.api.filinghistory.InternalData.TransactionKindEnum;

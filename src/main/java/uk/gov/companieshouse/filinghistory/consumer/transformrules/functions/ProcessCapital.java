@@ -2,11 +2,11 @@ package uk.gov.companieshouse.filinghistory.consumer.transformrules.functions;
 
 import static uk.gov.companieshouse.filinghistory.consumer.transformrules.TransformerUtils.toJsonPtr;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.regex.Pattern;
 import org.springframework.stereotype.Component;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.node.ObjectNode;
 
 @Component
 public class ProcessCapital {
@@ -28,7 +28,7 @@ public class ProcessCapital {
             outputNode = (ObjectNode) outputNode.at("/" + fields[i]);
         }
 
-        String sourceDescription = source.at(toJsonPtr(fieldPath)).textValue();
+        String sourceDescription = source.at(toJsonPtr(fieldPath)).stringValue(null);
 
         CapitalCaptures capitalCaptures = capitalCaptor.captureCapital(extract, altDescription, sourceDescription);
 

@@ -1,6 +1,6 @@
 package uk.gov.companieshouse.filinghistory.consumer.mapper.posttransform;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 import uk.gov.companieshouse.filinghistory.consumer.service.TransactionKindResult;
 
 public record InternalFilingHistoryApiMapperArguments(JsonNode topLevelNode, TransactionKindResult kindResult,

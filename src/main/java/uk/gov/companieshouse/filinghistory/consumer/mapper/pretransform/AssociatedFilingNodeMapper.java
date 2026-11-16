@@ -1,9 +1,9 @@
 package uk.gov.companieshouse.filinghistory.consumer.mapper.pretransform;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.node.ObjectNode;
 import uk.gov.companieshouse.api.delta.FilingHistory;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.FormatDate;
 

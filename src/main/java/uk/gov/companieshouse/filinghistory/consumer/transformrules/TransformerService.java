@@ -2,9 +2,9 @@ package uk.gov.companieshouse.filinghistory.consumer.transformrules;
 
 import static uk.gov.companieshouse.filinghistory.consumer.Application.NAMESPACE;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import java.util.List;
 import java.util.Map;
+import tools.jackson.databind.JsonNode;
 import uk.gov.companieshouse.filinghistory.consumer.logging.DataMapHolder;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.rules.Result;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.rules.Rule;

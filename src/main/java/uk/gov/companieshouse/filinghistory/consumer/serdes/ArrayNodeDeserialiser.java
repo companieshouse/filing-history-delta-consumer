@@ -2,10 +2,10 @@ package uk.gov.companieshouse.filinghistory.consumer.serdes;
 
 import static uk.gov.companieshouse.filinghistory.consumer.Application.NAMESPACE;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import java.io.IOException;
 import java.util.List;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.node.ArrayNode;
 import uk.gov.companieshouse.filinghistory.consumer.exception.NonRetryableException;
 import uk.gov.companieshouse.filinghistory.consumer.logging.DataMapHolder;
 import uk.gov.companieshouse.logging.Logger;
@@ -25,7 +25,7 @@ public class ArrayNodeDeserialiser<T> {
     public List<T> deserialise(ArrayNode arrayNode) {
         try {
             return mapper.readerForListOf(type).readValue(arrayNode);
-        } catch (IOException ex) {
+        } catch (JacksonException ex) {
             LOGGER.error("Unable to deserialise array node: [%s]".formatted(arrayNode.toPrettyString()),
                     ex,
                     DataMapHolder.getLogMap());

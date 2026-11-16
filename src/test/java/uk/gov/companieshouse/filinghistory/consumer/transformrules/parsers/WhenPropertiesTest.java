@@ -3,18 +3,18 @@ package uk.gov.companieshouse.filinghistory.consumer.transformrules.parsers;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.dataformat.yaml.YAMLMapper;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.rules.When;
 
 class WhenPropertiesTest {
 
-    private static final ObjectMapper MAPPER = new ObjectMapper(new YAMLFactory());
+    private static final ObjectMapper MAPPER = new YAMLMapper();
 
     private static final String ONE_LIKE = """
             - when:
@@ -72,7 +72,7 @@ class WhenPropertiesTest {
             """;
 
     @Test
-    void shouldCompileLikeWithOneCaptureGroup() throws JsonProcessingException {
+    void shouldCompileLikeWithOneCaptureGroup() throws JacksonException {
 
         List<RuleProperties> ruleProperties = MAPPER.readValue(ONE_LIKE, new TypeReference<>() {
         });
@@ -87,7 +87,7 @@ class WhenPropertiesTest {
     }
 
     @Test
-    void shouldCompileLikeWithTwoCaptureGroups() throws JsonProcessingException {
+    void shouldCompileLikeWithTwoCaptureGroups() throws JacksonException {
 
         List<RuleProperties> ruleProperties = MAPPER.readValue(TWO_LIKES, new TypeReference<>() {
         });
@@ -105,7 +105,7 @@ class WhenPropertiesTest {
     }
 
     @Test
-    void shouldFailToCompileWhenMissingDataTypeField() throws JsonProcessingException {
+    void shouldFailToCompileWhenMissingDataTypeField() throws JacksonException {
 
         List<RuleProperties> ruleProperties = MAPPER.readValue(MISSING_FORM_TYPE,
                 new TypeReference<>() {
@@ -120,7 +120,7 @@ class WhenPropertiesTest {
     }
 
     @Test
-    void shouldFailToCompileWhenMissingEqField() throws JsonProcessingException {
+    void shouldFailToCompileWhenMissingEqField() throws JacksonException {
 
         List<RuleProperties> ruleProperties = MAPPER.readValue(MISSING_EQ, new TypeReference<>() {
         });

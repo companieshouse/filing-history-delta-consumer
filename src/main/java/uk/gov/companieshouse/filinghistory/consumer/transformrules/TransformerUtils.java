@@ -1,6 +1,6 @@
 package uk.gov.companieshouse.filinghistory.consumer.transformrules;
 
-import com.fasterxml.jackson.core.JsonPointer;
+import tools.jackson.core.JsonPointer;
 
 public class TransformerUtils {
 

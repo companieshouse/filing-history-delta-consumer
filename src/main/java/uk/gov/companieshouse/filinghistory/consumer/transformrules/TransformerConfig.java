@@ -1,14 +1,13 @@
 package uk.gov.companieshouse.filinghistory.consumer.transformrules;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.dataformat.yaml.YAMLMapper;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.functions.TransformerFactory;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.parsers.RuleProperties;
 import uk.gov.companieshouse.filinghistory.consumer.transformrules.rules.Rule;
@@ -18,8 +17,8 @@ public class TransformerConfig {
 
     @Bean
     public TransformerService transformRules(@Value("${transform.rules}") String rulesFile,
-            TransformerFactory transformerFactory) throws IOException {
-        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+            TransformerFactory transformerFactory) {
+        ObjectMapper mapper = new YAMLMapper();
         InputStream stream = getClass().getResourceAsStream("/%s".formatted(rulesFile));
         List<RuleProperties> ruleProperties = mapper.readValue(stream, new TypeReference<>() {
         });
